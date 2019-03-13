@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const riven = require('../api/business/rivenProcess');
-const rivenAdapter = require('../api/models/rivenAdapter');
+const rivenAdapter = require('../api/business/rivenAdapter');
 
 router.get('/', function (req, res) {
     riven.list(
@@ -13,15 +13,27 @@ router.get('/', function (req, res) {
 });
 
 router.post('/add', function(req, res) {
-    riven.add(req.body,
-        ret => res.json(ret),
+    // riven.add(req.body,
+    //     ret => res.json(ret),
+    //     err => res.status(400).send('Invalid body, '+err));
+    rivenAdapter.form2riven(
+        req.body,
+        ret => riven.add(ret,
+            ret2 => riven.byId(
+                ret2._id,
+                riv => res.json(riv)),
+            err => res.status(400).send('Invalid body, '+err)),
         err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/formAdd', function(req, res) {
-    riven.add(
-        rivenAdapter.form2riven(req.body),
-        ret => riven.byId(ret._id, riv => res.render('rivenDetails', { riven: riv })),
+    rivenAdapter.form2riven(
+        req.body,
+        ret => riven.add(ret,
+            ret2 => riven.byId(
+                ret2._id,
+                riv => res.render('rivenDetails', { riven: riv })),
+            err => res.status(400).send('Invalid body, '+err)),
         err => res.status(400).send('Invalid body, '+err));
 });
 

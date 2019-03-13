@@ -12,6 +12,8 @@ const mongoose = require('mongoose'),
     RivenCondition = require('./api/models/rivenConditionModel.js'),
     Riven = require('./api/models/rivenModel.js'),
     BoosterType = require('./api/models/boosterTypeModel.js'),
+    RewardType = require('./api/models/rewardTypeModel.js'),
+    SortieReward = require('./api/models/sortieRewardModel.js'),
     bodyParser = require('body-parser');
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -29,6 +31,10 @@ const rivens = require('./routes/rivenRoutes');
 app.use('/riven', rivens);
 const boosterType = require('./routes/boosterTypeRoutes');
 app.use('/booster/type', boosterType);
+const rewardType = require('./routes/rewardTypeRoutes');
+app.use('/reward/type', rewardType);
+const sortieReward = require('./routes/sortieRewardRoute');
+app.use('/reward', sortieReward);
 
 // XLSX 2 JSON
 
