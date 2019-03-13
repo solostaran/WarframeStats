@@ -1,0 +1,17 @@
+extends layout
+
+block scripts
+
+block content
+    h1 Riven
+    p id = #{riven._id}
+    p weaponName = #{riven.weaponName}
+    p Challenge :
+    ul
+        for condition in riven.conditions
+            li= condition.description
+            ul
+                - var n = 1
+                if condition.advices
+                    for advice in condition.advices
+                        li= 'advice ' + n++ + ' : ' + advice

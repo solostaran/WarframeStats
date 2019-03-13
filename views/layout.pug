@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    block scripts
+      const version = 1.0
+  body
+    div(class='header')
+      header
+        p
+          a(href='/types') Riven Types
+          = ' - '
+          a(href='/conditions') Riven Conditions
+          = ' - '
+          a(href='/rivenForm') Create Riven
+    section
+      block content
+    div(class='footer')
+      footer
+        p
+          i croopyrite jojo
+

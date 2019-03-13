@@ -1,0 +1,16 @@
+extends layout
+
+block scripts
+
+block content
+    p List of Riven Challenges and conditions
+    ul
+        for condition in conditions
+            li= condition.description
+            ul
+                if condition.optional && condition.optional == true
+                    li= 'This condition is an optional one'
+                - var n = 1
+                if condition.advices
+                    for advice in condition.advices
+                        li= 'advice '+ n++ +' : '+advice

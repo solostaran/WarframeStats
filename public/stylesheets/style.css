@@ -1,0 +1,36 @@
+body {
+  //padding: 50px;
+  position: relative;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 60px;
+  padding-bottom: 10px;
+  height:100%
+}
+
+body::after {
+  content: '';
+  display: block;
+  height: 60px; /* Set same as footer's height */
+}
+
+a {
+  color: #00B7FF;
+}
+
+.footer {
+  position:absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height:60px;			/* Height of the footer */
+  background:#F0F0FF;
+}
+
+.header {
+  position:absolute;
+  left: 0;
+  right: 0;
+  top:0;
+  height:60px;
+  background:#F0F0FF;
+}
