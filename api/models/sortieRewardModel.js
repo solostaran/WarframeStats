@@ -19,7 +19,7 @@ const SortieRewardSchema = new Schema({
         required: false
     },
     reward : {
-        type: Schema.Types.Mixed,
+        type: Schema.Types.ObjectId,
         required: false,
         default: undefined
     }

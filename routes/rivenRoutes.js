@@ -57,7 +57,7 @@ router.delete('/delete/:id', function(req, res) {
 router.delete('/deleteall', function(req, res) {
     riven.deleteAll(
         ret => res.status(200).send(ret),
-        err => res.status(500).send("Cannot delete all rivens in DB, "+err));
+        err => res.status(500).send("Cannot delete all sortie rewards in DB, "+err));
 });
 
 module.exports = router;

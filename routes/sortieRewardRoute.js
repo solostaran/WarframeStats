@@ -28,6 +28,12 @@ router.get('/:id', function (req, res) {
         err => res.status(500).send(err));
 });
 
+router.delete('/delete/:id', function(req, res) {
+    sortieReward.deleteOneById(req.params.id,
+        ret => res.status(200).send(ret),
+        err => res.status(500).send("Cannot delete, "+err));
+});
+
 router.delete('/deleteall', function(req, res) {
     sortieReward.deleteAll(
         ret => res.status(200).send(ret),
