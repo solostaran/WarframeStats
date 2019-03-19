@@ -18,7 +18,7 @@ router.post('/add', function(req, res) {
 });
 
 router.get('/:id', function (req, res) {
-    sortieReward.byId(req.params.id,
+    sortieReward.findById(req.params.id,
         ret => {
             if (!ret)
                 res.status(404).send(null);

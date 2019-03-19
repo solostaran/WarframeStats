@@ -3,67 +3,36 @@
 const mongoose = require('mongoose'),
     _ = require("lodash"),
     SortieReward = mongoose.model('SortieReward'),
+    RivenType = mongoose.model('RivenType'),
+    RivenCondition = mongoose.model('RivenCondition'),
     rewardType = require('./rewardTypeProcess.js'),
     boosterType = require('./boosterTypeProcess.js'),
     rivenObj = require('./rivenProcess.js');
 
 const list = function(onFound, onError) {
-    SortieReward.find({}).populate('type').then(onFound).catch(onError);
+    SortieReward.find({}).then(onFound).catch(onError);
 };
 
 const add = function(obj, onSuccess, onError) {
-    const newReward = new SortieReward(obj);
+    let newReward = new SortieReward(obj);
     // the reward type can be referenced by either an alias or by its ID
-    rewardType.byIdOrName(
+    rewardType.findByIdOrName(
         obj.type,
         ret => {
-            newReward.type = ret[0]._id;
-            //if (ret[0].name.search(new RegExp('riven', 'i')) >= 0) {
-            if (_.includes(ret[0].name.toLowerCase(), 'riven')) {
-                rivenObj.add(ret.reward,
-                    riven => {
-                        newReward.reward = riven._id;
-                        newReward.save().then(onSuccess).catch(onError);
-                    },
-                    onError);
-                return;
-            }
-            if (_.includes(ret[0].name.toLowerCase(), 'booster')) {
-                boosterType.byId(newReward.reward,
-                    booster => {
-                        newReward.reward = booster._id;
-                        newReward.save().then(onSuccess).catch(onError);
-                    },
-                    onError);
-                return;
-            }
+            newReward.type = ret._id;
             newReward.save().then(onSuccess).catch(onError);
         },
         onError);
 };
 
-const byId = function(id, onSuccess, onError) {
-    SortieReward.findById(id).populate('type').lean().then(ret => {
-        if (_.includes(ret.type.name.toLowerCase(), 'booster')) {
-            boosterType.byId(ret.reward,
-                booster => {
-                    ret.reward = booster;
-                    onSuccess(ret);
-                },
-                onError);
-            return;
-        }
-        if (_.includes(ret.type.name.toLowerCase(), 'riven')) {
-            rivenObj.byId(ret.reward,
-                riven => {
-                    ret.reward = riven;
-                    onSuccess(ret);
-                },
-                onError);
-            return;
-        }
-        onSuccess(ret);
-    }).catch(onError);
+const findById = function(id, onSuccess, onError) {
+    SortieReward.findById(id)
+        .populate('type')
+        .populate({path: 'riven.type', model: 'RivenType'})
+        .populate([{path: 'riven.conditions', model: 'RivenCondition'}])
+        .populate('booster')
+        .then(onSuccess)
+        .catch(onError);
 }
 
 const deleteOneById = function(id, onDelete, onError) {
@@ -79,6 +48,6 @@ const deleteAll = function(onDelete, onError) {
 
 exports.list = list;
 exports.add = add;
-exports.byId = byId;
+exports.findById = findById;
 exports.deleteOneById = deleteOneById;
 exports.deleteAll = deleteAll;

@@ -20,16 +20,24 @@ const adds = function(listOfBoosterType, onSuccess, onError) {
         .catch(onError);
 };
 
-const byId = function(id, onFound, onError) {
+const findById = function(id, onFound, onError) {
     RewardTypes.findById(id).then(onFound).catch(onError);
 }
 
-const byName = function(name, onFound, onError) {
+const findByName = function(name, onFound, onError) {
     RewardTypes.find({name: { "$regex": name, "$options": "i" }}).then(onFound).catch(onError);
 }
 
-const byIdOrName = function(param, onFound, onError) {
-    byId(param, onFound, err => { byName(param, onFound, onError); });
+const findByIdOrName = function(param, onFound, onError) {
+    findById(param, onFound,
+err => {
+            findByName(param, ret2 => {
+                if (ret2.length > 0)
+                    onFound(ret2[0]);
+                else
+                    onError(new Error("Reward type not found : "+param));
+            }, onError);
+        });
 }
 
 const deleteOneById = function(id, onDelete, onError) {
@@ -50,8 +58,8 @@ const deleteAll = function(onDelete, onError) {
 exports.list = list;
 exports.add = add;
 exports.adds = adds;
-exports.byId = byId;
-exports.byName = byName;
-exports.byIdOrName = byIdOrName;
+exports.findById = findById;
+exports.findByName = findByName;
+exports.findByIdOrName = findByIdOrName;
 exports.deleteOneById = deleteOneById;
 exports.deleteAll = deleteAll;
