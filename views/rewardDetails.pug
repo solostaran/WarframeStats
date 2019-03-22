@@ -1,0 +1,50 @@
+extends layout
+
+block content
+    h1 Reward
+    label(for='type') This reward is :
+    input(id='type' size='24' value=reward.type.name readonly)
+    = '. Its ID is '
+    input(id='id' size='24' value=reward._id)
+    br
+    br
+    if reward.date
+        - var formattedDate = date2string(reward.date)
+        label(for='date') Obtained at this date :
+        input(id='date' size='24' value=formattedDate readonly)
+        br
+        br
+    label(for='created') Created in database at this date :
+    input(id='created' size='24' value=reward.Created_date readonly)
+    br
+    br
+    if reward.booster
+        label(for='booster') Booster type is :
+        input(id='booster' size='24' value=reward.booster.name readonly)
+        br
+        br
+    if reward.riven
+        label(for='rivenType') Riven type is :
+        input(id='rivenType' size='24' value=reward.riven.type.name readonly)
+        br
+        br
+        label(for='rivenWeaponName') Riven weapon is :
+        input(id='rivenWeaponName' size='24' value=reward.riven.weaponName readonly)
+        br
+        br
+        if reward.riven.conditions
+            = 'Riven challenge is : '
+            for val in reward.riven.conditions
+                input(value=val.description size=val.description.length readonly)
+            br
+            = 'Advices for this challenge : '
+            br
+            - var n = 1
+            for val in reward.riven.conditions
+                if val.advices
+                    for adv in val.advices
+                        span(style='margin-left:20px') #{n++}: #{adv}
+                        br
+    br
+    form(action='/rewardForm/'+reward._id)
+        input(type="submit" value='Edit Reward' style='margin-left:20px;')

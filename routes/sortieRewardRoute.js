@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const sortieReward = require('../api/business/sortieRewardProcess');
+const rewardAdapter = require('../api/business/rewardAdapter');
 
 router.get('/', function (req, res) {
     sortieReward.list(
@@ -17,6 +18,29 @@ router.post('/add', function(req, res) {
         err => res.status(400).send('Invalid body, '+err));
 });
 
+function date2string(date) {
+    const split = date.split(/\D/);
+    return split[0]+'/'+split[1]+'/'+split[2];
+}
+
+router.post('/form', function(req, res) {
+    sortieReward.addOrUpdate(req.body,
+        ret => sortieReward.findById(
+            ret._id,
+            reward => res.render('rewardDetails',
+                {
+                    title: 'Reward Details',
+                    date2string: (d) => {
+                        const split = d.toISOString().split(/\D/);
+                        return split[0]+'/'+split[1]+'/'+split[2];
+                    },
+                    reward: reward
+                }),
+            err => res.status(400).send(err)
+        ),
+        err => res.status(400).send(err));
+});
+
 router.get('/:id', function (req, res) {
     sortieReward.findById(req.params.id,
         ret => {
@@ -24,6 +48,23 @@ router.get('/:id', function (req, res) {
                 res.status(404).send(null);
             else
                 res.send(ret);
+        },
+        err => res.status(500).send(err));
+});
+
+router.get('/view/:id', function(req, res) {
+    sortieReward.findById(req.params.id,
+        ret => {
+            if (!ret)
+                res.status(404).send(null);
+            else
+                res.render('rewardDetails', {
+                    date2string: (d) => {
+                        const split = d.toISOString().split(/\D/);
+                        return split[0]+'/'+split[1]+'/'+split[2];
+                    },
+                    reward: ret
+                });
         },
         err => res.status(500).send(err));
 });

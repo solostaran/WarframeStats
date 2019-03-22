@@ -1,0 +1,70 @@
+/* outer container */
+.fzk-dp {
+	width: 210px;
+}
+.fzk-dp-float {
+	margin: 10px 0;
+	padding: 5px;
+	position: absolute;
+	background: white;
+	z-index: 10;
+	box-shadow: 0 0 10px black;
+}
+.fzk-dp-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: transparent;
+}
+
+/* navigation controls */
+.fzk-dp-ctrls {
+	position: relative;
+}
+.fzk-dp-btn-prv {}
+.fzk-dp-btn-nxt {}
+.fzk-dp-btn-cls {}
+
+/* header labels */
+.fzk-dp-lbls {
+	border-bottom: 1px solid black;
+	margin-bottom: 2px;
+	position: relative;
+}
+.fzk-dp-lbls .fzk-dp-cell {
+	font-weight: bold;
+	cursor: default;
+}
+
+/* cells */
+.fzk-dp-cells {
+	position: relative;
+}
+
+.fzk-dp-cell {
+	cursor: pointer;
+	display: inline-block;
+	width: 28px;
+	text-align: center;
+	border: 1px solid transparent;
+}
+
+.fzk-dp-cells .fzk-dp-cell:hover {
+	background: #eee;
+}
+
+.fzk-dp-cell-current {
+	border: 1px solid green;
+}
+.fzk-dp-cell-today {
+	background: green;
+}
+
+  .fzk-dp-cell-nxt
+, .fzk-dp-cell-prv
+{
+	color: #888;
+}
+.fzk-dp-cell-nxt {}

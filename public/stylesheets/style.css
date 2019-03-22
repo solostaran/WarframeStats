@@ -34,3 +34,20 @@ a {
   height:60px;
   background:#F0F0FF;
 }
+
+.left-right-container {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+}
+
+.left-element {
+  display: inline-block;
+  float: left;
+}
+
+.right-element {
+  display: inline-block;
+  float: left;
+  margin-left: 20px;
+}

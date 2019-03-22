@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+//var http = require('http-debug').http;
+//http.debug = 1;
 
 var app = express();
 
@@ -46,23 +48,6 @@ var options = {
     check_array : false, // If this value is true, then a header with [] at the end means that the value is an array
     separator: ';' // Only if check_array=true, split the value with this separator
 }
-// app.post('/node-excel-to-json', function(req, res) {
-//     if (req.body)
-//     excel2json(
-//         filename,
-//         options,
-//         {
-//             convert_all_sheet: false,
-//             return_type: 'Object',
-//             'sheetName': 'Feuil1'
-//         },
-//         function (err, output) {
-//             if (err)
-//                 res.json(err);
-//             else
-//                 res.json(output);
-//         });
-// });
 
 const enhancedExcel2json = require('./excel2json/enhancedExcel2json.js');
 app.post('/enhanced-excel-to-json', function(req, res) {
@@ -90,17 +75,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const indexRouter = require('./routes/index');
-//const usersRouter = require('./routes/users');
-const typesRouter = require('./routes/types');
-const conditionsRouter = require('./routes/conditions');
-const rivenFormRouter = require('./routes/rivenForm');
+const indexRouter = require('./routes/index'),
+//  usersRouter = require('./routes/users'),
+    typesRouter = require('./routes/types'),
+    conditionsRouter = require('./routes/conditions'),
+    rivenFormRouter = require('./routes/rivenFormRoute'),
+    rewardFormRouter = require('./routes/rewardFormRoute'),
+    boostersRouter = require('./routes/boosters');
 
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 app.use('/types', typesRouter);
 app.use('/conditions', conditionsRouter);
 app.use('/rivenForm', rivenFormRouter);
+app.use('/rewardForm', rewardFormRouter);
+app.use('/boosters', boostersRouter);
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {

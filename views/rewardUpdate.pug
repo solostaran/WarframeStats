@@ -1,0 +1,139 @@
+extends layout
+
+block link
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/dp/dp.css')
+
+block scripts
+    script.
+        var reward = !{JSON.stringify(reward)};
+    script(src='/dp/dp.js')
+    script(src='/javascripts/rewardScripts.js')
+    script(src='/javascripts/updateScripts.js')
+
+block content
+    // invisible Divs, ready for cloning
+    div(id='boosters' hidden=true)
+        label(for='booster-select') Select a booster type :
+        select(name='booster' id = 'booster-select')
+            each val in boosters
+                option(value= val._id) #{val.name}
+    div(id='condition-example' hidden=true)
+        label(for='cond-select') To be modified
+        select(name = 'rivenConditions[]' id = 'cond-select')
+            option none
+            each val in conditions.optionals
+                option(value= val._id) #{val.description}
+        span(onClick='removeRow(this);' style='margin-left: 20px;') [-]
+        span(onClick='addRow();' style='margin-left: 20px;') [+]
+    div(id='riven-example' hidden=true)
+        label(for='riven-type') Type :
+        select(name = 'rivenType' id = 'riven-type')
+            each val in rivens
+                option(value= val._id) #{val.name}
+        br
+        br
+        label(for='weaponName') Weapon Name :
+        input(name='rivenWeaponName' id='weaponName')
+        br
+        br
+        label(for='mcondition-example') Mandatory Condition :
+        select(name = 'rivenConditions[]' id='mcondition-example')
+            option none
+            each val in conditions.mandatories
+                option(value= val._id) #{val.description}
+        span(id='mand-span-example' onClick='addOptional(this)' style='margin-left: 20px;') [+]
+        br
+        br
+        div(id='condition-rows-example')
+    // Beginning of the visible template
+    h1 Modification of a Sortie's Reward
+    br
+    form(method='POST' name='rewardForm' action='/reward/form' onsubmit='return validateForm(this);')
+        if (reward)
+            div
+                label(for='id') ID of the reward
+                input(type='text' name='_id' id='id' size='24' value=reward._id readonly)
+            br
+        div
+            - var formattedDate = ''
+            if (reward && reward.date)
+                - formattedDate = date2string(reward.date)
+            label(for='date') Date of reward acquisition :
+            input(type='text' name='date' id='date' size='24' value=formattedDate readonly)
+            button(onclick="return toggleDatepicker(this.previousElementSibling);" type='button') Pick Date
+            button(onclick="return resetDate(this.previousElementSibling.previousElementSibling);" style="margin-left:20px;") Reset Date
+        br
+        label(for='type') Select the reward type :
+        select(name='type' id='type' onchange='onSelect(this)')
+            each val in types
+                if (reward.type._id.toString() === val._id.toString())
+                    option(value= val._id selected) #{val.name}
+                else
+                    option(value= val._id) #{val.name}
+        br
+        br
+        div(id='container')
+            if (reward && reward.booster)
+                div(id='boosters')
+                    label(for='booster-select') Select a booster type :
+                    select(name='booster' id = 'booster-select')
+                        each val in boosters
+                            if (reward.booster._id.toString() === val._id.toString())
+                                option(value=val._id selected) #{val.name}
+                            else
+                                option(value=val._id) #{val.name}
+            if (reward && reward.riven)
+                div(id='riven')
+                    label(for='riven-type') Type :
+                    select(name = 'rivenType' id = 'riven-type')
+                        each val in rivens
+                            if (reward.riven.type._id.toString() === val._id.toString())
+                                option(value= val._id selected) #{val.name}
+                            else
+                                option(value= val._id) #{val.name}
+                    br
+                    br
+                    label(for='weaponName') Weapon Name :
+                    input(name='rivenWeaponName' id='weaponName' value=reward.riven.weaponName)
+                    br
+                    br
+                    - var nbcond = reward.riven.conditions.length
+                    label(for='mcondition') Mandatory Condition :
+                    select(name = 'rivenConditions[]' id='mcondition')
+                        option none
+                        each val in conditions.mandatories
+                            if (reward.riven.conditions[0]._id.toString() === val._id.toString())
+                                option(value= val._id selected) #{val.description}
+                            else
+                                option(value= val._id) #{val.description}
+                    if (nbcond > 1)
+                        span(id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;' hidden) [+]
+                    else
+                        span(id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;') [+]
+                    br
+                    br
+                    div(id='condition-rows')
+                        - var index = 1
+                        while index < nbcond
+                            div(id='condition-row'+index)
+                                label(for='cond-select'+index) Optional condition #{index} :
+                                select(name = 'rivenConditions[]' id = 'cond-select'+index)
+                                    option none
+                                    each val in conditions.optionals
+                                        if (reward.riven.conditions[index]._id.toString() === val._id.toString())
+                                            option(value= val._id selected) #{val.description}
+                                        else
+                                            option(value= val._id) #{val.description}
+                                if (index < nbcond - 1)
+                                    span(onClick='removeRow(this);' style='margin-left: 20px;' hidden=true) [-]
+                                else
+                                    span(onClick='removeRow(this);' style='margin-left: 20px;') [-]
+                                if (index < nbcond - 1 || index >= 5)
+                                    span(onClick='addRow();' style='margin-left: 20px;' hidden=true) [+]
+                                else
+                                    span(onClick='addRow();' style='margin-left: 20px;') [+]
+                            - index++
+        br
+        br
+        input(name='submit' type='submit' value='Update Reward' style='margin-left: 20px;')

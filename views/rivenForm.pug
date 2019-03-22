@@ -18,18 +18,18 @@ block content
     h1 Create a new Riven
     // Riven creation form
     form(method='POST' action='/riven/formAdd' onsubmit='return validateForm(this);')
-        label(for='type') Type :
-        select(name = 'type' id = 'type')
+        label(for='riven-type') Type :
+        select(name = 'riven.type' id = 'riven-type')
             each val in types
                 option(value= val._id) #{val.name}
         br
         br
         label(for='weaponName') Weapon Name :
-        input(name='weaponName' id='weaponName')
+        input(name='riven.weaponName' id='weaponName')
         br
         br
         label(for='mcondition') Mandatory Condition :
-        select(name = 'conditions[]' id='mcondition')
+        select(name = 'riven.conditions[]' id='mcondition')
             option none
             each val in conditions.mandatories
                 option(value= val._id) #{val.description}
