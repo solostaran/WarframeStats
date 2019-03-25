@@ -12,7 +12,7 @@ const form2riven = function(formRiven, onOk, onError) {
     riven.conditions = formRiven.conditions.filter(function(cond) {
         return cond != 'none';
     });
-    rivenType.byIdOrName(
+    rivenType.findByIdOrName(
         formRiven.type,
         ret => {
             riven.type = ret._id;

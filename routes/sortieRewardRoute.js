@@ -13,15 +13,21 @@ router.get('/', function (req, res) {
 });
 
 router.post('/add', function(req, res) {
-    sortieReward.add(req.body,
+    sortieReward.addOrUpdate(req.body,
         ret => res.json(ret),
         err => res.status(400).send('Invalid body, '+err));
 });
 
-function date2string(date) {
-    const split = date.split(/\D/);
-    return split[0]+'/'+split[1]+'/'+split[2];
-}
+router.post('/adds', function(req, res) {
+    sortieReward.adds(req.body,
+        ret => res.json(ret),
+        err => res.status(400).send('Invalid body, '+err));
+});
+
+// function date2string(date) {
+//     const split = date.split(/\D/);
+//     return split[0]+'/'+split[1]+'/'+split[2];
+// }
 
 router.post('/form', function(req, res) {
     sortieReward.addOrUpdate(req.body,

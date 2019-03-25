@@ -24,7 +24,7 @@ router.post('/adds', function(req, res) {
 });
 
 router.get('/:id', function (req, res) {
-    rivenType.byId(req.params.id,
+    rivenType.findById(req.params.id,
         ret => {
             if (!ret)
                 res.status(404).send(null);

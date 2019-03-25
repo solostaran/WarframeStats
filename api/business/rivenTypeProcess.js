@@ -20,19 +20,19 @@ const adds = function(listOfRivenType, onSuccess, onError) {
         .catch(onError);
 };
 
-const byId = function(id, onFound, onError) {
+const findById = function(id, onFound, onError) {
     RivenTypes.findById(id).then(onFound).catch(onError);
 }
 
-const byName = function(name, onFound, onError) {
+const findByName = function(param, onFound, onError) {
     RivenTypes
-        .find({ name: { $regex : new RegExp(thename, "i") } })
+        .find({ name: { $regex : new RegExp(param, "i") } })
         .then(ret => onFound(ret[0]))
         .catch(onError);
 }
 
-const byIdOrName = function(param, onFound, onError) {
-    byId(param, onFound, err => { byName(param, onFound, onError); });
+const findByIdOrName = function(param, onFound, onError) {
+    findById(param, onFound, err => { findByName(param, onFound, onError); });
 }
 
 const deleteOneById = function(id, onDelete, onError) {
@@ -53,7 +53,7 @@ const deleteAll = function(onDelete, onError) {
 exports.list = list;
 exports.add = add;
 exports.adds = adds;
-exports.byId = byId;
-exports.byIdOrName = byIdOrName;
+exports.findById = findById;
+exports.findByIdOrName = findByIdOrName;
 exports.deleteOneById = deleteOneById;
 exports.deleteAll = deleteAll;

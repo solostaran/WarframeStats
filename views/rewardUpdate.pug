@@ -103,7 +103,7 @@ block content
                     select(name = 'rivenConditions[]' id='mcondition')
                         option none
                         each val in conditions.mandatories
-                            if (reward.riven.conditions[0]._id.toString() === val._id.toString())
+                            if (reward.riven.conditions.length > 0 && reward.riven.conditions[0]._id.toString() === val._id.toString())
                                 option(value= val._id selected) #{val.description}
                             else
                                 option(value= val._id) #{val.description}

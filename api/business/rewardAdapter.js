@@ -1,43 +1,75 @@
 'use strict'
 
 const mongoose = require('mongoose'),
+    convertDate = require('../utils/convertDates.js'),
     rewardType = require('./rewardTypeProcess.js'),
+    boosterTypeProcess = require('./boosterTypeProcess.js'),
+    rivenTypeProcess = require('./rivenTypeProcess.js'),
     sortieRewardProcess = require('./sortieRewardProcess.js'),
     SortieReward = mongoose.model('SortieReward');
 
-const modifyReward = function(reward, formReward, typeName, onOk, onError) {
+const modifyRewardBooster = function (reward, formReward, onOk, onError) {
+    if (formReward.booster) {
+        if (mongoose.Types.ObjectId.isValid(formReward.booster)) {
+            reward.booster = formReward.booster;
+            reward.markModified('booster');
+            onOk(reward);
+        } else {
+            boosterTypeProcess.findByIdOrName(formReward.booster,
+                btype => {
+                    reward.booster = btype._id;
+                    onOk(reward);
+                },
+                onError);
+        }
+    }
+    else
+        onError(new Error('Type is booster but no booster type provided.'));
+};
+
+const modifyRewardRiven = function (reward, formReward, onOk, onError) {
+    let conds = new Array();
+    if (formReward.rivenConditions)
+        conds = formReward.rivenConditions.filter(function(cond) { return cond != 'none'; });
+    const riven = {
+        type: formReward.rivenType,
+        weaponName: formReward.rivenWeaponName,
+        conditions: conds
+    };
+    reward.riven = riven;
+    reward.markModified('riven');
+    if (!mongoose.Types.ObjectId.isValid(reward.riven.type)) {
+        rivenTypeProcess.findByIdOrName(reward.riven.type,
+            rtype => {
+                reward.riven.type = rtype._id;
+                onOk(reward);
+            },
+            onError);
+    } else
+        onOk(reward);
+};
+
+const modifyRewardDate = function(reward, formReward, typeName, onOk, onError) {
     if (formReward.date) {
-        const split = formReward.date.split('/');
-        const newDate = new Date(Date.UTC(split[0], split[1], split[2]));
-        reward.date = newDate;
+        reward.date = convertDate.value2date(formReward.date);
         reward.markModified('date');
     } else {
         reward.date = null;
         reward.markModified('date');
     }
     if (typeName.search('Booster') >= 0) {
-        if (formReward.booster) {
-            reward.booster = formReward.booster;
-            reward.markModified('booster');
-        }
-        else
-            onError(new Error('Type is booster but no booster type provided.'));
+        modifyRewardBooster(reward, formReward, onOk, onError);
+        return;
     } else {
         if (reward.booster) {
             reward.booster = null;
             reward.markModified('booster');
         }
     }
+
     if (typeName.search('Riven') >= 0) {
-        const riven = {
-            type: formReward.rivenType,
-            weaponName: formReward.rivenWeaponName,
-            conditions: formReward.rivenConditions.filter(function(cond) {
-                return cond != 'none';
-            })
-        };
-        reward.riven = riven;
-        reward.markModified('riven');
+        modifyRewardRiven(reward, formReward, onOk, onError);
+        return;
     } else {
         if (reward.riven) {
             reward.riven = null;
@@ -45,10 +77,11 @@ const modifyReward = function(reward, formReward, typeName, onOk, onError) {
         }
     }
     onOk(reward);
-}
+};
 
 
 const form2reward = function(reward, formReward, onOk, onError) {
+
     // clarify the type
     rewardType.findByIdOrName(
         formReward.type,
@@ -56,7 +89,7 @@ const form2reward = function(reward, formReward, onOk, onError) {
             // type is known
             reward.type = type._id;
             reward.markModified('type');
-            modifyReward(reward, formReward, type.name, onOk, onError)
+            modifyRewardDate(reward, formReward, type.name, onOk, onError)
         },
     err => onError(err)
     );

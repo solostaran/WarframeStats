@@ -4,6 +4,7 @@ const mongoose = require('mongoose'),
     _ = require("lodash"),
     SortieReward = mongoose.model('SortieReward'),
     RivenType = mongoose.model('RivenType'),
+    RewardType = mongoose.model('RewardType'),
     RivenCondition = mongoose.model('RivenCondition'),
     rewardType = require('./rewardTypeProcess.js'),
     boosterType = require('./boosterTypeProcess.js'),
@@ -37,10 +38,29 @@ const addOrUpdate = function(obj, onSuccess, onError) {
         ).catch(onError);
     } else {
         const reward = new SortieReward(obj);
-        rewardAdapter.form2reward(reward, obj, ret => {
-            ret.save().then(onSuccess).catch(onError);
+        rewardAdapter.form2reward(reward, obj, reward => {
+            reward.save().then(onSuccess).catch(onError);
         }, onError);
     }
+};
+
+const adds = function(listOfRewards, onSuccess, onError) {
+    var inserted = 0;
+    var rejected = 0;
+    var rejects = new Array();
+    Promise.all(
+        listOfRewards.map(rform => {
+            return new Promise(resolve => addOrUpdate(rform, ret => { ++inserted; resolve(ret); }, err => {
+                    rejects.push({reject: rform, error: err });
+                    console.log("Reject: "+JSON.stringify(rform));
+                    ++rejected;
+                    resolve(err); }));
+        })
+    ).then(() => {
+        const result = {insertedCount: inserted , rejectedCount: rejected, rejects: rejects };
+        console.log("Rewards insertion : "+JSON.stringify(result));
+        onSuccess(result);
+    }).catch(onError);
 };
 
 const findById = function(id, onSuccess, onError) {
@@ -67,6 +87,7 @@ const deleteAll = function(onDelete, onError) {
 exports.list = list;
 //exports.add = add;
 exports.addOrUpdate = addOrUpdate;
+exports.adds = adds;
 exports.findById = findById;
 exports.deleteOneById = deleteOneById;
 exports.deleteAll = deleteAll;

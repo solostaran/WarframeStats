@@ -24,7 +24,7 @@ router.post('/adds', function(req, res) {
 });
 
 router.get('/:id', function (req, res) {
-    boosterType.byId(req.params.id,
+    boosterType.findById(req.params.id,
         ret => {
             if (!ret)
                 res.status(404).send(null);
