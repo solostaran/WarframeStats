@@ -11,8 +11,15 @@ const mongoose = require('mongoose'),
     rivenObj = require('./rivenProcess.js'),
     rewardAdapter = require('./rewardAdapter');
 
-const list = function(onFound, onError) {
-    SortieReward.find({}).populate('type').sort({date: 1}).then(onFound).catch(onError);
+const count = function(onCount) {
+    SortieReward.find().estimatedDocumentCount().then(onCount);
+}
+
+const list = function(options, onFound, onError) {
+    if (options && Number(options.skip) >= 0 && Number(options.limit) > 0)
+        SortieReward.find({}).populate('type').sort({date: 1}).skip(options.skip).limit(options.limit).then(onFound).catch(onError);
+    else
+        SortieReward.find({}).populate('type').sort({date: 1}).then(onFound).catch(onError);
 };
 
 // const add = function(obj, onSuccess, onError) {
@@ -84,6 +91,7 @@ const deleteAll = function(onDelete, onError) {
         .catch(onError);
 }
 
+exports.count = count;
 exports.list = list;
 //exports.add = add;
 exports.addOrUpdate = addOrUpdate;

@@ -1,9 +1,26 @@
 extends layout
 
+block scripts
+    script(src='/javascripts/rewardListScripts.js')
+
 block content
     if rewards.length === 0
         h2 Empty list
     else
+        h1 Rewards from #{offset + 1} to #{offset + rewards.length} over #{totalCount} rewards.
+        br
+        form(action='/rewardForm/list' method='post')
+            if (offset > 0)
+                button(onclick="return previous();" type='submit' style='margin-right:20px') <==
+            else
+                button(style='margin-right:20px' disabled) <==
+            input(type='text' id='nb' name='nb' value=nb onchange='onChangeNb();')
+            if (hasNext === true)
+                button(onclick="return next();" type='submit' style='margin-left:20px') ==>
+            else
+                button(style='margin-left:20px' disabled) ==>
+            input(type='hidden' id='offset' name='offset' value=offset)
+        br
         table(border=0)
             thead
                 tr

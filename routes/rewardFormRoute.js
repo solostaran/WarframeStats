@@ -7,12 +7,8 @@ const rewardType = require('../api/business/rewardTypeProcess.js'),
     boosterType = require('../api/business/boosterTypeProcess.js'),
     rivenType = require('../api/business/rivenTypeProcess.js'),
     rivenCondition = require('../api/business/rivenConditionProcess.js'),
-    sortieReward = require('../api/business/sortieRewardProcess.js');
-
-function date2string(date) {
-    const split = date.split(/\D/);
-    return split[0]+'/'+split[1]+'/'+split[2];
-}
+    sortieReward = require('../api/business/sortieRewardProcess.js'),
+    convertDates = require('../api/utils/convertDates');
 
 router.get('/', function(req, res, next) {
     rewardType.list(
@@ -40,17 +36,32 @@ router.get('/', function(req, res, next) {
     );
 });
 
-router.get('/list', function(req, res, next) {
-    sortieReward.list(
-        list => res.render('rewardList', {
-            date2string: (d) => {
-                const split = d.toISOString().split(/\D/);
-                return split[0]+'/'+split[1]+'/'+split[2];
-            },
-            rewards: list
-        }),
+function provideRewardList(req, res) {
+    let offset = req.body.offset ? Number(req.body.offset) : 0;
+    let nb = req.body.nb ? Number(req.body.nb) : 20;
+    sortieReward.count(count =>
+    sortieReward.list({skip: offset, limit: nb},
+        list => {
+            res.render('rewardList', {
+                date2string: convertDates.date2string,
+                rewards: list,
+                offset: offset,
+                nb: nb,
+                hasNext: list.length < nb ? false : true,
+                totalCount: count
+            });
+        },
         err => res.status(500).send(err)
-    )
+    ));
+}
+
+
+router.post('/list', function(req, res, next) {
+    provideRewardList(req, res);
+});
+
+router.get('/list', function(req, res, next) {
+    provideRewardList(req, res);
 });
 
 router.get('/:id', function(req, res, next) {
@@ -70,10 +81,7 @@ router.get('/:id', function(req, res, next) {
                                             let param = {
                                                 title: 'Reward Update',
                                                 reward: reward,
-                                                date2string: (d) => {
-                                                    const split = d.toISOString().split(/\D/);
-                                                    return split[0]+'/'+split[1]+'/'+split[2];
-                                                },
+                                                date2string: convertDates.date2string,
                                                 types: rewardTypes,
                                                 boosters: boosters,
                                                 rivens: rivenTypes,

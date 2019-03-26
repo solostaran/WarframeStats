@@ -5,6 +5,7 @@ const router = express.Router();
 
 const sortieReward = require('../api/business/sortieRewardProcess');
 const rewardAdapter = require('../api/business/rewardAdapter');
+const convertDates = require('../api/utils/convertDates');
 
 router.get('/', function (req, res) {
     sortieReward.list(
@@ -36,10 +37,7 @@ router.post('/form', function(req, res) {
             reward => res.render('rewardDetails',
                 {
                     title: 'Reward Details',
-                    date2string: (d) => {
-                        const split = d.toISOString().split(/\D/);
-                        return split[0]+'/'+split[1]+'/'+split[2];
-                    },
+                    date2string: convertDates.date2string,
                     reward: reward
                 }),
             err => res.status(400).send(err)
@@ -65,10 +63,7 @@ router.get('/view/:id', function(req, res) {
                 res.status(404).send(null);
             else
                 res.render('rewardDetails', {
-                    date2string: (d) => {
-                        const split = d.toISOString().split(/\D/);
-                        return split[0]+'/'+split[1]+'/'+split[2];
-                    },
+                    date2string: convertDates.date2string,
                     reward: ret
                 });
         },
