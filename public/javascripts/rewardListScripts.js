@@ -20,3 +20,40 @@ function onChangeNb() {
     if (isNaN($('nb').value) || Number($('nb').value < 0))
         $('nb').value = 20;
 }
+
+const floater1= new DatePicker();
+floater1.on('change', function(date) {
+    let tempDate = date.toISOString().split('-').join('/').substring(0, 10);
+    if ($('dateHigh').value && tempDate > $('dateHigh').value) {
+        alert('Wrong date selection');
+    } else {
+        $('dateLow').value = tempDate;
+        $('formOptions').submit();
+    }
+});
+function toggleDatepicker1(selector) {
+    floater1.toggle(selector);
+    return false;
+}
+const floater2= new DatePicker();
+floater2.on('change', function(date) {
+    let tempDate = date.toISOString().split('-').join('/').substring(0, 10);
+    if ($('dateLow').value && $('dateLow').value > tempDate) {
+        alert('Wrong date selection');
+    } else {
+        $('dateHigh').value = tempDate;
+        $('formOptions').submit();
+    }
+});
+function toggleDatepicker2(selector) {
+    floater2.toggle(selector);
+    return false;
+}
+
+function resetDate(that) {
+    if (that.value) {
+        that.value = "";
+        $('formOptions').submit();
+    }
+    return false;
+}

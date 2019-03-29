@@ -1,6 +1,11 @@
 extends layout
 
+block link
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/dp/dp.css')
+
 block scripts
+    script(src='/dp/dp.js')
     script(src='/javascripts/rewardListScripts.js')
 
 block content
@@ -9,17 +14,28 @@ block content
     else
         h1 Rewards from #{offset + 1} to #{offset + rewards.length} over #{totalCount} rewards.
         br
-        form(action='/rewardForm/list' method='post')
+        form(action='/rewardForm/list' id="formOptions" method='post')
             if (offset > 0)
                 button(onclick="return previous();" type='submit' style='margin-right:20px') <==
             else
                 button(style='margin-right:20px' disabled) <==
-            input(type='text' id='nb' name='nb' value=nb onchange='onChangeNb();')
+            input(type='text' id='nb' name='nb' size='12' value=nb onchange='onChangeNb();')
+            input(type='hidden' id='offset' name='offset' value=offset)
             if (hasNext === true)
                 button(onclick="return next();" type='submit' style='margin-left:20px') ==>
             else
                 button(style='margin-left:20px' disabled) ==>
-            input(type='hidden' id='offset' name='offset' value=offset)
+            label(for='dateLow' style='margin-left:40px') Date higher than :
+            button(onclick="return resetDate(this.nextElementSibling);" type='button') X
+            input(type='text' name='dateLow' id='dateLow' size='12' value=dateLow readonly)
+            input(type='hidden')
+            button(onclick="return toggleDatepicker1(this.previousElementSibling);" type='button') Pick Date
+            //button(onclick="return toggleDatepicker(this.previousElementSibling);" type='button') Pick Date
+            label(for='dateHigh' style='margin-left:40px') Date lower than :
+            button(onclick="return resetDate(this.nextElementSibling);" type='button') X
+            input(type='text' name='dateHigh' id='dateHigh' size='12' value=dateHigh readonly)
+            input(type='hidden')
+            button(onclick="return toggleDatepicker2(this.previousElementSibling);" type='button') Pick Date
         br
         table(border=0)
             thead

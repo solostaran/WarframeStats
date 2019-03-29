@@ -118,6 +118,7 @@
 		this.options.date.setFullYear(date[0]);
 		this.options.date.setMonth(date[1]-1);
 		this.options.date.setDate(date[2]);
+		this.options.date.setHours(12);
 
 		if(this._elms.input) {
 			this._elms.input.value = formatDate(this.options.date, dateFormat);

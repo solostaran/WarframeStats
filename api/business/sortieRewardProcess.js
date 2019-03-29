@@ -6,6 +6,7 @@ const mongoose = require('mongoose'),
     RivenType = mongoose.model('RivenType'),
     RewardType = mongoose.model('RewardType'),
     RivenCondition = mongoose.model('RivenCondition'),
+    convert = require('../utils/convertDates.js'),
     rewardType = require('./rewardTypeProcess.js'),
     boosterType = require('./boosterTypeProcess.js'),
     rivenObj = require('./rivenProcess.js'),
@@ -16,10 +17,24 @@ const count = function(onCount) {
 }
 
 const list = function(options, onFound, onError) {
+    let params = {};
+    if (options.dateLow || options.dateHigh) {
+        params.date = {};
+        if (options.dateLow) {
+            const date = convert.value2date(options.dateLow);
+            date.setHours(0, 0, 0);
+            params.date.$gte = date;
+        }
+        if (options.dateHigh) {
+            const date = convert.value2date(options.dateHigh);
+            date.setHours(23, 59, 59);
+            params.date.$lte = date;
+        }
+    }
     if (options && Number(options.skip) >= 0 && Number(options.limit) > 0)
-        SortieReward.find({}).populate('type').sort({date: 1}).skip(options.skip).limit(options.limit).then(onFound).catch(onError);
+        SortieReward.find(params).populate('type').sort({date: 1}).skip(options.skip).limit(options.limit).then(onFound).catch(onError);
     else
-        SortieReward.find({}).populate('type').sort({date: 1}).then(onFound).catch(onError);
+        SortieReward.find(params).populate('type').sort({date: 1}).then(onFound).catch(onError);
 };
 
 // const add = function(obj, onSuccess, onError) {
