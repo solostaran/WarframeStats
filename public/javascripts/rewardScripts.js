@@ -52,7 +52,7 @@ function onSelect(combo) {
         nodeClone.childNodes[8].htmlFor = 'mcondition';
         nodeClone.childNodes[9].id = 'mcondition';
         nodeClone.childNodes[10].id = 'mand-span';
-        nodeClone.childNodes[13].id = 'condition-rows';
+        nodeClone.childNodes[16].id = 'condition-rows';
         destination.appendChild(nodeClone);
     }
 }

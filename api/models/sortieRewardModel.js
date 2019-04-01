@@ -43,7 +43,14 @@ const SortieRewardSchema = new Schema({
                 alias: 'cond',
                 required: false,
                 default: undefined
-            }]
+            }],
+            N: {
+                type: Number,
+                alias: 'conditionVariable',
+                min: 0,
+                default: 0,
+                required: false
+            }
         },
         required: false
     }

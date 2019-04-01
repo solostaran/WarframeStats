@@ -11,6 +11,8 @@ block content
     ul
         for condition in riven.conditions
             li= condition.description
+            if condition === riven.conditions[0] && riven.N
+                = '(N = '+ riven.N + ')'
             ul
                 - var n = 1
                 if condition.advices

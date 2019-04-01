@@ -48,6 +48,20 @@ router.get('/:id', function (req, res) {
         err => res.status(500).send(err));
 });
 
+router.get('/view/:id', function(req, res) {
+    riven.byId(req.params.id,
+        ret => {
+            if (!ret)
+                res.status(404).send(null);
+            else
+                res.render('rivenDetails', {
+                    //date2string: convertDates.date2string,
+                    riven: ret
+                });
+        },
+        err => res.status(500).send(err));
+});
+
 router.delete('/delete/:id', function(req, res) {
     riven.deleteOneById(req.params.id,
         ret => res.status(200).send(ret),

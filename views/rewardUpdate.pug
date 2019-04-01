@@ -44,6 +44,9 @@ block content
                 option(value= val._id) #{val.description}
         span(id='mand-span-example' onClick='addOptional(this)' style='margin-left: 20px;') [+]
         br
+        label(for='rivenConditionVariable') Mandatory condition variable 'N' :
+        input(type='number' min='0' id='rivenConditionVariable' name='rivenN')
+        br
         br
         div(id='condition-rows-example')
     // Beginning of the visible template
@@ -111,6 +114,9 @@ block content
                         span(id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;' hidden) [+]
                     else
                         span(id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;') [+]
+                    br
+                    label(for='rivenConditionVariable') Mandatory condition variable 'N' :
+                    input(type='number' min='0' id='rivenConditionVariable' name='rivenN')
                     br
                     br
                     div(id='condition-rows')

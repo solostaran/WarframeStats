@@ -36,6 +36,8 @@ const modifyRewardRiven = function (reward, formReward, onOk, onError) {
         weaponName: formReward.rivenWeaponName,
         conditions: conds
     };
+    if (formReward.rivenN)
+        riven.N = formReward.rivenN;
     reward.riven = riven;
     reward.markModified('riven');
     if (!mongoose.Types.ObjectId.isValid(reward.riven.type)) {

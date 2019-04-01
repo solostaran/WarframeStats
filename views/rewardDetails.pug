@@ -36,6 +36,8 @@ block content
             = 'Riven challenge is : '
             for val in reward.riven.conditions
                 input(value=val.description size=val.description.length readonly)
+                if val === reward.riven.conditions[0] && reward.riven.N
+                    = '(N='+reward.riven.N+')'
             br
             = 'Advices for this challenge : '
             br
