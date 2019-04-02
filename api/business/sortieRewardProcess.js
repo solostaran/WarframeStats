@@ -50,6 +50,7 @@ const list = function(options, onFound, onError) {
 // };
 
 const addOrUpdate = function(obj, onSuccess, onError) {
+    if (obj === null) onError(new Error('Null object'));
     if (obj._id) {
         SortieReward.findById(obj._id).then(
             reward => {

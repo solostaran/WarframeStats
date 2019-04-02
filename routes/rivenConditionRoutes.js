@@ -29,6 +29,26 @@ router.post('/adds', function(req, res) {
         err => res.status(400).send('Invalid body, '+err));
 });
 
+router.post('/form', function(req, res) {
+    // sortieReward.addOrUpdate(req.body,
+    //     ret => sortieReward.findById(
+    //         ret._id,
+    //         reward => res.render('rewardDetails',
+    //             {
+    //                 title: 'Reward Details',
+    //                 date2string: convertDates.date2string,
+    //                 reward: reward
+    //             }),
+    //         err => res.status(400).send(err)
+    //     ),
+    //     err => res.status(400).send(err));
+    console.log(req.body);
+    rivenCondition.addOrUpdate(req.body,
+        () => rivenCondition.list(list => res.render('conditions', { title: 'Riven Conditions', conditions: list })),
+        err => res.status(500).send(err)
+    );
+});
+
 router.get('/:id', function (req, res) {
     rivenCondition.byId(req.params.id,
         ret => {

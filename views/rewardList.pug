@@ -9,33 +9,41 @@ block scripts
     script(src='/javascripts/rewardListScripts.js')
 
 block content
+    - nbRewards = totalCount;
     if rewards.length === 0
         h2 Empty list
     else
         h1 Rewards from #{offset + 1} to #{offset + rewards.length} over #{totalCount} rewards.
         br
         form(action='/rewardForm/list' id="formOptions" method='post')
-            if (offset > 0)
-                button(onclick="return previous();" type='submit' style='margin-right:20px') <==
-            else
-                button(style='margin-right:20px' disabled) <==
-            input(type='text' id='nb' name='nb' size='12' value=nb onchange='onChangeNb();')
-            input(type='hidden' id='offset' name='offset' value=offset)
-            if (hasNext === true)
-                button(onclick="return next();" type='submit' style='margin-left:20px') ==>
-            else
-                button(style='margin-left:20px' disabled) ==>
-            label(for='dateLow' style='margin-left:40px') Date higher than :
-            button(onclick="return resetDate(this.nextElementSibling);" type='button') X
-            input(type='text' name='dateLow' id='dateLow' size='12' value=dateLow readonly)
-            input(type='hidden')
-            button(onclick="return toggleDatepicker1(this.previousElementSibling);" type='button') Pick Date
-            //button(onclick="return toggleDatepicker(this.previousElementSibling);" type='button') Pick Date
-            label(for='dateHigh' style='margin-left:40px') Date lower than :
-            button(onclick="return resetDate(this.nextElementSibling);" type='button') X
-            input(type='text' name='dateHigh' id='dateHigh' size='12' value=dateHigh readonly)
-            input(type='hidden')
-            button(onclick="return toggleDatepicker2(this.previousElementSibling);" type='button') Pick Date
+            div
+                if (offset > 0)
+                    button(onclick="return first();" type='submit' style='margin-right:5px') first
+                    button(onclick="return previous();" type='submit' style='margin-right:15px') <==
+                else
+                    button(style='margin-right:5px' disabled) first
+                    button(style='margin-right:15px' disabled) <==
+                input(type='text' id='nb' name='nb' size='12' value=nb onchange='onChangeNb();')
+                input(type='hidden' id='offset' name='offset' value=offset)
+                if (hasNext === true)
+                    button(onclick="return next();" type='submit' style='margin-left:15px') ==>
+                else
+                    button(style='margin-left:15px' disabled) ==>
+                if (offset + nb < totalCount)
+                    button(style='margin-left:5px' onclick="return last("+totalCount+");") last
+                else
+                    button(style='margin-left:5px' disabled) last
+                label(for='dateLow' style='margin-left:40px') Date higher than :
+                button(onclick="return resetDate(this.nextElementSibling);" type='button') X
+                input(type='text' name='dateLow' id='dateLow' size='12' value=dateLow readonly)
+                input(type='hidden' readonly)
+                button(onclick="return toggleDatepicker1(this.previousElementSibling);" type='button') Pick Date
+                //button(onclick="return toggleDatepicker(this.previousElementSibling);" type='button') Pick Date
+                label(for='dateHigh' style='margin-left:40px') Date lower than :
+                button(onclick="return resetDate(this.nextElementSibling);" type='button') X
+                input(type='text' name='dateHigh' id='dateHigh' size='12' value=dateHigh readonly)
+                input(type='hidden' readonly)
+                button(onclick="return toggleDatepicker2(this.previousElementSibling);" type='button') Pick Date
         br
         table(border=0)
             thead

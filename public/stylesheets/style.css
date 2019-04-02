@@ -23,7 +23,7 @@ a {
   right: 0;
   bottom: 0;
   height:60px;			/* Height of the footer */
-  background:#F0F0FF;
+  background:#e9e9ff;
 }
 
 .header {
@@ -32,7 +32,7 @@ a {
   right: 0;
   top:0;
   height:60px;
-  background:#F0F0FF;
+  background: #e9e9ff;
 }
 
 .left-right-container {

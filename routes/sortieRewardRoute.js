@@ -4,11 +4,10 @@ const express = require('express');
 const router = express.Router();
 
 const sortieReward = require('../api/business/sortieRewardProcess');
-const rewardAdapter = require('../api/business/rewardAdapter');
 const convertDates = require('../api/utils/convertDates');
 
 router.get('/', function (req, res) {
-    sortieReward.list(
+    sortieReward.list({},
         ret => res.json(ret),
         err => res.status(500).send("Cannot list rewards from DB, "+err));
 });

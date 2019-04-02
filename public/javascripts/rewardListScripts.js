@@ -9,10 +9,22 @@ function previous() {
     return true;
 }
 
+function first() {
+    let hiddenOffset = $('offset');
+    hiddenOffset.value = 0;
+    return true;
+}
+
 function next() {
     let hiddenOffset = $('offset');
     let newBegin = Number(hiddenOffset.value) + Number($('nb').value);
     hiddenOffset.value = newBegin;
+    return true;
+}
+
+function last(totalCount) {
+    let hiddenOffset = $('offset');
+    hiddenOffset.value = totalCount - $('nb').value;
     return true;
 }
 

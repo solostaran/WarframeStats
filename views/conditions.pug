@@ -3,14 +3,20 @@ extends layout
 block scripts
 
 block content
-    p List of Riven Challenges and conditions
-    ul
+    h2 List of Riven Challenges and conditions
+    p= 'or '
+        a(href='/conditions/form') Create a new riven condition
+    table(border=0)
         for condition in conditions
-            li= condition.description
-            ul
-                if condition.optional && condition.optional == true
-                    li= 'This condition is an optional one'
-                - var n = 1
-                if condition.advices
-                    for advice in condition.advices
-                        li= 'advice '+ n++ +' : '+advice
+            tr
+                td(style='padding-right:10px;')
+                    a(href='/conditions/form/'+condition._id) #{condition._id}
+                td
+                    = condition.description
+                    ul
+                        if condition.optional && condition.optional == true
+                            li= 'This condition is an optional one'
+                        - var n = 1
+                        if condition.advices
+                            for advice in condition.advices
+                                li= 'advice '+ n++ +' : '+advice

@@ -55,7 +55,7 @@ router.get('/', function(req, res, next) {
 
 function provideRewardList(req, res) {
     let offset = req.body.offset ? Number(req.body.offset) : 0;
-    let nb = req.body.nb ? Number(req.body.nb) : 20;
+    let nb = req.body.nb ? Number(req.body.nb) : 30;
     sortieReward.count(count =>
     sortieReward.list({skip: offset, limit: nb, dateLow: req.body.dateLow, dateHigh: req.body.dateHigh },
         list => {

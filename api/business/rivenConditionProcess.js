@@ -21,6 +21,30 @@ const add = function(oneRivenCondition, onSuccess, onError) {
     newCondition.save().then(onSuccess).catch(onError);
 };
 
+const addOrUpdate = function(obj, onSuccess, onError) {
+    if (obj === null) onError(new Error('Null object'));
+    if (obj._id) {
+        RivenCondition.findById(obj._id).then(
+            cond => {
+                cond.description = obj.description;
+                cond.markModified('description');
+                if (obj.optional && obj.optional === 'on')
+                    cond.optional = true;
+                else
+                    cond.optional = false;
+                cond.markModified('optional');
+                cond.advices = obj.advices;
+                cond.markModified('advices');
+                cond.save().then(onSuccess).catch(onError);
+            }).catch(onError);
+    } else {
+        console.log('Create');
+        if (obj.optional && obj.optional === 'on') obj.optional = true;
+        const newCondition = new RivenCondition(obj);
+        newCondition.save().then(onSuccess).catch(onError);
+    }
+};
+
 const adds = function(listOfConditions, onSuccess, onError) {
     RivenCondition.collection
         .insertMany(listOfConditions, { ordered: true, rawResult: true })
@@ -49,6 +73,7 @@ const deleteAll = function(onDelete, onError) {
 exports.list = list;
 exports.formattedList = formattedList;
 exports.add = add;
+exports.addOrUpdate = addOrUpdate;
 exports.adds = adds;
 exports.byId = byId;
 exports.deleteOneById = deleteOneById;
