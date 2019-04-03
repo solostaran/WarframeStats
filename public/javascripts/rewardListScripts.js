@@ -31,6 +31,7 @@ function last(totalCount) {
 function onChangeNb() {
     if (isNaN($('nb').value) || Number($('nb').value < 0))
         $('nb').value = 20;
+    $('formOptions').submit();
 }
 
 const floater1= new DatePicker();
@@ -68,4 +69,9 @@ function resetDate(that) {
         $('formOptions').submit();
     }
     return false;
+}
+
+function onSelect(combo) {
+    //const text = combo.options[combo.selectedIndex].innerHTML;
+    $('formOptions').submit();
 }

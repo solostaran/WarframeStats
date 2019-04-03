@@ -24,11 +24,6 @@ router.post('/adds', function(req, res) {
         err => res.status(400).send('Invalid body, '+err));
 });
 
-// function date2string(date) {
-//     const split = date.split(/\D/);
-//     return split[0]+'/'+split[1]+'/'+split[2];
-// }
-
 router.post('/form', function(req, res) {
     sortieReward.addOrUpdate(req.body,
         ret => sortieReward.findById(

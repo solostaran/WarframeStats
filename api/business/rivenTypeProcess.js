@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const RivenTypes = mongoose.model('RivenType');
 
 const list = function(onFound, onError) {
-    RivenTypes.find({}).then(onFound, onError);
+    RivenTypes.find({}).then(onFound).catch(onError);
 };
 
 const add = function(oneRivenType, onSuccess, onError) {

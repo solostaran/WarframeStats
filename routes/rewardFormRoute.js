@@ -56,22 +56,25 @@ router.get('/', function(req, res, next) {
 function provideRewardList(req, res) {
     let offset = req.body.offset ? Number(req.body.offset) : 0;
     let nb = req.body.nb ? Number(req.body.nb) : 30;
-    sortieReward.count(count =>
-    sortieReward.list({skip: offset, limit: nb, dateLow: req.body.dateLow, dateHigh: req.body.dateHigh },
-        list => {
-            res.render('rewardList', {
-                date2string: convertDates.date2string,
-                rewards: list,
-                offset: offset,
-                nb: nb,
-                dateLow: req.body.dateLow,
-                dateHigh: req.body.dateHigh,
-                hasNext: list.length < nb ? false : true,
-                totalCount: count
-            });
-        },
-        err => res.status(500).send(err)
-    ));
+    rewardType.list(rewardTypes => {
+        sortieReward.list(
+            {skip: offset, limit: nb, dateLow: req.body.dateLow, dateHigh: req.body.dateHigh, type: req.body.type},
+            result => {
+                res.render('rewardList', {
+                    date2string: convertDates.date2string,
+                    rewards: result.data,
+                    offset: offset,
+                    nb: nb,
+                    dateLow: req.body.dateLow,
+                    dateHigh: req.body.dateHigh,
+                    hasNext: result.data.length < nb ? false : true,
+                    totalCount: result.count,
+                    rewardTypes: rewardTypes,
+                    rewardTypeSelected: req.body.type
+                });
+            },
+            err => res.status(500).send(err));
+    });
 }
 
 

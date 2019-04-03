@@ -163,5 +163,8 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+# Sonarqube scanner
+.scannerwork/
+
 # End of https://www.gitignore.io/api/node,intellij
 .idea/vcs.xml

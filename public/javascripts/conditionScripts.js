@@ -10,6 +10,7 @@ if (!Array.prototype.last){
 function addAdvice() {
     const div = $('advices');
     const nb = div.getElementsByTagName('div').length + 1;
+    if (nb > 10) return false;
     const nodeClone = $('div-advice-example').cloneNode(true);
     nodeClone.hidden = false;
     nodeClone.id = 'div-advice'+nb;

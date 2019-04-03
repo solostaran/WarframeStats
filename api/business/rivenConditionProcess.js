@@ -31,7 +31,7 @@ const addOrUpdate = function(obj, onSuccess, onError) {
                 if (obj.optional && obj.optional === 'on')
                     cond.optional = true;
                 else
-                    cond.optional = false;
+                    cond.optional = undefined;
                 cond.markModified('optional');
                 cond.advices = obj.advices;
                 cond.markModified('advices');
