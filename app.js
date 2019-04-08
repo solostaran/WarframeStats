@@ -81,7 +81,8 @@ const indexRouter = require('./routes/index'),
     conditionsRouter = require('./routes/conditions'),
     rivenFormRouter = require('./routes/rivenFormRoute'),
     rewardFormRouter = require('./routes/rewardFormRoute'),
-    boostersRouter = require('./routes/boosters');
+    boostersRouter = require('./routes/boosters'),
+    statsRouter = require('./routes/statsRoutes');
 
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
@@ -90,13 +91,11 @@ app.use('/conditions', conditionsRouter);
 app.use('/rivenForm', rivenFormRouter);
 app.use('/rewardForm', rewardFormRouter);
 app.use('/boosters', boostersRouter);
+app.use('/stats', statsRouter);
 
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
 app.use(function(req, res) {
-    res.status(404).send({url: req.originalUrl + ' not found'})
+    //res.status(404).send({url: req.originalUrl + ' not found'})
+    res.render('404', { url: req.originalUrl });
 });
 
 // error handler

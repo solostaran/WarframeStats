@@ -51,7 +51,7 @@ block content
                     select(name='type' id='perType' onchange='onSelect(this)')
                         option -
                         each type in rewardTypes
-                            if (rewardTypeSelected.toString() === type._id.toString())
+                            if (rewardTypeSelected && (rewardTypeSelected.toString() === type._id.toString()))
                                 option(value= type._id selected) #{type.name}
                             else
                                 option(value= type._id) #{type.name}

@@ -1,12 +1,10 @@
-'use strict'
+'use strict';
 
 const mongoose = require('mongoose'),
     convertDate = require('../utils/convertDates.js'),
     rewardType = require('./rewardTypeProcess.js'),
     boosterTypeProcess = require('./boosterTypeProcess.js'),
-    rivenTypeProcess = require('./rivenTypeProcess.js'),
-    sortieRewardProcess = require('./sortieRewardProcess.js'),
-    SortieReward = mongoose.model('SortieReward');
+    rivenTypeProcess = require('./rivenTypeProcess.js');
 
 const modifyRewardBooster = function (reward, formReward, onOk, onError) {
     if (formReward.booster) {
@@ -28,9 +26,9 @@ const modifyRewardBooster = function (reward, formReward, onOk, onError) {
 };
 
 const modifyRewardRiven = function (reward, formReward, onOk, onError) {
-    let conds = new Array();
+    let conds = [];
     if (formReward.rivenConditions)
-        conds = formReward.rivenConditions.filter(function(cond) { return cond != 'none'; });
+        conds = formReward.rivenConditions.filter(function(cond) { return cond !== 'none'; });
     const riven = {
         type: formReward.rivenType,
         weaponName: formReward.rivenWeaponName,

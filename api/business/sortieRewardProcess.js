@@ -3,18 +3,16 @@
 const mongoose = require('mongoose'),
     _ = require("lodash"),
     SortieReward = mongoose.model('SortieReward'),
-    RivenType = mongoose.model('RivenType'),
-    RewardType = mongoose.model('RewardType'),
-    RivenCondition = mongoose.model('RivenCondition'),
     convert = require('../utils/convertDates.js'),
-    rewardType = require('./rewardTypeProcess.js'),
-    boosterType = require('./boosterTypeProcess.js'),
-    rivenObj = require('./rivenProcess.js'),
     rewardAdapter = require('./rewardAdapter');
 
 const count = function(onCount) {
     SortieReward.find().estimatedDocumentCount().then(onCount);
-}
+};
+
+const countByType = function(type, onCount) {
+    SortieReward.countDocuments({type: type}).then(onCount);
+};
 
 const list = function(options, onFound, onError) {
     let params = {};
@@ -96,9 +94,9 @@ const addOrUpdate = function(obj, onSuccess, onError) {
 };
 
 const adds = function(listOfRewards, onSuccess, onError) {
-    var inserted = 0;
-    var rejected = 0;
-    var rejects = new Array();
+    let inserted = 0;
+    let rejected = 0;
+    let rejects = [];
     Promise.all(
         listOfRewards.map(rform => {
             return new Promise(resolve => addOrUpdate(rform, ret => { ++inserted; resolve(ret); }, err => {
@@ -122,20 +120,21 @@ const findById = function(id, onSuccess, onError) {
         .populate('booster')
         .then(onSuccess)
         .catch(onError);
-}
+};
 
 const deleteOneById = function(id, onDelete, onError) {
     SortieReward.deleteOne({ '_id': id}).then(onDelete).catch(onError);
-}
+};
 
 const deleteAll = function(onDelete, onError) {
     SortieReward.collection
         .deleteMany({})
         .then(onDelete)
         .catch(onError);
-}
+};
 
 exports.count = count;
+exports.countByType = countByType;
 exports.list = list;
 //exports.add = add;
 exports.addOrUpdate = addOrUpdate;
