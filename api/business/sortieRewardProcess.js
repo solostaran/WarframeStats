@@ -98,13 +98,13 @@ const adds = function(listOfRewards, onSuccess, onError) {
     let rejected = 0;
     let rejects = [];
     Promise.all(
-        listOfRewards.map(rform => {
-            return new Promise(resolve => addOrUpdate(rform, ret => { ++inserted; resolve(ret); }, err => {
+        listOfRewards.map(rform => new Promise(
+            resolve => addOrUpdate(rform, ret => { ++inserted; resolve(ret); }, err => {
                     rejects.push({reject: rform, error: err });
                     console.log("Reject: "+JSON.stringify(rform));
                     ++rejected;
-                    resolve(err); }));
-        })
+                    resolve(err); }))
+        )
     ).then(() => {
         const result = {insertedCount: inserted , rejectedCount: rejected, rejects: rejects };
         console.log("Rewards insertion : "+JSON.stringify(result));

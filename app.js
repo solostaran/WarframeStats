@@ -1,12 +1,23 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const createError = require('http-errors');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 //var http = require('http-debug').http;
 //http.debug = 1;
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+
+var options = {
+    key: fs.readFileSync('keys/client-key.pem'),
+    cert: fs.readFileSync('keys/client-cert.pem')
+};
 
 var app = express();
+
+http.createServer(app).listen(80)
+https.createServer(options, app).listen(443);
 
 // MONGODB SCHEMAS
 const mongoose = require('mongoose'),
@@ -17,7 +28,7 @@ const mongoose = require('mongoose'),
     RewardType = require('./api/models/rewardTypeModel.js'),
     SortieReward = require('./api/models/sortieRewardModel.js'),
     bodyParser = require('body-parser');
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
@@ -25,29 +36,29 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/WarframeStatsDB', { useNewUrlParser: true });
 
 // API ROUTES
-const rivenTypes = require('./routes/rivenTypeRoutes');
-app.use('/riven/type', rivenTypes);
-const rivenConditions = require('./routes/rivenConditionRoutes');
-app.use('/riven/condition', rivenConditions);
-const rivens = require('./routes/rivenRoutes');
-app.use('/riven', rivens);
-const boosterType = require('./routes/boosterTypeRoutes');
-app.use('/booster/type', boosterType);
-const rewardType = require('./routes/rewardTypeRoutes');
-app.use('/reward/type', rewardType);
-const sortieReward = require('./routes/sortieRewardRoute');
-app.use('/reward', sortieReward);
+const rivenTypeRoute = require('./routes/rivenTypeRoutes');
+app.use('/riven/type', rivenTypeRoute);
+const rivenConditionRoute = require('./routes/rivenConditionRoutes');
+app.use('/riven/condition', rivenConditionRoute);
+const rivenRoutes = require('./routes/rivenRoutes');
+app.use('/riven', rivenRoutes);
+const boosterTypeRoute = require('./routes/boosterTypeRoutes');
+app.use('/booster/type', boosterTypeRoute);
+const rewardTypeRoute = require('./routes/rewardTypeRoutes');
+app.use('/reward/type', rewardTypeRoute);
+const sortieRewardRoute = require('./routes/sortieRewardRoutes');
+app.use('/reward', sortieRewardRoute);
 
 // XLSX 2 JSON
 
-const excel2json = require('node-excel-to-json');
-var options = {
-    convert_all_sheet: false, // If this value is false, Then one sheet will processed which name would be provided
-    return_type: 'Object', // Two type of return type 'File' or 'Object'
-    sheetName: 'Feuil1', // Only if convert_all_sheet=false
-    check_array : false, // If this value is true, then a header with [] at the end means that the value is an array
-    separator: ';' // Only if check_array=true, split the value with this separator
-}
+//const excel2json = require('node-excel-to-json'); // original excel-to-json, unused
+// var options = {
+//     convert_all_sheet: false, // If this value is false, Then one sheet will processed which name would be provided
+//     return_type: 'Object', // Two type of return type 'File' or 'Object'
+//     sheetName: 'Feuil1', // Only if convert_all_sheet=false
+//     check_array : false, // If this value is true, then a header with [] at the end means that the value is an array
+//     separator: ';' // Only if check_array=true, split the value with this separator
+// }
 
 const enhancedExcel2json = require('./excel2json/enhancedExcel2json.js');
 app.post('/enhanced-excel-to-json', function(req, res) {
@@ -76,16 +87,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const indexRouter = require('./routes/index'),
-//  usersRouter = require('./routes/users'),
-    typesRouter = require('./routes/types'),
-    conditionsRouter = require('./routes/conditions'),
+    typesRouter = require('./routes/typesRoutes'),
+    conditionsRouter = require('./routes/conditionsRoutes'),
     rivenFormRouter = require('./routes/rivenFormRoute'),
-    rewardFormRouter = require('./routes/rewardFormRoute'),
-    boostersRouter = require('./routes/boosters'),
+    rewardFormRouter = require('./routes/rewardFormRoutes'),
+    boostersRouter = require('./routes/boostersRoutes'),
     statsRouter = require('./routes/statsRoutes');
 
 app.use('/', indexRouter);
-//app.use('/users', usersRouter);
 app.use('/types', typesRouter);
 app.use('/conditions', conditionsRouter);
 app.use('/rivenForm', rivenFormRouter);

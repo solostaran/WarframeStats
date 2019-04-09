@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const rivenCondition = require('../api/business/rivenConditionProcess');
+const RivenConditionProcess = require('../api/business/rivenConditionProcess');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    rivenCondition.list(
+    RivenConditionProcess.list(
         ret => res.render('conditions', { title: 'Riven Conditions', conditions: ret })
     );
 });
@@ -15,7 +15,7 @@ router.get('/form', function(req, res, next) {
 });
 
 router.get('/form/:id', function(req, res, next) {
-    rivenCondition.byId(req.params.id,
+    RivenConditionProcess.byId(req.params.id,
         ret => res.render('conditionDetails', { title: 'Update Riven Condition', condition: ret }),
         err => res.status(404).send(new Error('Condition not found.'))
     );

@@ -3,28 +3,28 @@
 const express = require('express');
 const router = express.Router();
 
-const boosterType = require('../api/business/boosterTypeProcess');
+const BoosterTypeProcess = require('../api/business/boosterTypeProcess');
 
 router.get('/', function (req, res) {
-    boosterType.list(
+    BoosterTypeProcess.list(
         ret => res.json(ret),
         err => res.status(500).send("Cannot list booster types from DB, "+err));
 });
 
 router.post('/add', function(req, res) {
-    boosterType.add(req.body,
+    BoosterTypeProcess.add(req.body,
         ret => res.json(ret),
         err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/adds', function(req, res) {
-    boosterType.adds(req.body,
+    BoosterTypeProcess.adds(req.body,
         ret => res.json({ "insertedCount": ret.insertedCount}),
         err => res.status(400).send('Invalid body, '+err));
 });
 
 router.get('/:id', function (req, res) {
-    boosterType.findById(req.params.id,
+    BoosterTypeProcess.findById(req.params.id,
         ret => {
             if (!ret)
                 res.status(404).send(null);
@@ -35,13 +35,13 @@ router.get('/:id', function (req, res) {
 });
 
 router.delete('/delete/:id', function(req, res) {
-    boosterType.deleteOneById(req.params.id,
+    BoosterTypeProcess.deleteOneById(req.params.id,
         ret => res.status(200).send(ret),
         err => res.status(500).send("Cannot delete, "+err));
 });
 
 router.delete('/deleteall', function(req, res) {
-    boosterType.deleteAll(
+    BoosterTypeProcess.deleteAll(
         ret => res.status(200).send(ret),
         err => res.status(500).send("Cannot delete all booster types in DB, "+err));
 });

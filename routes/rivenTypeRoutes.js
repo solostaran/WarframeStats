@@ -3,28 +3,28 @@
 const express = require('express');
 const router = express.Router();
 
-const rivenType = require('../api/business/rivenTypeProcess');
+const RivenTypeProcess = require('../api/business/rivenTypeProcess');
 
 router.get('/', function (req, res) {
-    rivenType.list(
+    RivenTypeProcess.list(
         ret => res.json(ret),
         err => res.status(500).send("Cannot list riven types from DB, "+err));
 });
 
 router.post('/add', function(req, res) {
-    rivenType.add(req.body,
+    RivenTypeProcess.add(req.body,
         ret => res.json(ret),
         err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/adds', function(req, res) {
-    rivenType.adds(req.body,
+    RivenTypeProcess.adds(req.body,
         ret => res.json({ "insertedCount": ret.insertedCount}),
         err => res.status(400).send('Invalid body, '+err));
 });
 
 router.get('/:id', function (req, res) {
-    rivenType.findById(req.params.id,
+    RivenTypeProcess.findById(req.params.id,
         ret => {
             if (!ret)
                 res.status(404).send(null);
@@ -35,13 +35,13 @@ router.get('/:id', function (req, res) {
 });
 
 router.delete('/delete/:id', function(req, res) {
-    rivenType.deleteOneById(req.params.id,
+    RivenTypeProcess.deleteOneById(req.params.id,
         ret => res.status(200).send(ret),
         err => res.status(500).send("Cannot delete, "+err));
 });
 
 router.delete('/deleteall', function(req, res) {
-    rivenType.deleteAll(
+    RivenTypeProcess.deleteAll(
         ret => res.status(200).send(ret),
         err => res.status(500).send("Cannot delete all riven types in DB, "+err));
 });

@@ -3,13 +3,13 @@
 const mongoose = require('mongoose'),
     _ = require("lodash"),
     SortieReward = mongoose.model('SortieReward'),
-    sortieRewardProcess = require('./sortieRewardProcess'),
-    rewardType = require('./rewardTypeProcess'),
-    rivenType = require('./rivenTypeProcess'),
-    boosterType = require('./boosterTypeProcess');
+    SortieRewardProcess = require('./sortieRewardProcess'),
+    RewardTypeProcess = require('./rewardTypeProcess'),
+    RivenTypeProcess = require('./rivenTypeProcess'),
+    BoosterTypeProcess = require('./boosterTypeProcess');
 
 const general = function(onCompleted, onError) {
-    rewardType.list(rewardTypes => {
+    RewardTypeProcess.list(rewardTypes => {
         Promise.all(
             rewardTypes.map(rt => SortieReward.countDocuments({type: rt._id}))
         ).then(results => {
@@ -24,17 +24,17 @@ const general = function(onCompleted, onError) {
 
 const riven = async function(onCompleted, onError) {
     try {
-        const rewardRiven = await new Promise(callback => rewardType.findByIdOrName('Riven', callback));
-        const rewards = await new Promise(callback => sortieRewardProcess.list({type: rewardRiven._id}, callback));
-        const types = await new Promise(rivenType.list);
+        const rewardRiven = await new Promise(callback => RewardTypeProcess.findByIdOrName('Riven', callback));
+        const rewards = await new Promise(callback => SortieRewardProcess.list({type: rewardRiven._id}, callback));
+        const types = await new Promise(RivenTypeProcess.list);
         const typeMap = {};
         types.map(rt => typeMap[rt._id] = rt);
         const stats = {};
         rewards.data.forEach(reward => {
             if (_.isNil(stats[typeMap[reward.riven.type].name]))
-                stats[typeMap[reward.riven.type].name] = 1
+                stats[typeMap[reward.riven.type].name] = 1;
             else
-                stats[typeMap[reward.riven.type].name] += 1
+                stats[typeMap[reward.riven.type].name] += 1;
         });
         onCompleted({stats: stats, count: rewards.count});
     } catch(err) {
@@ -42,8 +42,24 @@ const riven = async function(onCompleted, onError) {
     }
 };
 
-const booster = function(onCompleted, onError) {
-    onCompleted(null);
+const booster = async function(onCompleted, onError) {
+    try {
+        const rewardBooster = await new Promise(callback => RewardTypeProcess.findByIdOrName('Booster', callback));
+        const rewards = await new Promise(callback => SortieRewardProcess.list({type: rewardBooster._id}, callback));
+        const types = await new Promise(BoosterTypeProcess.list);
+        const typeMap = {};
+        types.map(bt => typeMap[bt._id] = bt);
+        const stats = {};
+        rewards.data.forEach(reward => {
+            if (_.isNil(stats[typeMap[reward.booster].name]))
+                stats[typeMap[reward.booster].name] = 1;
+            else
+                stats[typeMap[reward.booster].name] += 1;
+        });
+        onCompleted({stats: stats, count: rewards.count});
+    } catch (err) {
+        onError(err);
+    }
 };
 
 exports.general = general;

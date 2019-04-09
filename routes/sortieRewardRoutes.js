@@ -3,30 +3,30 @@
 const express = require('express');
 const router = express.Router();
 
-const sortieReward = require('../api/business/sortieRewardProcess');
+const SortieRewardProcess = require('../api/business/sortieRewardProcess');
 const convertDates = require('../api/utils/convertDates');
 
 router.get('/', function (req, res) {
-    sortieReward.list({},
+    SortieRewardProcess.list({},
         ret => res.json(ret),
         err => res.status(500).send("Cannot list rewards from DB, "+err));
 });
 
 router.post('/add', function(req, res) {
-    sortieReward.addOrUpdate(req.body,
+    SortieRewardProcess.addOrUpdate(req.body,
         ret => res.json(ret),
         err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/adds', function(req, res) {
-    sortieReward.adds(req.body,
+    SortieRewardProcess.adds(req.body,
         ret => res.json(ret),
         err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/form', function(req, res) {
-    sortieReward.addOrUpdate(req.body,
-        ret => sortieReward.findById(
+    SortieRewardProcess.addOrUpdate(req.body,
+        ret => SortieRewardProcess.findById(
             ret._id,
             reward => res.render('rewardDetails',
                 {
@@ -40,7 +40,7 @@ router.post('/form', function(req, res) {
 });
 
 router.get('/:id', function (req, res) {
-    sortieReward.findById(req.params.id,
+    SortieRewardProcess.findById(req.params.id,
         ret => {
             if (!ret)
                 res.status(404).send(null);
@@ -51,7 +51,7 @@ router.get('/:id', function (req, res) {
 });
 
 router.get('/view/:id', function(req, res) {
-    sortieReward.findById(req.params.id,
+    SortieRewardProcess.findById(req.params.id,
         ret => {
             if (!ret)
                 res.status(404).send(null);
@@ -65,13 +65,13 @@ router.get('/view/:id', function(req, res) {
 });
 
 router.delete('/delete/:id', function(req, res) {
-    sortieReward.deleteOneById(req.params.id,
+    SortieRewardProcess.deleteOneById(req.params.id,
         ret => res.status(200).send(ret),
         err => res.status(500).send("Cannot delete, "+err));
 });
 
 router.delete('/deleteall', function(req, res) {
-    sortieReward.deleteAll(
+    SortieRewardProcess.deleteAll(
         ret => res.status(200).send(ret),
         err => res.status(500).send("Cannot delete all rewards in DB, "+err));
 });
