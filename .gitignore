@@ -171,3 +171,4 @@ typings/
 
 # My certificates (not in the depot, see 'app.js' and the https section)
 keys/
+.idea/encodings.xml

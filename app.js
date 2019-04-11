@@ -5,19 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 //var http = require('http-debug').http;
 //http.debug = 1;
-const http = require('http');
-const https = require('https');
-const fs = require('fs');
-
-var options = {
-    key: fs.readFileSync('keys/client-key.pem'),
-    cert: fs.readFileSync('keys/client-cert.pem')
-};
 
 var app = express();
-
-http.createServer(app).listen(80)
-https.createServer(options, app).listen(443);
 
 // MONGODB SCHEMAS
 const mongoose = require('mongoose'),
