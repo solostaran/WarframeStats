@@ -23,7 +23,7 @@ a {
   right: 0;
   bottom: 0;
   height:60px;			/* Height of the footer */
-  background:#F0F0FF;
+  background:#e9e9ff;
 }
 
 .header {
@@ -31,6 +31,44 @@ a {
   left: 0;
   right: 0;
   top:0;
-  height:60px;
-  background:#F0F0FF;
+  padding: 20px;
+  background: #e9e9ff;
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
+
+.marginTop {
+  margin-top: 20px;
+}
+
+.marginTop .left-right-container {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+}
+
+.left-element {
+  display: inline-block;
+  float: left;
+}
+
+.right-element {
+  display: inline-block;
+  float: right;
+  margin-left: 20px;
+}
+
+.grid-container {
+  display: grid;
+  grid-gap: 5px;
+  padding: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+@media screen and (max-width: 768px) {
+  td {
+    font-size: 125%;
+  }
+}
+

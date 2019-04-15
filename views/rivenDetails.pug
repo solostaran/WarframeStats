@@ -5,11 +5,14 @@ block scripts
 block content
     h1 Riven
     p id = #{riven._id}
+    p type = #{riven.type.name}
     p weaponName = #{riven.weaponName}
     p Challenge :
     ul
         for condition in riven.conditions
             li= condition.description
+            if condition === riven.conditions[0] && riven.N
+                = '(N = '+ riven.N + ')'
             ul
                 - var n = 1
                 if condition.advices

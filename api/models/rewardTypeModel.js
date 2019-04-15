@@ -3,11 +3,12 @@ const Schema = mongoose.Schema;
 
 // https://warframe.fandom.com/wiki/Sortie#Rewards
 const RewardTypeSchema = new Schema({
-    description: {
+    name: {
         type: String,
-        alias: 'desc',
         required: true
     }
+},{
+    versionKey: false
 });
 
 module.exports = mongoose.model('RewardType', RewardTypeSchema);

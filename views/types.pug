@@ -3,7 +3,9 @@ extends layout
 block scripts
 
 block content
-    p List of Riven Types
+    = 'List of '
+    a(href='https://warframe.fandom.com/wiki/Riven_Mods') Riven
+    = ' Types'
     ul
         for type in types
             li= type.name

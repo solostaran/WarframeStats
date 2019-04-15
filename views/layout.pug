@@ -2,22 +2,33 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    block link
+      link(rel='stylesheet', href='/stylesheets/style.css')
     block scripts
-      const version = 1.0
+      - const version = 1.0
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
   body
-    div(class='header')
+    block body
       header
-        p
-          a(href='/types') Riven Types
-          = ' - '
-          a(href='/conditions') Riven Conditions
-          = ' - '
-          a(href='/rivenForm') Create Riven
-    section
-      block content
-    div(class='footer')
-      footer
-        p
-          i croopyrite jojo
+        div(class='header')
+          div
+            a(href='/types') Riven Types
+          div
+            a(href='/conditions') Riven Conditions
+          div
+            a(href='/boosters') Booster Types
+          div
+            a(href='/rivenForm') Create Riven
+          div
+            a(href='/rewardForm') Create Reward
+          div
+            a(href='/rewardForm/list') List Rewards
+          div
+            a(href='/stats') Stats
+      section
+        block content
+      div(class='footer')
+        footer
+          p
+            i croopyrite jojo
 

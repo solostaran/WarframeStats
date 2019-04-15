@@ -1,0 +1,49 @@
+extends layout
+
+block scripts
+    script(src='/javascripts/conditionScripts.js')
+
+block content
+    // invisible Divs, ready for cloning
+    div(id='div-advice-example' hidden=true)
+        label(for='advice-example') Advice
+        input(type='text' id='advice-example' name='advices[]' size='75')
+        br
+    if (condition)
+        h2= 'Edit riven condition which id =' + condition._id
+    else
+        h2= 'Create new riven condition'
+    form(action='/riven/condition/form' id='formCond' method='post')
+        if (condition)
+            input(type='hidden' name='_id' value=condition._id)
+        label(for='desc') Description :
+        if (condition)
+            input(id='desc' name='description' type='text' size='75' value=condition.description)
+        else
+            input(id='desc' name='description' type='text' size='75')
+        br
+        br
+        label(for='opt') Optional :
+        if (condition && condition.optional)
+            input(type='checkbox' id='opt' name='optional' checked)
+        else
+            input(type='checkbox' id='opt' name='optional')
+        br
+        br
+        div(id='advices')
+            - var n = 0
+            if (condition && condition.advices)
+                for adv in condition.advices
+                    div(id='div-advice'+(++n))
+                        label(for='advice'+n) Advice #{n} :
+                        input(type='text' id='advice'+n name='advices[]' size='75' value=adv)
+                        br
+        br
+        button(onclick='return addAdvice();') Add advice
+        button(onclick='return removeAdvice();' style='margin-left:20px;') Remove last advice
+        br
+        br
+        if (condition)
+            button(type='submit' style='margin-left:20px;') Update condition
+        else
+            button(type='submit' style='margin-left:20px;') Create condition

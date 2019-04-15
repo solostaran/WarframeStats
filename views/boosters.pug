@@ -1,0 +1,12 @@
+extends layout
+
+block scripts
+
+block content
+    p List of Booster Types
+    ul
+        for booster in boosters
+            li: a(href=booster.url) #{booster.name}
+            = booster.description
+            br
+            br

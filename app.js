@@ -1,63 +1,64 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+require('http-errors');
+const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+//var http = require('http-debug').http;
+//http.debug = 1;
 
-var app = express();
+//Configure isProduction variable
+const isProduction = process.env.NODE_ENV === 'production';
+if (isProduction) console.log('Production configuration.');
+else console.log('Development configuration.')
 
-// MONGODB SCHEMAS
-const mongoose = require('mongoose'),
-    RivenType = require('./api/models/rivenTypeModel.js'),
-    RivenCondition = require('./api/models/rivenConditionModel.js'),
-    Riven = require('./api/models/rivenModel.js'),
-    BoosterType = require('./api/models/boosterTypeModel.js'),
-    bodyParser = require('body-parser');
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
+const app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+// Configure app
+app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Configure MONGOOSE
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/WarframeStatsDB', { useNewUrlParser: true });
+if (!isProduction) mongoose.set('debug', true);
+
+// Mongoose Schemas
+require('./api/models/rivenTypeModel');
+require('./api/models/rivenConditionModel');
+require('./api/models/rivenModel');
+require('./api/models/boosterTypeModel');
+require('./api/models/rewardTypeModel');
+require('./api/models/sortieRewardModel');
+
 
 // API ROUTES
-const rivenTypes = require('./routes/rivenTypeRoutes');
-app.use('/riven/type', rivenTypes);
-const rivenConditions = require('./routes/rivenConditionRoutes');
-app.use('/riven/condition', rivenConditions);
-const rivens = require('./routes/rivenRoutes');
-app.use('/riven', rivens);
-const boosterType = require('./routes/boosterTypeRoutes');
-app.use('/booster/type', boosterType);
+const rivenTypeRoute = require('./routes/rivenTypeRoutes');
+app.use('/riven/type', rivenTypeRoute);
+const rivenConditionRoute = require('./routes/rivenConditionRoutes');
+app.use('/riven/condition', rivenConditionRoute);
+const rivenRoutes = require('./routes/rivenRoutes');
+app.use('/riven', rivenRoutes);
+const boosterTypeRoute = require('./routes/boosterTypeRoutes');
+app.use('/booster/type', boosterTypeRoute);
+const rewardTypeRoute = require('./routes/rewardTypeRoutes');
+app.use('/reward/type', rewardTypeRoute);
+const sortieRewardRoute = require('./routes/sortieRewardRoutes');
+app.use('/reward', sortieRewardRoute);
 
 // XLSX 2 JSON
-
-const excel2json = require('node-excel-to-json');
-var options = {
-    convert_all_sheet: false, // If this value is false, Then one sheet will processed which name would be provided
-    return_type: 'Object', // Two type of return type 'File' or 'Object'
-    sheetName: 'Feuil1', // Only if convert_all_sheet=false
-    check_array : false, // If this value is true, then a header with [] at the end means that the value is an array
-    separator: ';' // Only if check_array=true, split the value with this separator
-}
-// app.post('/node-excel-to-json', function(req, res) {
-//     if (req.body)
-//     excel2json(
-//         filename,
-//         options,
-//         {
-//             convert_all_sheet: false,
-//             return_type: 'Object',
-//             'sheetName': 'Feuil1'
-//         },
-//         function (err, output) {
-//             if (err)
-//                 res.json(err);
-//             else
-//                 res.json(output);
-//         });
-// });
-
 const enhancedExcel2json = require('./excel2json/enhancedExcel2json.js');
 app.post('/enhanced-excel-to-json', function(req, res) {
     enhancedExcel2json(
@@ -74,34 +75,19 @@ app.post('/enhanced-excel-to-json', function(req, res) {
         });
 });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// Views
+app.use('/', require('./routes/index'));
+app.use('/types', require('./routes/typesRoutes'));
+app.use('/conditions', require('./routes/conditionsRoutes'));
+app.use('/rivenForm', require('./routes/rivenFormRoute'));
+app.use('/rewardForm', require('./routes/rewardFormRoutes'));
+app.use('/boosters', require('./routes/boostersRoutes'));
+app.use('/stats', require('./routes/statsRoutes'));
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-const indexRouter = require('./routes/index');
-//const usersRouter = require('./routes/users');
-const typesRouter = require('./routes/types');
-const conditionsRouter = require('./routes/conditions');
-const rivenFormRouter = require('./routes/rivenForm');
-
-app.use('/', indexRouter);
-//app.use('/users', usersRouter);
-app.use('/types', typesRouter);
-app.use('/conditions', conditionsRouter);
-app.use('/rivenForm', rivenFormRouter);
-
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
+// 404 management
 app.use(function(req, res) {
-    res.status(404).send({url: req.originalUrl + ' not found'})
+    //res.status(404).send({url: req.originalUrl + ' not found'})
+    res.render('404', { url: req.originalUrl });
 });
 
 // error handler

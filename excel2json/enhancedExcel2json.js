@@ -11,22 +11,6 @@ const default_options = {
 }
 
 function enhancedExcel2json(options, callback) {
-    // if (typeof options.sheetName != 'string') {
-    //     return callback(new Error("Sheetname can only be of data type String"))
-    // }
-    // console.log(options);
-    // helper.convert(options, function(err, output) {
-    //     if (err) {
-    //         return callback(err);
-    //     }
-    //     if (!output) {
-    //         return callback(new Error("Return by helper function convert is undefined or NUll"));
-    //     }
-    //     if (typeof output != 'object') {
-    //         return callback(new Error("Incorrect return by helper function"));
-    //     }
-    //     return callback(null, output[options.sheetName])
-    // });
     if (typeof callback === 'undefined' && typeof options === 'function') {
         callback = options;
         options = default_options;

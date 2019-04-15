@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    h1= title
+    if (boosterStats)
+        p A total of #{boosterStats.count} boosters
+        table(border=0)
+            thead
+                th Booster type
+                th(style='padding-right:15px;') Count
+                th Percentage
+            tbody
+                for value, key in boosterStats.stats
+                    tr
+                        td(style='padding-right:15px;')= key
+                        td= value
+                        td= Number.parseFloat(value * 100 / boosterStats.count).toFixed(1) + '%'

@@ -163,4 +163,12 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+# Sonarqube scanner
+.scannerwork/
+
 # End of https://www.gitignore.io/api/node,intellij
+.idea/vcs.xml
+
+# My certificates (not in the depot, see 'app.js' and the https section)
+keys/
+.idea/encodings.xml

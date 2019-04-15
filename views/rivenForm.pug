@@ -4,11 +4,22 @@ block scripts
     script(src='/javascripts/rivenScripts.js')
 
 block content
+    // special invisible Div
+    div(id='condition-exemple' hidden=true)
+        label(for='cond-select') To be modified
+        select(name = 'conditions[]' id = 'cond-select')
+            option none
+            each val in conditions.optionals
+                option(value= val._id) #{val.description}
+        span(onClick='removeRow();' style='margin-left: 20px;') [-]
+        span(onClick='addRow();' style='margin-left: 20px;') [+]
+        br
+        br
     h1 Create a new Riven
-    // creation form
+    // Riven creation form
     form(method='POST' action='/riven/formAdd' onsubmit='return validateForm(this);')
-        label(for='type') Type :
-        select(name = 'type' id = 'type')
+        label(for='riven-type') Type :
+        select(name = 'type' id = 'riven-type')
             each val in types
                 option(value= val._id) #{val.name}
         br
@@ -24,17 +35,10 @@ block content
                 option(value= val._id) #{val.description}
         span(id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;') [+]
         br
+        label(for='conditionVariable') Mandatory condition variable 'N' :
+        input(type='number' min='0' id='conditionVariable' name='N')
         br
-        div
-            div(id = 'cond-row1' hidden=true)
-                label(for='cond-select1') Optional Condition 1 :
-                select(name = 'conditions[]' id = 'cond-select1')
-                    option none
-                    each val in conditions.optionals
-                        option(value= val._id) #{val.description}
-                span(onClick='removeRow();' style='margin-left: 20px;') [-]
-                span(onClick='addRow();' style='margin-left: 20px;') [+]
-                br
-                br
         br
-        input(name='submit' type='submit' value='Submit')
+        div(id='condition-rows')
+        br
+        input(name='submit' type='submit' value='Add Riven' style='margin-left: 20px;')
