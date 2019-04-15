@@ -6,7 +6,7 @@
 
 const app = require('../app');
 const debug = require('debug')('warframestats:server');
-const http = require('http');
+//const http = require('http');
 const https = require('https');
 const fs = require('fs');
 
@@ -93,8 +93,8 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
+  const addr = server.address();
+  const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
