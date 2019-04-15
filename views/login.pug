@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    h1 Login to Warframe Stats
+    form(action='/users/loginFormProcess' method='post')
+        p
+            label(for='email') E-Mail :
+            input(id='email' name='user[email]' type='text')
+            if (errors && errors.email)
+                = errors.email
+        p
+            label(for='password') Password :
+            input(id='password' name='user[password]' type='password')
+            if (errors && errors.password)
+                = errors.password
+        p
+            input(type='submit' value='Login')
+        p
+            if (errors && errors.info)
+                = errors.info

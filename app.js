@@ -44,6 +44,8 @@ require('./api/models/rivenModel');
 require('./api/models/boosterTypeModel');
 require('./api/models/rewardTypeModel');
 require('./api/models/sortieRewardModel');
+require('./api/models/Users');
+require('./config/passport');
 
 
 // API ROUTES
@@ -59,6 +61,8 @@ const rewardTypeRoute = require('./routes/rewardTypeRoutes');
 app.use('/reward/type', rewardTypeRoute);
 const sortieRewardRoute = require('./routes/sortieRewardRoutes');
 app.use('/reward', sortieRewardRoute);
+const usersRoute = require('./routes/usersRoutes');
+app.use('/users', usersRoute);
 
 // XLSX 2 JSON
 const enhancedExcel2json = require('./excel2json/enhancedExcel2json.js');

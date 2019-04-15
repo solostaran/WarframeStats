@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
+const auth = require('../config/jwt_auth').auth;
 const rewardType = require('../api/business/rewardTypeProcess.js'),
     boosterType = require('../api/business/boosterTypeProcess.js'),
     rivenType = require('../api/business/rivenTypeProcess.js'),
@@ -10,7 +11,7 @@ const rewardType = require('../api/business/rewardTypeProcess.js'),
     sortieReward = require('../api/business/sortieRewardProcess.js'),
     convertDates = require('../api/utils/convertDates');
 
-router.get('/', function(req, res, next) {
+router.get('/', auth.required, function(req, res, next) {
     // Promise version ... at least better than chain version
     Promise.all([
             new Promise(rewardType.list),
@@ -78,15 +79,15 @@ function provideRewardList(req, res) {
 }
 
 
-router.post('/list', function(req, res, next) {
+router.post('/list', auth.optional, function(req, res, next) {
     provideRewardList(req, res);
 });
 
-router.get('/list', function(req, res, next) {
+router.get('/list', auth.optional, function(req, res, next) {
     provideRewardList(req, res);
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', auth.required, function(req, res, next) {
     sortieReward.findById(req.params.id,
         reward => {
         if (!reward)
