@@ -6,8 +6,14 @@ const getTokenFromRequest = (req) => {
 
     // In order to provide CSRF protection,
     // check here Referer and Origin headers to see if they are related to your application
-    if (referer && (!referer.toString().startsWith('https://localhost/') || !referer.toString().startsWith('http://localhost:3000/'))) return null;
-    if (origin && (!origin.toString().startsWith('https://localhost/') || !origin.toString().startsWith('http://localhost:3000/'))) return null;
+    // if (referer && !referer.toString().startsWith('https://localhost/') && !referer.toString().startsWith('http://localhost:3000/')) {
+    //     console.log('bad referer : '+referer);
+    //     return null;
+    // }
+    // if (origin && !origin.toString().startsWith('https://localhost/') && !origin.toString().startsWith('http://localhost:3000/')) {
+    //     console.log('bad origin : '+origin);
+    //     return null;
+    // }
 
     if (authorization && (authorization.split(' ')[0] === 'Token' || authorization.split(' ')[0] === 'Bearer')) {
         return authorization.split(' ')[1];

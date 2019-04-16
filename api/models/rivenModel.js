@@ -25,6 +25,16 @@ const RivenSchema = new Schema({
         min: 0,
         default: 0,
         required: false
+    },
+    createdBy : {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+        required: false
+    },
+    modifiedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+        required: false
     }
 });
 

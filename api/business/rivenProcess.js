@@ -7,8 +7,10 @@ const list = function(onFound, onError) {
     Riven.find({}).then(onFound, onError);
 };
 
-const add = function(oneRiven, onSuccess, onError) {
+const add = function(oneRiven, userId, onSuccess, onError) {
     const newRiven = new Riven(oneRiven);
+    newRiven.createdBy = userId;
+    newRiven.markModified('createdBy');
     newRiven.save().then(onSuccess).catch(onError);
 };
 
@@ -17,7 +19,13 @@ const byId = function(id, onFound, onError) {
         .populate('type')
         //.populate('conditions')
         .populate([{path: 'conditions', model: 'RivenCondition'}])
-        .then(onFound)
+        .populate('modifiedBy')
+        .populate('createdBy')
+        .then(riven => {
+            if (riven.createdBy) riven.createdBy = riven.createdBy.toAuthJSON();
+            if (riven.modifiedBy) riven.modifiedBy = riven.modifiedBy.toAuthJSON();
+            onFound(riven);
+        })
         .catch(onError);
 };
 

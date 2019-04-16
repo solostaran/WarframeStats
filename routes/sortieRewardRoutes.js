@@ -14,19 +14,22 @@ router.get('/', auth.optional, function (req, res) {
 });
 
 router.post('/add', auth.required, function(req, res) {
-    SortieRewardProcess.addOrUpdate(req.body,
+    const { payload: { id } } = req;
+    SortieRewardProcess.addOrUpdate(req.body, id,
         ret => res.json(ret),
         err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/adds', auth.required, function(req, res) {
-    SortieRewardProcess.adds(req.body,
+    const { payload: { id } } = req;
+    SortieRewardProcess.adds(req.body, id,
         ret => res.json(ret),
         err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/form', auth.required, function(req, res) {
-    SortieRewardProcess.addOrUpdate(req.body,
+    const { payload: { id } } = req;
+    SortieRewardProcess.addOrUpdate(req.body, id,
         ret => SortieRewardProcess.findById(
             ret._id,
             reward => res.render('rewardDetails',
@@ -45,8 +48,9 @@ router.get('/:id', auth.optional, function (req, res) {
         ret => {
             if (!ret)
                 res.status(404).send(null);
-            else
+            else {
                 res.send(ret);
+            }
         },
         err => res.status(500).send(err));
 });

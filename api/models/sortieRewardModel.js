@@ -15,6 +15,16 @@ const SortieRewardSchema = new Schema({
         type: Date,
         required: false
     },
+    createdBy : {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+        required: false
+    },
+    modifiedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+        required: false
+    },
     booster : {
         type: Schema.Types.ObjectId,
         ref: 'BoosterType',

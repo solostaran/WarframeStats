@@ -14,9 +14,10 @@ router.get('/', auth.optional, function (req, res) {
 });
 
 router.post('/add', auth.required, function(req, res) {
+    const { payload: { id } } = req;
     RivenAdapter.form2riven(
         req.body,
-        ret => RivenProcess.add(ret,
+        ret => RivenProcess.add(ret, id,
             ret2 => RivenProcess.byId(
                 ret2._id,
                 riv => res.json(riv)),
@@ -25,9 +26,10 @@ router.post('/add', auth.required, function(req, res) {
 });
 
 router.post('/formAdd', auth.required, function(req, res) {
+    const { payload: { id } } = req;
     RivenAdapter.form2riven(
         req.body,
-        ret => RivenProcess.add(ret,
+        ret => RivenProcess.add(ret, id,
             ret2 => RivenProcess.byId(
                 ret2._id,
                 riv => res.render('rivenDetails', { riven: riv })),
