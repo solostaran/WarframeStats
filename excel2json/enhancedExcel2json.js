@@ -1,14 +1,14 @@
-var helper = require('./enhancedHelper.js');
-var fs = require('fs');
-var _ = require('lodash/core');
-const objectConstructor = {}.constructor;
+const helper = require('./enhancedHelper.js');
+const fs = require('fs');
+const _ = require('lodash/core');
+//const objectConstructor = {}.constructor;
 const default_options = {
     convert_all_sheet: true, // If this value is false, Then one sheet will processed which name would be provided
     return_type: 'Object', // Two type of return type 'File' or 'Object'
     sheetName: 'Feuil1', // Only if convert_all_sheet=false
     check_array : false,
     separator: ';' // Only if check_array=true
-}
+};
 
 function enhancedExcel2json(options, callback) {
     if (typeof callback === 'undefined' && typeof options === 'function') {
@@ -30,8 +30,8 @@ function enhancedExcel2json(options, callback) {
         });
     }
     // Fusion of parameters options and default options.
-    options = _.defaults(options, default_options)
-    if (options.return_type == "File") {
+    options = _.defaults(options, default_options);
+    if (options.return_type === "File") {
         if (options.convert_all_sheet) {
             helper.convert(options, function(err, output) {
                 if (err) {
@@ -53,7 +53,7 @@ function enhancedExcel2json(options, callback) {
                             //console.log("JSON saved to " + excelOutPutFile);
                             FileSavedOutput.push({
                                 OutputFileName: excelOutPutFile
-                            })
+                            });
                             return cb();
                         }
                     });
@@ -98,7 +98,7 @@ function enhancedExcel2json(options, callback) {
                 });
             });
         }
-    } else if (options.return_type == "Object") {
+    } else if (options.return_type === "Object") {
         if (options.convert_all_sheet) {
             helper.convert(options, function(err, output) {
                 if (err) {

@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema,
-    RewardType = mongoose.model('RewardType'),
-    BoosterType = mongoose.model('BoosterType'),
-    RivenCondition = mongoose.model('RivenCondition'),
-    Riven = mongoose.model('Riven');
+const Schema = mongoose.Schema;
 
 const SortieRewardSchema = new Schema({
     type : {

@@ -5,9 +5,9 @@ const cloneLimit = 5;
 function $(id) { return document.getElementById(id); }
 
 function validateForm(formObj) {
-    const riven = $('riven');
+    //const riven = $('riven');
     const mcond = $('mcondition');
-    if (mcond && mcond.value == 'none' && indexClone > 0) {
+    if (mcond && mcond.value === 'none' && indexClone > 0) {
         alert('No mandatory condition is selected');
         return false;
     }
@@ -88,7 +88,7 @@ function addRow() {
     destination.appendChild(clone);
     // HIDE THE BUTTONS OF THE PREVIOUS SELECT
     if (indexClone > 1) {
-        const previousClone = $('condition-row' + (indexClone - 1))
+        const previousClone = $('condition-row' + (indexClone - 1));
         previousClone.getElementsByTagName('span')[0].hidden = true;
         previousClone.getElementsByTagName('span')[1].hidden = true;
     }

@@ -1,7 +1,7 @@
 // from http://fizker.github.io/date-picker/
 
 !function() {
-	var global = this
+	var global = this;
 	global.DatePicker = ctor;
 
 	ctor.VERSION = '0.4.0';
@@ -67,7 +67,7 @@
 		}
 
 		_(this).bindAll('nextMonth', 'prevMonth', 'dateCellClicked');
-	};
+	}
 
 	function on(event, callback) {
 		if(typeof(callback) != 'function') {
@@ -79,21 +79,21 @@
 		this._events[event].push(callback);
 
 		return this;
-	};
+	}
 	function off(event, callback) {
 		if(!this._events[event]) {
 			return;
 		}
-		var index
+		var index;
 		while((index = this._events[event].indexOf(callback)) > -1) {
 			this._events[event].splice(index, 1);
 		}
 
 		return this;
-	};
+	}
 	function emit(event) {
 		var listeners = this._events[event]
-		  , args = Array.prototype.slice.call(arguments, 1)
+		  , args = Array.prototype.slice.call(arguments, 1);
 
 		if(listeners) {
 			_(listeners).each(function(cb) {
@@ -102,12 +102,12 @@
 		}
 
 		return this;
-	};
+	}
 
 	function dateCellClicked(e) {
 		var elm = e ? e.target : event.srcElement
 		  , date = elm.getAttribute('data-date')
-		  , dateFormat = this.options.dateFormat
+		  , dateFormat = this.options.dateFormat;
 
 		if(!date) {
 			return;
@@ -134,32 +134,33 @@
 		}
 
 		this.rerender();
-	};
+	}
 	function nextMonth() {
 		this._visibleDate.setDate(1);
 		this._visibleDate.setMonth(this._visibleDate.getMonth() + 1);
 
 		this.rerender();
-	};
+	}
 	function prevMonth() {
 		this._visibleDate.setDate(1);
 		this._visibleDate.setMonth(this._visibleDate.getMonth() - 1);
 
 		this.rerender();
-	};
+	}
 
 	function rerender() {
 		if(!this.container) {
 			return this;
 		}
 
-		var frag = this.render()
+		var frag = this.render();
 
 		this.container.innerHTML = '';
 		this.container.appendChild(frag);
 
 		return this;
-	};
+	}
+
 	function render() {
 		var frag = document.createDocumentFragment()
 		  , now = this._visibleDate || this.options.date
@@ -167,7 +168,7 @@
 		    ? createElement('div', { className: 'fzk-dp-overlay' })
 		    : null
 		  , showCloseButton = !!this._elms.floater
-		  , hide = _(this.hide).bind(this)
+		  , hide = _(this.hide).bind(this);
 
 		if(!this._visibleDate) {
 			this._visibleDate = new Date(now.getTime());
@@ -196,10 +197,10 @@
 		$$('.fzk-dp-cells', frag).onclick = this.dateCellClicked;
 
 		return frag;
-	};
+	}
 	function renderControls(showCloseButton) {
 		var div = createElement('div', { className: 'fzk-dp-ctrls' })
-		  , now = this._visibleDate
+		  , now = this._visibleDate;
 		div.appendChild(createElement('label',
 			{ className: 'fzk-dp-month'
 			, innerHTML: this.options.months[now.getMonth()] + ' ' + now.getFullYear()
@@ -223,9 +224,9 @@
 			));
 		}
 		return div;
-	};
+	}
 	function renderHeaderLabels() {
-		var div = createElement('div', { className: 'fzk-dp-lbls' })
+		var div = createElement('div', { className: 'fzk-dp-lbls' });
 		_(getWeekdays(this.options)).each(function(weekday) {
 			div.appendChild(createElement('label',
 				{ className: 'fzk-dp-cell'
@@ -234,7 +235,7 @@
 			));
 		});
 		return div;
-	};
+	}
 	function renderDateCells() {
 		var div = createElement('div', { className: 'fzk-dp-cells' })
 
@@ -254,7 +255,7 @@
 		  , nowStr =
 		    now.getFullYear() + '/'
 		    + padDate(now.getMonth() +1) + '/'
-		    + padDate(now.getDate())
+		    + padDate(now.getDate());
 
 		_(getOverflowPrev(date, this.options)).each(addToDiv('fzk-dp-cell-prv'));
 		_(getCurrentMonth(date)).each(addToDiv(''));
@@ -268,7 +269,7 @@
 					{ className: 'fzk-dp-cell ' + className
 					, innerHTML: date.date
 					}
-				  , data = { date: date.fullDate }
+				  , data = { date: date.fullDate };
 				if(nowStr === date.fullDate) {
 					opts.className += ' fzk-dp-cell-today';
 				}
@@ -277,8 +278,8 @@
 				}
 				div.appendChild(createElement('span', opts, data));
 			};
-		};
-	};
+		}
+	}
 
 	/**
 	 * This method is static, and exposed as static
@@ -286,15 +287,15 @@
 	function getWeekdays(opts) {
 		var days = []
 		  , i
-		  , current = opts.weekStart
+		  , current = opts.weekStart;
 
 		for(i = 0; i < 7; i++) {
 			days[i] = opts.weekdays[current++];
 			if(current == 7) current = 0;
-		};
+		}
 
 		return days;
-	};
+	}
 
 	/**
 	 * This method is static, and exposed as static
@@ -306,10 +307,10 @@
 		  // we do not need to subtract one here, since that has already been done
 		  , lastDay = new Date(year, +month, 0).getDate()
 		  , days = []
-		  , i
+		  , i;
 
 		for(i = 1; i <= lastDay; i++) {
-			var date = padDate(i)
+			var date = padDate(i);
 			days.push(
 				{ date: date
 				, fullDate: year + '/' + month + '/' + date
@@ -319,13 +320,13 @@
 		}
 
 		return days;
-	};
+	}
 
 	/**
 	 * This method is static, and exposed as static
 	 */
 	function getOverflowPrev(now, opts) {
-		var firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+		var firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 		if(firstDayOfMonth.getDay() == opts.weekStart) {
 			return [];
 		}
@@ -338,12 +339,12 @@
 		  , currentDay = firstDayOfMonth.getDay()
 		  , results = []
 		  , i
-		  , l = currentDay - opts.weekStart
+		  , l = currentDay - opts.weekStart;
 
 		if(l < 0) l += 7;
 
 		for(i = 0; i < l; i++) {
-			var currentDate = (lastDate - l + i + 1).toString()
+			var currentDate = (lastDate - l + i + 1).toString();
 			results.push(
 				{ date: currentDate
 				, fullDate: year + '/' + month + '/' + currentDate
@@ -351,13 +352,13 @@
 			);
 		}
 		return results;
-	};
+	}
 
 	/**
 	 * This method is static, and exposed as static
 	 */
 	function getOverflowNext(now, opts) {
-		var firstDayOfNextMonth = new Date(now.getFullYear(), now.getMonth()+1, 1)
+		var firstDayOfNextMonth = new Date(now.getFullYear(), now.getMonth()+1, 1);
 		if(firstDayOfNextMonth.getDay() == opts.weekStart) {
 			return [];
 		}
@@ -368,14 +369,14 @@
 		  , result = []
 		  , i = firstDayOfNextMonth.getDay() - opts.weekStart
 		  , l = 7
-		  , current = 1
+		  , current = 1;
 
 		if(i < 0) {
 			i += 7
 		}
 
 		for(; i < l; i++) {
-			var date = padDate(current++)
+			var date = padDate(current++);
 			result.push(
 				{ date: date
 				, fullDate: year + '-' + month + '-' + date
@@ -384,7 +385,7 @@
 		}
 
 		return result;
-	};
+	}
 
 	/**
 	 * This method is static
@@ -392,7 +393,7 @@
 	function padDate(date) {
 		date = +date;
 		return date < 10 ? '0' + date : date.toString();
-	};
+	}
 
 	function show(selector) {
 		this.resolveSelector(selector || this.selector || this.options.elm);
@@ -410,7 +411,7 @@
 		this.showing = true;
 
 		return this.emit('show', this);
-	};
+	}
 	function hide() {
 		this.container.innerHTML = '';
 		this._removeFloater();
@@ -419,20 +420,20 @@
 		this.selector = null;
 
 		return this.emit('hide', this);
-	};
+	}
 	function toggle(selector) {
 		if(this.showing && (!selector || this.selector === selector)) {
 			return this.hide();
 		}
 		return this.show(selector);
-	};
+	}
 
 	function _removeFloater() {
 		if(this._elms.floater) {
 			this._elms.floater.parentNode.removeChild(this._elms.floater);
 			this._elms.floater = null;
 		}
-	};
+	}
 
 	function resolveSelector(sel) {
 		this.container = (typeof(sel) === 'string')
@@ -462,7 +463,7 @@
 			this.container.style.left = offset.left + 'px';
 			this.container.style.top = (offset.top + offset.height) + 'px';
 		}
-	};
+	}
 
 	/**
 	 * This code is most graciously stolen from jQuery:
@@ -481,7 +482,7 @@
 		  , client =
 		    { top: docElm.clientTop || body.clientTop || 0
 		    , left: docElm.clientLeft || body.clientLeft || 0
-		    }
+		    };
 
 		if(box.height === undefined) {
 			box.height = ie8.height(elm);
@@ -494,7 +495,7 @@
 			, height: box.height
 			}
 		);
-	};
+	}
 
 	var ie8 = {};
 	ie8.height = function(elm) {
@@ -503,7 +504,7 @@
 		  , prefixes = [ 'border', 'padding' ]
 		  , height = elm.offsetHeight
 		  , i
-		  , j
+		  , j;
 
 		for(i = 0; i < 2; i++) {
 			for(j = 0; j < 2; j++) {
@@ -532,7 +533,7 @@
 		    , y: 'year', Y: 'year'
 		    }
 		  , parser = new RegExp(format.replace(/[yYdDmM]/g, parseDate))
-		  , date = str.match(parser)
+		  , date = str.match(parser);
 
 		if(!date || date.length != 4 || !keys.day || !keys.month || !keys.year) {
 			return null;
@@ -549,8 +550,8 @@
 		function parseDate(key) {
 			keys[keyMap[key]] = i++;
 			return '(\\d+)';
-		};
-	};
+		}
+	}
 
 	/**
 	 * This method is static, and exposed as static
@@ -572,7 +573,7 @@
 					return date.getFullYear().toString().substring(2);
 			}
 		});
-	};
+	}
 
 	function createElement(tag, opts, data) {
 		var elm = document.createElement(tag);
@@ -587,7 +588,7 @@
 			});
 		}
 		return elm;
-	};
+	}
 
 	function ensureClassName(elm, className) {
 		if(!new RegExp('(^| )' + className + '($| )')
@@ -613,47 +614,47 @@
 
 		function clone() {
 			var cp = {}
-			  , key
+			  , key;
 			for(key in obj) {
 				cp[key] = obj[key];
 			}
 			return cp;
-		};
+		}
 
 		// keys() assumes obj to be any object
 		function keys() {
 			var keys = []
-			  , key
+			  , key;
 			for(key in obj) {
 				if(obj.hasOwnProperty(key)) {
 					keys.push(key);
 				}
 			}
 			return _(keys);
-		};
+		}
 
 		// bind() assumes obj to be a function
 		function bind(ctx) {
 			return function() {
 				return obj.apply(ctx, arguments);
 			};
-		};
+		}
 
 		function bindAll(methods) {
-			methods = Array.prototype.slice.call(arguments)
+			methods = Array.prototype.slice.call(arguments);
 			_(methods).each(function(func) {
 				obj[func] = _(obj[func]).bind(obj);
 			});
-		};
+		}
 
 		function forEach(func, ctx) {
 			var i = 0
-			  , l = obj.length
+			  , l = obj.length;
 			for(; i < l; i++) {
 				func.call(ctx, obj[i], i, obj);
 			}
-		};
-	};
+		}
+	}
 
 	/**
 	 * These two helpers are inverted from what the webkit console expects
@@ -666,8 +667,8 @@
 	function $(selector, scope) {
 		return Array.prototype.slice.call(
 			(scope || document).querySelectorAll(selector));
-	};
+	}
 	function $$(selector, scope) {
 		return (scope || document).querySelector(selector);
-	};
+	}
 }();

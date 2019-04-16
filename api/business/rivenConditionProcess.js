@@ -54,21 +54,21 @@ const adds = function(listOfConditions, onSuccess, onError) {
 
 const byId = function(id, onFound, onError) {
     RivenCondition.findById(id).then(onFound).catch(onError);
-}
+};
 
 const deleteOneById = function(id, onDelete, onError) {
     RivenCondition
         .deleteOne({"_id":id})
         .then(onDelete)
         .catch(onError);
-}
+};
 
 const deleteAll = function(onDelete, onError) {
     RivenCondition.collection
         .deleteMany({})
         .then(onDelete)
         .catch(onError);
-}
+};
 
 exports.list = list;
 exports.formattedList = formattedList;

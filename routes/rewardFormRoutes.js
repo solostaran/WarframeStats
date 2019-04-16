@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const express = require('express');
 const router = express.Router();
@@ -11,7 +11,7 @@ const rewardType = require('../api/business/rewardTypeProcess.js'),
     sortieReward = require('../api/business/sortieRewardProcess.js'),
     convertDates = require('../api/utils/convertDates');
 
-router.get('/', auth.required, function(req, res, next) {
+router.get('/', auth.required, function(req, res) {
     // Promise version ... at least better than chain version
     Promise.all([
             new Promise(rewardType.list),
@@ -68,7 +68,7 @@ function provideRewardList(req, res) {
                     nb: nb,
                     dateLow: req.body.dateLow,
                     dateHigh: req.body.dateHigh,
-                    hasNext: result.data.length < nb ? false : true,
+                    hasNext: result.data.length >= nb,
                     totalCount: result.count,
                     rewardTypes: rewardTypes,
                     rewardTypeSelected: req.body.type
@@ -79,15 +79,15 @@ function provideRewardList(req, res) {
 }
 
 
-router.post('/list', auth.optional, function(req, res, next) {
+router.post('/list', auth.optional, function(req, res) {
     provideRewardList(req, res);
 });
 
-router.get('/list', auth.optional, function(req, res, next) {
+router.get('/list', auth.optional, function(req, res) {
     provideRewardList(req, res);
 });
 
-router.get('/:id', auth.required, function(req, res, next) {
+router.get('/:id', auth.required, function(req, res) {
     sortieReward.findById(req.params.id,
         reward => {
         if (!reward)

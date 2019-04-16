@@ -1,15 +1,15 @@
-var async = require('async');
-var XLSX = require('xlsx');
-var path = require('path');
+//const async = require('async');
+const XLSX = require('xlsx');
+const path = require('path');
 
-var options = {
-    check_array : false,
-    separator: ';' // Only if check_array=true
-}
+// let options = {
+//     check_array : false,
+//     separator: ';' // Only if check_array=true
+// };
 
 module.exports = {
     read: function(fileName) {
-        var dir = __dirname;
+        let dir = __dirname;
         //var filePath = path.resolve(dir, '../test/Persona_Sheet_New.xlsx');
         try {
             var filePath = path.resolve(dir, fileName); // fileName object with relative path of file
@@ -19,32 +19,32 @@ module.exports = {
         }
     },
     convert: function(options, callback) {
-        var workbook = this.read(options.input_filename);
+        let workbook = this.read(options.input_filename);
         if(!workbook){
             return callback(new Error("WorkBook object is Undefined or NUll"));
         }
         if(workbook instanceof Error) {
             return callback(new Error("Getting a error while reading the file"));
         }
-        var sheet_name_list = workbook.SheetNames;
-        var output = {};
+        let sheet_name_list = workbook.SheetNames;
+        let output = {};
         sheet_name_list.forEach(function(y) {
-            var worksheet = workbook.Sheets[y];
-            var headers = {};
-            var arrays = {};
-            var data = [];
+            let worksheet = workbook.Sheets[y];
+            let headers = {};
+            let arrays = {};
+            let data = [];
             for (z in worksheet) {
                 if (z[0] === '!') continue;
                 //parse out the column, row, and value
-                var col = z.substring(0, 1);
-                var row = parseInt(z.substring(1));
-                var value = worksheet[z].v;
+                let col = z.substring(0, 1);
+                let row = parseInt(z.substring(1));
+                let value = worksheet[z].v;
 
                 //store header names
-                if (row == 1) {
+                if (row === 1) {
 
                     if (options.check_array) {
-                        var bool = value.endsWith('[]');
+                        let bool = value.endsWith('[]');
                         arrays[col] = bool;
                         if (bool)
                             headers[col] = value.substring(0, value.length - 2);

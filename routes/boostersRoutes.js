@@ -4,7 +4,7 @@ const router = express.Router();
 const BoosterTypeProcess = require('../api/business/boosterTypeProcess');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
     BoosterTypeProcess.list(
         ret => res.render('boosters', { title: 'Booster Types', boosters: ret })
     );

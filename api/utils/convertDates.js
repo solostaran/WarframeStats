@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 // Convert Excel dates into JS date objects
 // @ref https://gist.github.com/christopherscott/2782634

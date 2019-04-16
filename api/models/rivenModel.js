@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema,
-    RivenType = mongoose.model('RivenType'),
-    RivenCondition = mongoose.model('RivenCondition');
+const Schema = mongoose.Schema;
 
 const RivenSchema = new Schema({
     type : {

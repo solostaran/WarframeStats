@@ -31,7 +31,7 @@ UsersSchema.methods.generateJWT = function() {
         id: this._id,
         exp: parseInt(expirationDate.getTime() / 1000, 10),
     }, sec_string);
-}
+};
 
 UsersSchema.methods.toAuthJSON = function() {
     return {

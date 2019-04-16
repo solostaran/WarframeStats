@@ -1,8 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-    Riven = mongoose.model('Riven'),
-    RivenCondition = mongoose.model('RivenCondition');
+    Riven = mongoose.model('Riven');
 
 const list = function(onFound, onError) {
     Riven.find({}).then(onFound, onError);
@@ -20,7 +19,7 @@ const byId = function(id, onFound, onError) {
         .populate([{path: 'conditions', model: 'RivenCondition'}])
         .then(onFound)
         .catch(onError);
-}
+};
 
 const deleteOneById = function(id, onDelete, onError) {
     Riven
@@ -28,14 +27,14 @@ const deleteOneById = function(id, onDelete, onError) {
         .then(onDelete)
         .catch(onError);
 
-}
+};
 
 const deleteAll = function(onDelete, onError) {
     Riven.collection
         .deleteMany({})
         .then(onDelete)
         .catch(onError);
-}
+};
 
 exports.list = list;
 exports.add = add;

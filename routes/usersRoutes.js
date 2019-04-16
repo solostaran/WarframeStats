@@ -1,38 +1,38 @@
-const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const router = require('express').Router();
 const auth = require('../config/jwt_auth').auth;
 const Users = mongoose.model('Users');
-const _ = require('lodash');
 
 //POST new user route (optional, everyone has access)
-router.post('/', auth.optional, (req, res, next) => {
-    const { body: { user } } = req;
+if (!(process.env.NODE_ENV === 'production')) {
+    router.post('/', auth.optional, (req, res) => {
+        const { body: { user } } = req;
 
-    if(!user.email) {
-        return res.status(422).json({
-            errors: {
-                email: 'is required',
-            },
-        });
-    }
+        if(!user.email) {
+            return res.status(422).json({
+                errors: {
+                    email: 'is required',
+                },
+            });
+        }
 
-    if(!user.password) {
-        return res.status(422).json({
-            errors: {
-                password: 'is required',
-            },
-        });
-    }
+        if(!user.password) {
+            return res.status(422).json({
+                errors: {
+                    password: 'is required',
+                },
+            });
+        }
 
-    const finalUser = new Users(user);
+        const finalUser = new Users(user);
 
-    finalUser.setPassword(user.password);
+        finalUser.setPassword(user.password);
 
-    return finalUser.save()
-        .then(() => res.json({ user: finalUser.toAuthJSON() }));
-});
+        return finalUser.save()
+            .then(() => res.json({ user: finalUser.toAuthJSON() }));
+    });
+}
 
 //POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
@@ -71,7 +71,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 });
 
 //GET current route (required, only authenticated users have access)
-router.get('/current', auth.required, (req, res, next) => {
+router.get('/current', auth.required, (req, res) => {
     const { payload: { id } } = req;
 
     return Users.findById(id)
@@ -89,7 +89,7 @@ router.get('/current', auth.required, (req, res, next) => {
 //     Users.collection.deleteMany({}).then(ret => res.status(200).send(ret));
 // });
 
-router.get('/loginForm', auth.optional, function(req, res, next) {
+router.get('/loginForm', auth.optional, function(req, res) {
     res.render('login', { title: "Login"});
 });
 
@@ -133,7 +133,7 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
     })(req, res, next);
 });
 
-router.get('/disconnect', auth.required, function(req, res, next) {
+router.get('/disconnect', auth.required, function(req, res) {
     const { payload: { id } } = req;
     Users.findById(id)
         .then((user) => {
