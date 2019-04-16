@@ -143,7 +143,6 @@ router.get('/disconnect', auth.required, function(req, res, next) {
             req.app.locals.connected = false; // For PUG templates
             res.clearCookie('access_token');
             res.render('disconnected', {title: 'Disconnect'});
-            console.log(JSON.stringify(user));
         });
 
 

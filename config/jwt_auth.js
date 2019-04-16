@@ -4,7 +4,11 @@ const sec_string = 'secret';
 const getTokenFromRequest = (req) => {
     const { headers: { authorization } } = req;
 
-    if(authorization && authorization.split(' ')[0] === 'Token') {
+    // In order to provide CSRF protection,
+    // check here Referer and Origin headers to see if they are related to your application
+
+    const auth_prefix = authorization.split(' ')[0];
+    if (authorization && (auth_prefix === 'Token' || auth_prefix === 'Bearer')) {
         return authorization.split(' ')[1];
     } else {
         let cookie_token = req.cookies['access_token'];
