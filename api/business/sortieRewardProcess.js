@@ -76,7 +76,6 @@ const list = function(options, onFound, onError) {
 // };
 
 const addOrUpdate = function(obj, userId, onSuccess, onError) {
-    console.log("USER ID = "+userId);
     if (obj === null) onError(new Error('Null object'));
     if (obj._id) {
         SortieReward.findById(obj._id).then(
