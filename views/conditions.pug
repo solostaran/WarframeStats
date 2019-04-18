@@ -9,12 +9,12 @@ block content
     table(border=0)
         for condition in conditions
             tr
-                td(style='padding-right:10px;')
-                    a(href='/conditions/form/'+condition._id) #{condition._id}
+                td(style='padding-right:10px; vertical-align: top;')
+                    a(href='/conditions/form/'+condition._id) edit
                 td
                     = condition.description
                     ul
-                        if condition.optional && condition.optional == true
+                        if condition.optional && condition.optional === true
                             li= 'This condition is an optional one'
                         - var n = 1
                         if condition.advices

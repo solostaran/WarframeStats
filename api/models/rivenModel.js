@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema,
-    RivenType = mongoose.model('RivenType'),
-    RivenCondition = mongoose.model('RivenCondition');
+const Schema = mongoose.Schema;
 
 const RivenSchema = new Schema({
     type : {
@@ -26,6 +24,16 @@ const RivenSchema = new Schema({
         alias: 'conditionVariable',
         min: 0,
         default: 0,
+        required: false
+    },
+    createdBy : {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+        required: false
+    },
+    modifiedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
         required: false
     }
 });

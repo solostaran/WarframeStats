@@ -1,0 +1,1 @@
+docker container stop app-warstats

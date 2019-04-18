@@ -3,15 +3,19 @@ require('http-errors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
+const debug = require('debug')('warframestats:server');
 //var http = require('http-debug').http;
 //http.debug = 1;
 
 //Configure isProduction variable
 const isProduction = process.env.NODE_ENV === 'production';
 if (isProduction) console.log('Production configuration.');
-else console.log('Development configuration.')
+else console.log('Development configuration.');
+
+const isNodemon = process.env.NODEMON === 'true';
+const isDocker = process.env.DOCKER === 'true';
 
 const app = express();
 
@@ -24,15 +28,28 @@ app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+if (isProduction)
+    app.use(morgan('combined', {
+        skip: function (req, res) { return res.statusCode < 400 }
+    }));
+else
+    app.use(morgan('dev'));
 
-// Configure MONGOOSE
+// Configure MONGOOSE (on docker, use a different hostname)
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/WarframeStatsDB', { useNewUrlParser: true });
+const db_host = isDocker ? 'net-db-warstats' : 'localhost';
+mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {useNewUrlParser: true})
+    .then(() => {
+        debug('Connected to database.');
+    })
+    .catch((err) => {
+        debug(err.message);
+        process.exit(-2);
+    });
 if (!isProduction) mongoose.set('debug', true);
 
 // Mongoose Schemas
@@ -42,6 +59,8 @@ require('./api/models/rivenModel');
 require('./api/models/boosterTypeModel');
 require('./api/models/rewardTypeModel');
 require('./api/models/sortieRewardModel');
+require('./api/models/Users');
+require('./config/passport');
 
 
 // API ROUTES
@@ -57,6 +76,8 @@ const rewardTypeRoute = require('./routes/rewardTypeRoutes');
 app.use('/reward/type', rewardTypeRoute);
 const sortieRewardRoute = require('./routes/sortieRewardRoutes');
 app.use('/reward', sortieRewardRoute);
+const usersRoute = require('./routes/usersRoutes');
+app.use('/users', usersRoute);
 
 // XLSX 2 JSON
 const enhancedExcel2json = require('./excel2json/enhancedExcel2json.js');
@@ -85,22 +106,32 @@ app.use('/boosters', require('./routes/boostersRoutes'));
 app.use('/stats', require('./routes/statsRoutes'));
 
 // 404 management
-app.use(function(req, res) {
+app.use(function(req, res, next) {
     //res.status(404).send({url: req.originalUrl + ' not found'})
     res.render('404', { url: req.originalUrl });
+    next();
 });
 
-// error handler
+// error handler excepting 404
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals (specific for express-jwt's UnauthorizedError)
+    if (err.name === 'UnauthorizedError')
+        res.locals.message = "You are not authorized to access " + req.url;
+    else
+        res.locals.message = err.message;
+    res.locals.error = isProduction ? {} : err; // provide the error only in development
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+
+    next();
 });
 
-module.exports = app;
-
-console.log('WarframeStats RESTful API server started.');
+if (isNodemon) {
+    const PORT = 3000;
+    app.listen(PORT, () => console.log('Server running on http://localhost:'+PORT+'/'));
+} else {
+    module.exports = app;
+}
+debug('RESTful API server started.');

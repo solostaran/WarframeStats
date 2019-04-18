@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const mongoose = require('mongoose'),
     rivenType = require('./rivenTypeProcess'),
@@ -10,7 +10,7 @@ const form2riven = function(formRiven, onOk, onError) {
     if (formRiven.weaponName)
         riven.weaponName = formRiven.weaponName;
     riven.conditions = formRiven.conditions.filter(function(cond) {
-        return cond != 'none';
+        return cond !== 'none';
     });
     if (formRiven.N)
         riven.N = formRiven.N;
@@ -22,6 +22,6 @@ const form2riven = function(formRiven, onOk, onError) {
             onOk(riven);
         },
         err => onError(err));
-}
+};
 
 exports.form2riven = form2riven;

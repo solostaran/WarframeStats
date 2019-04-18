@@ -17,8 +17,7 @@ function first() {
 
 function next() {
     let hiddenOffset = $('offset');
-    let newBegin = Number(hiddenOffset.value) + Number($('nb').value);
-    hiddenOffset.value = newBegin;
+    hiddenOffset.value = Number(hiddenOffset.value) + Number($('nb').value);
     return true;
 }
 
@@ -29,7 +28,7 @@ function last(totalCount) {
 }
 
 function onChangeNb() {
-    if (isNaN($('nb').value) || Number($('nb').value < 0))
+    if (isNaN($('nb').value) || Number($('nb').value) < 0)
         $('nb').value = 20;
     $('formOptions').submit();
 }

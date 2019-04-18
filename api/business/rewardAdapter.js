@@ -93,6 +93,6 @@ const form2reward = function(reward, formReward, onOk, onError) {
         },
     err => onError(err)
     );
-}
+};
 
 exports.form2reward = form2reward;

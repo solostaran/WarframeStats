@@ -66,7 +66,7 @@ block content
                     each val in rewards
                         tr
                             td(style='padding:5px')
-                                a(href='/reward/view/'+val._id)= val._id
+                                a(href='/reward/view/'+val._id)= '...'+val._id.toString().substr(-5, 5)
                             if (val.date)
                                 td(style='padding:5px')= date2string(val.date)
                             else

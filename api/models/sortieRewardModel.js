@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema,
-    RewardType = mongoose.model('RewardType'),
-    BoosterType = mongoose.model('BoosterType'),
-    RivenCondition = mongoose.model('RivenCondition'),
-    Riven = mongoose.model('Riven');
+const Schema = mongoose.Schema;
 
 const SortieRewardSchema = new Schema({
     type : {
@@ -17,6 +13,16 @@ const SortieRewardSchema = new Schema({
     },
     date : {
         type: Date,
+        required: false
+    },
+    createdBy : {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+        required: false
+    },
+    modifiedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
         required: false
     },
     booster : {

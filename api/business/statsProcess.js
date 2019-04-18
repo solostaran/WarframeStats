@@ -8,7 +8,7 @@ const mongoose = require('mongoose'),
     RivenTypeProcess = require('./rivenTypeProcess'),
     BoosterTypeProcess = require('./boosterTypeProcess');
 
-const general = function(onCompleted, onError) {
+const global = function(onCompleted, onError) {
     RewardTypeProcess.list(rewardTypes => {
         Promise.all(
             rewardTypes.map(rt => SortieReward.countDocuments({type: rt._id}))
@@ -18,7 +18,7 @@ const general = function(onCompleted, onError) {
                 return { type: rt, count: count };
             });
             onCompleted({ listStats: list, totalCount: totalCount});
-        }).catch(err => console.log(err));
+        }).catch(onError);
     });
 };
 
@@ -62,6 +62,6 @@ const booster = async function(onCompleted, onError) {
     }
 };
 
-exports.general = general;
+exports.global = global;
 exports.riven = riven;
 exports.booster = booster;

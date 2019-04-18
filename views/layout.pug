@@ -25,6 +25,11 @@ html
             a(href='/rewardForm/list') List Rewards
           div
             a(href='/stats') Stats
+          div
+            if (connected === true)
+              a(href='/users/disconnect') Disconnect
+            else
+              a(href='/users/loginForm') Login
       section
         block content
       div(class='footer')

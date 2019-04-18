@@ -22,15 +22,15 @@ const adds = function(listOfBoosterType, onSuccess, onError) {
 
 const findById = function(id, onFound, onError) {
     RewardTypes.findById(id).then(onFound).catch(onError);
-}
+};
 
 const findByName = function(name, onFound, onError) {
     RewardTypes.find({name: { "$regex": name, "$options": "i" }}).then(onFound).catch(onError);
-}
+};
 
 const findByIdOrName = function(param, onFound, onError) {
     findById(param, onFound,
-err => {
+        () => {
             findByName(param, ret2 => {
                 if (ret2.length > 0)
                     onFound(ret2[0]);
@@ -38,7 +38,7 @@ err => {
                     onError(new Error("Reward type not found : "+param));
             }, onError);
         });
-}
+};
 
 const deleteOneById = function(id, onDelete, onError) {
     RewardTypes
@@ -46,14 +46,14 @@ const deleteOneById = function(id, onDelete, onError) {
         .then(onDelete)
         .catch(onError);
 
-}
+};
 
 const deleteAll = function(onDelete, onError) {
     RewardTypes.collection
         .deleteMany({})
         .then(onDelete)
         .catch(onError);
-}
+};
 
 exports.list = list;
 exports.add = add;

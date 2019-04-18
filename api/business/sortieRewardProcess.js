@@ -75,11 +75,13 @@ const list = function(options, onFound, onError) {
 //         onError);
 // };
 
-const addOrUpdate = function(obj, onSuccess, onError) {
+const addOrUpdate = function(obj, userId, onSuccess, onError) {
     if (obj === null) onError(new Error('Null object'));
     if (obj._id) {
         SortieReward.findById(obj._id).then(
             reward => {
+                reward.modifiedBy = userId;
+                reward.markModified('modifiedBy');
                 rewardAdapter.form2reward(reward, obj, ret => {
                     ret.save().then(onSuccess).catch(onError);
                 }, onError);
@@ -87,19 +89,21 @@ const addOrUpdate = function(obj, onSuccess, onError) {
         ).catch(onError);
     } else {
         const reward = new SortieReward(obj);
+        reward.createdBy = userId;
+        reward.markModified('createdBy');
         rewardAdapter.form2reward(reward, obj, reward => {
             reward.save().then(onSuccess).catch(onError);
         }, onError);
     }
 };
 
-const adds = function(listOfRewards, onSuccess, onError) {
+const adds = function(listOfRewards, userId, onSuccess, onError) {
     let inserted = 0;
     let rejected = 0;
     let rejects = [];
     Promise.all(
         listOfRewards.map(rform => new Promise(
-            resolve => addOrUpdate(rform, ret => { ++inserted; resolve(ret); }, err => {
+            resolve => addOrUpdate(rform, userId, ret => { ++inserted; resolve(ret); }, err => {
                     rejects.push({reject: rform, error: err });
                     console.log("Reject: "+JSON.stringify(rform));
                     ++rejected;
@@ -118,7 +122,13 @@ const findById = function(id, onSuccess, onError) {
         .populate({path: 'riven.type', model: 'RivenType'})
         .populate([{path: 'riven.conditions', model: 'RivenCondition'}])
         .populate('booster')
-        .then(onSuccess)
+        .populate('modifiedBy')
+        .populate('createdBy')
+        .then(reward => {
+            if (reward.createdBy) reward.createdBy = reward.createdBy.toAuthJSON();
+            if (reward.modifiedBy) reward.modifiedBy = reward.modifiedBy.toAuthJSON();
+            onSuccess(reward);
+        })
         .catch(onError);
 };
 

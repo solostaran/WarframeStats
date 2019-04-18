@@ -9,4 +9,4 @@ window.onload = function() {
         if (reward.riven.conditions.length > 1)
             indexClone = reward.riven.conditions.length - 1;
     }
-}
+};

@@ -1,15 +1,16 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-    Riven = mongoose.model('Riven'),
-    RivenCondition = mongoose.model('RivenCondition');
+    Riven = mongoose.model('Riven');
 
 const list = function(onFound, onError) {
     Riven.find({}).then(onFound, onError);
 };
 
-const add = function(oneRiven, onSuccess, onError) {
+const add = function(oneRiven, userId, onSuccess, onError) {
     const newRiven = new Riven(oneRiven);
+    newRiven.createdBy = userId;
+    newRiven.markModified('createdBy');
     newRiven.save().then(onSuccess).catch(onError);
 };
 
@@ -18,9 +19,15 @@ const byId = function(id, onFound, onError) {
         .populate('type')
         //.populate('conditions')
         .populate([{path: 'conditions', model: 'RivenCondition'}])
-        .then(onFound)
+        .populate('modifiedBy')
+        .populate('createdBy')
+        .then(riven => {
+            if (riven.createdBy) riven.createdBy = riven.createdBy.toAuthJSON();
+            if (riven.modifiedBy) riven.modifiedBy = riven.modifiedBy.toAuthJSON();
+            onFound(riven);
+        })
         .catch(onError);
-}
+};
 
 const deleteOneById = function(id, onDelete, onError) {
     Riven
@@ -28,14 +35,14 @@ const deleteOneById = function(id, onDelete, onError) {
         .then(onDelete)
         .catch(onError);
 
-}
+};
 
 const deleteAll = function(onDelete, onError) {
     Riven.collection
         .deleteMany({})
         .then(onDelete)
         .catch(onError);
-}
+};
 
 exports.list = list;
 exports.add = add;

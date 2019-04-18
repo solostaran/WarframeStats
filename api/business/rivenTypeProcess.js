@@ -22,18 +22,18 @@ const adds = function(listOfRivenType, onSuccess, onError) {
 
 const findById = function(id, onFound, onError) {
     RivenTypes.findById(id).then(onFound).catch(onError);
-}
+};
 
 const findByName = function(param, onFound, onError) {
     RivenTypes
         .find({ name: { $regex : new RegExp(param, "i") } })
         .then(ret => onFound(ret[0]))
         .catch(onError);
-}
+};
 
 const findByIdOrName = function(param, onFound, onError) {
-    findById(param, onFound, err => { findByName(param, onFound, onError); });
-}
+    findById(param, onFound, () => { findByName(param, onFound, onError); });
+};
 
 const deleteOneById = function(id, onDelete, onError) {
     RivenTypes
@@ -41,14 +41,14 @@ const deleteOneById = function(id, onDelete, onError) {
         .then(onDelete)
         .catch(onError);
 
-}
+};
 
 const deleteAll = function(onDelete, onError) {
     RivenTypes.collection
         .deleteMany({})
         .then(onDelete)
         .catch(onError);
-}
+};
 
 exports.list = list;
 exports.add = add;

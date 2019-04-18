@@ -3,10 +3,11 @@
 const express = require('express');
 const router = express.Router();
 
+const auth = require('../config/jwt_auth').auth;
 const RivenTypeProcess = require('../api/business/rivenTypeProcess');
 const RivenConditionProcess = require('../api/business/rivenConditionProcess');
 
-router.get('/', async function (req, res, next) {
+router.get('/', auth.required, async function (req, res, next) {
     try {
         const rivenTypes = await new Promise(RivenTypeProcess.list);
         const rivenConditions = await new Promise(RivenConditionProcess.formattedList);

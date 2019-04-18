@@ -21,16 +21,20 @@ app.set('port', port);
  * Create HTTP server.
  */
 //const server = http.createServer(app);
+const http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+  res.end();
+}).listen(80); // redirect port 80 requests to https 443
 
 /**
  * Create HTTPS server.
  */
-var options = {
+const options = {
   key: fs.readFileSync('keys/client-key.pem'),
   cert: fs.readFileSync('keys/client-cert.pem')
 };
 const server = https.createServer(options, app);
-
 
 /**
  * Listen on provided port, on all network interfaces.

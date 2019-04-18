@@ -2,7 +2,7 @@ let iClone = 0;
 const cloneLimit = 5;
 
 function validateForm(formObj) {
-    if (document.getElementById('mcondition').value == 'none' && iClone > 0) {
+    if (document.getElementById('mcondition').value === 'none' && iClone > 0) {
         alert('No mandatory condition is selected');
         return false;
     }
@@ -44,7 +44,7 @@ function addRow() {
     destination.appendChild(clone);
     // HIDE THE BUTTONS OF THE PREVIOUS SELECT
     if (iClone > 1) {
-        const previousClone = document.getElementById('condition-row' + (iClone - 1))
+        const previousClone = document.getElementById('condition-row' + (iClone - 1));
         previousClone.getElementsByTagName('span')[0].hidden = true;
         previousClone.getElementsByTagName('span')[1].hidden = true;
     }
