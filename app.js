@@ -39,11 +39,11 @@ if (isProduction)
 else
     app.use(morgan('dev'));
 
-// Configure MONGOOSE
+// Configure MONGOOSE (on docker, use a different hostname)
 mongoose.Promise = global.Promise;
 const db_host = isDocker ? 'net-db-warstats' : 'localhost';
 mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {useNewUrlParser: true})
-    .then((ret) => {
+    .then(() => {
         debug('Connected to database.');
     })
     .catch((err) => {
@@ -106,20 +106,26 @@ app.use('/boosters', require('./routes/boostersRoutes'));
 app.use('/stats', require('./routes/statsRoutes'));
 
 // 404 management
-app.use(function(req, res) {
+app.use(function(req, res, next) {
     //res.status(404).send({url: req.originalUrl + ' not found'})
     res.render('404', { url: req.originalUrl });
+    next();
 });
 
-// error handler
-app.use(function(err, req, res) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = isProduction ? {} : err;
+// error handler excepting 404
+app.use(function(err, req, res, next) {
+    // set locals (specific for express-jwt's UnauthorizedError)
+    if (err.name === 'UnauthorizedError')
+        res.locals.message = "You are not authorized to access " + req.url;
+    else
+        res.locals.message = err.message;
+    res.locals.error = isProduction ? {} : err; // provide the error only in development
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+
+    next();
 });
 
 if (isNodemon) {

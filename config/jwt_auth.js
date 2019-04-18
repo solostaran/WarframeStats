@@ -2,9 +2,10 @@ const jwt = require('express-jwt');
 const sec_string = 'secret';
 
 const getTokenFromRequest = (req) => {
-    const { headers: { authorization, referer, origin } } = req;
+    const { headers: { authorization } } = req;
 
     // In order to provide CSRF protection,
+    // const { headers: { authorization, referer, origin } } = req;
     // check here Referer and Origin headers to see if they are related to your application
     // if (referer && !referer.toString().startsWith('https://localhost/') && !referer.toString().startsWith('http://localhost:3000/')) {
     //     console.log('bad referer : '+referer);
@@ -30,7 +31,7 @@ const auth = {
         userProperty: 'payload',
         getToken: getTokenFromRequest,
     }),
-    optional: jwt({
+    optional: jwt({ // allows us to define unprotected routes while still identifying registered users
         secret: sec_string,
         userProperty: 'payload',
         getToken: getTokenFromRequest,

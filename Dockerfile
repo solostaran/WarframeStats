@@ -15,6 +15,5 @@ COPY . .
 EXPOSE 443
 
 # Start the server
-CMD [ "export", "NODE_ENV=production" ]
 CMD [ "npm", "start" ]
 

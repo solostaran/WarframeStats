@@ -6,7 +6,8 @@ const Users = mongoose.model('Users');
 
 passport.use(new LocalStrategy({
     usernameField: 'user[email]',
-    passwordField: 'user[password]',
+    passwordField: 'user[password]'
+    //, passReqToCallback: true // means that the first argument of the callback will be 'req'
 }, (email, password, done) => {
     Users.findOne({ email })
         .then((user) => {
