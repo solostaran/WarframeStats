@@ -3,6 +3,7 @@
     <envs>
       <env name="DEBUG" value="warframestats:*" />
       <env name="NODE_ENV" value="production" />
+      <env name="DOCKER" value="false" />
     </envs>
     <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
       <browser url="http://localhost:3000/" />

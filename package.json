@@ -8,10 +8,10 @@
   "dependencies": {
     "body-parser": "latest",
     "cookie-parser": "~1.4.3",
-    "date-picker": "0.5.0",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "express-jwt": "^5.3.1",
+    "flatpickr": "^4.5.7",
     "http-errors": "~1.6.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "latest",

@@ -62,7 +62,7 @@ router.post('/login', auth.optional, (req, res, next) => {
         if(passportUser) {
             const user = passportUser;
             user.token = passportUser.generateJWT();
-
+            console.log(new Date().toISOString()+" | User '"+user.email+"' logged.");
             return res.json({ user: user.toAuthJSON() });
         }
 
@@ -126,6 +126,7 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
             // Cookie access token and connexion management
             req.app.locals.connected = true;    // For PUG templates
             res.cookie('access_token', user.token, { httpOnly: true, maxAge: 600000});
+            console.log(new Date().toISOString()+" | User '"+user.email+"' logged.");
             res.render('logged', { title: 'connected', connected: true, user: user.toAuthJSON() });
             return;
         }
@@ -142,6 +143,7 @@ router.get('/disconnect', auth.required, function(req, res) {
             }
             req.app.locals.connected = false; // For PUG templates
             res.clearCookie('access_token');
+            console.log(new Date().toISOString()+" | User '"+user.email+"' disconnected.");
             res.render('disconnected', {title: 'Disconnect'});
         });
 

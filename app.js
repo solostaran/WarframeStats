@@ -3,8 +3,9 @@ require('http-errors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
+const debug = require('debug')('warframestats:server');
 //var http = require('http-debug').http;
 //http.debug = 1;
 
@@ -14,6 +15,7 @@ if (isProduction) console.log('Production configuration.');
 else console.log('Development configuration.');
 
 const isNodemon = process.env.NODEMON === 'true';
+const isDocker = process.env.DOCKER === 'true';
 
 const app = express();
 
@@ -26,15 +28,28 @@ app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+if (isProduction)
+    app.use(morgan('combined', {
+        skip: function (req, res) { return res.statusCode < 400 }
+    }));
+else
+    app.use(morgan('dev'));
 
 // Configure MONGOOSE
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/WarframeStatsDB', { useNewUrlParser: true });
+const db_host = isDocker ? 'net-db-warstats' : 'localhost';
+mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {useNewUrlParser: true})
+    .then((ret) => {
+        debug('Connected to database.');
+    })
+    .catch((err) => {
+        debug(err.message);
+        process.exit(-2);
+    });
 if (!isProduction) mongoose.set('debug', true);
 
 // Mongoose Schemas
@@ -113,4 +128,4 @@ if (isNodemon) {
 } else {
     module.exports = app;
 }
-console.log('WarframeStats RESTful API server started.');
+debug('RESTful API server started.');
