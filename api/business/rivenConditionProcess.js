@@ -3,76 +3,92 @@
 const mongoose = require('mongoose');
 const RivenCondition = mongoose.model('RivenCondition');
 
-const list = function(onFound, onError) {
-    RivenCondition.find({}).then(onFound).catch(onError);
+const list = function() {
+    return RivenCondition.find({}).exec();
 };
 
-const formattedList = function(onFound, onError) {
-    RivenCondition.find({ optional: { $not: {$exists:true}}}).then(ret1 => {
-        RivenCondition.find({ optional: {$exists:true}}).then(ret2 => onFound({
-            mandatories: ret1,
-            optionals: ret2
-        })).catch(onError);
-    }).catch(onError);
+const formattedList = async function() {
+    return {
+        mandatories: await RivenCondition.find({ optional: { $not: {$exists:true}}}).exec(),
+        optionals: await RivenCondition.find({ optional: {$exists:true}})
+    };
+    // RivenCondition.find({ optional: { $not: {$exists:true}}}).then(ret1 => {
+    //     RivenCondition.find({ optional: {$exists:true}}).then(ret2 => onFound({
+    //         mandatories: ret1,
+    //         optionals: ret2
+    //     })).catch(onError);
+    // }).catch(onError);
 };
 
-const add = function(oneRivenCondition, onSuccess, onError) {
-    const newCondition = new RivenCondition(oneRivenCondition);
-    newCondition.save().then(onSuccess).catch(onError);
-};
-
-const addOrUpdate = function(obj, onSuccess, onError) {
-    if (obj === null) onError(new Error('Null object'));
+const addOrUpdate = async function(obj, userId) {
+    let cond;
+    if (obj === null) return Promise.reject('Null object');
     if (obj._id) {
-        RivenCondition.findById(obj._id).then(
-            cond => {
-                cond.description = obj.description;
-                cond.markModified('description');
-                if (obj.optional && obj.optional === 'on')
-                    cond.optional = true;
-                else
-                    cond.optional = undefined;
-                cond.markModified('optional');
-                cond.advices = obj.advices;
-                cond.markModified('advices');
-                cond.save().then(onSuccess).catch(onError);
-            }).catch(onError);
+        // update existing condition
+        cond = await RivenCondition.findById(obj._id);
+        cond.modifiedBy = userId;
+        cond.markModified('modifiedBy');
     } else {
-        console.log('Create');
-        if (obj.optional && obj.optional === 'on') obj.optional = true;
-        const newCondition = new RivenCondition(obj);
-        newCondition.save().then(onSuccess).catch(onError);
+        // create a new condition
+        cond = new RivenCondition(obj);
+        cond.createdBy = userId;
+        cond.markModified('createdBy');
     }
+    cond.description = obj.description;
+    cond.markModified('description');
+    if (obj.optional && (obj.optional === 'on' || obj.optional === 'true'))
+        cond.optional = true;
+    else
+        cond.optional = undefined;
+    cond.markModified('optional');
+    cond.advices = obj.advices;
+    cond.markModified('advices');
+    return cond.save();
 };
 
-const adds = function(listOfConditions, onSuccess, onError) {
-    RivenCondition.collection
-        .insertMany(listOfConditions, { ordered: true, rawResult: true })
-        .then(onSuccess)
-        .catch(onError);
+const adds = function(listOfConditions, userId, onSuccess, onError) {
+    let inserted = 0;
+    let rejected = 0;
+    let rejects = [];
+    Promise.all(
+        listOfConditions.map(rcond => new Promise(
+            resolve => addOrUpdate(rcond, userId)
+                .then(ret => { ++inserted; resolve(ret)})
+                .catch(err => {
+                    rejects.push({ reject: rcond, error: err.message});
+                    ++rejected;
+                    resolve(err);
+                }))
+        )
+    ).then(() => {
+        const result = {insertedCount: inserted , rejectedCount: rejected, rejects: rejects };
+        console.log("Conditions insertion : "+JSON.stringify(result));
+        onSuccess(result);
+    }).catch(onError);
+
+    // return new Promise(RivenCondition.collection
+    //     .insertMany(listOfConditions, { ordered: true, rawResult: true }));
+
 };
 
-const byId = function(id, onFound, onError) {
-    RivenCondition.findById(id).then(onFound).catch(onError);
+const byId = function(id) {
+    return RivenCondition.findById(id).exec();
 };
 
-const deleteOneById = function(id, onDelete, onError) {
-    RivenCondition
+const deleteOneById = function(id) {
+    return RivenCondition
         .deleteOne({"_id":id})
-        .then(onDelete)
-        .catch(onError);
+        .exec();
 };
 
-const deleteAll = function(onDelete, onError) {
-    RivenCondition.collection
+const deleteAll = function() {
+    return RivenCondition
         .deleteMany({})
-        .then(onDelete)
-        .catch(onError);
+        .exec();
 };
 
 exports.list = list;
 exports.formattedList = formattedList;
-exports.add = add;
 exports.addOrUpdate = addOrUpdate;
 exports.adds = adds;
 exports.byId = byId;

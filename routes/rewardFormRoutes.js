@@ -4,20 +4,20 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('../config/jwt_auth').auth;
-const rewardType = require('../api/business/rewardTypeProcess.js'),
-    boosterType = require('../api/business/boosterTypeProcess.js'),
-    rivenType = require('../api/business/rivenTypeProcess.js'),
-    rivenCondition = require('../api/business/rivenConditionProcess.js'),
-    sortieReward = require('../api/business/sortieRewardProcess.js'),
+const RewardTypeProcess = require('../api/business/rewardTypeProcess.js'),
+    BoosterTypeProcess = require('../api/business/boosterTypeProcess.js'),
+    RivenTypeProcess = require('../api/business/rivenTypeProcess.js'),
+    RivenConditionProcess = require('../api/business/rivenConditionProcess.js'),
+    SortieRewardProcess = require('../api/business/sortieRewardProcess.js'),
     convertDates = require('../api/utils/convertDates');
 
 router.get('/', auth.required, function(req, res) {
     // Promise version ... at least better than chain version
     Promise.all([
-            new Promise(rewardType.list),
-            new Promise(boosterType.list),
-            new Promise(rivenType.list),
-            new Promise(rivenCondition.formattedList)
+            RewardTypeProcess.list(),
+            BoosterTypeProcess.list(),
+            RivenTypeProcess.list(),
+            RivenConditionProcess.formattedList()
         ]).then(results => {
             let param = {
                 title: 'Reward Form',
@@ -54,28 +54,29 @@ router.get('/', auth.required, function(req, res) {
     // );
 });
 
-function provideRewardList(req, res) {
+async function provideRewardList(req, res) {
     let offset = req.body.offset ? Number(req.body.offset) : 0;
     let nb = req.body.nb ? Number(req.body.nb) : 30;
-    rewardType.list(rewardTypes => {
-        sortieReward.list(
-            {skip: offset, limit: nb, dateLow: req.body.dateLow, dateHigh: req.body.dateHigh, type: req.body.type},
-            result => {
-                res.render('rewardList', {
-                    date2string: convertDates.date2string,
-                    rewards: result.data,
-                    offset: offset,
-                    nb: nb,
-                    dateLow: req.body.dateLow,
-                    dateHigh: req.body.dateHigh,
-                    hasNext: result.data.length >= nb,
-                    totalCount: result.count,
-                    rewardTypes: rewardTypes,
-                    rewardTypeSelected: req.body.type
-                });
-            },
-            err => res.status(500).send(err));
-    });
+    const rewardTypes = await RewardTypeProcess.list();
+    //console.log("Just get "+rewardTypes.length+ " reward types.");
+    SortieRewardProcess.list(
+        {skip: offset, limit: nb, dateLow: req.body.dateLow, dateHigh: req.body.dateHigh, type: req.body.type},
+        result => {
+            //console.log("Just get "+result.data.length+" rewards over "+result.count);
+            res.status(200).render('rewardList', {
+                date2string: convertDates.date2string,
+                rewards: result.data,
+                offset: offset,
+                nb: nb,
+                dateLow: req.body.dateLow,
+                dateHigh: req.body.dateHigh,
+                hasNext: result.data.length >= nb,
+                totalCount: result.count,
+                rewardTypes: rewardTypes,
+                rewardTypeSelected: req.body.type
+            });
+        },
+        err => res.status(500).send(err));
 }
 
 
@@ -88,16 +89,16 @@ router.get('/list', auth.optional, function(req, res) {
 });
 
 router.get('/:id', auth.required, function(req, res) {
-    sortieReward.findById(req.params.id,
+    SortieRewardProcess.findById(req.params.id,
         reward => {
         if (!reward)
             res.status(404).send(null);
         else
             Promise.all([
-                new Promise(rewardType.list),
-                new Promise(boosterType.list),
-                new Promise(rivenType.list),
-                new Promise(rivenCondition.formattedList)
+                new Promise(RewardTypeProcess.list),
+                new Promise(BoosterTypeProcess.list),
+                new Promise(RivenTypeProcess.list),
+                new Promise(RivenConditionProcess.formattedList)
             ]).then(results => {
                 let param = {
                     title: 'Reward Update',

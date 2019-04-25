@@ -3,8 +3,9 @@ extends layout
 block scripts
     script.
         window.onload = function() {
-            setTimeout(function() {window.location.href = '/';}, 3000);
+            setTimeout(function() {window.location.href = '/';}, 4000);
         };
 
 block content
     h1 Whoever you are, you have been disconnected !
+    i In fact I know you : #{user.email}

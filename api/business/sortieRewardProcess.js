@@ -60,41 +60,12 @@ const list = function(options, onFound, onError) {
             }).catch(onError);
         }
     }
-
 };
 
-// const add = function(obj, onSuccess, onError) {
-//     let newReward = new SortieReward(obj);
-//     // the reward type can be referenced by either an alias or by its ID
-//     rewardType.findByIdOrName(
-//         obj.type,
-//         ret => {
-//             newReward.type = ret._id;
-//             newReward.save().then(onSuccess).catch(onError);
-//         },
-//         onError);
-// };
-
-const addOrUpdate = function(obj, userId, onSuccess, onError) {
-    if (obj === null) onError(new Error('Null object'));
-    if (obj._id) {
-        SortieReward.findById(obj._id).then(
-            reward => {
-                reward.modifiedBy = userId;
-                reward.markModified('modifiedBy');
-                rewardAdapter.form2reward(reward, obj, ret => {
-                    ret.save().then(onSuccess).catch(onError);
-                }, onError);
-            }
-        ).catch(onError);
-    } else {
-        const reward = new SortieReward(obj);
-        reward.createdBy = userId;
-        reward.markModified('createdBy');
-        rewardAdapter.form2reward(reward, obj, reward => {
-            reward.save().then(onSuccess).catch(onError);
-        }, onError);
-    }
+const addOrUpdate = async function(obj, userId) {
+    if (obj === null) return Promise.reject('Null object');
+    const reward = await rewardAdapter.form2reward(obj, userId);
+    return reward.save();
 };
 
 const adds = function(listOfRewards, userId, onSuccess, onError) {
@@ -103,7 +74,9 @@ const adds = function(listOfRewards, userId, onSuccess, onError) {
     let rejects = [];
     Promise.all(
         listOfRewards.map(rform => new Promise(
-            resolve => addOrUpdate(rform, userId, ret => { ++inserted; resolve(ret); }, err => {
+            resolve => addOrUpdate(rform, userId)
+                .then(ret => { ++inserted; resolve(ret); })
+                .catch(err => {
                     rejects.push({reject: rform, error: err });
                     console.log("Reject: "+JSON.stringify(rform));
                     ++rejected;
@@ -132,15 +105,16 @@ const findById = function(id, onSuccess, onError) {
         .catch(onError);
 };
 
-const deleteOneById = function(id, onDelete, onError) {
-    SortieReward.deleteOne({ '_id': id}).then(onDelete).catch(onError);
+const deleteOneById = function(id) {
+    return SortieReward
+        .deleteOne({ '_id': id})
+        .exec();
 };
 
 const deleteAll = function(onDelete, onError) {
-    SortieReward.collection
+    return SortieReward
         .deleteMany({})
-        .then(onDelete)
-        .catch(onError);
+        .exec();
 };
 
 exports.count = count;

@@ -1,4 +1,10 @@
 extends layout
 
+block scripts
+    script.
+        window.onload = function() {
+            setTimeout(function() {window.location.href = '/';}, 4000);
+        };
+
 block content
     h1= "User '" + user.email + "' logged."
