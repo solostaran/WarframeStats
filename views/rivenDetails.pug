@@ -5,8 +5,11 @@ block scripts
 block content
     h1 Riven
     p id = #{riven._id}
-    p type = #{riven.type.name}
-    p weaponName = #{riven.weaponName}
+    p Created_date = #{riven.Created_date}
+    p Type = #{riven.type.name}
+    if (riven.note)
+        p Additional information : #{riven.note}
+    p Weapon Name = #{riven.weaponName}
     p Challenge :
     ul
         for condition in riven.conditions

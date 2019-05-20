@@ -5,7 +5,7 @@ const mongoose = require('mongoose'),
     RivenAdapter = require('./rivenAdapter');
 
 const list = function() {
-    return Riven.find({}).exec();
+    return Riven.find({}).populate('type').sort({Created_date: 1}).exec();
 };
 
 const addOrUpdate = async function(oneRiven, userId) {

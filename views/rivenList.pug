@@ -1,0 +1,36 @@
+extends layout
+
+block link
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+block content
+    if rivens.length === 0
+        h2 Empty list
+    else
+        h1(style='margin-top:20px;') List of Rivens
+        p
+            ="Those are rivens obtained by transmutation or special events but not as sortie's rewards."
+            br
+            = "See "
+            a(href='/rewardForm/list') List Rewards
+            = " for that last kind of rivens."
+        br
+        div(class='marginTop')
+            table(border=0)
+                thead
+                    tr
+                        th ID
+                        //th Date
+                        th Type
+                        th Additional information
+                    tbody
+                        each val in rivens
+                            tr
+                                td(style='padding:5px')
+                                    a(href='/riven/view/' + val._id)= '...' + val._id.toString().substr(-5, 5)
+                                //if (val.date)
+                                //    td(style='padding:5px')= date2string(val.Created_date)
+                                //else
+                                //    td
+                                td(style='padding:5px')= val.type.name
+                                td(style='padding:5px')= val.note

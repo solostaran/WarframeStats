@@ -32,6 +32,10 @@ const form2riven = async function(formRiven, userId) {
         conds = formRiven.conditions.filter(function(cond) { return cond !== 'none'; });
     riven.conditions = conds;
     riven.markModified('conditions');
+    if (formRiven.note) {
+        riven.note = formRiven.note;
+        riven.markModified('note');
+    }
     //console.log(JSON.stringify(riven));
     return riven;
 };
