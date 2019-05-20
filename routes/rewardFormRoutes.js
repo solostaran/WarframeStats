@@ -95,10 +95,10 @@ router.get('/:id', auth.required, function(req, res) {
             res.status(404).send(null);
         else
             Promise.all([
-                new Promise(RewardTypeProcess.list),
-                new Promise(BoosterTypeProcess.list),
-                new Promise(RivenTypeProcess.list),
-                new Promise(RivenConditionProcess.formattedList)
+                RewardTypeProcess.list(),
+                BoosterTypeProcess.list(),
+                RivenTypeProcess.list(),
+                RivenConditionProcess.formattedList()
             ]).then(results => {
                 let param = {
                     title: 'Reward Update',
