@@ -1,5 +1,7 @@
 'use strict';
 
+// TODO: add update (we need this to change "exilus" to "warframe exilus adapter")
+
 const express = require('express');
 const router = express.Router();
 

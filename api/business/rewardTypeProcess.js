@@ -1,5 +1,7 @@
 'use strict';
 
+// TODO: add update (we need this to change "exilus" to "warframe exilus adapter")
+
 const mongoose = require('mongoose');
 const RewardTypes = mongoose.model('RewardType');
 

@@ -125,7 +125,7 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
 
             // Cookie access token and connexion management
             req.app.locals.connected = true;    // For PUG templates
-            res.cookie('access_token', user.token, { httpOnly: true, maxAge: 600000});
+            res.cookie('access_token', user.token, { httpOnly: true, maxAge: 3600000}); // 1 hour
             console.log(new Date().toISOString()+" | User '"+user.email+"' logged.");
             res.render('logged', { title: 'connected', connected: true, user: user.toAuthJSON() });
             return;
