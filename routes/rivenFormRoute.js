@@ -32,4 +32,27 @@ router.get('/list', auth.optional, async function(req,res) {
     }
 });
 
+router.get('/:id', auth.required, function(req, res) {
+    RivenProcess.byId(req.params.id)
+        .then(riven => {
+            console.log(JSON.stringify(riven));
+            if (!riven)
+                res.status(404).send(null);
+            else
+                Promise.all([
+                    RivenTypeProcess.list(),
+                    RivenConditionProcess.formattedList()
+                ]).then(results => {
+                    let param = {
+                        title: 'Riven Update',
+                        riven: riven,
+                        date2string: convertDates.date2string,
+                        types: results[0],
+                        conditions: results[1] };
+                    res.render('rivenUpdate', param);
+                }).catch(err => res.status(500).send(err));
+        })
+        .catch(err => res.status(500).send(err));
+});
+
 module.exports = router;

@@ -20,7 +20,7 @@ router.post('/add', auth.required, function(req, res) {
         .catch(err => res.status(400).send(err));
 });
 
-router.post('/formAdd', auth.required, function(req, res) {
+router.post('/form', auth.required, function(req, res) {
     const { payload: { id } } = req;
     RivenProcess.addOrUpdate(req.body, id)
         .then(riven => res.render('rivenDetails', { riven: riven }))

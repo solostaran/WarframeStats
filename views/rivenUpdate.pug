@@ -1,0 +1,91 @@
+extends layout
+
+block link
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/dp/dp.css')
+
+block scripts
+    script.
+        var riven = !{JSON.stringify(riven)};
+    script(src='/javascripts/rivenScripts.js')
+    script(src='/javascripts/updateRivenScripts.js')
+
+block content
+    // special invisible Div
+    div(id='condition-exemple' hidden=true)
+        label(for='cond-select') To be modified
+        select(name = 'conditions[]' id = 'cond-select')
+            option none
+            each val in conditions.optionals
+                option(value= val._id) #{val.description}
+        span(onClick='removeRow();' style='margin-left: 20px;') [-]
+        span(onClick='addRow();' style='margin-left: 20px;') [+]
+        br
+        br
+    h1 Modify a Riven
+    // Riven update form
+    form(method='POST' action='/riven/form' onsubmit='return validateForm(this);')
+        if (riven)
+            div
+                label(for='id') ID of the riven
+                input(type='text' name='_id' id='id' size='24' value=riven._id readonly)
+            br
+        label(for='riven-type') Type :
+        select(name = 'type' id = 'riven-type')
+            each val in types
+                if (riven.type._id.toString() === val._id.toString())
+                    option(value= val._id selected) #{val.name}
+                else
+                    option(value= val._id) #{val.name}
+        br
+        br
+        label(for='weaponName') Weapon Name :
+        input(name='weaponName' id='weaponName' value=riven.weaponName)
+        br
+        br
+        label(for='note') Additional information :
+        input(name='note' id='note' size='40' value=riven.note)
+        br
+        br
+        - var nbcond = riven.conditions.length
+        label(for='mcondition') Mandatory Condition :
+        select(name = 'conditions[]' id='mcondition')
+            option none
+            each val in conditions.mandatories
+                if (nbcond > 0 && riven.conditions[0]._id.toString() === val._id.toString())
+                    option(value= val._id selected) #{val.description}
+                else
+                    option(value= val._id) #{val.description}
+        if (nbcond > 1)
+            span(id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;' hidden) [+]
+        else
+            span(id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;') [+]
+        br
+        label(for='conditionVariable') Mandatory condition variable 'N' :
+        input(type='number' min='0' id='conditionVariable' name='N' value=riven.N)
+        br
+        br
+        div(id='condition-rows')
+            - var index = 1
+            while index < nbcond
+                div(id='condition-row' + index)
+                    label(for='cond-select' + index) Optional condition #{index} :
+                    select(name = 'conditions[]' id = 'cond-select' + index)
+                        option none
+                        each val in conditions.optionals
+                            if (riven.conditions[index]._id.toString() === val._id.toString())
+                                option(value= val._id selected) #{val.description}
+                            else
+                                option(value= val._id) #{val.description}
+                    if (index < nbcond - 1)
+                        span(onClick='removeRow(this);' style='margin-left: 20px;' hidden=true) [-]
+                    else
+                        span(onClick='removeRow(this);' style='margin-left: 20px;') [-]
+                    if (index < nbcond - 1 || index >= 5)
+                        span(onClick='addRow();' style='margin-left: 20px;' hidden=true) [+]
+                    else
+                        span(onClick='addRow();' style='margin-left: 20px;') [+]
+                - index++
+        br
+        br
+        input(name='submit' type='submit' value='Update Riven' style='margin-left: 20px;')

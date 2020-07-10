@@ -19,6 +19,10 @@ const adds = function(listOfBoosterType) {
         ;
 };
 
+const update = function(boosterType) {
+    return BoosterTypes.findByIdAndUpdate(boosterType._id, {name: boosterType.name, description: boosterType.description, url: boosterType.url}).exec();
+}
+
 const findById = function(id) {
     return BoosterTypes.findById(id).exec();
 };
@@ -53,6 +57,7 @@ const deleteAll = function() {
 exports.list = list;
 exports.add = add;
 exports.adds = adds;
+exports.update = update;
 exports.findById = findById;
 exports.findByName = findByName;
 exports.findByIdOrName = findByIdOrName;

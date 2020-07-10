@@ -29,6 +29,13 @@ router.post('/adds', auth.required, function(req, res) {
         .catch(err => res.status(400).send('Invalid body, '+err));
 });
 
+router.put('/update', auth.required, function(req, res) {
+   RewardTypeProcess
+       .update(req.body)
+       .then(ret => res.json({_id: ret._id, oldName: ret.name, newName: req.body.name}))
+       .catch(err => res.status(400).send('Invalid body, '+err));
+});
+
 router.get('/:id', auth.optional, function (req, res) {
     RewardTypeProcess.findById(req.params.id)
         .then(ret => {

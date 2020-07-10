@@ -17,6 +17,10 @@ const adds = function(listOfRivenType) {
         .insertMany(listOfRivenType, { ordered: true, rawResult: true });
 };
 
+const update = function(rivenType) {
+    return RivenTypes.findByIdAndUpdate(rivenType._id, {name: rivenType.name}).exec();
+}
+
 const findById = function(id) {
     return RivenTypes.findById(id).exec();
 };
@@ -53,6 +57,7 @@ const deleteAll = function() {
 exports.list = list;
 exports.add = add;
 exports.adds = adds;
+exports.update = update;
 exports.findById = findById;
 exports.findByIdOrName = findByIdOrName;
 exports.deleteOneById = deleteOneById;

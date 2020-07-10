@@ -9,8 +9,8 @@ const list = function() {
     return RewardTypes.find({}).exec();
 };
 
-const add = function(oneBoosterType) {
-    const newObj = new RewardTypes(oneBoosterType);
+const add = function(oneRewardType) {
+    const newObj = new RewardTypes(oneRewardType);
     return newObj.save();
 };
 
@@ -18,6 +18,10 @@ const adds = function(listOfBoosterType) {
     return RewardTypes.collection
         .insertMany(listOfBoosterType, { ordered: true, rawResult: true });
 };
+
+const update = function(rewardType) {
+    return RewardTypes.findByIdAndUpdate(rewardType._id, {name: rewardType.name}).exec();
+}
 
 const findById = function(id) {
     return RewardTypes.findById(id).exec();
@@ -53,6 +57,7 @@ const deleteAll = function() {
 exports.list = list;
 exports.add = add;
 exports.adds = adds;
+exports.update = update;
 exports.findById = findById;
 exports.findByName = findByName;
 exports.findByIdOrName = findByIdOrName;
