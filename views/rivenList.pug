@@ -23,6 +23,7 @@ block content
                         //th Date
                         th Type
                         th Additional information
+                        th Weapon Name
                     tbody
                         each val in rivens
                             tr
@@ -34,3 +35,4 @@ block content
                                 //    td
                                 td(style='padding:5px')= val.type.name
                                 td(style='padding:5px')= val.note
+                                td(style='padding:5px')= val.weaponName

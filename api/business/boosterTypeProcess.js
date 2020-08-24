@@ -7,6 +7,15 @@ const list = function() {
     return BoosterTypes.find({}).exec();
 };
 
+const to_array = async function() {
+    let retArray = [];
+    const boosterTypes = await BoosterTypes.find({}).exec();
+    for (let booster of boosterTypes) {
+        retArray[booster._id] = booster.name;
+    }
+    return retArray;
+};
+
 const add = function(oneBoosterType) {
     const newObj = new BoosterTypes(oneBoosterType);
     return newObj.save();
@@ -55,6 +64,7 @@ const deleteAll = function() {
 };
 
 exports.list = list;
+exports.to_array = to_array;
 exports.add = add;
 exports.adds = adds;
 exports.update = update;

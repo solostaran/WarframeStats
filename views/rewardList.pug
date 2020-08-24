@@ -62,6 +62,7 @@ block content
                         th ID
                         th Date
                         th Type
+                        th Additional information
                 tbody
                     each val in rewards
                         tr
@@ -72,3 +73,7 @@ block content
                             else
                                 td
                             td(style='padding:5px')= val.type.name
+                            if (val.booster)
+                                td(style='padding:5px')= boosterTypes[val.booster]
+                            if (val.riven)
+                                td(style='padding:5px')= val.riven.weaponName

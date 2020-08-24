@@ -13,7 +13,7 @@ router.get('/', auth.required, async function (req, res, next) {
     try {
         const rivenTypes = await RivenTypeProcess.list();
         const rivenConditions = await RivenConditionProcess.formattedList();
-        console.log("manda="+rivenConditions.mandatories.length+", opt="+rivenConditions.optionals.length);
+        //console.log("manda="+rivenConditions.mandatories.length+", opt="+rivenConditions.optionals.length);
         res.render('rivenForm', {title: 'Riven Form', types: rivenTypes, conditions: rivenConditions});
     } catch (err) {
         res.render('error', {err: err});
