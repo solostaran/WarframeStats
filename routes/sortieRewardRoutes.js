@@ -15,9 +15,9 @@ router.get('/', auth.optional, function (req, res) {
 
 router.post('/add', auth.required, function(req, res) {
     const { payload: { id } } = req;
-    SortieRewardProcess.addOrUpdate(req.body, id,
-        ret => res.json(ret),
-        err => res.status(400).send('Invalid body, '+err));
+    SortieRewardProcess.addOrUpdate(req.body, id)
+        .then(ret => res.json(ret))
+        .catch(err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/adds', auth.required, function(req, res) {
@@ -29,8 +29,8 @@ router.post('/adds', auth.required, function(req, res) {
 
 router.post('/form', auth.required, function(req, res) {
     const { payload: { id } } = req;
-    SortieRewardProcess.addOrUpdate(req.body, id,
-        ret => SortieRewardProcess.findById(
+    SortieRewardProcess.addOrUpdate(req.body, id)
+        .then(ret => SortieRewardProcess.findById(
             ret._id,
             reward => res.render('rewardDetails',
                 {
@@ -39,8 +39,8 @@ router.post('/form', auth.required, function(req, res) {
                     reward: reward
                 }),
             err => res.status(400).send(err)
-        ),
-        err => res.status(400).send(err));
+        ))
+        .catch(err => res.status(400).send(err));
 });
 
 router.get('/:id', auth.optional, function (req, res) {
@@ -70,15 +70,15 @@ router.get('/view/:id', auth.optional, function(req, res) {
 });
 
 router.delete('/delete/:id', auth.required, function(req, res) {
-    SortieRewardProcess.deleteOneById(req.params.id,
-        ret => res.status(200).send(ret),
-        err => res.status(500).send("Cannot delete, "+err));
+    SortieRewardProcess.deleteOneById(req.params.id)
+        .then(ret => res.status(200).send(ret))
+        .catch(err => res.status(400).send("Cannot delete : "+err));
 });
 
 router.delete('/deleteall', auth.required, function(req, res) {
-    SortieRewardProcess.deleteAll(
-        ret => res.status(200).send(ret),
-        err => res.status(500).send("Cannot delete all rewards in DB, "+err));
+    SortieRewardProcess.deleteAll()
+        .then(ret => res.status(200).send(ret))
+        .catch(err => res.status(500).send("Cannot delete all rewards in DB, "+err));
 });
 
 module.exports = router;

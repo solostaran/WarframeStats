@@ -19,14 +19,22 @@ const RivenConditionSchema = new Schema({
         type: [String],
         required: false,
         default: undefined
+    },
+    createdBy : {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+        required: false
+    },
+    modifiedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+        required: false
     }
-}, {
-    versionKey: false
 });
 
 // Without the following code, advices will be created to [] even if there is no advice.
 // But I would like it to be 'undefined'
-// Workaround: add 'default: undefined' in the Schema
+// another workaround: add 'default: undefined' in the Schema
 
 // RivenConditionSchema.pre('save', function (next) {
 //     if (this.isNew && 0 === this.advices.length) {

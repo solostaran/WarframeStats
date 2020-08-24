@@ -28,11 +28,13 @@ const getTokenFromRequest = (req) => {
 const auth = {
     required: jwt({
         secret: sec_string,
+        algorithms: ['HS256'],
         userProperty: 'payload',
         getToken: getTokenFromRequest,
     }),
     optional: jwt({ // allows us to define unprotected routes while still identifying registered users
         secret: sec_string,
+        algorithms: ['HS256'],
         userProperty: 'payload',
         getToken: getTokenFromRequest,
         credentialsRequired: false,

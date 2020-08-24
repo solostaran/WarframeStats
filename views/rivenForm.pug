@@ -17,7 +17,7 @@ block content
         br
     h1 Create a new Riven
     // Riven creation form
-    form(method='POST' action='/riven/formAdd' onsubmit='return validateForm(this);')
+    form(method='POST' action='/riven/form' onsubmit='return validateForm(this);')
         label(for='riven-type') Type :
         select(name = 'type' id = 'riven-type')
             each val in types
@@ -26,6 +26,10 @@ block content
         br
         label(for='weaponName') Weapon Name :
         input(name='weaponName' id='weaponName')
+        br
+        br
+        label(for='note') Additional information :
+        input(name='note' id='note' size='40')
         br
         br
         label(for='mcondition') Mandatory Condition :

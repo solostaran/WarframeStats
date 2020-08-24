@@ -3,56 +3,61 @@
 const mongoose = require('mongoose');
 const RivenTypes = mongoose.model('RivenType');
 
-const list = function(onFound, onError) {
-    RivenTypes.find({}).then(onFound).catch(onError);
+const list = function() {
+    return RivenTypes.find({}).exec();
 };
 
-const add = function(oneRivenType, onSuccess, onError) {
+const add = function(oneRivenType) {
     const newRT = new RivenTypes(oneRivenType);
-    newRT.save().then(onSuccess).catch(onError);
+    return newRT.save();
 };
 
-const adds = function(listOfRivenType, onSuccess, onError) {
-    RivenTypes.collection
-        .insertMany(listOfRivenType, { ordered: true, rawResult: true })
-        //.save(listOfRivenType)
-        .then(onSuccess)
-        .catch(onError);
+const adds = function(listOfRivenType) {
+    return RivenTypes.collection
+        .insertMany(listOfRivenType, { ordered: true, rawResult: true });
 };
 
-const findById = function(id, onFound, onError) {
-    RivenTypes.findById(id).then(onFound).catch(onError);
+const update = function(rivenType) {
+    return RivenTypes.findByIdAndUpdate(rivenType._id, {name: rivenType.name}).exec();
+}
+
+const findById = function(id) {
+    return RivenTypes.findById(id).exec();
 };
 
-const findByName = function(param, onFound, onError) {
-    RivenTypes
+const findByName = function(param) {
+    return RivenTypes
         .find({ name: { $regex : new RegExp(param, "i") } })
-        .then(ret => onFound(ret[0]))
-        .catch(onError);
+        .exec();
 };
 
-const findByIdOrName = function(param, onFound, onError) {
-    findById(param, onFound, () => { findByName(param, onFound, onError); });
+const findByIdOrName = async function(param) {
+    try {
+        return await findById(param);
+    } catch (err) {}
+    const ret = await findByName(param);
+    if (ret.length === 1)
+        return ret[0];
+    return null;
 };
 
-const deleteOneById = function(id, onDelete, onError) {
-    RivenTypes
+const deleteOneById = function(id) {
+    return RivenTypes
         .deleteOne({ '_id': id})
-        .then(onDelete)
-        .catch(onError);
+        .exec();
 
 };
 
-const deleteAll = function(onDelete, onError) {
-    RivenTypes.collection
+const deleteAll = function() {
+    return RivenTypes
         .deleteMany({})
-        .then(onDelete)
-        .catch(onError);
+        .exec();
 };
 
 exports.list = list;
 exports.add = add;
 exports.adds = adds;
+exports.update = update;
 exports.findById = findById;
 exports.findByIdOrName = findByIdOrName;
 exports.deleteOneById = deleteOneById;

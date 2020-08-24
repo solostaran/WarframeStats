@@ -6,7 +6,7 @@
       <env name="DOCKER" value="false" />
     </envs>
     <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
-      <browser url="http://localhost:3000/" />
+      <browser name="b2a9dca7-9d0b-4e1e-98a8-afb19c1328d2" start="true" url="https://localhost/" />
     </EXTENSION>
     <method v="2" />
   </configuration>

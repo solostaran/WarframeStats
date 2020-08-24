@@ -4,9 +4,29 @@ block scripts
 
 block content
     h1 Riven
-    p id = #{riven._id}
-    p type = #{riven.type.name}
-    p weaponName = #{riven.weaponName}
+    p
+        label(for='id') Riven ID :
+        input(id='id' value=riven._id readonly size=24)
+        br
+        label(for='createdDate') Created in database at :
+        input(id='createdDate' value=riven.Created_date readonly size=24)
+        br
+        label(for='createdBy') Created by :
+        input(id='createdBy' value=riven.createdBy.email readonly)
+        br
+        if (riven.modifiedBy)
+            label(for='modifiedBy') Modified by :
+            input(id='modifiedBy' value=riven.modifiedBy.email readonly)
+    p
+        label(for='type') Type :
+        input(id='type' value=riven.type.name readonly)
+    if (riven.note)
+        p
+            label(for='note') Additional information :
+            input(id='note' value=riven.note readonly size=30)
+    p
+        label(for='weaponName') Weapon Name :
+        input(id='weaponName' value=riven.weaponName readonly)
     p Challenge :
     ul
         for condition in riven.conditions
@@ -18,3 +38,6 @@ block content
                 if condition.advices
                     for advice in condition.advices
                         li= 'advice ' + n++ + ' : ' + advice
+    br
+    form(action='/rivenForm/' + riven._id)
+        input(type="submit" value='Edit Riven' style='margin-left:20px;')

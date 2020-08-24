@@ -26,6 +26,14 @@ const RivenSchema = new Schema({
         default: 0,
         required: false
     },
+    Created_date: {
+        type: Date,
+        default: Date.now
+    },
+    note: {
+        type: String,
+        required: true
+    },
     createdBy : {
         type: Schema.Types.ObjectId,
         ref: 'Users',
