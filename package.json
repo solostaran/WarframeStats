@@ -20,7 +20,7 @@
     "node-excel-to-json": "0.0.3",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "tv4-node": "0.0.1",
     "xlsx": "^0.14.5"
   }
