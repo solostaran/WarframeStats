@@ -1,2 +1,3 @@
 $env:NODE_ENV = "production"
-npm run start
+cd "c:\Dev\WarframeStats\app-warstats\"
+node "bin/www"

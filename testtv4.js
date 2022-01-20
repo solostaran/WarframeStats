@@ -1,11 +1,11 @@
-const tv4 = require("tv4-node").tv4;
+const tv4 = require("tv4");
 
-var jsonData = [
+const jsonData = [
     {
         "_id": "5c796514dcfbfe51dcc71e19",
         "name": "primary"
     }];
-var schema = {
+const schema = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type":"array",
     "items": {
@@ -21,5 +21,5 @@ var schema = {
         "required": ["_id", "name"]
     }
 };
-var valid = tv4.validate(jsonData, schema);
+let valid = tv4.validate(jsonData, schema);
 console.log(valid);
