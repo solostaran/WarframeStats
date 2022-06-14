@@ -1,0 +1,18 @@
+extends layout
+
+block link
+	link(rel='stylesheet', href='/stylesheets/style.css')
+	link(rel='stylesheet', href='/dp/dp.css')
+
+block scripts
+	script(src='/dp/dp.js')
+
+block content
+	h1= title
+	p= 'There are '+events.length+' ongoing events.'
+	ul
+		for event in events
+			h3= event.description
+			p= event.tooltip
+			p= 'Expiration date = '+event.expiry
+			br

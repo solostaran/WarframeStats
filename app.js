@@ -78,6 +78,8 @@ const sortieRewardRoute = require('./routes/sortieRewardRoutes');
 app.use('/reward', sortieRewardRoute);
 const usersRoute = require('./routes/usersRoutes');
 app.use('/users', usersRoute);
+const worldStateRoute = require('./routes/worldStateRoute');
+app.use('/worldState', worldStateRoute);
 
 // XLSX 2 JSON
 const enhancedExcel2json = require('./excel2json/enhancedExcel2json.js');
