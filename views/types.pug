@@ -1,11 +1,27 @@
 extends layout
 
-block scripts
-
 block content
-    = 'List of '
-    a(href='https://warframe.fandom.com/wiki/Riven_Mods') Riven
-    = ' Types'
-    ul
-        for type in types
-            li= type.name
+	script.
+		var navitem = document.getElementById('nav-rivtyp');
+		navitem.classList.add('active');
+
+	//div(class='container')
+	//    h3.
+	//        List of #[a(href='https://warframe.fandom.com/wiki/Riven_Mods') Riven] Types
+	//    ul(class='striped-list')
+	//        for type in types
+	//            li= type.name
+	//    br
+	//    h1= coucou
+
+	div(class='container-fluid')
+		div(class='row ms-1')
+			table(class='table table-responsive table-striped table-hover')
+				thead
+					tr
+						th.
+							List of #[a(href='https://warframe.fandom.com/wiki/Riven_Mods') Riven] Types
+				tbody
+					for type in types
+						tr
+							td= type.name

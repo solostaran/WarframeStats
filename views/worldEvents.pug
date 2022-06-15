@@ -1,18 +1,20 @@
 extends layout
 
-block link
-	link(rel='stylesheet', href='/stylesheets/style.css')
-	link(rel='stylesheet', href='/dp/dp.css')
-
-block scripts
-	script(src='/dp/dp.js')
-
 block content
-	h1= title
-	p= 'There are '+events.length+' ongoing events.'
-	ul
-		for event in events
-			h3= event.description
-			p= event.tooltip
-			p= 'Expiration date = '+event.expiry
-			br
+	script.
+		var navitem = document.getElementById('nav-events');
+		navitem.classList.add('active');
+
+	div(class='container-fluid')
+		div(class='row ms-1')
+			h2= title
+			p= 'There are ' + events.length + ' ongoing events.'
+		div(class='row ms-1')
+			table(class='table table-responsive table-striped table-hover')
+				tbody
+					for event in events
+						tr
+							td
+								h4= event.description
+								p= event.tooltip
+								p= 'Expiration date = '+event.expiry.substring(0, 16).replace('T', ', ')

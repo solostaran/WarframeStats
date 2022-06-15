@@ -1,23 +1,32 @@
 extends layout
 
 block content
-    h1= title
-    if (stats)
-        p= totalCount + ' rewards.'
-        table(border=0)
-            thead
-                th Reward type
-                th(style='padding-right:15px;') Count
-                th Percentage
-            tbody
-                for stat in stats
-                    tr
-                        td(style='padding-right:15px;')
-                            if stat.type.name.search('Riven') >= 0
-                                a(href='/stats/riven')= stat.type.name
-                            else if stat.type.name.search('Booster') >= 0
-                                a(href='/stats/booster')= stat.type.name
-                            else
-                                = stat.type.name
-                        td= stat.count
-                        td= Number.parseFloat(stat.count * 100 / totalCount).toFixed(1) + '%'
+	script.
+		document.getElementById('nav-stats').classList.add('active');
+
+	div(class='container-fluid')
+		div(class='row ms-1')
+			if (stats)
+				h2= title
+				p=	totalCount + ' rewards.'
+				div(class='row ms-1')
+					table(class='table table-responsive table-striped table-hover')
+						thead
+							tr
+								th Reward type
+								th(style='padding-right:15px;') Count
+								th Percentage
+						tbody
+							for stat in stats
+								tr
+									td(style='padding-right:15px;')
+										if stat.type.name.search('Riven') >= 0
+											a(href='/stats/riven')= stat.type.name
+										else if stat.type.name.search('Booster') >= 0
+											a(href='/stats/booster')= stat.type.name
+										else
+											= stat.type.name
+									td= stat.count
+									td= Number.parseFloat(stat.count * 100 / totalCount).toFixed(1) + '%'
+			else
+				h2 No stats !

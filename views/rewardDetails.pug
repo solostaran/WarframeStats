@@ -1,6 +1,10 @@
 extends layout
 
 block content
+    script.
+        var navitem = document.getElementById('nav-rewlist');
+        navitem.classList.add('active');
+
     h1 Reward
     label(for='type') This reward is :
     input(id='type' size='24' value=reward.type.name readonly)

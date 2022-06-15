@@ -1,9 +1,13 @@
 extends layout
 
-block scripts
+block append scripts
     script(src='/javascripts/rivenScripts.js')
 
 block content
+    script.
+        var navitem = document.getElementById('nav-rivform');
+        navitem.classList.add('active');
+
     // special invisible Div
     div(id='condition-exemple' hidden=true)
         label(for='cond-select') To be modified

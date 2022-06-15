@@ -1,79 +1,86 @@
 extends layout
 
-block link
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/dp/dp.css')
+block append link
+	link(rel='stylesheet', href='/dp/dp.css')
 
-block scripts
-    script(src='/dp/dp.js')
-    script(src='/javascripts/rewardListScripts.js')
+block append scripts
+	script(src='/dp/dp.js')
+	script(src='/javascripts/rewardListScripts.js')
 
 block content
-    - nbRewards = totalCount;
-    if rewards.length === 0
-        h2 Empty list
-    else
-        h1(style='margin-top:20px;') Rewards from #{offset + 1} to #{offset + rewards.length} over #{totalCount} rewards.
-        br
-        form(action='/rewardForm/list' id="formOptions" method='post')
-            div(class='grid-container')
-                div
-                    if (offset > 0)
-                        button(style='margin-left:5px' onclick="return first();" type='submit') first
-                        button(style='margin-left:5px' onclick="return previous();" type='submit') <==
-                    else
-                        button(style='margin-left:5px' disabled) first
-                        button(style='margin-left:5px' disabled) <==
-                    input(type='text' id='nb' name='nb' size='6' value=nb onchange='onChangeNb();' style='text-align: center; margin-left: 5px;')
-                    input(type='hidden' id='offset' name='offset' value=offset)
-                    if (hasNext === true)
-                        button(style='margin-left:5px' onclick="return next();" type='submit') ==>
-                    else
-                        button(style='margin-left:5px' disabled) ==>
-                    if (offset + nb < totalCount)
-                        button(style='margin-left:5px' onclick="return last("+totalCount+");") last
-                    else
-                        button(style='margin-left:5px' disabled) last
-                div
-                    label(for='dateLow' style='margin-right:5px;') Date >=
-                    button(onclick="return resetDate(this.nextElementSibling);" type='button') X
-                    input(type='text' name='dateLow' id='dateLow' size='12' value=dateLow readonly)
-                    input(type='hidden' readonly)
-                    button(onclick="return toggleDatepicker1(this.previousElementSibling);" type='button') Pick Date
-                div
-                    label(for='dateHigh' style='margin-right:5px;') Date <=
-                    button(onclick="return resetDate(this.nextElementSibling);" type='button') X
-                    input(type='text' name='dateHigh' id='dateHigh' size='12' value=dateHigh readonly)
-                    input(type='hidden' readonly)
-                    button(onclick="return toggleDatepicker2(this.previousElementSibling);" type='button') Pick Date
-                div
-                    label(for='perType') Filter by type :
-                    select(name='type' id='perType' onchange='onSelect(this)')
-                        option -
-                        each type in rewardTypes
-                            if (rewardTypeSelected && (rewardTypeSelected.toString() === type._id.toString()))
-                                option(value= type._id selected) #{type.name}
-                            else
-                                option(value= type._id) #{type.name}
-        div(class='marginTop')
-            table(border=0)
-                thead
-                    tr
-                        th ID
-                        th Date
-                        th Type
-                        th Additional information
-                tbody
-                    each val in rewards
-                        tr
-                            td(style='padding:5px')
-                                a(href='/reward/view/'+val._id)= '...'+val._id.toString().substr(-5, 5)
-                            if (val.date)
-                                td(style='padding:5px')= date2string(val.date)
-                            else
-                                td
-                            td(style='padding:5px')= val.type.name
-                            if (val.booster)
-                                td(style='padding:5px')= boosterTypes[val.booster]
-                            if (val.riven)
-                                td(style='padding:5px')= val.riven.weaponName
+	script.
+		document.getElementById('nav-rewlist').classList.add('active');
+
+	- nbRewards = totalCount;
+	if rewards.length === 0
+		h2 Empty list
+	else
+		div(class='container-fluid')
+			div(class='row ms-1')
+				h1(style='margin-top:20px;') Rewards from #{offset + 1} to #{offset + rewards.length} over #{totalCount} rewards.
+			form(action='/rewardForm/list' id="formOptions" method='post')
+				div(class='row ms-1')
+					div(class='col-sm p-1')
+						if (offset > 0)
+							button(style='margin-left:5px' onclick="return first();" type='submit') first
+							button(style='margin-left:5px' onclick="return previous();" type='submit') <==
+						else
+							button(style='margin-left:5px' disabled) first
+							button(style='margin-left:5px' disabled) <==
+						input(type='text' id='nb' name='nb' size='6' value=nb onchange='onChangeNb();' style='text-align: center; margin-left: 5px;')
+						input(type='hidden' id='offset' name='offset' value=offset)
+						if (hasNext === true)
+							button(style='margin-left:5px' onclick="return next();" type='submit') ==>
+						else
+							button(style='margin-left:5px' disabled) ==>
+						if (offset + nb < totalCount)
+							button(style='margin-left:5px' onclick="return last("+totalCount+");") last
+						else
+							button(style='margin-left:5px' disabled) last
+					div(class='col-sm p-1')
+						label(for='dateLow' style='margin-right:5px;') Date >=
+						button(onclick="return resetDate(this.nextElementSibling);" type='button') X
+						input(type='text' name='dateLow' id='dateLow' size='12' value=dateLow readonly)
+						input(type='hidden' readonly)
+						button(onclick="return toggleDatepicker1(this.previousElementSibling);" type='button') Pick Date
+					div(class='col-sm p-1')
+							label(for='dateHigh' style='margin-right:5px;') Date <=
+							button(onclick="return resetDate(this.nextElementSibling);" type='button') X
+							input(type='text' name='dateHigh' id='dateHigh' size='12' value=dateHigh readonly)
+							input(type='hidden' readonly)
+							button(onclick="return toggleDatepicker2(this.previousElementSibling);" type='button') Pick Date
+					div(class='col-sm p-1')
+						label(for='perType') Filter by type :
+						select(name='type' id='perType' onchange='onSelect(this)')
+							option -
+							each type in rewardTypes
+								if (rewardTypeSelected && (rewardTypeSelected.toString() === type._id.toString()))
+									option(value= type._id selected) #{type.name}
+								else
+									option(value= type._id) #{type.name}
+				div(class='row ms-1')
+					table(class='table table-responsive table-striped table-hover')
+						thead
+							tr
+								th ID
+								th Date
+								th Type
+								th Additional information
+						tbody
+							each val in rewards
+								tr
+									td
+										a(href='/reward/view/'+val._id)= '...'+val._id.toString().substr(-5, 5)
+									if (val.date)
+										td= date2string(val.date)
+									else
+										td -
+									td= val.type.name
+									td
+										if (val.booster)
+											span= boosterTypes[val.booster]
+										else
+											if (val.riven)
+												span= val.riven.weaponName
+											else
+												span -

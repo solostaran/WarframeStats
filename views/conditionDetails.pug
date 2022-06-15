@@ -1,9 +1,13 @@
 extends layout
 
-block scripts
+block append scripts
     script(src='/javascripts/conditionScripts.js')
 
 block content
+    script.
+        var navitem = document.getElementById('nav-rivcond');
+        navitem.classList.add('active');
+
     // invisible Divs, ready for cloning
     div(id='div-advice-example' hidden=true)
         label(for='advice-example') Advice

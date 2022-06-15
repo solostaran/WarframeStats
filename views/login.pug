@@ -1,6 +1,10 @@
 extends layout
 
 block content
+    script.
+        var navitem = document.getElementById('nav-login');
+        navitem.classList.add('active');
+
     h1 Login to Warframe Stats
     form(action='/users/loginFormProcess' method='post')
         p

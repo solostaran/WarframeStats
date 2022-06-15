@@ -1,10 +1,10 @@
 extends layout
 
-block link
+block append link
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/dp/dp.css')
 
-block scripts
+block append scripts
     script.
         var riven = !{JSON.stringify(riven)};
     script(src='/javascripts/rivenScripts.js')

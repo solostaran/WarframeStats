@@ -1,14 +1,17 @@
 extends layout
 
-block link
-    link(rel='stylesheet', href='/stylesheets/style.css')
+block append link
     link(rel='stylesheet', href='/dp/dp.css')
 
-block scripts
+block append scripts
     script(src='/dp/dp.js')
     script(src='/javascripts/rewardScripts.js')
 
 block content
+    script.
+        var navitem = document.getElementById('nav-rewform');
+        navitem.classList.add('active');
+
     // special invisible Divs
     div(id='boosters' hidden=true)
         label(for='booster-select') Select a booster type :
