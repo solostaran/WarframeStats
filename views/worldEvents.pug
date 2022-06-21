@@ -5,11 +5,11 @@ block content
 		var navitem = document.getElementById('nav-events');
 		navitem.classList.add('active');
 
-	div(class='container-fluid')
-		div(class='row ms-1')
-			h2= title
+	div(class='container-lg')
+		div(class='row')
+			h3= title
 			p= 'There are ' + events.length + ' ongoing events.'
-		div(class='row ms-1')
+		div(class='row')
 			table(class='table table-responsive table-striped table-hover')
 				tbody
 					for event in events
@@ -17,4 +17,4 @@ block content
 							td
 								h4= event.description
 								p= event.tooltip
-								p= 'Expiration date = '+event.expiry.substring(0, 16).replace('T', ', ')
+								p= 'Expiration date = '+new Date(event.expiry).toLocaleString()

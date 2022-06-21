@@ -4,12 +4,12 @@ block content
 	script.
 		document.getElementById('nav-rivcond').classList.add('active');
 
-	div(class='container-fluid')
-		div(class='row ms-1')
+	div(class='container-lg')
+		div(class='row')
 			table(class='table table-responsive table-striped table-hover')
 				thead
 					tr
-						th(style='colspan:2;')
+						th(colspan=2)
 							div List of Riven Challenges and conditions
 							div(class='float-right').
 								or #[a(href='/conditions/form') Create a new riven condition]
@@ -17,7 +17,7 @@ block content
 					for condition in conditions
 						tr
 							td(class='text-center align-middle')
-								a(href='/conditions/form/' + condition._id) edit
+								a(class='btn btn-outline-info', href='/conditions/form/' + condition._id) edit
 							td
 								= condition.description
 								ul

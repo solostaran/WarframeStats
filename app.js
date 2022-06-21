@@ -81,6 +81,8 @@ app.use('/users', usersRoute);
 const worldStateRoute = require('./routes/worldStateRoute');
 app.use('/worldState', worldStateRoute);
 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 // XLSX 2 JSON
 const enhancedExcel2json = require('./excel2json/enhancedExcel2json.js');
 app.post('/enhanced-excel-to-json', function(req, res) {

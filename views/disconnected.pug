@@ -1,11 +1,13 @@
 extends layout
 
 block scripts
-    script.
-        window.onload = function() {
-            setTimeout(function() {window.location.href = '/';}, 4000);
-        };
+	script.
+		window.onload = function() {
+				setTimeout(function() {window.location.href = '/';}, 4000);
+		};
 
 block content
-    h1 Whoever you are, you have been disconnected !
-    i In fact I know you : #{user.email}
+	div(class='container-fluid')
+		div(class='row m-1')
+			h3 Whoever you are, you have been disconnected !
+			i(class="text-muted") In fact I know you : #{user.email}

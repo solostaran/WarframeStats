@@ -11,6 +11,11 @@ function validateForm(formObj) {
         alert('No mandatory condition is selected');
         return false;
     }
+    const date = $('date');
+    if (date.value.length === 0) {
+        alert('Should have a date');
+        return false;
+    }
     // if (riven && !riven.childNodes[5].value) {
     //     alert('weaponName is empty !');
     //     return false;
@@ -49,10 +54,12 @@ function onSelect(combo) {
         nodeClone = original.cloneNode(true);
         nodeClone.id = 'riven';
         nodeClone.hidden = false;
-        nodeClone.childNodes[8].htmlFor = 'mcondition';
-        nodeClone.childNodes[9].id = 'mcondition';
-        nodeClone.childNodes[10].id = 'mand-span';
-        nodeClone.childNodes[16].id = 'condition-rows';
+        // div mandatory condition + button
+        nodeClone.childNodes[2].childNodes[0].htmlFor = 'mcondition';
+        nodeClone.childNodes[2].childNodes[1].id = 'mcondition';
+        nodeClone.childNodes[2].childNodes[2].id = 'mand-span';
+        // div optional conditions array
+        nodeClone.childNodes[4].id = 'condition-rows';
         destination.appendChild(nodeClone);
     }
 }

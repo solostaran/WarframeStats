@@ -4,12 +4,12 @@ block content
 	script.
 		document.getElementById('nav-stats').classList.add('active');
 
-	div(class='container-fluid')
-		div(class='row ms-1')
+	div(class='container-lg')
+		div(class='row m-1')
 			if (stats)
-				h2= title
+				h3= title
 				p=	totalCount + ' rewards.'
-				div(class='row ms-1')
+				div(class='row')
 					table(class='table table-responsive table-striped table-hover')
 						thead
 							tr
@@ -21,9 +21,9 @@ block content
 								tr
 									td(style='padding-right:15px;')
 										if stat.type.name.search('Riven') >= 0
-											a(href='/stats/riven')= stat.type.name
+											a(class='btn btn-outline-primary btn-sm' href='/stats/riven')= stat.type.name
 										else if stat.type.name.search('Booster') >= 0
-											a(href='/stats/booster')= stat.type.name
+											a(class='btn btn-outline-primary btn-sm' href='/stats/booster')= stat.type.name
 										else
 											= stat.type.name
 									td= stat.count

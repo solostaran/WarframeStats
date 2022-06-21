@@ -29,7 +29,7 @@ function addRow() {
     const original = document.getElementById('condition-exemple');
     const clone = original.cloneNode(true);
     clone.id = 'condition-row' + ++iClone;
-    clone.getElementsByTagName('label')[0].innerHTML = 'Optional Condition '+iClone+' : ';
+    clone.getElementsByTagName('label')[0].innerHTML = 'Optional condition '+iClone+' : ';
     clone.getElementsByTagName('label')[0].htmlFor = 'cond-select'+iClone;
     clone.getElementsByTagName('select')[0].id = 'cond-select'+iClone;
     clone.hidden = false;

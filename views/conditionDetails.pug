@@ -1,53 +1,51 @@
 extends layout
 
 block append scripts
-    script(src='/javascripts/conditionScripts.js')
+	script(src='/javascripts/conditionScripts.js')
 
 block content
-    script.
-        var navitem = document.getElementById('nav-rivcond');
-        navitem.classList.add('active');
+	script.
+		document.getElementById('nav-rivcond').classList.add('active');
 
-    // invisible Divs, ready for cloning
-    div(id='div-advice-example' hidden=true)
-        label(for='advice-example') Advice
-        input(type='text' id='advice-example' name='advices[]' size='75')
-        br
-    if (condition)
-        h2= 'Edit riven condition which id =' + condition._id
-    else
-        h2= 'Create new riven condition'
-    form(action='/riven/condition/form' id='formCond' method='post')
-        if (condition)
-            input(type='hidden' name='_id' value=condition._id)
-        label(for='desc') Description :
-        if (condition)
-            input(id='desc' name='description' type='text' size='75' value=condition.description)
-        else
-            input(id='desc' name='description' type='text' size='75')
-        br
-        br
-        label(for='opt') Optional :
-        if (condition && condition.optional)
-            input(type='checkbox' id='opt' name='optional' checked)
-        else
-            input(type='checkbox' id='opt' name='optional')
-        br
-        br
-        div(id='advices')
-            - var n = 0
-            if (condition && condition.advices)
-                for adv in condition.advices
-                    div(id='div-advice'+(++n))
-                        label(for='advice'+n) Advice #{n} :
-                        input(type='text' id='advice'+n name='advices[]' size='75' value=adv)
-                        br
-        br
-        button(onclick='return addAdvice();') Add advice
-        button(onclick='return removeAdvice();' style='margin-left:20px;') Remove last advice
-        br
-        br
-        if (condition)
-            button(type='submit' style='margin-left:20px;') Update condition
-        else
-            button(type='submit' style='margin-left:20px;') Create condition
+	// invisible Divs, ready for cloning
+	div(class='input-group mt-2' id='div-advice-example' hidden=true)
+		label(class='input-group-text' for='advice-example') Advice
+		input(class='form-control' type='text' id='advice-example' name='advices[]' size='75')
+	div(class='container-lg')
+		div(class='row')
+			if (condition)
+				h3 Edit riven condition
+				span= 'id = ' + condition._id
+			else
+				h3= 'Create new riven condition'
+		form(action='/riven/condition/form' id='formCond' method='post')
+			if (condition)
+				input(type='hidden' name='_id' value=condition._id)
+			div(class='input-group mt-2')
+				label(class='input-group-text' for='desc') Description :
+				if (condition)
+					input(class='form-control' id='desc' name='description' type='text' size='75' value=condition.description)
+				else
+					input(class='form-control' id='desc' name='description' type='text' size='75')
+			div(class='form-check mt-2')
+				label(class='form-check-label' for='opt') : Optional
+				if (condition && condition.optional)
+					input(class='form-check-input' type='checkbox' id='opt' name='optional' checked)
+				else
+					input(class='form-check-input' type='checkbox' id='opt' name='optional')
+			div(class='row' id='advices')
+				- let n = 0
+				if (condition && condition.advices)
+					for adv in condition.advices
+						div(class='input-group mt-2' id='div-advice'+(++n))
+							label(class='input-group-text' for='advice'+n) Advice #{n} :
+							input(class='form-control' type='text' id='advice'+n name='advices[]' size='75' value=adv)
+			div(class='row mt-3 ms-1')
+				button(class='btn btn-outline-info w-25' onclick='return addAdvice();') Add advice
+				button(class='btn btn-outline-info w-25' onclick='return removeAdvice();' style='margin-left:20px;') Remove last advice
+			div(class='row mt-4')
+				button(class='btn btn-outline-primary w-25 ms-5' type='submit' style='margin-left:20px;')
+					if (condition)
+						= 'Update condition'
+					else
+						= 'Create condition'

@@ -107,6 +107,7 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
 
     if(!user.password) {
         res.render('login',{
+            email: user.email,
             errors: {
                 password: 'is required',
             },
@@ -130,6 +131,7 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
             res.render('logged', { title: 'connected', connected: true, user: user.toAuthJSON() });
             return;
         }
+        info.email = user.email;
         res.render('login', info);
     })(req, res, next);
 });
