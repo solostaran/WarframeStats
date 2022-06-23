@@ -1,10 +1,27 @@
 extends layout
 
 block append link
-	link(rel='stylesheet', href='/dp/dp.css')
+	link(rel='stylesheet', href='https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css')
 
 block append scripts
-	script(src='/dp/dp.js')
+	script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+	script(src='https://code.jquery.com/ui/1.13.1/jquery-ui.js')
+	script(type='text/javascript').
+		// cf. https://jqueryui.com/datepicker/
+		$(document).ready(function() {
+			$('#startDate').datepicker({
+					dateFormat:'yy/mm/dd',
+					onSelect: function(d) {
+						$('#formOptions').submit();
+					}
+			});
+			$('#endDate').datepicker({
+					dateFormat: 'yy/mm/dd',
+					onSelect: function (d) {
+							$('#formOptions').submit();
+					}
+			});
+		});
 	script(src='/javascripts/rewardListScripts.js')
 
 block content
@@ -14,38 +31,37 @@ block content
 	- nbRewards = totalCount;
 	div(class='container-fluid')
 		div(class='row mt-1')
-			h3 Sortie Rewards from #{offset + 1} to #{offset + rewards.length} over #{totalCount} rewards.
+			if (totalCount == 0)
+				h3 No sortie rewards with current selection
+			else
+				h3 Sortie Rewards from #{offset + 1} to #{offset + rewards.length} over #{totalCount} rewards.
 		form(action='/rewardForm/list' id="formOptions" method='post')
 			div(class='row')
 				div(class='col-sm p-1')
 					if (offset > 0)
 						button(style='margin-left:5px' onclick="return first();" type='submit') first
-						button(style='margin-left:5px' onclick="return previous();" type='submit') <==
+						button(style='margin-left:5px' onclick="return previous();" type='submit') <=
 					else
 						button(style='margin-left:5px' disabled) first
-						button(style='margin-left:5px' disabled) <==
-					input(type='text' id='nb' name='nb' size='6' value=nb onchange='onChangeNb();' style='text-align: center; margin-left: 5px;')
+						button(style='margin-left:5px' disabled) <=
+					input(type='text' id='nb' name='nb' size='3' value=nb onchange='onChangeNb();' style='text-align: center; margin-left: 5px;')
 					input(type='hidden' id='offset' name='offset' value=offset)
 					if (hasNext === true)
-						button(style='margin-left:5px' onclick="return next();" type='submit') ==>
+						button(style='margin-left:5px' onclick="return next("+totalCount+");" type='submit') =>
 					else
-						button(style='margin-left:5px' disabled) ==>
+						button(style='margin-left:5px' disabled) =>
 					if (offset + nb < totalCount)
 						button(style='margin-left:5px' onclick="return last("+totalCount+");") last
 					else
 						button(style='margin-left:5px' disabled) last
 				div(class='col-sm p-1')
-					label(for='dateLow' style='margin-right:5px;') Date >=
+					label(for='startDate' style='margin-right:5px;') Date >=
 					button(onclick="return resetDate(this.nextElementSibling);" type='button') X
-					input(type='text' name='dateLow' id='dateLow' size='10' value=dateLow readonly)
-					input(type='hidden' readonly)
-					button(onclick="return toggleDatepicker1(this.previousElementSibling);" type='button') Pick Date
+					input(id='startDate' name='dateLow' type='text' size='10' value=dateLow readonly)
 				div(class='col-sm p-1')
-						label(for='dateHigh' style='margin-right:5px;') Date <=
-						button(onclick="return resetDate(this.nextElementSibling);" type='button') X
-						input(type='text' name='dateHigh' id='dateHigh' size='10' value=dateHigh readonly)
-						input(type='hidden' readonly)
-						button(onclick="return toggleDatepicker2(this.previousElementSibling);" type='button') Pick Date
+					label(for='endDate' style='margin-right:5px;') Date <=
+					button(onclick="return resetDate(this.nextElementSibling);" type='button') X
+					input(type='text' name='dateHigh' id='endDate' size='10' value=dateHigh readonly)
 				div(class='col-sm p-1')
 					label(for='perType') Filter by type :
 					select(name='type' id='perType' onchange='onSelect(this)')

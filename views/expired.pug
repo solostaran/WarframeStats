@@ -1,6 +1,6 @@
 extends layout
 
-block append scripts
+block scripts
 	script.
 		window.onload = function() {
 				setTimeout(function() {window.location.href = '/';}, 3000);
@@ -9,4 +9,4 @@ block append scripts
 block content
 	div(class='container-fluid')
 		div(class='row m-1')
-			h3= "User '" + user.email + "' logged."
+			h3 No session or session has expired.

@@ -78,7 +78,7 @@ async function provideRewardList(req, res) {
                 nb: nb,
                 dateLow: req.body.dateLow,
                 dateHigh: req.body.dateHigh,
-                hasNext: result.data.length >= nb,
+                hasNext: offset + nb < result.count,
                 totalCount: result.count,
                 boosterTypes: boosters,
                 rewardTypes: rewardTypes,
