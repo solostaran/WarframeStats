@@ -41,14 +41,16 @@ const booster = async function(onCompleted, onError) {
     const rewardBooster = await RewardTypeProcess.findByIdOrName('Booster');
     const rewards = await new Promise(callback => SortieRewardProcess.list({type: rewardBooster._id}, callback, onError));
     const types = await BoosterTypeProcess.list();
-    const typeMap = {};
-    types.map(bt => typeMap[bt._id] = bt);
     const stats = {};
+    //const typeMap = {};
+    //types.map(bt => typeMap[bt._id] = bt);
+    types.forEach(t => stats[t.name] = 0);
     rewards.data.forEach(reward => {
-        if (_.isNil(stats[typeMap[reward.booster].name]))
-            stats[typeMap[reward.booster].name] = 1;
-        else
-            stats[typeMap[reward.booster].name] += 1;
+        // if (_.isNil(stats[typeMap[reward.booster].name]))
+        //     stats[typeMap[reward.booster].name] = 1;
+        // else
+        //     stats[typeMap[reward.booster._id].name] += 1;
+            stats[reward.booster.name] += 1;
         });
     return {stats: stats, count: rewards.count};
 };

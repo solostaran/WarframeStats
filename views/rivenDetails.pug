@@ -43,8 +43,8 @@ block content
 		div(class='form-group input-group-sm p-1')
 			label(for='id') Riven ID :
 			input(class='form-control' id='id' value=riven._id readonly size=24)
-			label(for='createdDate') Created in database at :
-			input(class='form-control' id='createdDate' value=riven.Created_date readonly size=24)
+			label(for='createdDate') Created in database at this date :
+			input(class='form-control' id='createdDate' value=riven.Created_date.toLocaleString() readonly size=24)
 			label(for='createdBy') Created by :
 			input(class='form-control' id='createdBy' value=riven.createdBy.email readonly)
 			if (riven.modifiedBy)

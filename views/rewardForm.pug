@@ -9,7 +9,7 @@ block append scripts
 	script(type='text/javascript').
 		$(document).ready(function () {
 			$('#date').datepicker({
-				dateFormat: 'yy/mm/dd',
+				dateFormat: 'yy-mm-dd',
 				onSelect: function (d) {
 					$('#formOptions').submit();
 				}
