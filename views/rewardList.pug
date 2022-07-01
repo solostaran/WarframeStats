@@ -10,13 +10,13 @@ block append scripts
 		// cf. https://jqueryui.com/datepicker/
 		$(document).ready(function() {
 			$('#startDate').datepicker({
-					dateFormat:'yy/mm/dd',
+					dateFormat:'yy-mm-dd',
 					onSelect: function(d) {
 						$('#formOptions').submit();
 					}
 			});
 			$('#endDate').datepicker({
-					dateFormat: 'yy/mm/dd',
+					dateFormat: 'yy-mm-dd',
 					onSelect: function (d) {
 							$('#formOptions').submit();
 					}
@@ -91,7 +91,7 @@ block content
 								td= val.type.name
 								td
 									if (val.booster)
-										span= boosterTypes[val.booster]
+										span= val.booster.name
 									else
 										if (val.riven)
 											span= val.riven.weaponName

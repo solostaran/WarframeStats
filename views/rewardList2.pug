@@ -1,0 +1,88 @@
+extends layout
+
+block append link
+	link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css")
+	link(rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css")
+
+block append scripts
+
+block content
+	script.
+		document.getElementById('nav-rewlist2').classList.add('active');
+
+	div(class='container-fluid')
+		div(class='row')
+			div(id="toolbar-title")
+				h3 Sortie's Rewards
+			table(id="table"
+				data-content-type="application/x-www-form-urlencoded"
+				data-toolbar="#toolbar-title"
+				data-url="/rewards.json"
+				data-filter-control="true"
+				data-header-style="headerStyle"
+				data-row-style="rowStyle"
+				data-height="760"
+				data-pagination="true"
+				data-side-pagination="client"
+				data-pagination-loop="false"
+				data-page-list="[10, 20, 50, All]"
+				data-total-field="count"
+				data-data-field="items"
+				data-show-fullscreen="true"
+				data-show-search-clear-button="true")
+				thead
+					tr
+						th(data-field="details" data-formatter="detailsFormatter" data-events="detailsEvents") Details
+						th(data-field="date" data-formatter="dateFormatter" data-sortable="true") Date
+						th(data-field="type.name" data-filter-control="select") Type
+						th(data-field="riven.weaponName" data-filter-control="input") Weapon name
+						th(data-field="booster.name" data-filter-control="select") Booster Type
+		script(src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js")
+		//script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous")
+		script(src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js")
+		script(src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js")
+		script(type='text/javascript').
+			let $table = $('#table');
+
+			function rowStyle(row, index) {
+				if (index % 2 === 0)
+					return { css: { 'background': '#f0f0ff'} };
+				return { };
+			}
+
+			function headerStyle(column) {
+				return {
+					'type.name': {
+						css: {background: '#f0f0ff'}
+					},
+					'details': {
+						css: {background: '#f0f0ff'}
+					},
+					'booster.name': {
+						css: {background: '#f0f0ff'}
+					}
+				}[column.field]
+			}
+
+			function detailsFormatter(value, row, index) {
+				return [
+					'<a class="details-btn" href="javascript:void(0)" title="details">',
+					'<i class="btn btn-outline-info">More info</i>',
+					'</a>'
+				].join('');
+			};
+
+			function dateFormatter(value) {
+				return value.substring(0, 10);
+			}
+
+			window.detailsEvents = {
+				'click .details-btn': function (e, value, row, index) {
+					//alert('You click like action, row: ' + JSON.stringify(row));
+					window.location.href = 'https://localhost/reward/view/' + row._id;
+				}
+			};
+
+			$(function () {
+				$table.bootstrapTable();
+			});
