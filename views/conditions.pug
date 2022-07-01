@@ -1,22 +1,29 @@
 extends layout
 
-block scripts
-
 block content
-    h2 List of Riven Challenges and conditions
-    p= 'or '
-        a(href='/conditions/form') Create a new riven condition
-    table(border=0)
-        for condition in conditions
-            tr
-                td(style='padding-right:10px; vertical-align: top;')
-                    a(href='/conditions/form/'+condition._id) edit
-                td
-                    = condition.description
-                    ul
-                        if condition.optional && condition.optional === true
-                            li= 'This condition is an optional one'
-                        - var n = 1
-                        if condition.advices
-                            for advice in condition.advices
-                                li= 'advice '+ n++ +' : '+advice
+	script.
+		document.getElementById('nav-rivcond').classList.add('active');
+
+	div(class='container-lg')
+		div(class='row')
+			table(class='table table-responsive table-striped table-hover')
+				thead
+					tr
+						th(colspan=2)
+							div List of Riven Challenges and conditions
+							div(class='float-right').
+								or #[a(href='/conditions/form') Create a new riven condition]
+				tbody
+					for condition in conditions
+						tr
+							td(class='text-center align-middle')
+								a(class='btn btn-outline-info', href='/conditions/form/' + condition._id) edit
+							td
+								= condition.description
+								ul
+									if condition.optional && condition.optional === true
+										li= 'This condition is an optional one'
+									if condition.advices
+										- let n = 1
+										for advice in condition.advices
+											li= 'advice ' + n++ + ' : ' + advice

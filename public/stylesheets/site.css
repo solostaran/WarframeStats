@@ -1,0 +1,7 @@
+.nav-item>a:focus, .nav-item>a:hover {
+    background-color: #d0d0f0;
+}
+
+.navbar {
+    background: #e9e9ff;
+}

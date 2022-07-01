@@ -40,22 +40,22 @@ const list = function(options, onFound, onError) {
     if (_.isEmpty(params)) {
         SortieReward.find().estimatedDocumentCount().then(count => {
             if (options && Number(options.skip) >= 0 && Number(options.limit) > 0)
-                SortieReward.find(params).populate('type').sort({date: 1}).skip(options.skip).limit(options.limit).then(list => {
+                SortieReward.find(params).populate('type').populate('booster').sort({date: 1}).skip(options.skip).limit(options.limit).then(list => {
                     onFound({data: list, count: count});
                 }).catch(onError);
             else
-                SortieReward.find(params).populate('type').sort({date: 1}).then(list => {
+                SortieReward.find(params).populate('type').populate('booster').sort({date: 1}).then(list => {
                     onFound({data: list, count: count});
                 }).catch(onError);
         });
     } else {
         // NOTE: this can't work with a large amount of data
         if (options && Number(options.skip) >= 0 && Number(options.limit) > 0) {
-            SortieReward.find(params).populate('type').sort({date: 1}).then(list => {
+            SortieReward.find(params).populate('type').populate('booster').sort({date: 1}).then(list => {
                 onFound({data: list.slice(options.skip, options.skip + options.limit), count: list.length})
             }).catch(onError);
         } else {
-            SortieReward.find(params).populate('type').sort({date: 1}).then(list => {
+            SortieReward.find(params).populate('type').populate('booster').sort({date: 1}).then(list => {
                 onFound({data: list, count: list.length})
             }).catch(onError);
         }

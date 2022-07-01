@@ -16,11 +16,11 @@ function getJsDateFromExcel(excelDate) {
 
 }
 
+// Convert a date either from Excel (aka an integer since Unix Epoch)
+// or in "aaaa/mm/dd" or "aaaa-mm-dd" format.
 function value2date(val) {
-    // Convert a date either from Excel (aka an integer since Unix Epoch) or in "aaaa/mm/dd" format.
     if (isNaN(val)) {
-        // date in format : aaaa/mm/dd
-        const split = val.split('/');
+        const split = val.split(/[-/]/); // split with - or /
         return new Date(Date.UTC(split[0], split[1] - 1, split[2], 12));
     } else {
         // excel date in number since January 1, 1970
@@ -30,7 +30,7 @@ function value2date(val) {
 
 function date2string(d) {
     const split = d.toISOString().split(/\D/);
-    return split[0]+'/'+split[1]+'/'+split[2];
+    return split[0]+'-'+split[1]+'-'+split[2];
 }
 
 exports.value2date = value2date;

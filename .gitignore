@@ -173,3 +173,5 @@ typings/
 keys/
 .idea/encodings.xml
 /.idea/sonarIssues.xml
+
+*.bak

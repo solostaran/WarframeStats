@@ -1,20 +1,28 @@
 extends layout
 
 block content
-    h1 Login to Warframe Stats
-    form(action='/users/loginFormProcess' method='post')
-        p
-            label(for='email') E-Mail :
-            input(id='email' name='user[email]' type='text')
-            if (errors && errors.email)
-                = errors.email
-        p
-            label(for='password') Password :
-            input(id='password' name='user[password]' type='password')
-            if (errors && errors.password)
-                = errors.password
-        p
-            input(type='submit' value='Login')
-        p
-            if (errors && errors.info)
-                = errors.info
+	script.
+		document.getElementById('nav-login').classList.add('active');
+
+	div(class='container-lg')
+		div(class='row')
+			h3 Login to Warframe Stats
+		form(action='/users/loginFormProcess' method='post')
+			div(class='form-group mt-2')
+				label(class='col-form-label col-sm-2' for='email') E-Mail :
+				if (email)
+					input(class='col-sm-10 form-control', id='email', name='user[email]', type='text', aria-describedby="emailHelp" value=email)
+				else
+					input(class='col-sm-10 form-control', id='email', name='user[email]', type='text', aria-describedby="emailHelp" placeholder="Enter email")
+				if (errors && errors.email)
+					small(id='emailError', class="form-text", style='color: red;')= errors.email
+			div(class='form-group mt-2')
+				label(class='col-form-label col-sm-2' for='password') Password :
+				input(class='col-sm-10 form-control', id='password', name='user[password]', type='password', placeholder="Enter password")
+				if (errors && errors.password)
+					small(id='passwordError', class="form-text", style='color: red;')= errors.password
+			div(class='row mt-4')
+				input(class='btn btn-outline-primary w-25 ms-3' type='submit' value='Login')
+			div(class='row mt-2')
+				if (errors && errors.info)
+					small(id='otherError', class="form-text", style='color: red;')= errors.info

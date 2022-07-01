@@ -64,7 +64,7 @@ router.get('/', auth.required, function(req, res) {
 
 async function provideRewardList(req, res) {
     let offset = req.body.offset ? Number(req.body.offset) : 0;
-    let nb = req.body.nb ? Number(req.body.nb) : 30;
+    let nb = req.body.nb ? Number(req.body.nb) : 20;
     //const rewardTypes = await RewardTypeProcess.list();
     //const boosterTypes = await BoosterTypeProcess.to_array();
     SortieRewardProcess.list(
@@ -78,9 +78,9 @@ async function provideRewardList(req, res) {
                 nb: nb,
                 dateLow: req.body.dateLow,
                 dateHigh: req.body.dateHigh,
-                hasNext: result.data.length >= nb,
+                hasNext: offset + nb < result.count,
                 totalCount: result.count,
-                boosterTypes: boosters,
+                //boosterTypes: boosters,
                 rewardTypes: rewardTypes,
                 rewardTypeSelected: req.body.type
             });
@@ -95,6 +95,10 @@ router.post('/list', auth.optional, function(req, res) {
 
 router.get('/list', auth.optional, function(req, res) {
     provideRewardList(req, res);
+});
+
+router.get('/list2', auth.optional, function(req, res) {
+    res.render('rewardList2');
 });
 
 router.get('/:id', auth.required, function(req, res) {

@@ -1,67 +1,74 @@
 extends layout
 
-block link
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/dp/dp.css')
+block append link
+	link(rel='stylesheet', href='https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css')
 
-block scripts
-    script(src='/dp/dp.js')
-    script(src='/javascripts/rewardScripts.js')
+block append scripts
+	script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+	script(src='https://code.jquery.com/ui/1.13.1/jquery-ui.js')
+	script(type='text/javascript').
+		$(document).ready(function () {
+			$('#date').datepicker({
+				dateFormat: 'yy-mm-dd',
+				onSelect: function (d) {
+					$('#formOptions').submit();
+				}
+			});
+		});
+	script(src='/javascripts/rewardScripts.js')
 
 block content
-    // special invisible Divs
-    div(id='boosters' hidden=true)
-        label(for='booster-select') Select a booster type :
-        select(name='booster' id = 'booster-select')
-            each val in boosters
-                option(value= val._id) #{val.name}
-    div(id='condition-example' hidden=true)
-        label(for='cond-select') To be modified
-        select(name = 'rivenConditions[]' id = 'cond-select')
-            option none
-            each val in conditions.optionals
-                option(value= val._id) #{val.description}
-        span(onClick='removeRow(this);' style='margin-left: 20px;') [-]
-        span(onClick='addRow();' style='margin-left: 20px;') [+]
-    div(id='riven-example' hidden=true)
-        label(for='riven-type') Type :
-        select(name = 'rivenType' id = 'riven-type')
-            each val in rivens
-                option(value= val._id) #{val.name}
-        br
-        br
-        label(for='weaponName') Weapon Name :
-        input(name='rivenWeaponName' id='weaponName')
-        br
-        br
-        label(for='mcondition-example') Mandatory Condition :
-        select(name = 'rivenConditions[]' id='mcondition-example')
-            option none
-            each val in conditions.mandatories
-                option(value= val._id) #{val.description}
-        span(id='mand-span-example' onClick='addOptional(this)' style='margin-left: 20px;') [+]
-        br
-        label(for='rivenConditionVariable') Mandatory condition variable 'N' :
-        input(type='number' min='0' id='rivenConditionVariable' name='rivenN')
-        br
-        br
-        div(id='condition-rows-example')
-    // Beginning of visible template
-    h1 Creation of a new Sortie's Reward
-    br
-    form(method='POST' name='rewardForm' action='/reward/form' onsubmit='return validateForm(this);')
-        div
-            label(for='date') Date of reward acquisition :
-            input(type='text' name='date' id='date' size='24' readonly)
-            button(onclick="return toggleDatepicker(this.previousElementSibling);" type='button') Pick Date
-        br
-        label(for='type') Select the reward type :
-        select(name='type' id='type' onchange='onSelect(this)')
-            each val in types
-                option(value= val._id) #{val.name}
-        br
-        br
-        div(id='container')
-        br
-        br
-        input(name='submit' type='submit' value='Add Reward' style='margin-left: 20px;')
+	script.
+		document.getElementById('nav-rewform').classList.add('active');
+
+	// invisible Divs, ready for cloning
+	div(class='input-group mt-2' id='boosters' hidden=true)
+		label(class='input-group-text' for='booster-select') Select a booster type :
+		select(class='form-select' name='booster' id = 'booster-select')
+			each val in boosters
+				option(value= val._id) #{val.name}
+	div(class='input-group input-group-sm m-1 p-1' id='condition-example' hidden=true)
+		label(class='mt-1' for='cond-select') To be modified
+		select(class='form-select mx-1' name='rivenConditions[]' id='cond-select')
+			option none
+			each val in conditions.optionals
+				option(value= val._id) #{val.description}
+		span(class='btn btn-outline-info mx-2' onClick='removeRow(this);' style='font-size:larger;') -
+		span(class='btn btn-outline-info' onClick='addRow();' style='font-size:larger;') +
+	div(class='row' id='riven-example' hidden=true)
+		div(class='input-group mt-2')
+			label(class='input-group-text' for='riven-type') Type :
+			select(class='form-select' name = 'rivenType' id = 'riven-type')
+				each val in rivens
+					option(value= val._id) #{val.name}
+		div(class='input-group mt-2')
+			label(class='input-group-text' for='weaponName') Weapon Name :
+			input(class='form-control' name='rivenWeaponName' id='weaponName')
+		div(class='input-group mt-2')
+			label(class='input-group-text' for='mcondition-example') Mandatory Condition :
+			select(class='form-select' name = 'rivenConditions[]' id='mcondition-example')
+				option none
+				each val in conditions.mandatories
+					option(value= val._id) #{val.description}
+			span(class='btn btn-outline-info mx-1' id='mand-span-example' onClick='addOptional(this)') +
+		div(class='input-group mt-2')
+			label(class='input-group-text' for='rivenConditionVariable') Mandatory condition variable 'N' :
+			input(class='form-control' type='number' min='0' id='rivenConditionVariable' name='rivenN')
+		div(id='condition-rows-example')
+	// Beginning of visible template
+	div(class='container-lg')
+		div(class='row m-1')
+			h3 Creation of a new Sortie's Reward
+		form(method='POST' name='rewardForm' action='/reward/form' onsubmit='return validateForm(this);')
+			div(class='input-group mt-2')
+				label(class='input-group-text' for='date') Date of reward acquisition :
+				input(class='form-control' type='text' name='date' id='date' size='24' readonly)
+				button(class='btn btn-outline-info mx-1' type='button' onClick='return resetDate(this.previousElementSibling);') X
+			div(class='input-group mt-2')
+				label(class='input-group-text' for='type') Select the reward type :
+				select(class='form-select' name='type' id='type' onchange='onSelect(this)')
+					each val in types
+						option(value= val._id) #{val.name}
+			div(id='container')
+			div(class='row mt-4')
+				input(class='btn btn-outline-primary w-25 ms-5' name='submit' type='submit' value='Add Reward' style='margin-left: 20px;')

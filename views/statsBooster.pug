@@ -1,17 +1,25 @@
 extends layout
 
 block content
-    h1= title
-    if (boosterStats)
-        p A total of #{boosterStats.count} boosters
-        table(border=0)
-            thead
-                th Booster type
-                th(style='padding-right:15px;') Count
-                th Percentage
-            tbody
-                for value, key in boosterStats.stats
-                    tr
-                        td(style='padding-right:15px;')= key
-                        td= value
-                        td= Number.parseFloat(value * 100 / boosterStats.count).toFixed(1) + '%'
+	script.
+		document.getElementById('nav-stats').classList.add('active');
+
+	div(class='container-lg')
+		div(class='row m-1')
+			if (boosterStats)
+				h3= title
+				p A total of #{boosterStats.count} boosters
+				div(class='row')
+					table(class='table table-responsive table-striped table-hover')
+						thead
+							th Booster type
+							th(style='padding-right:15px;') Count
+							th Percentage
+						tbody
+							for value, key in boosterStats.stats
+								tr
+									td(style='padding-right:15px;')= key
+									td= value
+									td= Number.parseFloat(value * 100 / boosterStats.count).toFixed(1) + '%'
+			else
+				h2 No stats !
