@@ -14,6 +14,12 @@ const countByType = function(type, onCount) {
     SortieReward.countDocuments({type: type}).then(onCount);
 };
 
+const rawlist = function(onOk, onError) {
+    SortieReward.find({}).populate('type').populate('booster').sort({date: 1}).then(list => {
+        onOk(list)
+    }).catch(onError);
+}
+
 const list = function(options, onFound, onError) {
     let params = {};
     if (options.dateLow || options.dateHigh) {
@@ -120,6 +126,7 @@ const deleteAll = function(onDelete, onError) {
 exports.count = count;
 exports.countByType = countByType;
 exports.list = list;
+exports.rawlist = rawlist;
 //exports.add = add;
 exports.addOrUpdate = addOrUpdate;
 exports.adds = adds;

@@ -13,6 +13,13 @@ router.get('/', auth.optional, function (req, res) {
         err => res.status(500).send("Cannot list rewards from DB, "+err));
 });
 
+router.get('/raw', auth.optional, function(req, res) {
+  SortieRewardProcess.rawlist(
+    ret => res.json(ret),
+    err => res.status(500).send("Cannot list rewards from DB, "+err)
+  );
+});
+
 router.post('/add', auth.required, function(req, res) {
     const { payload: { id } } = req;
     SortieRewardProcess.addOrUpdate(req.body, id)
