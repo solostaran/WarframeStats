@@ -3,6 +3,7 @@ extends layout
 block content
 	script.
 		document.getElementById('nav-rivlist').classList.add('active');
+		document.getElementById('nav-rivlist').innerText = 'Riven Info';
 
 	div(class='container-fluid')
 		div(class='row m-1')
@@ -11,10 +12,10 @@ block content
 			label(for='type')
 				b Type :
 			input(class='form-control input-lg' id='type' value=riven.type.name readonly)
-		if (riven.note)
-			div(class='form-group p-1')
-				label(for='note') Riven origin :
-				input(class='form-control' id='note' value=riven.note readonly size=30)
+		div(class='form-group p-1')
+			label(for='source')
+				b Riven source :
+			input(class='form-control' id='source' value=riven.source.source readonly size=30)
 		div(class='form-group p-1')
 			label(for='weaponName')
 				b Weapon Name :

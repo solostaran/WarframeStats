@@ -1,41 +1,89 @@
 extends layout
 
+block append link
+	link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css")
+	link(rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css")
+
+block append scripts
+
 block content
 	script.
 		document.getElementById('nav-rivlist').classList.add('active');
 
 	div(class='container-lg')
 		div(class='row mt-1')
-			if rivens.length === 0
-				h3 Empty list
-			else
+			div(id="toolbar-title")
 				h3 List of Rivens
-				p
-					="Those are rivens obtained by transmutation or special events but not as sortie's rewards."
-					br
-					= "See "
-					a(href='/rewardForm/list') List Rewards
-					= " for that last kind of rivens."
-		if rivens.length > 0
-			div(class='row')
-				table(class='table table-responsive table-striped table-hover')
-					thead
-						tr
-							th Details
-							//th Date
-							th Type
-							th Additional information
-							th Weapon Name
-					tbody(style='height: 10px !important; overflow-y: auto;')
-						each val in rivens
-							tr
-								td(class='filterable-cell', style='padding:5px')
-									a(class='btn btn-outline-info',href='/riven/view/' + val._id)= 'more info'
-									//a(href='/riven/view/' + val._id)= 'More info on ...' + val._id.toString().substr(-5, 5)
-								//if (val.date)
-								//    td(style='padding:5px')= date2string(val.Created_date)
-								//else
-								//    td
-								td(class='filterable-cell', style='padding:5px')= val.type.name
-								td(class='filterable-cell', style='padding:5px')= val.note
-								td(class='filterable-cell', style='padding:5px')= val.weaponName
+			table(id="table"
+				data-content-type="application/json"
+				data-toolbar="#toolbar-title"
+				data-url="/riven/"
+				data-filter-control="true"
+				data-header-style="headerStyle"
+				data-row-style="rowStyle"
+				data-height="765"
+				data-pagination="true"
+				data-side-pagination="client"
+				data-pagination-loop="false"
+				data-page-list="[10, 20, 50, All]"
+				data-total-field="count"
+				data-data-field="items"
+				data-show-fullscreen="true"
+				data-show-search-clear-button="true")
+				thead
+					tr
+						th(data-field="details" data-formatter="detailsFormatter" data-events="detailsEvents") Details
+						//th(data-field="date" data-formatter="dateFormatter" data-sortable="true") Date
+						th(data-field="source.source" data-filter-control="select") Source
+						th(data-field="type.name" data-filter-control="select") Type
+						th(data-field="weaponName" data-filter-control="input") Weapon name
+				tbody(style='height: 10px !important; overflow-y: auto;')
+		script(src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js")
+		//script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous")
+		script(src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js")
+		script(src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js")
+		script(type='text/javascript').
+			let $table = $('#table');
+
+			function rowStyle(row, index) {
+				if (index % 2 === 0)
+					return {css: {'background': '#f0f0ff'}};
+				return {css: {'background': '#ffffff'}};
+			}
+
+			function headerStyle(column) {
+				return {
+					'type.name': {
+						css: {background: '#f0f0ff'}
+					},
+					'details': {
+						css: {background: '#f0f0ff'}
+					},
+					'booster.name': {
+						css: {background: '#f0f0ff'}
+					}
+				}[column.field]
+			}
+
+			function detailsFormatter(value, row, index) {
+				return [
+					'<a class="details-btn" href="javascript:void(0)" title="details">',
+					'<i class="btn btn-outline-info">More info</i>',
+					'</a>'
+				].join('');
+			};
+
+			function dateFormatter(value) {
+				return value.substring(0, 10);
+			}
+
+			window.detailsEvents = {
+				'click .details-btn': function (e, value, row, index) {
+					//alert('You click like action, row: ' + JSON.stringify(row));
+					window.location.href = '/riven/view/' + row._id;
+				}
+			}
+
+			$(function () {
+				$table.bootstrapTable();
+			});

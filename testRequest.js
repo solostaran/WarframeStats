@@ -10,7 +10,7 @@ const mongoose = require('mongoose'),
     Riven = require('./api/models/rivenModel'),
     RewardType = require('./api/models/rewardTypeModel'),
     Reward = require('./api/models/sortieRewardModel'),
-    sortieReward = require('./api/business/sortieRewardProcess'),
+    sortieReward = require('./api/business/rewardProcess'),
     convertDates = require('./api/utils/convertDates'),
     bodyParser = require('body-parser'),
     logger = require('morgan');
@@ -20,13 +20,13 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/WarframeStatsDB', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/WarframeStatsDB', { useUnifiedTopology: true, useNewUrlParser: true });
 
 function testRequest() {
     console.log("Get all rewards");
     sortieReward.list({skip: 20, limit: 20},
         list => {
-            console.log('list size='+list.length);
+            console.log('list size='+list.count);
             mongoose.disconnect();
         },
         err => {

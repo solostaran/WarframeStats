@@ -3,47 +3,51 @@ extends layout
 block content
 	script.
 		document.getElementById('nav-rewlist').classList.add('active');
+		document.getElementById('nav-rewlist').innerText = 'Reward Info';
 
-	div(class='container-fluid')
+	div(class='container')
 		div(class='row m-1')
 			h3 Reward
 		div(class='form-group p-1')
 			label(class='fw-bold' for='type') Reward type :
 			input(class='form-control fw-bold' id='type' size='24' value=reward.type.name readonly)
 		if reward.booster
-			div(class='form-group p-1')
+			div(class='form-group m-1 p-2 border border-primary')
 				label(class='fw-bold' for='booster') Booster type is :
 				input(class='form-control fw-bold' id='booster' size='24' value=reward.booster.name readonly)
-		if reward.riven
-			div(class='form-group p-1')
+		if reward.rivenType
+			div(class='form-group m-1 p-2 border border-primary')
 				label(for='rivenType') Riven type is :
-				input(class='form-control fw-bold' id='rivenType' size='24' value=reward.riven.type.name readonly)
-				label(for='rivenWeaponName') Riven weapon name is :
-				input(class='form-control fw-bold' id='rivenWeaponName' size='24' value=reward.riven.weaponName readonly)
-			if reward.riven.conditions
-				div(class='table-responsive m-1')
-					table(class='table table-sm table-striped table-hover')
-						thead
-							tr
-								th Challenge
-						tbody
-							for condition in reward.riven.conditions
-								tr
-									td
-										if condition === reward.riven.conditions[0] && reward.riven.N
-											= condition.description.replace('{N}', reward.riven.N)
-										else
-											= condition.description
-										ul
-											- let n = 1
-											if condition.advices
-												for advice in condition.advices
-													li= 'advice ' + n++ + ' : ' + advice
+				input(class='form-control fw-bold' id='rivenType' size='24' value=reward.rivenType.name readonly)
+				if reward.riven
+					label(for='rivenId') Riven ID is :
+					input(class='form-control' id='rivenId' value=reward.riven._id readonly)
+					label(for='rivenWeaponName') Riven weapon name is :
+					input(class='form-control fw-bold' id='rivenWeaponName' size='24' value=reward.riven.weaponName readonly)
+					if reward.riven.conditions
+						div(class='table-responsive m-1')
+							table(class='table table-sm table-striped table-hover')
+								thead
+									tr
+										th Challenge
+								tbody
+									for condition in reward.riven.conditions
+										tr
+											td
+												if condition === reward.riven.conditions[0] && reward.riven.N
+													= condition.description.replace('{N}', reward.riven.N)
+												else
+													= condition.description
+												ul
+													- let n = 1
+													if condition.advices
+														for advice in condition.advices
+															li= 'advice ' + n++ + ' : ' + advice
 		div(class='row m-1')
 			form(action='/rewardForm/' + reward._id)
 				input(class='btn btn-outline-primary' type="submit" value='Edit Reward' style='margin-left:20px;')
 		div(class='form-group input-group-sm p-1')
-			label(for='id') ID is :
+			label(for='id') Reward ID is :
 			input(class='form-control' id='id' size='24' value=reward._id readonly)
 			if reward.createdBy
 				label(for='createdBy') Created by :

@@ -62,12 +62,16 @@ block content
 	// Beginning of the visible template
 	div(class='container-lg')
 		div(class='row m-1')
-			h3 Modification of a Sortie's Reward
+			h3 Modification of a Reward
 		form(method='POST' name='rewardForm' action='/reward/form' onsubmit='return validateForm(this);')
 			if (reward)
 				div(class='input-group input-group-sm mb-2')
 					label(class='input-group-text' for='id') ID of the reward
 					input(class='form-control' type='text' name='_id' id='id' size='24' value=reward._id readonly aria-describedby='id')
+			if (reward && reward.riven)
+				div(class='input-group input-group-sm mt-2')
+					label(class='input-group-text' for='rivenId') Riven ID is :
+					input(class='form-control' type='text' name='rivenId' id='rivenId' size='24' value=reward.riven._id readonly aria-describedby='rivenId')
 			div(class='input-group mt-2')
 				- var formattedDate = ''
 				if (reward && reward.date)
@@ -76,6 +80,14 @@ block content
 				input(class='form-control' type='text' name='date' id='date' size='24' value=formattedDate readonly)
 				//button(onclick="return toggleDatepicker(this.previousElementSibling);" type='button') Pick Date
 				button(class='btn btn-outline-info mx-1' onclick="return resetDate(this.previousElementSibling);" style="margin-left:20px;") X
+			div(class='input-group mt-2')
+				label(class='input-group-text' for='source') Select the reward source :
+				select(class='form-select' name='source' id='source')
+					each val in sources
+						if (reward.source._id.toString() === val._id.toString())
+							option(value= val._id selected) #{val.name}
+						else
+							option(value= val._id) #{val.name}
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='type') Select the reward type :
 				select(class='form-select' name='type' id='type' onchange='onSelect(this)')

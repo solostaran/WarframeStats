@@ -54,10 +54,13 @@ if (!isProduction) mongoose.set('debug', true);
 
 // Mongoose Schemas
 require('./api/models/rivenTypeModel');
+require('./api/models/rivenSourceModel');
 require('./api/models/rivenConditionModel');
 require('./api/models/rivenModel');
 require('./api/models/boosterTypeModel');
 require('./api/models/rewardTypeModel');
+require('./api/models/rewardSourceModel');
+require('./api/models/rewardModel');
 require('./api/models/sortieRewardModel');
 require('./api/models/Users');
 require('./config/passport');
@@ -66,6 +69,8 @@ require('./config/passport');
 // API ROUTES
 const rivenTypeRoute = require('./routes/rivenTypeRoutes');
 app.use('/riven/type', rivenTypeRoute);
+const rivenSourceRoute = require('./routes/rivenSourceRoutes');
+app.use('/riven/source', rivenSourceRoute);
 const rivenConditionRoute = require('./routes/rivenConditionRoutes');
 app.use('/riven/condition', rivenConditionRoute);
 const rivenRoutes = require('./routes/rivenRoutes');
@@ -74,8 +79,12 @@ const boosterTypeRoute = require('./routes/boosterTypeRoutes');
 app.use('/booster/type', boosterTypeRoute);
 const rewardTypeRoute = require('./routes/rewardTypeRoutes');
 app.use('/reward/type', rewardTypeRoute);
+const rewardSourceRoute = require('./routes/rewardSourceRoutes');
+app.use('/reward/source', rewardSourceRoute);
+const rewardRoute = require('./routes/rewardRoutes');
+app.use('/reward', rewardRoute);
 const sortieRewardRoute = require('./routes/sortieRewardRoutes');
-app.use('/reward', sortieRewardRoute);
+app.use('/sortiereward', sortieRewardRoute);
 const usersRoute = require('./routes/usersRoutes');
 app.use('/users', usersRoute);
 const worldStateRoute = require('./routes/worldStateRoute');
@@ -102,10 +111,12 @@ app.post('/enhanced-excel-to-json', function(req, res) {
 
 // Views
 app.use('/', require('./routes/index'));
-app.use('/types', require('./routes/typesRoutes'));
+app.use('/types', require('./routes/rivenTypesRoutes'));
+app.use('/sources', require('./routes/rivenSourcesRoutes'));
 app.use('/conditions', require('./routes/conditionsRoutes'));
 app.use('/rivenForm', require('./routes/rivenFormRoute'));
 app.use('/rewardForm', require('./routes/rewardFormRoutes'));
+app.use('/sortieRewardForm', require('./routes/sortieRewardFormRoutes'));
 app.use('/boosters', require('./routes/boostersRoutes'));
 app.use('/stats', require('./routes/statsRoutes'));
 

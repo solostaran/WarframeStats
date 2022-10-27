@@ -41,6 +41,7 @@ function onSelect(combo) {
         nodeClone.hidden = false;
         destination.appendChild(nodeClone);
     } else if (text.search('Riven') >= 0) {
+        indexClone = 0;
         const original = _('riven-example');
         nodeClone = original.cloneNode(true);
         nodeClone.id = 'riven';

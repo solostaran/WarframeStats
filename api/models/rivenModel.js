@@ -10,7 +10,7 @@ const RivenSchema = new Schema({
     weaponName : {
         type: String,
         alias: 'weapon',
-        required: true
+        required: false
     },
     conditions : [{
         type: Schema.Types.ObjectId,
@@ -23,21 +23,31 @@ const RivenSchema = new Schema({
         type: Number,
         alias: 'conditionVariable',
         min: 0,
-        default: 0,
+        default: undefined,
         required: false
     },
     Created_date: {
         type: Date,
         default: Date.now
     },
-    note: {
-        type: String,
-        required: true
+    source: {
+        type: Schema.Types.ObjectId,
+        ref: 'RivenSource',
+        require: true
+    },
+    // note: {
+    //     type: String,
+    //     required: false
+    // },
+    reward: {
+        type: Schema.Types.ObjectId,
+        ref: 'Reward',
+        require: false
     },
     createdBy : {
         type: Schema.Types.ObjectId,
         ref: 'Users',
-        required: false
+        required: true
     },
     modifiedBy: {
         type: Schema.Types.ObjectId,

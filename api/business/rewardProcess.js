@@ -2,20 +2,21 @@
 
 const mongoose = require('mongoose'),
 	_ = require("lodash"),
-	SortieReward = mongoose.model('SortieReward'),
+	Reward = mongoose.model('Reward'),
+	rivenProcess = require('./rivenProcess'),
 	convert = require('../utils/convertDates.js'),
-	rewardAdapter = require('./sortieRewardAdapter');
+	rewardAdapter = require('./rewardAdapter');
 
 const count = function(onCount) {
-	SortieReward.find().estimatedDocumentCount().then(onCount);
+	Reward.find().estimatedDocumentCount().then(onCount);
 };
 
 const countByType = function(type, onCount) {
-	SortieReward.countDocuments({type: type}).then(onCount);
+	Reward.countDocuments({type: type}).then(onCount);
 };
 
 const rawlist = function(onOk, onError) {
-	SortieReward.find({}).populate('type').populate('booster').sort({date: 1}).then(list => {
+	Reward.find({}).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(list => {
 		onOk(list)
 	}).catch(onError);
 }
@@ -39,29 +40,29 @@ const list = function(options, onFound, onError) {
 		if (options.type !== '-') params.type = options.type;
 	}
 	// if (options && Number(options.skip) >= 0 && Number(options.limit) > 0) {
-	//     SortieReward.find(params).populate('type').sort({date: 1}).skip(options.skip).limit(options.limit).then(onFound).catch(onError);
+	//     Reward.find(params).populate('type').sort({date: 1}).skip(options.skip).limit(options.limit).then(onFound).catch(onError);
 	// } else {
-	//     SortieReward.find(params).populate('type').sort({date: 1}).then(onFound).catch(onError);
+	//     Reward.find(params).populate('type').sort({date: 1}).then(onFound).catch(onError);
 	// }
 	if (_.isEmpty(params)) {
-		SortieReward.find().estimatedDocumentCount().then(count => {
+		Reward.find().estimatedDocumentCount().then(count => {
 			if (options && Number(options.skip) >= 0 && Number(options.limit) > 0)
-				SortieReward.find(params).populate('type').populate('booster').sort({date: 1}).skip(options.skip).limit(options.limit).then(list => {
+				Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).skip(options.skip).limit(options.limit).then(list => {
 					onFound({data: list, count: count});
 				}).catch(onError);
 			else
-				SortieReward.find(params).populate('type').populate('booster').sort({date: 1}).then(list => {
+				Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(list => {
 					onFound({data: list, count: count});
 				}).catch(onError);
 		});
 	} else {
 		// NOTE: this can't work with a large amount of data
 		if (options && Number(options.skip) >= 0 && Number(options.limit) > 0) {
-			SortieReward.find(params).populate('type').populate('booster').sort({date: 1}).then(list => {
+			Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(list => {
 				onFound({data: list.slice(options.skip, options.skip + options.limit), count: list.length})
 			}).catch(onError);
 		} else {
-			SortieReward.find(params).populate('type').populate('booster').sort({date: 1}).then(list => {
+			Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(list => {
 				onFound({data: list, count: list.length})
 			}).catch(onError);
 		}
@@ -70,8 +71,8 @@ const list = function(options, onFound, onError) {
 
 const addOrUpdate = async function(obj, userId) {
 	if (obj === null) return Promise.reject('Null object');
-	const reward = await rewardAdapter.form2reward(obj, userId);
-	return reward.save();
+	const reward = Promise.resolve(rewardAdapter.form2reward(obj, userId));
+	return reward;
 };
 
 const adds = function(listOfRewards, userId, onSuccess, onError) {
@@ -95,30 +96,34 @@ const adds = function(listOfRewards, userId, onSuccess, onError) {
 	}).catch(onError);
 };
 
-const findById = function(id, onSuccess, onError) {
-	SortieReward.findById(id)
+const findById = async function(id) {
+	const reward = await Reward.findById(id)
+		.populate('source')
 		.populate('type')
-		.populate({path: 'riven.type', model: 'RivenType'})
-		.populate([{path: 'riven.conditions', model: 'RivenCondition'}])
 		.populate('booster')
+		.populate('rivenType')
+		//.populate('riven') // doesn't work well
 		.populate('modifiedBy')
 		.populate('createdBy')
-		.then(reward => {
-			if (reward.createdBy) reward.createdBy = reward.createdBy.toAuthJSON();
-			if (reward.modifiedBy) reward.modifiedBy = reward.modifiedBy.toAuthJSON();
-			onSuccess(reward);
-		})
-		.catch(onError);
+	if (reward) {
+		if (reward.createdBy) reward.createdBy = reward.createdBy.toAuthJSON();
+		if (reward.modifiedBy) reward.modifiedBy = reward.modifiedBy.toAuthJSON();
+	}
+	if (reward.riven) {
+		const riven = await rivenProcess.byId(reward.riven);
+		reward.riven = riven;
+	}
+	return reward;
 };
 
 const deleteOneById = function(id) {
-	return SortieReward
+	return Reward
 		.deleteOne({ '_id': id})
 		.exec();
 };
 
 const deleteAll = function(onDelete, onError) {
-	return SortieReward
+	return Reward
 		.deleteMany({})
 		.exec();
 };
