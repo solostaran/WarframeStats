@@ -61,7 +61,6 @@ require('./api/models/boosterTypeModel');
 require('./api/models/rewardTypeModel');
 require('./api/models/rewardSourceModel');
 require('./api/models/rewardModel');
-require('./api/models/sortieRewardModel');
 require('./api/models/Users');
 require('./config/passport');
 
@@ -83,8 +82,6 @@ const rewardSourceRoute = require('./routes/rewardSourceRoutes');
 app.use('/reward/source', rewardSourceRoute);
 const rewardRoute = require('./routes/rewardRoutes');
 app.use('/reward', rewardRoute);
-const sortieRewardRoute = require('./routes/sortieRewardRoutes');
-app.use('/sortiereward', sortieRewardRoute);
 const usersRoute = require('./routes/usersRoutes');
 app.use('/users', usersRoute);
 const worldStateRoute = require('./routes/worldStateRoute');
@@ -116,7 +113,6 @@ app.use('/sources', require('./routes/rivenSourcesRoutes'));
 app.use('/conditions', require('./routes/conditionsRoutes'));
 app.use('/rivenForm', require('./routes/rivenFormRoute'));
 app.use('/rewardForm', require('./routes/rewardFormRoutes'));
-app.use('/sortieRewardForm', require('./routes/sortieRewardFormRoutes'));
 app.use('/boosters', require('./routes/boostersRoutes'));
 app.use('/stats', require('./routes/statsRoutes'));
 
