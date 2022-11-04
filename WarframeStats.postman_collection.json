@@ -412,7 +412,7 @@
 									"    pm.response.to.be.withBody;\r",
 									"});\r",
 									"pm.test(\"Validate array count\", function () {\r",
-									"    pm.expect(pm.response.json().length).to.be.equal(Number(pm.collectionVariables.get(\"riven_origins_inserted\")));\r",
+									"    pm.expect(pm.response.json().length).to.be.equal(Number(pm.collectionVariables.get(\"riven_sources_inserted\")));\r",
 									"});\r",
 									"var schema = {\r",
 									"    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
@@ -423,14 +423,14 @@
 									"            \"_id\": {\r",
 									"              \"type\": \"string\"\r",
 									"            },\r",
-									"            \"origin\": {\r",
+									"            \"name\": {\r",
 									"              \"type\": \"string\"\r",
 									"            },\r",
 									"            \"more_info\": {\r",
 									"              \"type\": \"string\"\r",
 									"            }\r",
 									"        },\r",
-									"        \"required\": [\"_id\", \"origin\"]\r",
+									"        \"required\": [\"_id\", \"name\"]\r",
 									"    }\r",
 									"};\r",
 									"pm.test(\"Validate schema\", function () {\r",
@@ -533,12 +533,12 @@
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.be.ok;",
 									"    if (pm.response.code == 200) {",
-									"        var rti = Number(pm.collectionVariables.get(\"riven_origins_inserted\"));",
+									"        var rti = Number(pm.collectionVariables.get(\"riven_sources_inserted\"));",
 									"        rti += 1;",
-									"        pm.collectionVariables.set(\"riven_origins_inserted\", rti);",
-									"        console.log(\"Total of riven origins = \"+rti);",
+									"        pm.collectionVariables.set(\"riven_sources_inserted\", rti);",
+									"        console.log(\"Total of riven sources = \"+rti);",
 									"        // save ID",
-									"        pm.collectionVariables.set(\"riven_origin_id\", pm.response.json()._id);",
+									"        pm.collectionVariables.set(\"riven_source_id\", pm.response.json()._id);",
 									"    }",
 									"});",
 									"pm.test(\"_id length ok\", function() {",
@@ -566,7 +566,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"source\":\"nowhere\", \"more_info\": \"couldn't be more explicit\"}"
+							"raw": "{\"name\":\"nowhere\", \"more_info\": \"couldn't be more explicit\"}"
 						},
 						"url": {
 							"raw": "{{base_url}}/riven/source/add",
@@ -592,10 +592,10 @@
 									"pm.test(\"Insert 12 riven origins\", function() {\r",
 									"    pm.expect(pm.response.json().insertedCount).to.be.equal(12); \r",
 									"});\r",
-									"var roi = Number(pm.collectionVariables.get(\"riven_origins_inserted\"));\r",
+									"var roi = Number(pm.collectionVariables.get(\"riven_sources_inserted\"));\r",
 									"roi += pm.response.json().insertedCount;\r",
-									"pm.collectionVariables.set(\"riven_origins_inserted\", roi);\r",
-									"console.log(\"Total of riven origins = \"+roi);"
+									"pm.collectionVariables.set(\"riven_sources_inserted\", roi);\r",
+									"console.log(\"Total of riven sources = \"+roi);"
 								],
 								"type": "text/javascript"
 							}
@@ -606,7 +606,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n  {\"source\":\"Unknown\", \"more_info\": \"from an unknown source (due to the unveiling mechanism or simply unknown)\"},\r\n  {\"source\":\"Slivers\", \"more_info\": \"sold by Palladino in Iron Wake for 10 slivers\"},\r\n  {\"source\":\"Sortie\", \"more_info\": \"sortie's reward\"},\r\n  {\"source\":\"Archon\", \"more_info\": \"archon hunts' reward\"},\r\n  {\"source\":\"Transmutation\", \"more_info\": \"converting 4 rivens into a new one\"},\r\n  {\"source\":\"Simaris\", \"more_info\": \"sold by Cephalon Simaris\"},\r\n  {\"source\":\"Steel Path\", \"more_info\": \"sold by Teshin from Steel Path\"},\r\n  {\"source\":\"Nightwave\", \"more_info\": \"nightwave's rank reward\"},\r\n  {\"source\":\"Nihil\", \"more_info\": \"Nihil boss in Enter Nihil's Oubliette from Nightwave's offerings\"},\r\n  {\"source\":\"Event\", \"more_info\": \"tactical alerts or special events Gift from the Lotus\"},\r\n  {\"source\":\"Daily\", \"more_info\": \"in the daily tribute\"},\r\n  {\"source\":\"Arbitration\", \"more_info\": \"sold by vendors of the Arbiters of Hexis\"}\r\n]",
+							"raw": "[\r\n  {\"name\":\"Unknown\", \"more_info\": \"from an unknown source (due to the unveiling mechanism or simply unknown)\"},\r\n  {\"name\":\"Slivers\", \"more_info\": \"sold by Palladino in Iron Wake for 10 slivers\"},\r\n  {\"name\":\"Sortie\", \"more_info\": \"sortie's reward\"},\r\n  {\"name\":\"Archon\", \"more_info\": \"archon hunts' reward\"},\r\n  {\"name\":\"Transmutation\", \"more_info\": \"converting 4 rivens into a new one\"},\r\n  {\"name\":\"Simaris\", \"more_info\": \"sold by Cephalon Simaris\"},\r\n  {\"name\":\"Steel Path\", \"more_info\": \"sold by Teshin from Steel Path\"},\r\n  {\"name\":\"Nightwave\", \"more_info\": \"nightwave's rank reward\"},\r\n  {\"name\":\"Nihil\", \"more_info\": \"Nihil boss in Enter Nihil's Oubliette from Nightwave's offerings\"},\r\n  {\"name\":\"Event\", \"more_info\": \"tactical alerts or special events Gift from the Lotus\"},\r\n  {\"name\":\"Daily\", \"more_info\": \"in the daily tribute\"},\r\n  {\"name\":\"Arbitration\", \"more_info\": \"sold by vendors of the Arbiters of Hexis\"}\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -653,14 +653,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/riven/source/{{riven_origin_id}}",
+							"raw": "{{base_url}}/riven/source/{{riven_source_id}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"riven",
 								"source",
-								"{{riven_origin_id}}"
+								"{{riven_source_id}}"
 							]
 						}
 					},
@@ -679,7 +679,7 @@
 									"pm.test(\"Deleted one riven origin\", function () {",
 									"    pm.expect(pm.response.json().n).to.be.equal(1);",
 									"    if (pm.response.json().n == 1) {",
-									"        pm.collectionVariables.set(\"riven_origins_inserted\", Number(pm.collectionVariables.get(\"riven_origins_inserted\"))-1);",
+									"        pm.collectionVariables.set(\"riven_sources_inserted\", Number(pm.collectionVariables.get(\"riven_sources_inserted\"))-1);",
 									"    }",
 									"});"
 								],
@@ -725,10 +725,10 @@
 									"   pm.expect(pm.response.json().ok).to.be.equal(1);",
 									"});",
 									"pm.test(\"Deleted the expected number\", function () {",
-									"    pm.expect(pm.response.json().n).to.be.equal(Number(pm.collectionVariables.get(\"riven_origins_inserted\")));",
+									"    pm.expect(pm.response.json().n).to.be.equal(Number(pm.collectionVariables.get(\"riven_sources_inserted\")));",
 									"});",
-									"pm.collectionVariables.set(\"riven_origins_inserted\", 0);",
-									"console.log(\"Total of riven origins = \"+0);"
+									"pm.collectionVariables.set(\"riven_sources_inserted\", 0);",
+									"console.log(\"Total of riven sources = \"+0);"
 								],
 								"type": "text/javascript"
 							}
@@ -1422,6 +1422,9 @@
 									"            },\r",
 									"            \"name\": {\r",
 									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"more_info\": {\r",
+									"              \"type\": \"string\"\r",
 									"            }\r",
 									"        },\r",
 									"        \"required\": [\"_id\", \"name\"]\r",
@@ -1458,12 +1461,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/reward/type/",
-									"protocol": "http",
+									"raw": "{{base_url}}/reward/type/",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
-									"port": "3000",
 									"path": [
 										"reward",
 										"type",
@@ -1485,23 +1486,27 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "595"
+									"value": "1112"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"253-/fdVkRcISMrts8n2RqJPMeAttfs\""
+									"value": "W/\"458-fPRz98vAT6/ULJK66bDA4gEPYgw\""
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 19 Mar 2019 13:05:25 GMT"
+									"value": "Fri, 04 Nov 2022 14:19:47 GMT"
 								},
 								{
 									"key": "Connection",
 									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0af\",\n        \"name\": \"Anasa Ayatan Sculpture\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b0\",\n        \"name\": \"Riven Mod\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b1\",\n        \"name\": \"4000 Endo\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b2\",\n        \"name\": \"6000 Kuva\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b3\",\n        \"name\": \"3-Day Booster\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b4\",\n        \"name\": \"Exilus Adapter\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b5\",\n        \"name\": \"Forma\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b6\",\n        \"name\": \"Orokin Catalyst blueprint\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b7\",\n        \"name\": \"Orokin Reactor blueprint\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b8\",\n        \"name\": \"Legendary Core\"\n    }\n]"
+							"body": "[\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0af\",\n        \"name\": \"Anasa Ayatan Sculpture\",\n        \"more_info\": \"the most common decoration and endo source\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b0\",\n        \"name\": \"Riven Mod\",\n        \"more_info\": \"either a veiled or unveiled riven\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b1\",\n        \"name\": \"Endo\",\n        \"more_info\": \"4000 in Sortie and 8000 in Archon's hunt\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b2\",\n        \"name\": \"Kuva\",\n        \"more_info\": \"6000 in Sortie and 12000 in Archon's hunt\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b3\",\n        \"name\": \"Booster\",\n        \"more_info\": \"3 days of booster\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b4\",\n        \"name\": \"Exilus Warframe Adapter\",\n        \"more_info\": \"Unlock the exilus mod slot\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b5\",\n        \"name\": \"Forma\",\n        \"more_info\": \"fully formed Forma\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b6\",\n        \"name\": \"Orokin Catalyst blueprint\",\n        \"more_info\": \"Weapon enhancement. Must be crafted in the foundry.\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b7\",\n        \"name\": \"Orokin Reactor blueprint\",\n        \"more_info\": \"Warframe, companion or archwing enhancement. Must be crafted in the foundry.\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b8\",\n        \"name\": \"Legendary Core\",\n        \"more_info\": \"Maximize any mod with no cost.\"\n    }\n]"
 						}
 					]
 				},
@@ -1638,7 +1643,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n    {\n        \"name\": \"Anasa Ayatan Sculpture\"\n    },\n    {\n        \"name\": \"Riven Mod\"\n    },\n    {\n        \"name\": \"4000 Endo\"\n    },\n    {\n        \"name\": \"6000 Kuva\"\n    },\n    {\n        \"name\": \"3-Day Booster\"\n    },\n    {\n        \"name\": \"Exilus Adapter\"\n    },\n    {\n        \"name\": \"Forma\"\n    },\n    {\n        \"name\": \"Orokin Catalyst blueprint\"\n    },\n    {\n        \"name\": \"Orokin Reactor blueprint\"\n    },\n    {\n        \"name\": \"Legendary Core\"\n    }\n]"
+							"raw": "[\n    {\n        \"name\": \"Anasa Ayatan Sculpture\",\n        \"more_info\": \"the most common decoration and endo source\"\n    },\n    {\n        \"name\": \"Riven Mod\",\n        \"more_info\": \"either a veiled or unveiled riven\"\n    },\n    {\n        \"name\": \"Endo\",\n        \"more_info\": \"4000 in Sortie and 8000 in Archon's hunt\"\n    },\n    {\n        \"name\": \"Kuva\",\n        \"more_info\": \"6000 in Sortie and 12000 in Archon's hunt\"\n    },\n    {\n        \"name\": \"Booster\",\n        \"more_info\": \"3 days of booster\"\n    },\n    {\n        \"name\": \"Exilus Warframe Adapter\",\n        \"more_info\": \"Unlock the exilus mod slot\"\n    },\n    {\n        \"name\": \"Forma\",\n        \"more_info\": \"fully formed Forma\"\n    },\n    {\n        \"name\": \"Orokin Catalyst blueprint\",\n        \"more_info\": \"Weapon enhancement. Must be crafted in the foundry.\"\n    },\n    {\n        \"name\": \"Orokin Reactor blueprint\",\n        \"more_info\": \"Warframe, companion or archwing enhancement. Must be crafted in the foundry.\"\n    },\n    {\n        \"name\": \"Legendary Core\",\n        \"more_info\": \"Maximize any mod with no cost.\"\n    }\n]"
 						},
 						"url": {
 							"raw": "{{base_url}}/reward/type/adds",
@@ -2462,6 +2467,548 @@
 			]
 		},
 		{
+			"name": "SortieReward",
+			"item": [
+				{
+					"name": "GET rewards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(\"GET rewards : number of reward = \"+pm.response.json().length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET rewards with options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(\"GET rewards : number of reward = \"+pm.response.json().length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  limit: 20\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Booster reward",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"reward_id_booster\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\":\"booster\",\n\t\"booster\": \"5c87cdace96e9e3de0e700d8\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD booster reward 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"reward_id_booster\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\": \"Booster\",\n\t\"date\": 44202,\n\t\"booster\": \"credit\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Riven reward",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"reward_id_riven\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\":\"5c8934cf2369a4462c22e0b0\",\n\t\"riven\": {\n\t\t\"type\":\"5c7ee494e9449f542c14244c\",\n\t\t\"weaponName\":\"Paintgun\",\n\t\t\"conditions\":[\"5c868874e236101e60b1ef59\",\"5c868874e236101e60b1ef73\"]\n\t},\n\t\"date\": \"2019/01/01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Riven reward 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"reward_id_riven\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\": \"Riven\",\n\t\"date\": 44500,\n    \"rivenType\": \"rifle\",\n    \"rivenWeaponName\": \"Gorgon\",\n    \"rivenConditions\": [\"5cbf1eb6e4edaa3170d1de7d\", \"none\", \"5cbf1eb6e4edaa3170d1de95\", \"5cbf1eb6e4edaa3170d1de97\"],\n    \"rivenN\": 666\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Booster reward",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/{{reward_id_booster}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"{{reward_id_booster}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET Booster reward",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/reward/{{reward_id_booster}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reward",
+										"{{reward_id_booster}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "365"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"16d-LFgxh490GzClBen0s2ICRUB+1RI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Mar 2019 18:48:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"5c9138d3016ab554d4dd9afd\",\n    \"booster\": {\n        \"_id\": \"5c87cdace96e9e3de0e700d8\",\n        \"name\": \"Affinity Booster\",\n        \"description\": \"doubles the amount of affinity earned from pickups and mission rewards\",\n        \"url\": \"https://warframe.fandom.com/wiki/Affinity_Booster\"\n    },\n    \"Created_date\": \"2019-03-19T18:45:39.273Z\",\n    \"type\": {\n        \"_id\": \"5c8934cf2369a4462c22e0b3\",\n        \"name\": \"3-Day Booster\"\n    },\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "GET Riven reward",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/{{reward_id_riven}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"{{reward_id_riven}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET Riven reward",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/reward/{{reward_id_riven}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reward",
+										"{{reward_id_riven}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "553"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"229-J+pfjpihdwf9T/+e/lwQnbjkMKU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Mar 2019 18:48:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"5c9135c0b4cf1d0fa0ebdc2d\",\n    \"type\": {\n        \"_id\": \"5c8934cf2369a4462c22e0b1\",\n        \"name\": \"4000 Endo\"\n    },\n    \"riven\": {\n        \"type\": {\n            \"_id\": \"5c7ee494e9449f542c14244c\",\n            \"name\": \"primary\"\n        },\n        \"weaponName\": \"Paintgun\",\n        \"conditions\": [\n            {\n                \"_id\": \"5c868874e236101e60b1ef59\",\n                \"description\": \"Kill N enemies\",\n                \"Created_date\": \"2019-03-19T18:48:24.042Z\"\n            },\n            {\n                \"_id\": \"5c868874e236101e60b1ef73\",\n                \"description\": \"invisible\",\n                \"optional\": true,\n                \"advices\": [\n                    \"Stealth warframe maybe ?\"\n                ],\n                \"Created_date\": \"2019-03-19T18:48:24.045Z\"\n            }\n        ]\n    },\n    \"date\": \"2019-01-01T01:01:01.001Z\",\n    \"Created_date\": \"2019-03-19T18:32:32.683Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "DELETE Booster reward",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/delete/{{reward_id_booster}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"delete",
+								"{{reward_id_booster}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Riven reward",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/delete/{{reward_id_riven}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"delete",
+								"{{reward_id_riven}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE all rewards (CAREFUL)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/deleteall",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"deleteall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET reward view",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/view/5c9904e8af079133581d5d9b",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"view",
+								"5c9904e8af079133581d5d9b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET reward (misc)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/5cb453a818dd6e6aac47e397",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"5cb453a818dd6e6aac47e397"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Rewards (CAREFUL)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Insert rewards\", function() {",
+									"    const number = pm.collectionVariables.get('rewards_to_insert');",
+									"    pm.expect(pm.response.json().insertedCount).to.be.equal(number);",
+									"    console.log(number + ' rewards inserted.');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const number = JSON.parse(request.data).length;",
+									"pm.environment.set('rewards_to_insert', number);",
+									"console.log(\"Try to insert \"+number+\" rewards ...\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    null,\n    null,\n    {\n        \"type\": \"Ayatan\",\n        \"date\": 43437\n    },\n    null,\n    null,\n    null,\n    null,\n    null,\n    null,\n    null,\n    null,\n    {\n        \"type\": \"Booster\",\n        \"date\": 43446,\n        \"booster\": \"credit\"\n    }\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/adds",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"adds"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Reward",
 			"item": [
 				{
@@ -2655,7 +3202,52 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"type\":\"5c8934cf2369a4462c22e0b0\",\n\t\"riven\": {\n\t\t\"type\":\"5c7ee494e9449f542c14244c\",\n\t\t\"weaponName\":\"Paintgun\",\n\t\t\"conditions\":[\"5c868874e236101e60b1ef59\",\"5c868874e236101e60b1ef73\"]\n\t},\n\t\"date\": \"2019/01/01\"\n}"
+							"raw": "{\n  \"source\":\"6356aede5337161a3948d0aa\",\n\t\"type\":\"5c8934cf2369a4462c22e0b0\",\n\t\"riven\": {\n\t\t\"type\":\"5c7ee494e9449f542c14244c\",\n\t\t\"weaponName\":\"Paintgun\",\n\t\t\"conditions\":[\"5c868874e236101e60b1ef59\",\"5c868874e236101e60b1ef73\"]\n\t},\n\t\"date\": \"2019/01/01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reward/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reward",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Reward with empty Riven by Form",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"reward_id_riven\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"date\": \"2022-10-25\",\n  \"source\": \"6356aede5337161a3948d0aa\",\n  \"type\": \"5c8934cf2369a4462c22e0b0\",\n  \"rivenType\": \"5c93564f864cd6643c9e1e1c\",\n  \"rivenWeaponName\": \"\",\n  \"rivenConditions\": [\n    \"none\"\n  ],\n  \"rivenN\": \"\",\n  \"submit\": \"Add Reward\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/reward/add",
@@ -2915,14 +3507,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/reward/view/5c9904e8af079133581d5d9b",
+							"raw": "{{base_url}}/reward/view/6356b64e78056212704e0207",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"reward",
 								"view",
-								"5c9904e8af079133581d5d9b"
+								"6356b64e78056212704e0207"
 							]
 						}
 					},
@@ -2934,13 +3526,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/reward/5cb453a818dd6e6aac47e397",
+							"raw": "{{base_url}}/reward/63586839bdc2f470e8c47d66",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"reward",
-								"5cb453a818dd6e6aac47e397"
+								"63586839bdc2f470e8c47d66"
 							]
 						}
 					},
@@ -3563,12 +4155,12 @@
 			"value": ""
 		},
 		{
-			"key": "riven_origins_inserted",
+			"key": "riven_sources_inserted",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"key": "riven_origin_id",
+			"key": "riven_source_id",
 			"value": "",
 			"type": "string"
 		},

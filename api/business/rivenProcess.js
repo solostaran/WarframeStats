@@ -5,7 +5,7 @@ const mongoose = require('mongoose'),
 	RivenAdapter = require('./rivenAdapter');
 
 const list = function() {
-	return Riven.find({}).populate('type').populate('source', {'source':1}).sort({Created_date: 1}).exec();
+	return Riven.find({}).populate('type').populate('source', {'name':1}).sort({Created_date: 1}).exec();
 };
 
 const addOrUpdate = async function(oneRiven, userId) {
@@ -20,7 +20,7 @@ const byId = async function(id) {
 	try {
 		riven = await Riven.findById(id)
 			.populate('type')
-			.populate('source', {'source':1})
+			.populate('source', {'name':1})
 			//.populate('conditions')
 			.populate([{path: 'conditions', model: 'RivenCondition'}])
 			.populate('modifiedBy')

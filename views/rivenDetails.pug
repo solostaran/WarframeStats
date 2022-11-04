@@ -5,17 +5,22 @@ block content
 		document.getElementById('nav-rivlist').classList.add('active');
 		document.getElementById('nav-rivlist').innerText = 'Riven Info';
 
-	div(class='container-fluid')
+	div(class='container')
 		div(class='row m-1')
 			h3 Riven
 		div(class='form-group p-1')
 			label(for='type')
 				b Type :
 			input(class='form-control input-lg' id='type' value=riven.type.name readonly)
-		div(class='form-group p-1')
-			label(for='source')
-				b Riven source :
-			input(class='form-control' id='source' value=riven.source.source readonly size=30)
+		div(class='input-group p-1')
+			div(class='col-xs')
+				label(for='source')
+					b Riven source :
+				input(class='form-control' id='source' value=riven.source.name readonly size=24)
+			if (riven.reward)
+				div(class='col-xs mx-2')
+					label(for='rewardId') Reward ID :
+					input(class='form-control' id='rewardId' value=riven.reward._id readonly size=24)
 		div(class='form-group p-1')
 			label(for='weaponName')
 				b Weapon Name :

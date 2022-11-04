@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // https://warframe.fandom.com/wiki/Riven_Mods
 const RivenSourceSchema = new Schema({
-	source: {
+	name: {
 		type: String,
 		required: true
 	},

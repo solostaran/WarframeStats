@@ -17,8 +17,8 @@ const addOrUpdate = async function(obj) {
         // create a new origin
         ro = new RivenSource();
     }
-    ro.source = obj.source;
-    ro.markModified('source');
+    ro.name = obj.name;
+    ro.markModified('name');
     if (obj.more_info) {
         ro.more_info = obj.more_info;
         ro.markModified('more_info');
@@ -35,17 +35,17 @@ const findById = function(id) {
     return RivenSource.findById(id).exec();
 };
 
-const findBySource = function(param) {
+const findByName = function(param) {
     return RivenSource
-        .find({ source: { $regex : new RegExp(param, "i") } })
+        .find({ name: { $regex : new RegExp(param, "i") } })
         .exec();
 };
 
-const findByIdOrSource = async function(param) {
+const findByIdOrName = async function(param) {
     try {
         return await findById(param);
     } catch (err) {}
-    const ret = await findBySource(param);
+    const ret = await findByName(param);
     if (ret.length === 1)
         return ret[0];
     return null;
@@ -68,6 +68,6 @@ exports.list = list;
 exports.addOrUpdate = addOrUpdate;
 exports.adds = adds;
 exports.findById = findById;
-exports.findByIdOrOrigin = findByIdOrSource;
+exports.findByIdOrName = findByIdOrName;
 exports.deleteOneById = deleteOneById;
 exports.deleteAll = deleteAll;

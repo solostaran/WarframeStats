@@ -17,16 +17,19 @@ html(lang='en')
           a(class='navbar-brand', href='#') WarframeStats
             button(class='navbar-toggler ms-1', type='button', data-bs-toggle='collapse', data-bs-target='#navbarTogglerWS', aria-controls='navbarTogglerWS', aria-expanded='false', aria-label='Toggle navigation')
               span(class='navbar-toggler-icon')
-        div(class='collapse navbar-collapse', id='navbarTogglerWS')
+        div(class='collapse navbar-collapse' id='navbarTogglerWS')
           ul(class='nav nav-pills nav-fill')
-            li(class='nav-item')
-              a(class='nav-link', aria-current='page', href='/types', id='nav-rivtyp') Riven types
-            li(class='nav-item')
-              a(class='nav-link', aria-current='page', href='/sources', id='nav-rivsrc') Riven sources
-            li(class='nav-item')
-              a(class='nav-link', aria-current='page', href='/conditions', id='nav-rivcond') Riven conditions
-            li(class='nav-item')
-              a(class='nav-link', aria-current='page', href='/boosters', id='nav-boosttyp') Booster types
+            li(class='nav-item dropdown' id='dropInfo')
+              a(class='nav-link dropdown-toggle' href='#' data-bs-toggle='dropdown') Informations
+              ul(class='dropdown-menu')
+                li(class='dropdown-item')
+                  a(class='nav-link', aria-current='page', href='/types', id='nav-rivtyp') Riven types
+                li(class='dropdown-item')
+                  a(class='nav-link', aria-current='page', href='/sources', id='nav-rivsrc') Riven sources
+                li(class='dropdown-item')
+                  a(class='nav-link', aria-current='page', href='/conditions', id='nav-rivcond') Riven conditions
+                li(class='dropdown-item')
+                  a(class='nav-link', aria-current='page', href='/boosters', id='nav-boosttyp') Booster types
             li(class='nav-item')
               a(class='nav-link', aria-current='page', href='/rivenForm', id='nav-rivform') Create riven
             li(class='nav-item')

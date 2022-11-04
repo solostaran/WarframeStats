@@ -36,7 +36,7 @@ const form2riven = async function(formRiven, userId) {
         riven.N = formRiven.N;
         riven.markModified('N');
     }
-    riven.source = await RivSrcProcess.findByIdOrOrigin(formRiven.source);
+    riven.source = await RivSrcProcess.findByIdOrName(formRiven.source);
     if (riven.source === null)
         return Promise.reject('This riven source cannot be defined : '+formRiven.source);
     riven.markModified('source');

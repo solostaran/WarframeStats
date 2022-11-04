@@ -24,7 +24,7 @@ const getRewardBooster = async function (formReward) {
 };
 
 const manageRewardRiven = async function (formReward, userId, rivenType, rewardId, rewardSrc) {
-	const rivsrc = await RivenSourceProcess.findByIdOrOrigin(rewardSrc.name);
+	const rivsrc = await RivenSourceProcess.findByIdOrName(rewardSrc.name);
 	if (!rivsrc) throw new Error('Riven source cannot correspond to reward source');
 	let riven;
 	if (formReward.rivenId) {
@@ -47,8 +47,7 @@ const manageRewardRiven = async function (formReward, userId, rivenType, rewardI
 		riven.N = formReward.rivenN;
 	}
 	if (formReward.rivenConditions) {
-		let conds = [];
-		conds = formReward.rivenConditions.filter(function (cond) {	return cond !== 'none';	});
+		const conds = formReward.rivenConditions.filter(function (cond) {	return cond !== 'none';	});
 		riven.conditions = conds;
 		riven.markModified('conditions');
 	}
