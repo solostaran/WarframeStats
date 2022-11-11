@@ -25,7 +25,7 @@ const getRewardBooster = async function (formReward) {
 
 const manageRewardRiven = async function (formReward, userId, rivenType, rewardId, rewardSrc) {
 	const rivsrc = await RivenSourceProcess.findByIdOrName(rewardSrc.name);
-	if (!rivsrc) throw new Error('Riven source cannot correspond to reward source');
+	if (!rivsrc) throw new Error('Riven source doesn\'t correspond to reward source');
 	let riven;
 	if (formReward.rivenId) {
 		riven = await Riven.findById({_id: formReward.rivenId});
@@ -83,12 +83,12 @@ const form2reward = async function(formReward, userId) {
 	const rsource = await RewardSourceProcess.findByIdOrName(formReward.source);
 	reward.source = rsource._id;
 	reward.markModified('source');
-	const rtype = await RewardTypeProcess.findByIdOrName(formReward.type);
-	reward.type = rtype._id;
+	const rewtype = await RewardTypeProcess.findByIdOrName(formReward.type);
+	reward.type = rewtype._id;
 	reward.markModified('type');
 	reward.date = getRewardDate(formReward);
 	reward.markModified('date');
-	if (rtype.name.search('Booster') >= 0) {
+	if (rewtype.name.search('Booster') >= 0) {
 		reward.booster = await getRewardBooster(formReward);
 		reward.markModified('booster');
 	}
@@ -96,15 +96,25 @@ const form2reward = async function(formReward, userId) {
 		reward.booster = null;
 		reward.markModified('booster');
 	}
-	if (rtype.name.search('Riven') >= 0) {
-		const rtype = await RivenTypeProcess.findByIdOrName(formReward.rivenType);
-		if (!rtype) throw new Error('Reward with riven but without valid rivenType');
-		reward.rivenType = rtype._id;
+	if (rewtype.name.search('Riven') >= 0) {
+		const rivtype = await RivenTypeProcess.findByIdOrName(formReward.rivenType);
+		if (!rivtype) throw new Error('Reward with riven but without valid rivenType');
+		reward.rivenType = rivtype._id;
 		reward.markModified('rivenType');
-		const riven = await manageRewardRiven(formReward, userId, rtype._id, reward._id, rsource);
-		reward.riven = riven._id;
-		reward.markModified('riven');
+		if (formReward.rivenWeaponName || (formReward.rivenConditions && formReward.rivenConditions[0] !== 'none')) {
+			// riven information in form = update or create a riven
+			const riven = await manageRewardRiven(formReward, userId, rivtype._id, reward._id, rsource);
+			reward.riven = riven._id;
+			reward.markModified('riven');
+		} else if (reward.riven) {
+			// old unveiled riven + no riven info in form = remove the old unveiled riven
+			const riven = await Riven.findById({_id: reward.riven._id});
+			reward.riven = null;
+			reward.markModified('riven');
+			await riven.remove();
+		}
 	} else if (reward.riven) {
+		// old riven exists + reward is no longer a riven = remove old riven
 		const riven = await Riven.findById({_id: reward.riven._id});
 		reward.riven = null;
 		reward.markModified('riven');
@@ -112,7 +122,6 @@ const form2reward = async function(formReward, userId) {
 		reward.markModified('rivenType');
 		await riven.remove();
 	}
-	reward.markModified('riven');
 	//console.log(JSON.stringify(reward));
 	await reward.save();
 	return reward;

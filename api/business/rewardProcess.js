@@ -16,7 +16,7 @@ const countByType = function(type, onCount) {
 };
 
 const rawlist = function(onOk, onError) {
-	Reward.find({}).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(list => {
+	Reward.find({}).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: -1}).then(list => {
 		onOk(list)
 	}).catch(onError);
 }
