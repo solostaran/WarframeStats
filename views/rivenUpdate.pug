@@ -42,9 +42,9 @@ block content
 					select(class='form-select' name = 'source' id = 'riven-source' aria-describedby="riven-source")
 						each val in sources
 							if (riven.source._id.toString() === val._id.toString())
-								option(value= val._id selected) #{val.source}
+								option(value= val._id selected) #{val.name}
 							else
-								option(value= val._id) #{val.source}
+								option(value= val._id) #{val.name}
 				div(class='input-group mb-2')
 					span(class='input-group-text' for='weapon-name') Weapon name :
 					input(class='form-control' name='weaponName' id='weaponName' value=riven.weaponName aria-describedby='weapon-name')

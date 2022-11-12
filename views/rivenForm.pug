@@ -36,7 +36,7 @@ block content
 				label(class='input-group-text' for='source') Source of the riven :
 				select(class='form-select' name = 'source' id = 'riven-source')
 					each val in sources
-						option(value= val._id) #{val.source}
+						option(value= val._id) #{val.name}
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='weaponName') Weapon Name :
 				input(class='form-control' name='weaponName' id='weaponName' placeholder='ex: Nagantaka')
