@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// https://warframe.fandom.com/wiki/Sortie#Rewards
-const RewardTypeSchema = new Schema({
+// https://warframe.fandom.com/wiki/Riven_Mods
+const RivenSourceSchema = new Schema({
 	name: {
 		type: String,
 		required: true
@@ -16,4 +16,4 @@ const RewardTypeSchema = new Schema({
 	versionKey: false
 });
 
-module.exports = mongoose.model('RewardType', RewardTypeSchema);
+module.exports = mongoose.model('RivenSource', RivenSourceSchema);

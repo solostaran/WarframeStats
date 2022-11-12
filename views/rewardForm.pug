@@ -58,12 +58,17 @@ block content
 	// Beginning of visible template
 	div(class='container-lg')
 		div(class='row m-1')
-			h3 Creation of a new Sortie's Reward
+			h3 Creation of a new Reward
 		form(method='POST' name='rewardForm' action='/reward/form' onsubmit='return validateForm(this);')
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='date') Date of reward acquisition :
 				input(class='form-control' type='text' name='date' id='date' size='24' readonly)
 				button(class='btn btn-outline-info mx-1' type='button' onClick='return resetDate(this.previousElementSibling);') X
+			div(class='input-group mt-2')
+				label(class='input-group-text' for='source') Select the reward source :
+				select(class='form-select' name='source' id='source')
+					each val in sources
+						option(value= val._id) #{val.name}
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='type') Select the reward type :
 				select(class='form-select' name='type' id='type' onchange='onSelect(this)')

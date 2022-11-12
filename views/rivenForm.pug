@@ -33,11 +33,13 @@ block content
 					each val in types
 						option(value= val._id) #{val.name}
 			div(class='input-group mt-2')
+				label(class='input-group-text' for='source') Source of the riven :
+				select(class='form-select' name = 'source' id = 'riven-source')
+					each val in sources
+						option(value= val._id) #{val.source}
+			div(class='input-group mt-2')
 				label(class='input-group-text' for='weaponName') Weapon Name :
 				input(class='form-control' name='weaponName' id='weaponName' placeholder='ex: Nagantaka')
-			div(class='input-group mt-2')
-				label(class='input-group-text' for='note') Additional information (source of the riven) :
-				input(class='form-control' name='note' id='note' size='40' placeholder='ex: Transmutation')
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='mcondition') Mandatory Condition :
 				select(class='form-select' name = 'conditions[]' id='mcondition')

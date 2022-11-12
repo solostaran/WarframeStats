@@ -3,7 +3,8 @@
 		"_postman_id": "63dff991-62eb-4233-b16c-cdab026019d4",
 		"name": "WarframeStats",
 		"description": "Store Warframe loots from Sorties (and maybe Bounties)",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6764791"
 	},
 	"item": [
 		{
@@ -52,12 +53,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/riven/type",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/type",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"type"
@@ -71,12 +70,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/riven/type",
-									"protocol": "http",
+									"raw": "{{base_url}}/riven/type",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
-									"port": "3000",
 									"path": [
 										"riven",
 										"type"
@@ -97,23 +94,27 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "308"
+									"value": "415"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"134-3Pa5RCZ52MChgQI3Cv0L2SvLXwU\""
+									"value": "W/\"19f-PYYdmKgD+s1HrRBwiMpB8N3XixE\""
 								},
 								{
 									"key": "Date",
-									"value": "Fri, 01 Mar 2019 19:24:38 GMT"
+									"value": "Wed, 12 Oct 2022 16:44:12 GMT"
 								},
 								{
 									"key": "Connection",
 									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"_id\": \"5c796514dcfbfe51dcc71e19\",\n        \"name\": \"primary\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1a\",\n        \"name\": \"secondary\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1b\",\n        \"name\": \"melee\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1c\",\n        \"name\": \"shotgun\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1d\",\n        \"name\": \"kitgun\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1e\",\n        \"name\": \"zaw\"\n    }\n]"
+							"body": "[\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e19\",\n        \"name\": \"rifle\"\n    },\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e1a\",\n        \"name\": \"pistol\"\n    },\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e1b\",\n        \"name\": \"melee\"\n    },\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e1c\",\n        \"name\": \"shotgun\"\n    },\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e1d\",\n        \"name\": \"kitgun\"\n    },\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e1e\",\n        \"name\": \"zaw\"\n    },\n    {\n        \"_id\": \"5ced03e11b3c1756f820dff7\",\n        \"name\": \"archgun\"\n    },\n    {\n        \"_id\": \"5f0468b30bf1362e406e2b63\",\n        \"name\": \"sentinel weapon\"\n    }\n]"
 						}
 					]
 				},
@@ -158,12 +159,10 @@
 							"raw": "{\"name\":\"worldshatterweapon\"}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/riven/type/add",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/type/add",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"type",
@@ -209,12 +208,10 @@
 							"raw": "{\r\n    \"_id\":\"{{riven_type_id}}\",\r\n    \"name\":\"my kitten type\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/riven/type/update",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/type/update",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"type",
@@ -257,12 +254,10 @@
 							"raw": "[{\"name\":\"rifle\"},{\"name\":\"pistol\"},{\"name\":\"melee\"},{\"name\":\"shotgun\"},{\"name\":\"kitgun\"},{\"name\":\"zaw\"},{\"name\":\"arch-gun\"}]"
 						},
 						"url": {
-							"raw": "http://localhost:3000/riven/type/adds",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/type/adds",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"type",
@@ -301,12 +296,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/riven/type/{{riven_type_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/type/{{riven_type_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"type",
@@ -347,12 +340,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/riven/type/delete/{{riven_type_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/type/delete/{{riven_type_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"type",
@@ -361,30 +352,136 @@
 							]
 						}
 					},
+					"response": []
+				},
+				{
+					"name": "DELETE all riven types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"ok = 1\", function () {",
+									"   pm.expect(pm.response.json().ok).to.be.equal(1);",
+									"});",
+									"pm.test(\"Deleted the expected number\", function () {",
+									"    pm.expect(pm.response.json().n).to.be.equal(Number(pm.collectionVariables.get(\"riven_types_inserted\")));",
+									"});",
+									"pm.collectionVariables.set(\"riven_types_inserted\", 0);",
+									"console.log(\"Total of riven types = \"+0);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/riven/type/deleteall/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"type",
+								"deleteall",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RivenSources",
+			"item": [
+				{
+					"name": "GET Riven sources",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 and body present\", function () {\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"pm.test(\"Validate array count\", function () {\r",
+									"    pm.expect(pm.response.json().length).to.be.equal(Number(pm.collectionVariables.get(\"riven_sources_inserted\")));\r",
+									"});\r",
+									"var schema = {\r",
+									"    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"    \"type\":\"array\",\r",
+									"    \"items\": {\r",
+									"        \"type\" : \"object\",\r",
+									"        \"properties\": {\r",
+									"            \"_id\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"name\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"more_info\": {\r",
+									"              \"type\": \"string\"\r",
+									"            }\r",
+									"        },\r",
+									"        \"required\": [\"_id\", \"name\"]\r",
+									"    }\r",
+									"};\r",
+									"pm.test(\"Validate schema\", function () {\r",
+									"    var valid = tv4.validate(pm.response.json(), schema);\r",
+									"    pm.expect(valid).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/riven/source",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"source"
+							]
+						}
+					},
 					"response": [
 						{
-							"name": "DELETE Riven type by ID",
+							"name": "GET Riven origins",
 							"originalRequest": {
-								"method": "DELETE",
+								"method": "GET",
 								"header": [
 									{
-										"key": "Content-Type",
+										"key": "Accept",
 										"value": "application/json",
 										"type": "text"
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/riven/type/delete/{{riven_type_id}}",
-									"protocol": "http",
+									"raw": "{{base_url}}/riven/origin",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
-									"port": "3000",
 									"path": [
 										"riven",
-										"type",
-										"delete",
-										"{{riven_type_id}}"
+										"origin"
 									]
 								}
 							},
@@ -402,28 +499,220 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "14"
+									"value": "1277"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"e-+5VCygqWcZ7wJFa42PMop+n5IBw\""
+									"value": "W/\"4fd-UJConJKZjCNnvmXWEonGOyruGl8\""
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 05 Mar 2019 16:16:28 GMT"
+									"value": "Wed, 12 Oct 2022 16:44:42 GMT"
 								},
 								{
 									"key": "Connection",
 									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"n\": 0,\n    \"ok\": 1\n}"
+							"body": "[\n    {\n        \"_id\": \"6346ee317637987d78d9cbe6\",\n        \"origin\": \"Unknown\",\n        \"more_info\": \"from an unknown source (due to the unveiling mechanism or simply unknown)\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbe7\",\n        \"origin\": \"Slivers\",\n        \"more_info\": \"sold by Palladino in Iron Wake for 10 slivers\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbe8\",\n        \"origin\": \"Sortie\",\n        \"more_info\": \"sortie's reward\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbe9\",\n        \"origin\": \"Archon\",\n        \"more_info\": \"archon hunts' reward\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbea\",\n        \"origin\": \"Transmutation\",\n        \"more_info\": \"converting 4 rivens into a new one\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbeb\",\n        \"origin\": \"Simaris\",\n        \"more_info\": \"sold by Cephalon Simaris\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbec\",\n        \"origin\": \"Steel Path\",\n        \"more_info\": \"sold by Teshin from Steel Path\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbed\",\n        \"origin\": \"Nightwave\",\n        \"more_info\": \"nightwave's rank reward\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbee\",\n        \"origin\": \"Nihil\",\n        \"more_info\": \"Nihil boss in Enter Nihil's Oubliette from Nightwave's offerings\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbef\",\n        \"origin\": \"Event\",\n        \"more_info\": \"tactical alerts or special events Gift from the Lotus\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbf0\",\n        \"origin\": \"Daily\",\n        \"more_info\": \"in the daily tribute\"\n    },\n    {\n        \"_id\": \"6346ee317637987d78d9cbf1\",\n        \"origin\": \"Arbitration\",\n        \"more_info\": \"sold by vendors of the Arbiters of Hexis\"\n    }\n]"
 						}
 					]
 				},
 				{
-					"name": "DELETE all riven types",
+					"name": "ADD Riven source",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        var rti = Number(pm.collectionVariables.get(\"riven_sources_inserted\"));",
+									"        rti += 1;",
+									"        pm.collectionVariables.set(\"riven_sources_inserted\", rti);",
+									"        console.log(\"Total of riven sources = \"+rti);",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"riven_source_id\", pm.response.json()._id);",
+									"    }",
+									"});",
+									"pm.test(\"_id length ok\", function() {",
+									"   pm.expect(pm.response.json()._id.length).to.be.equal(24);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"nowhere\", \"more_info\": \"couldn't be more explicit\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/riven/source/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"source",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Multiple riven sources",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Insert 12 riven origins\", function() {\r",
+									"    pm.expect(pm.response.json().insertedCount).to.be.equal(12); \r",
+									"});\r",
+									"var roi = Number(pm.collectionVariables.get(\"riven_sources_inserted\"));\r",
+									"roi += pm.response.json().insertedCount;\r",
+									"pm.collectionVariables.set(\"riven_sources_inserted\", roi);\r",
+									"console.log(\"Total of riven sources = \"+roi);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\"name\":\"Unknown\", \"more_info\": \"from an unknown source (due to the unveiling mechanism or simply unknown)\"},\r\n  {\"name\":\"Slivers\", \"more_info\": \"sold by Palladino in Iron Wake for 10 slivers\"},\r\n  {\"name\":\"Sortie\", \"more_info\": \"sortie's reward\"},\r\n  {\"name\":\"Archon\", \"more_info\": \"archon hunts' reward\"},\r\n  {\"name\":\"Transmutation\", \"more_info\": \"converting 4 rivens into a new one\"},\r\n  {\"name\":\"Simaris\", \"more_info\": \"sold by Cephalon Simaris\"},\r\n  {\"name\":\"Steel Path\", \"more_info\": \"sold by Teshin from Steel Path\"},\r\n  {\"name\":\"Nightwave\", \"more_info\": \"nightwave's rank reward\"},\r\n  {\"name\":\"Nihil\", \"more_info\": \"Nihil boss in Enter Nihil's Oubliette from Nightwave's offerings\"},\r\n  {\"name\":\"Event\", \"more_info\": \"tactical alerts or special events Gift from the Lotus\"},\r\n  {\"name\":\"Daily\", \"more_info\": \"in the daily tribute\"},\r\n  {\"name\":\"Arbitration\", \"more_info\": \"sold by vendors of the Arbiters of Hexis\"}\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/riven/source/adds",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"source",
+								"adds"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Riven source by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 and body present\", function () {\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/riven/source/{{riven_source_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"source",
+								"{{riven_source_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Riven source by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Deleted one riven origin\", function () {",
+									"    pm.expect(pm.response.json().n).to.be.equal(1);",
+									"    if (pm.response.json().n == 1) {",
+									"        pm.collectionVariables.set(\"riven_sources_inserted\", Number(pm.collectionVariables.get(\"riven_sources_inserted\"))-1);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/riven/source/delete/{{riven_origin_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"source",
+								"delete",
+								"{{riven_origin_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE all riven origins",
 					"event": [
 						{
 							"listen": "test",
@@ -436,10 +725,10 @@
 									"   pm.expect(pm.response.json().ok).to.be.equal(1);",
 									"});",
 									"pm.test(\"Deleted the expected number\", function () {",
-									"    pm.expect(pm.response.json().n).to.be.equal(Number(pm.environment.get(\"riven_types_inserted\")));",
+									"    pm.expect(pm.response.json().n).to.be.equal(Number(pm.collectionVariables.get(\"riven_sources_inserted\")));",
 									"});",
-									"pm.collectionVariables.set(\"riven_types_inserted\", 0);",
-									"console.log(\"Total of riven types = \"+0);"
+									"pm.collectionVariables.set(\"riven_sources_inserted\", 0);",
+									"console.log(\"Total of riven sources = \"+0);"
 								],
 								"type": "text/javascript"
 							}
@@ -449,17 +738,312 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/riven/type/deleteall/",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/source/deleteall/",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
-								"type",
+								"source",
 								"deleteall",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RivenConditions",
+			"item": [
+				{
+					"name": "GET Riven conditions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Validate array count > 1\", function () {\r",
+									"    pm.expect(pm.response.json().length).to.be.above(1);\r",
+									"});\r",
+									"var schema = {\r",
+									"    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"    \"type\":\"array\",\r",
+									"    \"items\": {\r",
+									"        \"type\" : \"object\",\r",
+									"        \"properties\": {\r",
+									"            \"_id\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"description\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"Created_date\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"advices\":{\r",
+									"                \"type\": \"array\",\r",
+									"                \"items\": {\r",
+									"                    \"type\":\"string\"\r",
+									"                }\r",
+									"            }\r",
+									"        },\r",
+									"        \"required\": [\"_id\", \"description\"]\r",
+									"    }\r",
+									"};\r",
+									"pm.test(\"Validate schema\", function () {\r",
+									"    var valid = tv4.validate(pm.response.json(), schema);\r",
+									"    pm.expect(valid).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/riven/condition",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"condition"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Riven conditions Formatted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Validate mandatories filled.\", function () {\r",
+									"    pm.expect(pm.response.json().mandatories.length).to.be.above(1);\r",
+									"});\r",
+									"pm.test(\"Validate optionals filled.\", function () {\r",
+									"    pm.expect(pm.response.json().optionals.length).to.be.above(1);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/riven/condition/formatted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"condition",
+								"formatted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Riven condition",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        var rci = Number(pm.environment.get(\"riven_conditions_inserted\"));",
+									"        rci += 1;",
+									"        pm.environment.set(\"riven_conditions_inserted\", rci);",
+									"        console.log(\"Total of riven conditions = \"+rci);",
+									"        // save ID",
+									"        pm.environment.set(\"riven_condition_id\", pm.response.json()._id);",
+									"    }",
+									"});",
+									"pm.test(\"_id length ok\", function() {",
+									"   pm.expect(pm.response.json()._id.length).to.be.equal(24);",
+									"});",
+									"pm.test(\"Advices undefined if not present\", function() {",
+									"   pm.expect(pm.response.json().advices).to.be.undefined; ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Kill N frozen ennemies\",\n    \"advices\": [\n        \"Ask for Elsa's help\",\n        \"Olaf can help too\",\n        \"Frost can't help you with that ... or not.\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/riven/condition/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"condition",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Multiple riven conditions",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"description\": \"Kill N enemies\"\n    },\n    {\n        \"description\": \"Kill N enemies in a row\",\n        \"advices\": [\n            \"Hydron on Sedna or Helene on Saturne + Loki and weapons like Ignis or Amprex\"\n        ]\n    },\n    {\n        \"description\": \"Make N killing blows\"\n    },\n    {\n        \"description\": \"Destroy N dargyns\"\n    },\n    {\n        \"description\": \"Kill N dargyn pilots before they hit the ground\",\n        \"advices\": [\n            \"Arca Plasmor with improved range\",\n            \"Nova with max range to slow pilot's fall\",\n            \"Mag with Magnetize and shoot the border of the bubble.\"\n        ]\n    },\n    {\n        \"description\": \"Kill 3 airborne condrocs\",\n        \"advices\": [\n            \"Volt ability 1 (or Arca Plasmor with range) just after take-off\",\n            \"Sniper rifle on flying condrocs at the west of the map.\"\n        ]\n    },\n    {\n        \"description\": \"Find N caches\",\n        \"advices\": [\n            \"Orokin sabotage\",\n            \"Eidolon plains, alone in free roaming\"\n        ]\n    },\n    {\n        \"description\": \"Kill N tusk ballistas\",\n        \"advices\": [\n            \"Eidolon plains by day with a stealth warframe\"\n        ]\n    },\n    {\n        \"description\": \"Destroy N vruush turrets\",\n        \"advices\": [\n            \"Eidolon plains and turrets must be destroyed consecutively.\",\n            \"Itzal archwing is good to avoid missiles.\",\n            \"Snper rifle is best.\"\n        ]\n    },\n    {\n        \"description\": \"Sustain 3x melee combo for 30 seconds\",\n        \"advices\": [\n            \"Nimus on Eris = lots of infested and level 30+\"\n        ]\n    },\n    {\n        \"description\": \"Complete an incursion alone\",\n        \"advices\": [\n            \"Eidolon plains in free roaming (best with find caches)\"\n        ]\n    },\n    {\n        \"description\": \"Synthesize Simaris target without using ability or consumables\",\n        \"advices\": [\n            \"Stealth warframe (best with Ivara)\"\n        ]\n    },\n    {\n        \"description\": \"Fish, mine and kill an enemy in less than 30 seconds\",\n        \"advices\": [\n            \"Eidolon plains, find a mine in close proximity of water then in order : fish, mine and kill someone in the closest camp\"\n        ]\n    },\n    {\n        \"description\": \"Finish a level 30+ interception alone\",\n        \"advices\": [\n            \"Xini on Eris with Banshee Quake or Nova or Saryn\"\n        ]\n    },\n    {\n        \"description\": \"Finish a level 30+ extermination\",\n        \"advices\": [\n            \"Oxomoco in the Void\"\n        ]\n    },\n    {\n        \"description\": \"Finish a level 30+ survival without killing anyone or using consumables\",\n        \"advices\": [\n            \"Selkie on Sedna with Loki and Master Thief mod to pop up more oxygen.\",\n            \"Better with grineers : infested = poison and corpus = nullifiers.\"\n        ]\n    },\n    {\n\t    \"description\": \"Finish a level 30+ defense alone with the defense objective taking no damage\",\n    \t\"advices\": [\n        \t\"Frost with a big bubble and freezing augment\",\n        \t\"Blast infested enemies from far away : Saryn or Banshee quake for example\"\n    \t]\n\t},\n    {\n\t    \"description\": \"Find N syndicate medallions\",\n\t    \"advices\": [\n\t        \"Limbo's cataclysm / Saryn's Molt / Equinox's Maim to destroy containers in a large AoE\",\n\t        \"Carrier's Looter Mod can break containers\",\n\t        \"Your max range melee weapon to destroy containers\",\n\t        \"Mag's Greedy Pull augment can be useful (with Mag) to loot\",\n\t        \"Detection range affected by Loot Detector, Thief's Wit and Animal Instinct mods as well as Ivara's passive.\",\n\t        \"Khora's Venari can have an additional animal instinct\"\n\t    ]\n\t},\n    {\n        \"description\": \"with a hobbled dragon key equipped\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"on enter : do not forget the key in your consumables !!!\",\n            \"on exit : do not forget to remove the key in your consumables\"\n        ]\n    },\n    {\n        \"description\": \"without being detected\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Stealth warframe and/or silenced weapon.\"\n        ]\n    },\n    {\n        \"description\": \"without being killed\",\n        \"optional\": \"true\"\n    },\n    {\n        \"description\": \"without beind knocked down\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Stealth warframe\",\n            \"Atlas\",\n            \"Rhino\",\n            \"Better with infested.\"\n        ]\n    },\n    {\n        \"description\": \"without getting afflicted by status effects\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Stealth warframe or bubble type warframe (Frost, Limbo)\"\n        ]\n    },\n    {\n        \"description\": \"on sentients\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Plato on Lua and find the oculyst (do not run too fast, they will not see you)\",\n            \"Tycho on Lua (2 at 5 minutes and then 3 every 5 minutes)\"\n        ]\n    },\n    {\n        \"description\": \"with headshots\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Stealth warframe and/or silenced weapon.\"\n        ]\n    },\n    {\n        \"description\": \"level 30+\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Sedna / Pluto / Eris and the Void\"\n        ]\n    },\n    {\n        \"description\": \"without taking any damage\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Rhino's Iron skin\",\n            \"Loki (max stealth build) or Ivara depending on the mission\",\n            \" Maybe Frost with a defense mission.\"\n        ]\n    },\n    {\n        \"description\": \"sliding\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Best with scatter weapons (Ignis, Amprex)\"\n        ]\n    },\n    {\n        \"description\": \"invisible\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Stealth warframe maybe ?\"\n        ]\n    },\n    {\n        \"description\": \"while flying\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Needs archwing\",\n            \"Itzal is best generally to avoid missiles + stealth\"\n        ]\n    },\n    {\n        \"description\": \"from more than 100m\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Eidolon plains or Orb Vallis\",\n            \"Silenced sniper rifle or Loki + augment.\"\n        ]\n    },\n    {\n        \"description\": \"with a bow\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Use a bow !!!\",\n            \"Zephyr + jetstream augment can help you.\",\n            \"Nova with max slow.\"\n        ]\n    },\n    {\n        \"description\": \"without an ally being downed\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Do it alone\"\n        ]\n    },\n    {\n        \"description\": \"with a sentry active\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Don't forget to equip a sentry !\",\n            \" Maybe don't equip the sentry with a weapon.\"\n        ]\n    },\n    {\n        \"description\": \"with an animal companion active\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Khora's Venari is not a valid companion !\"\n        ]\n    },\n    {\n        \"description\": \"without failing the mission\",\n        \"optional\": \"true\"\n    },\n    {\n        \"description\": \"in one day\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"In general it means Plains of Eidolon.\"\n        ]\n    },\n    {\n        \"description\": \"on a drop ship\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Yursa on Neptune = 1 drop ship on turns 2, 6 and 10. Rinse and repeat.\",\n            \"Good with Amprex by shooting the ship.\"\n        ]\n    },\n    {\n        \"description\": \"with only a melee weapon equipped\",\n        \"optional\": \"true\"\n    },\n    {\n        \"description\": \"with a secondary weapon\",\n        \"optional\": \"true\"\n    },\n    {\n        \"description\": \"without using life consumables\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Beware of the red spheres ! They are consumables.\",\n            \"Stealth or Rhino (Refresh the iron skin safely).\",\n            \"Elevate, Nourish and Repair magus are not consumables :)\"\n        ]\n    },\n    {\n        \"description\": \"with a decaying dragon key equipped\",\n        \"optional\": \"true\"\n    },\n    {\n        \"description\": \"without raising any alarms\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Easier than without being detected.\",\n            \"Berserck type or stealth\",\n            \"no Surviva, Defense or Infested missions because an alarm is the beginning of those missions !\"\n        ]\n    },\n    {\n        \"description\": \"in a single aim glide\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Quite easy with a moa companion and the Tractor Beam mod.\",\n            \"In case of headshots : easier with grineer and more difficult with infested.\",\n            \"In case of headshots : best with mirage and spread or precise weapons (Brakk, Akstiletto, ...).\",\n            \"More than one time done on Uranus.\"\n        ]\n    },\n    {\n\t    \"description\": \"while wall dashing or wall clinging\",\n\t    \"optional\": true,\n\t    \"advices\": [\n\t        \"Hydron on Sedna or Helene on Saturne + Loki and weapons like Ignis or Amprex\",\n\t        \"With no alarms: Ivara and noise arrow to pack mobs\"\n\t    ]\n\t}\n]\n"
+						},
+						"url": {
+							"raw": "{{base_url}}/riven/condition/adds",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"condition",
+								"adds"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Riven condition by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 and body present\", function () {\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/riven/condition/{{riven_condition_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"condition",
+								"{{riven_condition_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Riven condition by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Deleted one riven condition\", function () {",
+									"    pm.expect(pm.response.json().n).to.be.equal(1);",
+									"    if (pm.response.json().n == 1) {",
+									"        pm.collectionVariables.set(\"riven_conditions_inserted\", Number(pm.collectionVariables.get(\"riven_conditions_inserted\"))-1);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/riven/condition/delete/{{riven_condition_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"condition",
+								"delete",
+								"{{riven_condition_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE all riven conditions",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/riven/condition/deleteall",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"riven",
+								"condition",
+								"deleteall"
 							]
 						}
 					},
@@ -519,12 +1103,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/booster/type/",
-							"protocol": "http",
+							"raw": "{{base_url}}/booster/type/",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"booster",
 								"type",
@@ -532,58 +1114,7 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "GET Riven types",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/riven/type",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"riven",
-										"type"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "308"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"134-3Pa5RCZ52MChgQI3Cv0L2SvLXwU\""
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 01 Mar 2019 19:24:38 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "[\n    {\n        \"_id\": \"5c796514dcfbfe51dcc71e19\",\n        \"name\": \"primary\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1a\",\n        \"name\": \"secondary\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1b\",\n        \"name\": \"melee\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1c\",\n        \"name\": \"shotgun\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1d\",\n        \"name\": \"kitgun\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1e\",\n        \"name\": \"zaw\"\n    }\n]"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "ADD Booster type",
@@ -626,12 +1157,10 @@
 							"raw": "{\n\t\"name\":\"toto boost\",\n\t\"description\":\"double the amount of totos\",\n\t\"url\":\"https://blague-humour.com/blague-toto/\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/booster/type/add",
-							"protocol": "http",
+							"raw": "{{base_url}}/booster/type/add",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"booster",
 								"type",
@@ -677,12 +1206,10 @@
 							"raw": "{\n\t\"_id\": \"{{booster_type_id}}\",\n\t\"name\":\"chance en boisson\",\n\t\"description\":\"multiply luck by ten\",\n\t\"url\":\"https://loto.com\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/booster/type/update",
-							"protocol": "http",
+							"raw": "{{base_url}}/booster/type/update",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"booster",
 								"type",
@@ -725,12 +1252,10 @@
 							"raw": "[\n    {\n        \"name\": \"Affinity Booster\",\n        \"description\": \"doubles the amount of affinity earned from pickups and mission rewards\",\n        \"url\": \"https://warframe.fandom.com/wiki/Affinity_Booster\"\n    },\n    {\n        \"name\": \"Credit Booster\",\n        \"description\": \"doubles the amount of credits earned from pickups, caches and mission rewards\",\n        \"url\": \"https://warframe.fandom.com/wiki/Credit_Booster\"\n    },\n    {\n        \"name\": \"Resource Booster\",\n        \"description\": \"doubles the amount of resources earned from pickups\",\n        \"url\": \"https://warframe.fandom.com/wiki/Resource_Booster\"\n    },\n    {\n        \"name\": \"Resource Drop Chance Booster\",\n        \"description\": \"doubles the chance of resource drops\",\n        \"url\": \"https://warframe.fandom.com/wiki/Resource_Drop_Chance_Booster\"\n    },\n    {\n    \t\"name\": \"Mod Drop Chance Booster\",\n    \t\"description\": \"doubles the chance of mod drops\",\n    \t\"url\": \"https://warframe.fandom.com/wiki/Mod_Drop_Chance_Booster\"\n    }\n]"
 						},
 						"url": {
-							"raw": "http://localhost:3000/booster/type/adds",
-							"protocol": "http",
+							"raw": "{{base_url}}/booster/type/adds",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"booster",
 								"type",
@@ -769,12 +1294,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/booster/type/{{booster_type_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/booster/type/{{booster_type_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"booster",
 								"type",
@@ -815,12 +1338,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/booster/type/delete/{{booster_type_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/booster/type/delete/{{booster_type_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"booster",
 								"type",
@@ -829,66 +1350,7 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "DELETE Riven type by ID",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3000/riven/type/delete/{{riven_type_id}}",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"riven",
-										"type",
-										"delete",
-										"{{riven_type_id}}"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "14"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"e-+5VCygqWcZ7wJFa42PMop+n5IBw\""
-								},
-								{
-									"key": "Date",
-									"value": "Tue, 05 Mar 2019 16:16:28 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"n\": 0,\n    \"ok\": 1\n}"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "DELETE all booster types",
@@ -917,12 +1379,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/booster/type/deleteall",
-							"protocol": "http",
+							"raw": "{{base_url}}/booster/type/deleteall",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"booster",
 								"type",
@@ -962,6 +1422,9 @@
 									"            },\r",
 									"            \"name\": {\r",
 									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"more_info\": {\r",
+									"              \"type\": \"string\"\r",
 									"            }\r",
 									"        },\r",
 									"        \"required\": [\"_id\", \"name\"]\r",
@@ -980,12 +1443,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/type/",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/type/",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"type",
@@ -995,67 +1456,15 @@
 					},
 					"response": [
 						{
-							"name": "GET Riven types",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/riven/type",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"riven",
-										"type"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "308"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"134-3Pa5RCZ52MChgQI3Cv0L2SvLXwU\""
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 01 Mar 2019 19:24:38 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "[\n    {\n        \"_id\": \"5c796514dcfbfe51dcc71e19\",\n        \"name\": \"primary\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1a\",\n        \"name\": \"secondary\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1b\",\n        \"name\": \"melee\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1c\",\n        \"name\": \"shotgun\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1d\",\n        \"name\": \"kitgun\"\n    },\n    {\n        \"_id\": \"5c796516dcfbfe51dcc71e1e\",\n        \"name\": \"zaw\"\n    }\n]"
-						},
-						{
 							"name": "GET Reward types",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/reward/type/",
-									"protocol": "http",
+									"raw": "{{base_url}}/reward/type/",
 									"host": [
-										"localhost"
+										"{{base_url}}"
 									],
-									"port": "3000",
 									"path": [
 										"reward",
 										"type",
@@ -1077,23 +1486,27 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "595"
+									"value": "1112"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"253-/fdVkRcISMrts8n2RqJPMeAttfs\""
+									"value": "W/\"458-fPRz98vAT6/ULJK66bDA4gEPYgw\""
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 19 Mar 2019 13:05:25 GMT"
+									"value": "Fri, 04 Nov 2022 14:19:47 GMT"
 								},
 								{
 									"key": "Connection",
 									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0af\",\n        \"name\": \"Anasa Ayatan Sculpture\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b0\",\n        \"name\": \"Riven Mod\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b1\",\n        \"name\": \"4000 Endo\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b2\",\n        \"name\": \"6000 Kuva\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b3\",\n        \"name\": \"3-Day Booster\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b4\",\n        \"name\": \"Exilus Adapter\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b5\",\n        \"name\": \"Forma\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b6\",\n        \"name\": \"Orokin Catalyst blueprint\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b7\",\n        \"name\": \"Orokin Reactor blueprint\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b8\",\n        \"name\": \"Legendary Core\"\n    }\n]"
+							"body": "[\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0af\",\n        \"name\": \"Anasa Ayatan Sculpture\",\n        \"more_info\": \"the most common decoration and endo source\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b0\",\n        \"name\": \"Riven Mod\",\n        \"more_info\": \"either a veiled or unveiled riven\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b1\",\n        \"name\": \"Endo\",\n        \"more_info\": \"4000 in Sortie and 8000 in Archon's hunt\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b2\",\n        \"name\": \"Kuva\",\n        \"more_info\": \"6000 in Sortie and 12000 in Archon's hunt\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b3\",\n        \"name\": \"Booster\",\n        \"more_info\": \"3 days of booster\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b4\",\n        \"name\": \"Exilus Warframe Adapter\",\n        \"more_info\": \"Unlock the exilus mod slot\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b5\",\n        \"name\": \"Forma\",\n        \"more_info\": \"fully formed Forma\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b6\",\n        \"name\": \"Orokin Catalyst blueprint\",\n        \"more_info\": \"Weapon enhancement. Must be crafted in the foundry.\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b7\",\n        \"name\": \"Orokin Reactor blueprint\",\n        \"more_info\": \"Warframe, companion or archwing enhancement. Must be crafted in the foundry.\"\n    },\n    {\n        \"_id\": \"5c8934cf2369a4462c22e0b8\",\n        \"name\": \"Legendary Core\",\n        \"more_info\": \"Maximize any mod with no cost.\"\n    }\n]"
 						}
 					]
 				},
@@ -1138,12 +1551,10 @@
 							"raw": "{\"name\":\"Marvel figurine\"}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/reward/type/add",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/type/add",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"type",
@@ -1189,12 +1600,10 @@
 							"raw": "{\r\n    \"_id\": \"{{reward_type_id}}\",\r\n    \"name\": \"Marvel figurine collector\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/reward/type/update",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/type/update",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"type",
@@ -1234,15 +1643,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n    {\n        \"name\": \"Anasa Ayatan Sculpture\"\n    },\n    {\n        \"name\": \"Riven Mod\"\n    },\n    {\n        \"name\": \"4000 Endo\"\n    },\n    {\n        \"name\": \"6000 Kuva\"\n    },\n    {\n        \"name\": \"3-Day Booster\"\n    },\n    {\n        \"name\": \"Exilus Adapter\"\n    },\n    {\n        \"name\": \"Forma\"\n    },\n    {\n        \"name\": \"Orokin Catalyst blueprint\"\n    },\n    {\n        \"name\": \"Orokin Reactor blueprint\"\n    },\n    {\n        \"name\": \"Legendary Core\"\n    }\n]"
+							"raw": "[\n    {\n        \"name\": \"Anasa Ayatan Sculpture\",\n        \"more_info\": \"the most common decoration and endo source\"\n    },\n    {\n        \"name\": \"Riven Mod\",\n        \"more_info\": \"either a veiled or unveiled riven\"\n    },\n    {\n        \"name\": \"Endo\",\n        \"more_info\": \"4000 in Sortie and 8000 in Archon's hunt\"\n    },\n    {\n        \"name\": \"Kuva\",\n        \"more_info\": \"6000 in Sortie and 12000 in Archon's hunt\"\n    },\n    {\n        \"name\": \"Booster\",\n        \"more_info\": \"3 days of booster\"\n    },\n    {\n        \"name\": \"Exilus Warframe Adapter\",\n        \"more_info\": \"Unlock the exilus mod slot\"\n    },\n    {\n        \"name\": \"Forma\",\n        \"more_info\": \"fully formed Forma\"\n    },\n    {\n        \"name\": \"Orokin Catalyst blueprint\",\n        \"more_info\": \"Weapon enhancement. Must be crafted in the foundry.\"\n    },\n    {\n        \"name\": \"Orokin Reactor blueprint\",\n        \"more_info\": \"Warframe, companion or archwing enhancement. Must be crafted in the foundry.\"\n    },\n    {\n        \"name\": \"Legendary Core\",\n        \"more_info\": \"Maximize any mod with no cost.\"\n    }\n]"
 						},
 						"url": {
-							"raw": "http://localhost:3000/reward/type/adds",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/type/adds",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"type",
@@ -1281,12 +1688,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/type/{{reward_type_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/type/{{reward_type_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"type",
@@ -1327,12 +1732,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/reward/type/delete/{{reward_type_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/type/delete/{{reward_type_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"type",
@@ -1429,12 +1832,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/type/deleteall",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/type/deleteall",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"type",
@@ -1447,20 +1848,21 @@
 			]
 		},
 		{
-			"name": "RivenConditions",
+			"name": "RewardSources",
 			"item": [
 				{
-					"name": "GET Riven conditions",
+					"name": "GET Reward sources",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"pm.test(\"Status code is 200 and body present\", function () {\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.response.to.be.withBody;\r",
 									"});\r",
-									"pm.test(\"Validate array count > 1\", function () {\r",
-									"    pm.expect(pm.response.json().length).to.be.above(1);\r",
+									"pm.test(\"Validate array count\", function () {\r",
+									"    pm.expect(pm.response.json().length).to.be.equal(Number(pm.collectionVariables.get(\"reward_sources_inserted\")));\r",
 									"});\r",
 									"var schema = {\r",
 									"    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
@@ -1471,20 +1873,11 @@
 									"            \"_id\": {\r",
 									"              \"type\": \"string\"\r",
 									"            },\r",
-									"            \"description\": {\r",
+									"            \"name\": {\r",
 									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"Created_date\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"advices\":{\r",
-									"                \"type\": \"array\",\r",
-									"                \"items\": {\r",
-									"                    \"type\":\"string\"\r",
-									"                }\r",
 									"            }\r",
 									"        },\r",
-									"        \"required\": [\"_id\", \"description\"]\r",
+									"        \"required\": [\"_id\", \"name\"]\r",
 									"    }\r",
 									"};\r",
 									"pm.test(\"Validate schema\", function () {\r",
@@ -1498,167 +1891,29 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/riven/condition",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"riven",
-								"condition"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "GET Riven conditions",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/riven/condition",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"riven",
-										"condition"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "8717"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"220d-05f2/WjaYY/emVQPBeJ2KVeqTRM\""
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 01 Mar 2019 19:24:56 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "[\n    {\n        \"_id\": \"5c7970421de0c95d342d8e29\",\n        \"description\": \"Kill N enemies\",\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2a\",\n        \"description\": \"Kill N enemies in a row\",\n        \"advices\": [\n            \"Hydron on Sedna or Helene on Saturne + Loki and weapons like Ignis or Amprex\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2b\",\n        \"description\": \"Make N killing blows\",\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2c\",\n        \"description\": \"Destroy N dargyns\",\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2d\",\n        \"description\": \"Kill N dargyn pilots before they hit the ground\",\n        \"advices\": [\n            \"Arca Plasmor with improved range\",\n            \"Nova with max range to slow pilot's fall\",\n            \"Mag with Magnetize and shoot the border of the bubble.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2e\",\n        \"description\": \"Kill 3 airborne condrocs\",\n        \"advices\": [\n            \"Volt ability 1 (or Arca Plasmor with range) just after take-off\",\n            \"Sniper rifle on flying condrocs at the west of the map.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2f\",\n        \"description\": \"Find N caches\",\n        \"advices\": [\n            \"Orokin sabotage\",\n            \"Eidolon plains, alone in free roaming\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e30\",\n        \"description\": \"Kill N tusk ballistas\",\n        \"advices\": [\n            \"Eidolon plains by day with a stealth warframe\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e31\",\n        \"description\": \"Destroy N vruush turrets\",\n        \"advices\": [\n            \"Eidolon plains and turrets must be destroyed consecutively.\",\n            \"Itzal archwing is good to avoid missiles.\",\n            \"Snper rifle is best.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e32\",\n        \"description\": \"Sustain 3x melee combo for 30 seconds\",\n        \"advices\": [\n            \"Nimus on Eris = lots of infested and level 30+\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e33\",\n        \"description\": \"Complete an incursion alone\",\n        \"advices\": [\n            \"Eidolon plains in free roaming (best with find caches)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e34\",\n        \"description\": \"Synthesize Simaris target without using ability or consumables\",\n        \"advices\": [\n            \"Stealth warframe (best with Ivara)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e35\",\n        \"description\": \"Fish, mine and kill an enemy in less than 30 seconds\",\n        \"advices\": [\n            \"Eidolon plains, find a mine in close proximity of water then in order : fish, mine and kill someone in the closest camp\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.750Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e36\",\n        \"description\": \"Finish a level 30+ interception alone\",\n        \"advices\": [\n            \"Xini on Eris with Banshee Quake or Nova or Saryn\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.750Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e37\",\n        \"description\": \"Finish a level 30+ extermination\",\n        \"advices\": [\n            \"Oxomoco in the Void\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.750Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e38\",\n        \"description\": \"Finish a level 30+ survival without killing anyone or using consumables\",\n        \"advices\": [\n            \"Selkie on Sedna with Loki and Master Thief mod to pop up more oxygen.\",\n            \"Better with grineers : infested = poison and corpus = nullifiers.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.750Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e39\",\n        \"description\": \"with a hobbled dragon key equipped\",\n        \"optional\": true,\n        \"advices\": [\n            \"on enter : do not forget the key in your consumables !!!\",\n            \"on exit : do not forget to remove the key in your consumables\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.750Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3a\",\n        \"description\": \"without being detected\",\n        \"optional\": true,\n        \"advices\": [\n            \"Stealth warframe and/or silenced weapon.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3b\",\n        \"description\": \"without being killed\",\n        \"optional\": true,\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3c\",\n        \"description\": \"without beind knocked down\",\n        \"optional\": true,\n        \"advices\": [\n            \"Stealth warframe\",\n            \"Atlas\",\n            \"Rhino\",\n            \"Better with infested.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3d\",\n        \"description\": \"without getting afflicted by status effects\",\n        \"optional\": true,\n        \"advices\": [\n            \"Stealth warframe or bubble type warframe (Frost, Limbo)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3e\",\n        \"description\": \"on sentients\",\n        \"optional\": true,\n        \"advices\": [\n            \"Plato on Lua and find the oculyst (do not run too fast, they will not see you)\",\n            \"Tycho on Lua (2 at 5 minutes and then 3 every 5 minutes)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3f\",\n        \"description\": \"with headshots\",\n        \"optional\": true,\n        \"advices\": [\n            \"Stealth warframe and/or silenced weapon.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e40\",\n        \"description\": \"level 30+\",\n        \"optional\": true,\n        \"advices\": [\n            \"Sedna / Pluto / Eris and the Void\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e41\",\n        \"description\": \"without taking any damage\",\n        \"optional\": true,\n        \"advices\": [\n            \"Rhino's Iron skin\",\n            \"Loki (max stealth build) or Ivara depending on the mission\",\n            \" Maybe Frost with a defense mission.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e42\",\n        \"description\": \"sliding\",\n        \"optional\": true,\n        \"advices\": [\n            \"Best with scatter weapons (Ignis, Amprex)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e43\",\n        \"description\": \"invisible\",\n        \"optional\": true,\n        \"advices\": [\n            \"Stealth warframe maybe ?\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e44\",\n        \"description\": \"while flying\",\n        \"optional\": true,\n        \"advices\": [\n            \"Needs archwing\",\n            \"Itzal is best generally to avoid missiles + stealth\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e45\",\n        \"description\": \"from more than 100m\",\n        \"optional\": true,\n        \"advices\": [\n            \"Eidolon plains or Orb Vallis\",\n            \"Silenced sniper rifle or Loki + augment.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e46\",\n        \"description\": \"with a bow\",\n        \"optional\": true,\n        \"advices\": [\n            \"Use a bow !!!\",\n            \"Zephyr + jetstream augment can help you.\",\n            \"Nova with max slow.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e47\",\n        \"description\": \"without an ally being downed\",\n        \"optional\": true,\n        \"advices\": [\n            \"Do it alone\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e48\",\n        \"description\": \"with a sentry active\",\n        \"optional\": true,\n        \"advices\": [\n            \"Don't forget to equip a sentry !\",\n            \" Maybe don't equip the sentry with a weapon.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e49\",\n        \"description\": \"with an animal companion active\",\n        \"optional\": true,\n        \"advices\": [\n            \"Khora's Venari is not a valid companion !\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4a\",\n        \"description\": \"without failing the mission\",\n        \"optional\": true,\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4b\",\n        \"description\": \"in one day\",\n        \"optional\": true,\n        \"advices\": [\n            \"In general it means Plains of Eidolon.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4c\",\n        \"description\": \"on a drop ship\",\n        \"optional\": true,\n        \"advices\": [\n            \"Yursa on Neptune = 1 drop ship on turns 2, 6 and 10. Rinse and repeat.\",\n            \"Good with Amprex by shooting the ship.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4d\",\n        \"description\": \"with only a melee weapon equipped\",\n        \"optional\": true,\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4e\",\n        \"description\": \"with a secondary weapon\",\n        \"optional\": true,\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4f\",\n        \"description\": \"without using life consumables\",\n        \"optional\": true,\n        \"advices\": [\n            \"Beware of the red spheres ! They are consumables.\",\n            \"Stealth or Rhino (Refresh the iron skin safely).\",\n            \"Elevate, Nourish and Repair magus are not consumables :)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e50\",\n        \"description\": \"with a decaying dragon key equipped\",\n        \"optional\": true,\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e51\",\n        \"description\": \"without raising any alarms\",\n        \"optional\": true,\n        \"advices\": [\n            \"Easier than without being detected.\",\n            \"Berserck type or stealth\",\n            \"no Surviva, Defense or Infested missions because an alarm is the beginning of those missions !\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e52\",\n        \"description\": \"in a single aim glide\",\n        \"optional\": true,\n        \"advices\": [\n            \"Quite easy with a moa companion and the Tractor Beam mod.\",\n            \"In case of headshots : easier with grineer and more difficult with infested.\",\n            \"In case of headshots : best with mirage and spread or precise weapons (Brakk, Akstiletto, ...).\",\n            \"More than one time done on Uranus.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.753Z\"\n    }\n]"
-						}
-					]
-				},
-				{
-					"name": "GET Riven conditions Formatted",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test(\"Validate mandatories filled.\", function () {\r",
-									"    pm.expect(pm.response.json().mandatories.length).to.be.above(1);\r",
-									"});\r",
-									"pm.test(\"Validate optionals filled.\", function () {\r",
-									"    pm.expect(pm.response.json().optionals.length).to.be.above(1);\r",
-									"});\r",
-									""
-								],
-								"type": "text/javascript"
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
 							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
+						],
 						"url": {
-							"raw": "http://localhost:3000/riven/condition/formatted",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/source/",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
-								"riven",
-								"condition",
-								"formatted"
+								"reward",
+								"source",
+								""
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "GET Riven conditions",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/riven/condition",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"riven",
-										"condition"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "8717"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"220d-05f2/WjaYY/emVQPBeJ2KVeqTRM\""
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 01 Mar 2019 19:24:56 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "[\n    {\n        \"_id\": \"5c7970421de0c95d342d8e29\",\n        \"description\": \"Kill N enemies\",\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2a\",\n        \"description\": \"Kill N enemies in a row\",\n        \"advices\": [\n            \"Hydron on Sedna or Helene on Saturne + Loki and weapons like Ignis or Amprex\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2b\",\n        \"description\": \"Make N killing blows\",\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2c\",\n        \"description\": \"Destroy N dargyns\",\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2d\",\n        \"description\": \"Kill N dargyn pilots before they hit the ground\",\n        \"advices\": [\n            \"Arca Plasmor with improved range\",\n            \"Nova with max range to slow pilot's fall\",\n            \"Mag with Magnetize and shoot the border of the bubble.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2e\",\n        \"description\": \"Kill 3 airborne condrocs\",\n        \"advices\": [\n            \"Volt ability 1 (or Arca Plasmor with range) just after take-off\",\n            \"Sniper rifle on flying condrocs at the west of the map.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e2f\",\n        \"description\": \"Find N caches\",\n        \"advices\": [\n            \"Orokin sabotage\",\n            \"Eidolon plains, alone in free roaming\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e30\",\n        \"description\": \"Kill N tusk ballistas\",\n        \"advices\": [\n            \"Eidolon plains by day with a stealth warframe\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e31\",\n        \"description\": \"Destroy N vruush turrets\",\n        \"advices\": [\n            \"Eidolon plains and turrets must be destroyed consecutively.\",\n            \"Itzal archwing is good to avoid missiles.\",\n            \"Snper rifle is best.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e32\",\n        \"description\": \"Sustain 3x melee combo for 30 seconds\",\n        \"advices\": [\n            \"Nimus on Eris = lots of infested and level 30+\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e33\",\n        \"description\": \"Complete an incursion alone\",\n        \"advices\": [\n            \"Eidolon plains in free roaming (best with find caches)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e34\",\n        \"description\": \"Synthesize Simaris target without using ability or consumables\",\n        \"advices\": [\n            \"Stealth warframe (best with Ivara)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.749Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e35\",\n        \"description\": \"Fish, mine and kill an enemy in less than 30 seconds\",\n        \"advices\": [\n            \"Eidolon plains, find a mine in close proximity of water then in order : fish, mine and kill someone in the closest camp\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.750Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e36\",\n        \"description\": \"Finish a level 30+ interception alone\",\n        \"advices\": [\n            \"Xini on Eris with Banshee Quake or Nova or Saryn\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.750Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e37\",\n        \"description\": \"Finish a level 30+ extermination\",\n        \"advices\": [\n            \"Oxomoco in the Void\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.750Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e38\",\n        \"description\": \"Finish a level 30+ survival without killing anyone or using consumables\",\n        \"advices\": [\n            \"Selkie on Sedna with Loki and Master Thief mod to pop up more oxygen.\",\n            \"Better with grineers : infested = poison and corpus = nullifiers.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.750Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e39\",\n        \"description\": \"with a hobbled dragon key equipped\",\n        \"optional\": true,\n        \"advices\": [\n            \"on enter : do not forget the key in your consumables !!!\",\n            \"on exit : do not forget to remove the key in your consumables\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.750Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3a\",\n        \"description\": \"without being detected\",\n        \"optional\": true,\n        \"advices\": [\n            \"Stealth warframe and/or silenced weapon.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3b\",\n        \"description\": \"without being killed\",\n        \"optional\": true,\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3c\",\n        \"description\": \"without beind knocked down\",\n        \"optional\": true,\n        \"advices\": [\n            \"Stealth warframe\",\n            \"Atlas\",\n            \"Rhino\",\n            \"Better with infested.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3d\",\n        \"description\": \"without getting afflicted by status effects\",\n        \"optional\": true,\n        \"advices\": [\n            \"Stealth warframe or bubble type warframe (Frost, Limbo)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3e\",\n        \"description\": \"on sentients\",\n        \"optional\": true,\n        \"advices\": [\n            \"Plato on Lua and find the oculyst (do not run too fast, they will not see you)\",\n            \"Tycho on Lua (2 at 5 minutes and then 3 every 5 minutes)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e3f\",\n        \"description\": \"with headshots\",\n        \"optional\": true,\n        \"advices\": [\n            \"Stealth warframe and/or silenced weapon.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e40\",\n        \"description\": \"level 30+\",\n        \"optional\": true,\n        \"advices\": [\n            \"Sedna / Pluto / Eris and the Void\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e41\",\n        \"description\": \"without taking any damage\",\n        \"optional\": true,\n        \"advices\": [\n            \"Rhino's Iron skin\",\n            \"Loki (max stealth build) or Ivara depending on the mission\",\n            \" Maybe Frost with a defense mission.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e42\",\n        \"description\": \"sliding\",\n        \"optional\": true,\n        \"advices\": [\n            \"Best with scatter weapons (Ignis, Amprex)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e43\",\n        \"description\": \"invisible\",\n        \"optional\": true,\n        \"advices\": [\n            \"Stealth warframe maybe ?\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.751Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e44\",\n        \"description\": \"while flying\",\n        \"optional\": true,\n        \"advices\": [\n            \"Needs archwing\",\n            \"Itzal is best generally to avoid missiles + stealth\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e45\",\n        \"description\": \"from more than 100m\",\n        \"optional\": true,\n        \"advices\": [\n            \"Eidolon plains or Orb Vallis\",\n            \"Silenced sniper rifle or Loki + augment.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e46\",\n        \"description\": \"with a bow\",\n        \"optional\": true,\n        \"advices\": [\n            \"Use a bow !!!\",\n            \"Zephyr + jetstream augment can help you.\",\n            \"Nova with max slow.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e47\",\n        \"description\": \"without an ally being downed\",\n        \"optional\": true,\n        \"advices\": [\n            \"Do it alone\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e48\",\n        \"description\": \"with a sentry active\",\n        \"optional\": true,\n        \"advices\": [\n            \"Don't forget to equip a sentry !\",\n            \" Maybe don't equip the sentry with a weapon.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e49\",\n        \"description\": \"with an animal companion active\",\n        \"optional\": true,\n        \"advices\": [\n            \"Khora's Venari is not a valid companion !\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4a\",\n        \"description\": \"without failing the mission\",\n        \"optional\": true,\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4b\",\n        \"description\": \"in one day\",\n        \"optional\": true,\n        \"advices\": [\n            \"In general it means Plains of Eidolon.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4c\",\n        \"description\": \"on a drop ship\",\n        \"optional\": true,\n        \"advices\": [\n            \"Yursa on Neptune = 1 drop ship on turns 2, 6 and 10. Rinse and repeat.\",\n            \"Good with Amprex by shooting the ship.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4d\",\n        \"description\": \"with only a melee weapon equipped\",\n        \"optional\": true,\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4e\",\n        \"description\": \"with a secondary weapon\",\n        \"optional\": true,\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e4f\",\n        \"description\": \"without using life consumables\",\n        \"optional\": true,\n        \"advices\": [\n            \"Beware of the red spheres ! They are consumables.\",\n            \"Stealth or Rhino (Refresh the iron skin safely).\",\n            \"Elevate, Nourish and Repair magus are not consumables :)\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e50\",\n        \"description\": \"with a decaying dragon key equipped\",\n        \"optional\": true,\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e51\",\n        \"description\": \"without raising any alarms\",\n        \"optional\": true,\n        \"advices\": [\n            \"Easier than without being detected.\",\n            \"Berserck type or stealth\",\n            \"no Surviva, Defense or Infested missions because an alarm is the beginning of those missions !\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.752Z\"\n    },\n    {\n        \"_id\": \"5c7970421de0c95d342d8e52\",\n        \"description\": \"in a single aim glide\",\n        \"optional\": true,\n        \"advices\": [\n            \"Quite easy with a moa companion and the Tractor Beam mod.\",\n            \"In case of headshots : easier with grineer and more difficult with infested.\",\n            \"In case of headshots : best with mirage and spread or precise weapons (Brakk, Akstiletto, ...).\",\n            \"More than one time done on Uranus.\"\n        ],\n        \"Created_date\": \"2019-03-01T19:24:56.753Z\"\n    }\n]"
-						}
-					]
+					"response": []
 				},
 				{
-					"name": "ADD Riven condition",
+					"name": "ADD Reward source",
 					"event": [
 						{
 							"listen": "test",
@@ -1667,19 +1922,16 @@
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.be.ok;",
 									"    if (pm.response.code == 200) {",
-									"        var rci = Number(pm.environment.get(\"riven_conditions_inserted\"));",
-									"        rci += 1;",
-									"        pm.environment.set(\"riven_conditions_inserted\", rci);",
-									"        console.log(\"Total of riven conditions = \"+rci);",
+									"        var rti = Number(pm.collectionVariables.get(\"reward_sources_inserted\"));",
+									"        rti += 1;",
+									"        pm.collectionVariables.set(\"reward_sources_inserted\", rti);",
+									"        console.log(\"Total of reward sources = \"+rti);",
 									"        // save ID",
-									"        pm.environment.set(\"riven_condition_id\", pm.response.json()._id);",
+									"        pm.collectionVariables.set(\"reward_source_id\", pm.response.json()._id);",
 									"    }",
 									"});",
 									"pm.test(\"_id length ok\", function() {",
 									"   pm.expect(pm.response.json()._id.length).to.be.equal(24);",
-									"});",
-									"pm.test(\"Advices undefined if not present\", function() {",
-									"   pm.expect(pm.response.json().advices).to.be.undefined; ",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1698,18 +1950,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"Kill N frozen ennemies\",\n    \"advices\": [\n        \"Ask for Elsa's help\",\n        \"Olaf can help too\",\n        \"Frost can't help you with that ... or not.\"\n    ]\n}"
+							"raw": "{\"name\":\"Multiverse\"}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/riven/condition/add",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/source/add",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
-								"riven",
-								"condition",
+								"reward",
+								"source",
 								"add"
 							]
 						}
@@ -1717,7 +1967,73 @@
 					"response": []
 				},
 				{
-					"name": "ADD Multiple riven conditions",
+					"name": "UPDATE Reward source",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        console.log(\"updated id = \"+pm.response.json()._id);",
+									"    }",
+									"});",
+									"pm.test(\"_id length ok\", function() {",
+									"   pm.expect(pm.response.json()._id.length).to.be.equal(24);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"{{reward_source_id}}\",\r\n    \"name\": \"Marvel multiverse\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reward/source/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reward",
+								"source",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Multiple reward sources",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Insert reward sources\", function() {",
+									"    pm.expect(pm.response.json().insertedCount).to.be.equal(2); ",
+									"});",
+									"var rti = Number(pm.collectionVariables.get(\"reward_sources_inserted\"));",
+									"rti += pm.response.json().insertedCount;",
+									"pm.collectionVariables.set(\"reward_sources_inserted\", rti);",
+									"console.log(\"Total of reward sources = \"+rti);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1729,18 +2045,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n    {\n        \"description\": \"Kill N enemies\"\n    },\n    {\n        \"description\": \"Kill N enemies in a row\",\n        \"advices\": [\n            \"Hydron on Sedna or Helene on Saturne + Loki and weapons like Ignis or Amprex\"\n        ]\n    },\n    {\n        \"description\": \"Make N killing blows\"\n    },\n    {\n        \"description\": \"Destroy N dargyns\"\n    },\n    {\n        \"description\": \"Kill N dargyn pilots before they hit the ground\",\n        \"advices\": [\n            \"Arca Plasmor with improved range\",\n            \"Nova with max range to slow pilot's fall\",\n            \"Mag with Magnetize and shoot the border of the bubble.\"\n        ]\n    },\n    {\n        \"description\": \"Kill 3 airborne condrocs\",\n        \"advices\": [\n            \"Volt ability 1 (or Arca Plasmor with range) just after take-off\",\n            \"Sniper rifle on flying condrocs at the west of the map.\"\n        ]\n    },\n    {\n        \"description\": \"Find N caches\",\n        \"advices\": [\n            \"Orokin sabotage\",\n            \"Eidolon plains, alone in free roaming\"\n        ]\n    },\n    {\n        \"description\": \"Kill N tusk ballistas\",\n        \"advices\": [\n            \"Eidolon plains by day with a stealth warframe\"\n        ]\n    },\n    {\n        \"description\": \"Destroy N vruush turrets\",\n        \"advices\": [\n            \"Eidolon plains and turrets must be destroyed consecutively.\",\n            \"Itzal archwing is good to avoid missiles.\",\n            \"Snper rifle is best.\"\n        ]\n    },\n    {\n        \"description\": \"Sustain 3x melee combo for 30 seconds\",\n        \"advices\": [\n            \"Nimus on Eris = lots of infested and level 30+\"\n        ]\n    },\n    {\n        \"description\": \"Complete an incursion alone\",\n        \"advices\": [\n            \"Eidolon plains in free roaming (best with find caches)\"\n        ]\n    },\n    {\n        \"description\": \"Synthesize Simaris target without using ability or consumables\",\n        \"advices\": [\n            \"Stealth warframe (best with Ivara)\"\n        ]\n    },\n    {\n        \"description\": \"Fish, mine and kill an enemy in less than 30 seconds\",\n        \"advices\": [\n            \"Eidolon plains, find a mine in close proximity of water then in order : fish, mine and kill someone in the closest camp\"\n        ]\n    },\n    {\n        \"description\": \"Finish a level 30+ interception alone\",\n        \"advices\": [\n            \"Xini on Eris with Banshee Quake or Nova or Saryn\"\n        ]\n    },\n    {\n        \"description\": \"Finish a level 30+ extermination\",\n        \"advices\": [\n            \"Oxomoco in the Void\"\n        ]\n    },\n    {\n        \"description\": \"Finish a level 30+ survival without killing anyone or using consumables\",\n        \"advices\": [\n            \"Selkie on Sedna with Loki and Master Thief mod to pop up more oxygen.\",\n            \"Better with grineers : infested = poison and corpus = nullifiers.\"\n        ]\n    },\n    {\n\t    \"description\": \"Finish a level 30+ defense alone with the defense objective taking no damage\",\n    \t\"advices\": [\n        \t\"Frost with a big bubble and freezing augment\",\n        \t\"Blast infested enemies from far away : Saryn or Banshee quake for example\"\n    \t]\n\t},\n    {\n\t    \"description\": \"Find N syndicate medallions\",\n\t    \"advices\": [\n\t        \"Limbo's cataclysm / Saryn's Molt / Equinox's Maim to destroy containers in a large AoE\",\n\t        \"Carrier's Looter Mod can break containers\",\n\t        \"Your max range melee weapon to destroy containers\",\n\t        \"Mag's Greedy Pull augment can be useful (with Mag) to loot\",\n\t        \"Detection range affected by Loot Detector, Thief's Wit and Animal Instinct mods as well as Ivara's passive.\",\n\t        \"Khora's Venari can have an additional animal instinct\"\n\t    ]\n\t},\n    {\n        \"description\": \"with a hobbled dragon key equipped\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"on enter : do not forget the key in your consumables !!!\",\n            \"on exit : do not forget to remove the key in your consumables\"\n        ]\n    },\n    {\n        \"description\": \"without being detected\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Stealth warframe and/or silenced weapon.\"\n        ]\n    },\n    {\n        \"description\": \"without being killed\",\n        \"optional\": \"true\"\n    },\n    {\n        \"description\": \"without beind knocked down\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Stealth warframe\",\n            \"Atlas\",\n            \"Rhino\",\n            \"Better with infested.\"\n        ]\n    },\n    {\n        \"description\": \"without getting afflicted by status effects\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Stealth warframe or bubble type warframe (Frost, Limbo)\"\n        ]\n    },\n    {\n        \"description\": \"on sentients\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Plato on Lua and find the oculyst (do not run too fast, they will not see you)\",\n            \"Tycho on Lua (2 at 5 minutes and then 3 every 5 minutes)\"\n        ]\n    },\n    {\n        \"description\": \"with headshots\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Stealth warframe and/or silenced weapon.\"\n        ]\n    },\n    {\n        \"description\": \"level 30+\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Sedna / Pluto / Eris and the Void\"\n        ]\n    },\n    {\n        \"description\": \"without taking any damage\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Rhino's Iron skin\",\n            \"Loki (max stealth build) or Ivara depending on the mission\",\n            \" Maybe Frost with a defense mission.\"\n        ]\n    },\n    {\n        \"description\": \"sliding\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Best with scatter weapons (Ignis, Amprex)\"\n        ]\n    },\n    {\n        \"description\": \"invisible\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Stealth warframe maybe ?\"\n        ]\n    },\n    {\n        \"description\": \"while flying\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Needs archwing\",\n            \"Itzal is best generally to avoid missiles + stealth\"\n        ]\n    },\n    {\n        \"description\": \"from more than 100m\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Eidolon plains or Orb Vallis\",\n            \"Silenced sniper rifle or Loki + augment.\"\n        ]\n    },\n    {\n        \"description\": \"with a bow\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Use a bow !!!\",\n            \"Zephyr + jetstream augment can help you.\",\n            \"Nova with max slow.\"\n        ]\n    },\n    {\n        \"description\": \"without an ally being downed\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Do it alone\"\n        ]\n    },\n    {\n        \"description\": \"with a sentry active\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Don't forget to equip a sentry !\",\n            \" Maybe don't equip the sentry with a weapon.\"\n        ]\n    },\n    {\n        \"description\": \"with an animal companion active\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Khora's Venari is not a valid companion !\"\n        ]\n    },\n    {\n        \"description\": \"without failing the mission\",\n        \"optional\": \"true\"\n    },\n    {\n        \"description\": \"in one day\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"In general it means Plains of Eidolon.\"\n        ]\n    },\n    {\n        \"description\": \"on a drop ship\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Yursa on Neptune = 1 drop ship on turns 2, 6 and 10. Rinse and repeat.\",\n            \"Good with Amprex by shooting the ship.\"\n        ]\n    },\n    {\n        \"description\": \"with only a melee weapon equipped\",\n        \"optional\": \"true\"\n    },\n    {\n        \"description\": \"with a secondary weapon\",\n        \"optional\": \"true\"\n    },\n    {\n        \"description\": \"without using life consumables\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Beware of the red spheres ! They are consumables.\",\n            \"Stealth or Rhino (Refresh the iron skin safely).\",\n            \"Elevate, Nourish and Repair magus are not consumables :)\"\n        ]\n    },\n    {\n        \"description\": \"with a decaying dragon key equipped\",\n        \"optional\": \"true\"\n    },\n    {\n        \"description\": \"without raising any alarms\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Easier than without being detected.\",\n            \"Berserck type or stealth\",\n            \"no Surviva, Defense or Infested missions because an alarm is the beginning of those missions !\"\n        ]\n    },\n    {\n        \"description\": \"in a single aim glide\",\n        \"optional\": \"true\",\n        \"advices\": [\n            \"Quite easy with a moa companion and the Tractor Beam mod.\",\n            \"In case of headshots : easier with grineer and more difficult with infested.\",\n            \"In case of headshots : best with mirage and spread or precise weapons (Brakk, Akstiletto, ...).\",\n            \"More than one time done on Uranus.\"\n        ]\n    },\n    {\n\t    \"description\": \"while wall dashing or wall clinging\",\n\t    \"optional\": true,\n\t    \"advices\": [\n\t        \"Hydron on Sedna or Helene on Saturne + Loki and weapons like Ignis or Amprex\",\n\t        \"With no alarms: Ivara and noise arrow to pack mobs\"\n\t    ]\n\t}\n]\n"
+							"raw": "[\n    {\n        \"name\": \"Sortie\"\n    },\n    {\n        \"name\": \"Archon's hunt\"\n    }\n]"
 						},
 						"url": {
-							"raw": "http://localhost:3000/riven/condition/adds",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/source/adds",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
-								"riven",
-								"condition",
+								"reward",
+								"source",
 								"adds"
 							]
 						}
@@ -1748,8 +2062,17 @@
 					"response": []
 				},
 				{
-					"name": "GET Riven condition by ID",
+					"name": "GET Reward source by ID",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
@@ -1767,30 +2090,27 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/riven/condition/{{riven_condition_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/source/{{reward_source_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
-								"riven",
-								"condition",
-								"{{riven_condition_id}}"
+								"reward",
+								"source",
+								"{{reward_source_id}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "DELETE Riven condition by ID",
+					"name": "DELETE Reward type by ID",
 					"event": [
 						{
 							"listen": "test",
@@ -1799,10 +2119,10 @@
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
-									"pm.test(\"Deleted one riven condition\", function () {",
+									"pm.test(\"Deleted one riven type\", function () {",
 									"    pm.expect(pm.response.json().n).to.be.equal(1);",
 									"    if (pm.response.json().n == 1) {",
-									"        pm.collectionVariables.set(\"riven_conditions_inserted\", Number(pm.collectionVariables.get(\"riven_conditions_inserted\"))-1);",
+									"        pm.collectionVariables.set(\"reward_sources_inserted\", Number(pm.collectionVariables.get(\"reward_sources_inserted\"))-1);",
 									"    }",
 									"});"
 								],
@@ -1820,96 +2140,54 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/riven/condition/delete/{{riven_condition_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/source/delete/{{reward_source_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
-								"riven",
-								"condition",
+								"reward",
+								"source",
 								"delete",
-								"{{riven_condition_id}}"
+								"{{reward_source_id}}"
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "DELETE Riven type by ID",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3000/riven/type/delete/{{riven_type_id}}",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"riven",
-										"type",
-										"delete",
-										"{{riven_type_id}}"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "14"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"e-+5VCygqWcZ7wJFa42PMop+n5IBw\""
-								},
-								{
-									"key": "Date",
-									"value": "Tue, 05 Mar 2019 16:16:28 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"n\": 0,\n    \"ok\": 1\n}"
-						}
-					]
+					"response": []
 				},
 				{
-					"name": "DELETE all riven conditions",
+					"name": "DELETE all reward types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"ok = 1\", function () {",
+									"   pm.expect(pm.response.json().ok).to.be.equal(1);",
+									"});",
+									"pm.test(\"Deleted the expected number\", function () {",
+									"    pm.expect(pm.response.json().n).to.be.equal(Number(pm.collectionVariables.get(\"reward_sources_inserted\")));",
+									"});",
+									"pm.collectionVariables.set(\"reward_sources_inserted\", 0);",
+									"console.log(\"Total of reward sources = \"+0);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/riven/condition/deleteall",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/source/deleteall",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
-								"riven",
-								"condition",
+								"reward",
+								"source",
 								"deleteall"
 							]
 						}
@@ -1934,6 +2212,28 @@
 									"pm.test(\"Validate array count > 1\", function () {\r",
 									"    pm.expect(pm.response.json().length).to.be.above(1);\r",
 									"});\r",
+									"var typeSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"properties\": {\r",
+									"    \"_id\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"name\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  }\r",
+									"};\r",
+									"var sourceSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"properties\": {\r",
+									"    \"_id\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"source\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  }\r",
+									"};\r",
 									"var schema = {\r",
 									"    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
 									"    \"type\":\"array\",\r",
@@ -1941,16 +2241,19 @@
 									"        \"type\" : \"object\",\r",
 									"        \"properties\": {\r",
 									"            \"_id\": {\r",
-									"                \"type\": \"string\"\r",
+									"              \"type\": \"string\"\r",
 									"            },\r",
 									"            \"weaponName\": {\r",
-									"                \"type\": \"string\"\r",
+									"              \"type\": \"string\"\r",
 									"            },\r",
 									"            \"Created_date\": {\r",
-									"                \"type\": \"string\"\r",
+									"              \"type\": \"string\"\r",
 									"            },\r",
 									"            \"type\": {\r",
-									"                \"type\": \"string\"\r",
+									"              $ref: 'typeSchema'\r",
+									"            },\r",
+									"            \"source\": {\r",
+									"              $ref: 'sourceSchema'\r",
 									"            },\r",
 									"            \"conditions\":{\r",
 									"                \"type\": \"array\",\r",
@@ -1959,7 +2262,7 @@
 									"                }\r",
 									"            }\r",
 									"        },\r",
-									"        \"required\": [\"_id\", \"weaponName\", \"type\"]\r",
+									"        \"required\": [\"_id\", \"weaponName\", \"type\", \"source\"]\r",
 									"    }\r",
 									"};\r",
 									"pm.test(\"Validate schema\", function () {\r",
@@ -1981,12 +2284,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/riven/",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								""
@@ -2029,12 +2330,10 @@
 							"raw": "{\n\t\"type\":\"rifle\",\n\t\"weaponName\":\"Paintgun\",\n\t\"N\":72,\n\t\"conditions\":[\"5c868874e236101e60b1ef59\",\"5c868874e236101e60b1ef73\"]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/riven/formAdd/",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/formAdd/",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"formAdd",
@@ -2078,12 +2377,10 @@
 							"raw": "{\n\t\"type\":\"rifle\",\n\t\"weaponName\":\"Paintgun\",\n\t\"N\":56,\n\t\"conditions\":[\"5c868874e236101e60b1ef59\", \"none\", \"5c868874e236101e60b1ef73\"]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/riven/add/",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/add/",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"add",
@@ -2099,12 +2396,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/riven/{{riven_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/{{riven_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"{{riven_id}}"
@@ -2119,12 +2414,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/riven/view/{{riven_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/view/{{riven_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"view",
@@ -2140,12 +2433,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/riven/delete/{{riven_id}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/delete/{{riven_id}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"delete",
@@ -2161,15 +2452,555 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/riven/deleteall",
-							"protocol": "http",
+							"raw": "{{base_url}}/riven/deleteall",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"riven",
 								"deleteall"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SortieReward",
+			"item": [
+				{
+					"name": "GET rewards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(\"GET rewards : number of reward = \"+pm.response.json().length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET rewards with options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(\"GET rewards : number of reward = \"+pm.response.json().length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  limit: 20\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Booster reward",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"reward_id_booster\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\":\"booster\",\n\t\"booster\": \"5c87cdace96e9e3de0e700d8\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD booster reward 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"reward_id_booster\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\": \"Booster\",\n\t\"date\": 44202,\n\t\"booster\": \"credit\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Riven reward",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"reward_id_riven\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\":\"5c8934cf2369a4462c22e0b0\",\n\t\"riven\": {\n\t\t\"type\":\"5c7ee494e9449f542c14244c\",\n\t\t\"weaponName\":\"Paintgun\",\n\t\t\"conditions\":[\"5c868874e236101e60b1ef59\",\"5c868874e236101e60b1ef73\"]\n\t},\n\t\"date\": \"2019/01/01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Riven reward 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"reward_id_riven\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\": \"Riven\",\n\t\"date\": 44500,\n    \"rivenType\": \"rifle\",\n    \"rivenWeaponName\": \"Gorgon\",\n    \"rivenConditions\": [\"5cbf1eb6e4edaa3170d1de7d\", \"none\", \"5cbf1eb6e4edaa3170d1de95\", \"5cbf1eb6e4edaa3170d1de97\"],\n    \"rivenN\": 666\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Booster reward",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/{{reward_id_booster}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"{{reward_id_booster}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET Booster reward",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/reward/{{reward_id_booster}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reward",
+										"{{reward_id_booster}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "365"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"16d-LFgxh490GzClBen0s2ICRUB+1RI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Mar 2019 18:48:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"5c9138d3016ab554d4dd9afd\",\n    \"booster\": {\n        \"_id\": \"5c87cdace96e9e3de0e700d8\",\n        \"name\": \"Affinity Booster\",\n        \"description\": \"doubles the amount of affinity earned from pickups and mission rewards\",\n        \"url\": \"https://warframe.fandom.com/wiki/Affinity_Booster\"\n    },\n    \"Created_date\": \"2019-03-19T18:45:39.273Z\",\n    \"type\": {\n        \"_id\": \"5c8934cf2369a4462c22e0b3\",\n        \"name\": \"3-Day Booster\"\n    },\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "GET Riven reward",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/{{reward_id_riven}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"{{reward_id_riven}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET Riven reward",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/reward/{{reward_id_riven}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reward",
+										"{{reward_id_riven}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "553"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"229-J+pfjpihdwf9T/+e/lwQnbjkMKU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Mar 2019 18:48:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"5c9135c0b4cf1d0fa0ebdc2d\",\n    \"type\": {\n        \"_id\": \"5c8934cf2369a4462c22e0b1\",\n        \"name\": \"4000 Endo\"\n    },\n    \"riven\": {\n        \"type\": {\n            \"_id\": \"5c7ee494e9449f542c14244c\",\n            \"name\": \"primary\"\n        },\n        \"weaponName\": \"Paintgun\",\n        \"conditions\": [\n            {\n                \"_id\": \"5c868874e236101e60b1ef59\",\n                \"description\": \"Kill N enemies\",\n                \"Created_date\": \"2019-03-19T18:48:24.042Z\"\n            },\n            {\n                \"_id\": \"5c868874e236101e60b1ef73\",\n                \"description\": \"invisible\",\n                \"optional\": true,\n                \"advices\": [\n                    \"Stealth warframe maybe ?\"\n                ],\n                \"Created_date\": \"2019-03-19T18:48:24.045Z\"\n            }\n        ]\n    },\n    \"date\": \"2019-01-01T01:01:01.001Z\",\n    \"Created_date\": \"2019-03-19T18:32:32.683Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "DELETE Booster reward",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/delete/{{reward_id_booster}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"delete",
+								"{{reward_id_booster}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Riven reward",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/delete/{{reward_id_riven}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"delete",
+								"{{reward_id_riven}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE all rewards (CAREFUL)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/deleteall",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"deleteall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET reward view",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/view/5c9904e8af079133581d5d9b",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"view",
+								"5c9904e8af079133581d5d9b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET reward (misc)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sortiereward/5cb453a818dd6e6aac47e397",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"5cb453a818dd6e6aac47e397"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Rewards (CAREFUL)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Insert rewards\", function() {",
+									"    const number = pm.collectionVariables.get('rewards_to_insert');",
+									"    pm.expect(pm.response.json().insertedCount).to.be.equal(number);",
+									"    console.log(number + ' rewards inserted.');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const number = JSON.parse(request.data).length;",
+									"pm.environment.set('rewards_to_insert', number);",
+									"console.log(\"Try to insert \"+number+\" rewards ...\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    null,\n    null,\n    {\n        \"type\": \"Ayatan\",\n        \"date\": 43437\n    },\n    null,\n    null,\n    null,\n    null,\n    null,\n    null,\n    null,\n    null,\n    {\n        \"type\": \"Booster\",\n        \"date\": 43446,\n        \"booster\": \"credit\"\n    }\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/sortiereward/adds",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sortiereward",
+								"adds"
 							]
 						}
 					},
@@ -2197,12 +3028,52 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
+							"path": [
+								"reward",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET rewards with options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(\"GET rewards : number of reward = \"+pm.response.json().length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  limit: 20\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reward/",
+							"host": [
+								"{{base_url}}"
+							],
 							"path": [
 								"reward",
 								""
@@ -2244,12 +3115,10 @@
 							"raw": "{\n\t\"type\":\"booster\",\n\t\"booster\": \"5c87cdace96e9e3de0e700d8\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/reward/add",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/add",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"add"
@@ -2291,12 +3160,10 @@
 							"raw": "{\n\t\"type\": \"Booster\",\n\t\"date\": 44202,\n\t\"booster\": \"credit\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/reward/add",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/add",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"add"
@@ -2335,15 +3202,58 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"type\":\"5c8934cf2369a4462c22e0b0\",\n\t\"riven\": {\n\t\t\"type\":\"5c7ee494e9449f542c14244c\",\n\t\t\"weaponName\":\"Paintgun\",\n\t\t\"conditions\":[\"5c868874e236101e60b1ef59\",\"5c868874e236101e60b1ef73\"]\n\t},\n\t\"date\": \"2019/01/01\"\n}"
+							"raw": "{\n  \"source\":\"6356aede5337161a3948d0aa\",\n\t\"type\":\"5c8934cf2369a4462c22e0b0\",\n\t\"riven\": {\n\t\t\"type\":\"5c7ee494e9449f542c14244c\",\n\t\t\"weaponName\":\"Paintgun\",\n\t\t\"conditions\":[\"5c868874e236101e60b1ef59\",\"5c868874e236101e60b1ef73\"]\n\t},\n\t\"date\": \"2019/01/01\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/reward/add",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/add",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
+							"path": [
+								"reward",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Reward with empty Riven by Form",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"reward_id_riven\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"date\": \"2022-10-25\",\n  \"source\": \"6356aede5337161a3948d0aa\",\n  \"type\": \"5c8934cf2369a4462c22e0b0\",\n  \"rivenType\": \"5c93564f864cd6643c9e1e1c\",\n  \"rivenWeaponName\": \"\",\n  \"rivenConditions\": [\n    \"none\"\n  ],\n  \"rivenN\": \"\",\n  \"submit\": \"Add Reward\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reward/add",
+							"host": [
+								"{{base_url}}"
+							],
 							"path": [
 								"reward",
 								"add"
@@ -2385,12 +3295,10 @@
 							"raw": "{\n\t\"type\": \"Riven\",\n\t\"date\": 44500,\n    \"rivenType\": \"rifle\",\n    \"rivenWeaponName\": \"Gorgon\",\n    \"rivenConditions\": [\"5cbf1eb6e4edaa3170d1de7d\", \"none\", \"5cbf1eb6e4edaa3170d1de95\", \"5cbf1eb6e4edaa3170d1de97\"],\n    \"rivenN\": 666\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/reward/add",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/add",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"add"
@@ -2405,12 +3313,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/{{reward_id_booster}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/{{reward_id_booster}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"{{reward_id_booster}}"
@@ -2476,12 +3382,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/{{reward_id_riven}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/{{reward_id_riven}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"{{reward_id_riven}}"
@@ -2547,12 +3451,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/delete/{{reward_id_booster}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/delete/{{reward_id_booster}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"delete",
@@ -2568,12 +3470,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/delete/{{reward_id_riven}}",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/delete/{{reward_id_riven}}",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"delete",
@@ -2589,12 +3489,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/deleteall",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/deleteall",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"deleteall"
@@ -2609,16 +3507,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/view/5c9904e8af079133581d5d9b",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/view/6356b64e78056212704e0207",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"view",
-								"5c9904e8af079133581d5d9b"
+								"6356b64e78056212704e0207"
 							]
 						}
 					},
@@ -2630,15 +3526,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/reward/5cb453a818dd6e6aac47e397",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/63586839bdc2f470e8c47d66",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
-								"5cb453a818dd6e6aac47e397"
+								"63586839bdc2f470e8c47d66"
 							]
 						}
 					},
@@ -2687,12 +3581,10 @@
 							"raw": "[\n    null,\n    null,\n    {\n        \"type\": \"Ayatan\",\n        \"date\": 43437\n    },\n    null,\n    null,\n    null,\n    null,\n    null,\n    null,\n    null,\n    null,\n    {\n        \"type\": \"Booster\",\n        \"date\": 43446,\n        \"booster\": \"credit\"\n    }\n]"
 						},
 						"url": {
-							"raw": "http://localhost:3000/reward/adds",
-							"protocol": "http",
+							"raw": "{{base_url}}/reward/adds",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"reward",
 								"adds"
@@ -2738,12 +3630,10 @@
 							"raw": "{\n\t\"user\": {\n\t\t\"email\":\"tata@toto.fr\",\n\t\t\"password\":\"test\"\n\t}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/users/",
-							"protocol": "http",
+							"raw": "{{base_url}}/users/",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"users",
 								""
@@ -2780,12 +3670,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/users/current",
-							"protocol": "http",
+							"raw": "{{base_url}}/users/current",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"users",
 								"current"
@@ -2831,12 +3719,10 @@
 							"raw": "{\n\t\"user\": {\n\t\t\"email\": \"tata@toto.fr\",\n\t\t\"password\": \"test\"\n\t}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/users/login",
-							"protocol": "http",
+							"raw": "{{base_url}}/users/login",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"users",
 								"login"
@@ -2879,15 +3765,181 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/users/disconnect",
-							"protocol": "http",
+							"raw": "{{base_url}}/users/disconnect",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3000",
 							"path": [
 								"users",
 								"disconnect"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "warframestat.us",
+			"item": [
+				{
+					"name": "GET platform information",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.warframestat.us/pc/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"warframestat",
+								"us"
+							],
+							"path": [
+								"pc",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET platform events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.warframestat.us/pc/events/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"warframestat",
+								"us"
+							],
+							"path": [
+								"pc",
+								"events",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET earthCycle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.warframestat.us/pc/earthCycle",
+							"protocol": "https",
+							"host": [
+								"api",
+								"warframestat",
+								"us"
+							],
+							"path": [
+								"pc",
+								"earthCycle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET cetusCycle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.warframestat.us/pc/cetusCycle",
+							"protocol": "https",
+							"host": [
+								"api",
+								"warframestat",
+								"us"
+							],
+							"path": [
+								"pc",
+								"cetusCycle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET vallisCycle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.warframestat.us/pc/vallisCycle",
+							"protocol": "https",
+							"host": [
+								"api",
+								"warframestat",
+								"us"
+							],
+							"path": [
+								"pc",
+								"vallisCycle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET cambionCycle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.warframestat.us/pc/cambionCycle",
+							"protocol": "https",
+							"host": [
+								"api",
+								"warframestat",
+								"us"
+							],
+							"path": [
+								"pc",
+								"cambionCycle"
 							]
 						}
 					},
@@ -2990,6 +4042,33 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Warframe WorldState",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://content.warframe.com/dynamic/worldState.php?Accept=application/json",
+					"protocol": "http",
+					"host": [
+						"content",
+						"warframe",
+						"com"
+					],
+					"path": [
+						"dynamic",
+						"worldState.php"
+					],
+					"query": [
+						{
+							"key": "Accept",
+							"value": "application/json"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -3074,6 +4153,31 @@
 		{
 			"key": "Token",
 			"value": ""
+		},
+		{
+			"key": "riven_sources_inserted",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "riven_source_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "reward_sources_inserted",
+			"value": "0",
+			"type": "string"
+		},
+		{
+			"key": "reward_source_id",
+			"value": "",
+			"type": "string"
 		}
 	]
 }

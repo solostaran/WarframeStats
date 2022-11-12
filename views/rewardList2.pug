@@ -1,88 +1,99 @@
 extends layout
 
 block append link
-	link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css")
-	link(rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css")
+	link(rel='stylesheet', href='https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css')
 
 block append scripts
+	script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+	script(src='https://code.jquery.com/ui/1.13.1/jquery-ui.js')
+	script(type='text/javascript').
+		// cf. https://jqueryui.com/datepicker/
+		$(document).ready(function() {
+			$('#startDate').datepicker({
+					dateFormat:'yy-mm-dd',
+					onSelect: function(d) {
+						$('#formOptions').submit();
+					}
+			});
+			$('#endDate').datepicker({
+					dateFormat: 'yy-mm-dd',
+					onSelect: function (d) {
+							$('#formOptions').submit();
+					}
+			});
+		});
+	script(src='/javascripts/rewardListScripts.js')
 
 block content
 	script.
 		document.getElementById('nav-rewlist2').classList.add('active');
 
+	- nbRewards = totalCount;
 	div(class='container-fluid')
-		div(class='row')
-			div(id="toolbar-title")
-				h3 Sortie's Rewards
-			table(id="table"
-				data-content-type="application/x-www-form-urlencoded"
-				data-toolbar="#toolbar-title"
-				data-url="/rewards.json"
-				data-filter-control="true"
-				data-header-style="headerStyle"
-				data-row-style="rowStyle"
-				data-height="760"
-				data-pagination="true"
-				data-side-pagination="client"
-				data-pagination-loop="false"
-				data-page-list="[10, 20, 50, All]"
-				data-total-field="count"
-				data-data-field="items"
-				data-show-fullscreen="true"
-				data-show-search-clear-button="true")
-				thead
-					tr
-						th(data-field="details" data-formatter="detailsFormatter" data-events="detailsEvents") Details
-						th(data-field="date" data-formatter="dateFormatter" data-sortable="true") Date
-						th(data-field="type.name" data-filter-control="select") Type
-						th(data-field="riven.weaponName" data-filter-control="input") Weapon name
-						th(data-field="booster.name" data-filter-control="select") Booster Type
-		script(src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js")
-		//script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous")
-		script(src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js")
-		script(src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js")
-		script(type='text/javascript').
-			let $table = $('#table');
-
-			function rowStyle(row, index) {
-				if (index % 2 === 0)
-					return { css: { 'background': '#f0f0ff'} };
-				return { };
-			}
-
-			function headerStyle(column) {
-				return {
-					'type.name': {
-						css: {background: '#f0f0ff'}
-					},
-					'details': {
-						css: {background: '#f0f0ff'}
-					},
-					'booster.name': {
-						css: {background: '#f0f0ff'}
-					}
-				}[column.field]
-			}
-
-			function detailsFormatter(value, row, index) {
-				return [
-					'<a class="details-btn" href="javascript:void(0)" title="details">',
-					'<i class="btn btn-outline-info">More info</i>',
-					'</a>'
-				].join('');
-			};
-
-			function dateFormatter(value) {
-				return value.substring(0, 10);
-			}
-
-			window.detailsEvents = {
-				'click .details-btn': function (e, value, row, index) {
-					//alert('You click like action, row: ' + JSON.stringify(row));
-					window.location.href = 'https://localhost/reward/view/' + row._id;
-				}
-			};
-
-			$(function () {
-				$table.bootstrapTable();
-			});
+		div(class='row mt-1')
+			if (totalCount == 0)
+				h3 No sortie rewards with current selection
+			else
+				h3 Sortie Rewards from #{offset + 1} to #{offset + rewards.length} over #{totalCount} rewards.
+		form(action='/rewardForm/list2' id="formOptions" method='post')
+			div(class='row')
+				div(class='col-sm p-1')
+					if (offset > 0)
+						button(style='margin-left:5px' onclick="return first();" type='submit') first
+						button(style='margin-left:5px' onclick="return previous();" type='submit') <=
+					else
+						button(style='margin-left:5px' disabled) first
+						button(style='margin-left:5px' disabled) <=
+					input(type='text' id='nb' name='nb' size='3' value=nb onchange='onChangeNb();' style='text-align: center; margin-left: 5px;')
+					input(type='hidden' id='offset' name='offset' value=offset)
+					if (hasNext === true)
+						button(style='margin-left:5px' onclick="return next("+totalCount+");" type='submit') =>
+					else
+						button(style='margin-left:5px' disabled) =>
+					if (offset + nb < totalCount)
+						button(style='margin-left:5px' onclick="return last("+totalCount+");") last
+					else
+						button(style='margin-left:5px' disabled) last
+				div(class='col-sm p-1')
+					label(for='startDate' style='margin-right:5px;') Date >=
+					button(onclick="return resetDate(this.nextElementSibling);" type='button') X
+					input(id='startDate' name='dateLow' type='text' size='10' value=dateLow readonly)
+				div(class='col-sm p-1')
+					label(for='endDate' style='margin-right:5px;') Date <=
+					button(onclick="return resetDate(this.nextElementSibling);" type='button') X
+					input(type='text' name='dateHigh' id='endDate' size='10' value=dateHigh readonly)
+				div(class='col-sm p-1')
+					label(for='perType') Filter by type :
+					select(name='type' id='perType' onchange='onSelect(this)')
+						option -
+						each type in rewardTypes
+							if (rewardTypeSelected && (rewardTypeSelected.toString() === type._id.toString()))
+								option(value= type._id selected) #{type.name}
+							else
+								option(value= type._id) #{type.name}
+			div(class='row')
+				table(class='table table-responsive table-striped table-hover')
+					thead
+						tr
+							th Details
+							th Date
+							th Type
+							th Additional information
+					tbody
+						each val in rewards
+							tr
+								td
+									a(class='btn btn-outline-info', href='/reward/view/'+val._id) More info
+								if (val.date)
+									td= date2string(val.date)
+								else
+									td -
+								td= val.type.name
+								td
+									if (val.booster)
+										span= val.booster.name
+									else
+										if (val.rivenType)
+											span= val.rivenType.name
+										else
+											span -

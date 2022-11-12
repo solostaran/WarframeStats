@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose'),
     RivenTypeProcess = require('./rivenTypeProcess'),
+    RivSrcProcess = require('./rivenSourceProcess'),
     Riven = mongoose.model('Riven');
 
 const form2riven = async function(formRiven, userId) {
@@ -22,7 +23,6 @@ const form2riven = async function(formRiven, userId) {
     }
     riven.type = await RivenTypeProcess.findByIdOrName(formRiven.type);
     if (riven.type === null)
-        //return new Error()
         return Promise.reject('This riven type cannot be defined : '+formRiven.type);
     riven.markModified('type');
     riven.weaponName = formRiven.weaponName;
@@ -32,10 +32,14 @@ const form2riven = async function(formRiven, userId) {
         conds = formRiven.conditions.filter(function(cond) { return cond !== 'none'; });
     riven.conditions = conds;
     riven.markModified('conditions');
-    if (formRiven.note) {
-        riven.note = formRiven.note;
-        riven.markModified('note');
+    if (formRiven.N) {
+        riven.N = formRiven.N;
+        riven.markModified('N');
     }
+    riven.source = await RivSrcProcess.findByIdOrName(formRiven.source);
+    if (riven.source === null)
+        return Promise.reject('This riven source cannot be defined : '+formRiven.source);
+    riven.markModified('source');
     //console.log(JSON.stringify(riven));
     return riven;
 };

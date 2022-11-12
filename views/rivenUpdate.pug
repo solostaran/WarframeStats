@@ -1,8 +1,5 @@
 extends layout
 
-block append link
-	link(rel='stylesheet', href='/dp/dp.css')
-
 block append scripts
 	script.
 		var riven = !{JSON.stringify(riven)};
@@ -40,12 +37,17 @@ block content
 								option(value= val._id selected) #{val.name}
 							else
 								option(value= val._id) #{val.name}
+				div(class='input-group mt-2')
+					label(class='input-group-text' for='source') Source of the riven :
+					select(class='form-select' name = 'source' id = 'riven-source' aria-describedby="riven-source")
+						each val in sources
+							if (riven.source._id.toString() === val._id.toString())
+								option(value= val._id selected) #{val.source}
+							else
+								option(value= val._id) #{val.source}
 				div(class='input-group mb-2')
 					span(class='input-group-text' for='weapon-name') Weapon name :
 					input(class='form-control' name='weaponName' id='weaponName' value=riven.weaponName aria-describedby='weapon-name')
-				div(class='input-group mb-2')
-					label(class='input-group-text' for='note') Additional information :
-					input(class='form-control' name='note' id='note' size='40' value=riven.note aria-describedby='note')
 				- var nbcond = riven.conditions.length
 				div(class='input-group mb-2')
 					label(class='input-group-text' for='mcondition') Mandatory Condition :
