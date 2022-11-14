@@ -6,35 +6,48 @@
 
 const app = require('../app');
 const debug = require('debug')('warframestats:server');
-//const http = require('http');
+const http = require('http');
 const https = require('https');
 const fs = require('fs');
+
+const isHttp = process.env.HTTP === 'true';
 
 /**
  * Get port from environment and store in Express.
  */
+let port;
+if (isHttp)
+  port = normalizePort(process.env.PORT || '3000');
+else
+  port = normalizePort(process.env.PORT || '443');
 
-const port = normalizePort(process.env.PORT || '443');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-//const server = http.createServer(app);
-const http = require('http');
-http.createServer(function (req, res) {
-  res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-  res.end();
-}).listen(80); // redirect port 80 requests to https 443
+let server;
+if (isHttp)
+  server = http.createServer(app);
+else {
+  http.createServer(function (req, res) {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+  }).listen(80); // redirect port 80 requests to https 443
+}
+
 
 /**
  * Create HTTPS server.
  */
-const options = {
-  key: fs.readFileSync('keys/warstat2020-key.pem'),
-  cert: fs.readFileSync('keys/warstat2020-cert.pem')
-};
-const server = https.createServer(options, app);
+if (!isHttp) {
+  const options = {
+    key: fs.readFileSync('keys/warstat2020-key.pem'),
+    cert: fs.readFileSync('keys/warstat2020-cert.pem')
+  };
+  server = https.createServer(options, app);
+}
+
 
 /**
  * Listen on provided port, on all network interfaces.
