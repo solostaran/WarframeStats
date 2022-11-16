@@ -2,18 +2,37 @@ extends layout
 
 block content
 	script.
-		document.getElementById('nav-events').classList.add('active');
+		document.getElementById('nav-wstate').classList.add('active');
 
 	div(class='container-lg')
 		div(class='row')
 			h3= title
-			p= 'There are ' + events.length + ' ongoing events.'
-		div(class='row')
+			p= 'There are ' + pc.events.length + ' ongoing events.'
 			table(class='table table-responsive table-striped table-hover')
 				tbody
-					for event in events
+					for event in pc.events
 						tr
 							td
 								h4= event.description
 								p= event.tooltip
 								p= 'Expiration date = '+new Date(event.expiry).toLocaleString()
+		div(class='row')
+			h3 Earth Cycle
+			span It is #[strong #{pc.earthCycle.state}] time.
+			span Timeleft to next cycle : #{pc.earthCycle.timeLeft}
+		div(class='row')
+			h3 Plains of Eidolon Cycle
+			span It is #[strong #{pc.cetusCycle.state}] time.
+			span Timeleft : #{pc.cetusCycle.shortString}
+		div(class='row')
+			h3 Orb Vallis Cycle
+			span It is #[strong #{pc.vallisCycle.state}] time.
+			span Timeleft : #{pc.vallisCycle.shortString}
+		div(class='row')
+			h3 Cambion Drift Cycle
+			span #[strong #{pc.cambionCycle.active}] is active.
+			span Timeleft to next cycle : #{pc.cambionCycle.timeLeft}
+		div(class='row')
+			h3 Zariman Cycle
+			span It is controlled by #[strong #{pc.zarimanCycle.state}].
+			span Timeleft : #{pc.zarimanCycle.shortString}
