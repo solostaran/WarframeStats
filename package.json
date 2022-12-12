@@ -1,16 +1,16 @@
 {
   "name": "warframestats",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
     "axios": "^0.27.2",
-    "body-parser": "^1.19.1",
+    "body-parser": "^1.19.2",
     "cookie-parser": "^1.4.6",
     "debug": "^4.3.3",
-    "express": "~4.17.2",
+    "express": "~4.17.3",
     "express-jwt": "^6.1.0",
     "flatpickr": "^4.6.9",
     "http-errors": "^1.8.1",
