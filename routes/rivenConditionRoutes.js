@@ -19,21 +19,21 @@ router.get('/formatted', auth.optional, function(req, res) {
 });
 
 router.post('/add', auth.required, function(req, res) {
-    const { payload: { id } } = req;
+    const { auth: { id } } = req;
     RivenConditionProcess.addOrUpdate(req.body, id)
         .then(ret => res.json(ret))
         .catch(err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/adds', auth.required, function(req, res) {
-    const { payload: { id } } = req;
+    const { auth: { id } } = req;
     RivenConditionProcess.adds(req.body, id,
         ret => res.json(ret),
         err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/form', auth.required, function(req, res) {
-    const { payload: { id } } = req;
+    const { auth: { id } } = req;
     RivenConditionProcess.addOrUpdate(req.body, id)
         .then(() => RivenConditionProcess.list().then(list => res.render('conditions', { title: 'Riven Conditions', conditions: list })))
         .catch(err => res.status(500).send(err));

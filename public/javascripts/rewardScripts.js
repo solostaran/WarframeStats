@@ -23,8 +23,8 @@ function validateForm(formObj) {
     return true;
 }
 
-function resetDate(dateinput) {
-    dateinput.value = '';
+function resetDate() {
+    _('date').value = '';
     return false;
 }
 
@@ -50,6 +50,9 @@ function onSelect(combo) {
         nodeClone.childNodes[2].childNodes[0].htmlFor = 'mcondition';
         nodeClone.childNodes[2].childNodes[1].id = 'mcondition';
         nodeClone.childNodes[2].childNodes[2].id = 'mand-span';
+        nodeClone.childNodes[2].childNodes[2].onclick = function () {
+            addOptional(this);
+        }
         // div optional conditions array
         nodeClone.childNodes[4].id = 'condition-rows';
         destination.appendChild(nodeClone);
@@ -96,7 +99,7 @@ function addRow() {
 /**
  * Unhide the penultimate ComboBox' buttons and remove the last ComboBox.
  */
-function removeRow(obj) {
+function removeRow() {
     const currentRow = _('condition-row'+indexClone);
     indexClone--;
     if (indexClone > 0) {
@@ -109,3 +112,15 @@ function removeRow(obj) {
     }
     currentRow.remove();
 }
+
+$(document).ready(function () {
+    $('#date').datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function (d) {
+            $('#formOptions').submit();
+        }
+    });
+    _('resetDate').onclick = resetDate;
+    _('type').onchange = function () { onSelect(this); }
+    _('rewardForm').onsubmit = function () { return validateForm(this); }
+});

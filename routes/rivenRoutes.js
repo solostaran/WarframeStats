@@ -14,14 +14,14 @@ router.get('/', auth.optional, function (req, res) {
 });
 
 router.post('/add', auth.required, function(req, res) {
-    const { payload: { id } } = req;
+    const { auth: { id } } = req;
     RivenProcess.addOrUpdate(req.body, id)
         .then(riven => res.json(riven))
         .catch(err => res.status(400).send(err));
 });
 
 router.post('/form', auth.required, function(req, res) {
-    const { payload: { id } } = req;
+    const { auth: { id } } = req;
     RivenProcess.addOrUpdate(req.body, id)
         .then(riven => res.render('rivenDetails', { riven: riven }))
         .catch(err => res.status(400).send(err));

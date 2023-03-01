@@ -6,24 +6,15 @@ block append link
 block append scripts
 	script(src="https://code.jquery.com/jquery-3.6.0.min.js")
 	script(src='https://code.jquery.com/ui/1.13.1/jquery-ui.js')
-	script(nonce=nonce, type='text/javascript').
-		$(document).ready(function () {
-			$('#date').datepicker({
-				dateFormat: 'yy/mm/dd',
-				onSelect: function (d) {
-					$('#formOptions').submit();
-				}
-			});
-		});
-	script.
+	script(nonce=nonce).
 		var reward = !{JSON.stringify(reward)};
 	script(src='/javascripts/rewardScripts.js')
 	script(src='/javascripts/updateScripts.js')
 
 block content
-	script.
-		document.getElementById('nav-rewform').classList.add('active');
-		document.getElementById('nav-rewform').innerText = 'Update reward';
+	script(nonce=nonce).
+		_('nav-rewform').classList.add('active');
+		_('nav-rewform').innerText = 'Update reward';
 
 	// invisible Divs, ready for cloning
 	div(class='input-group mt-2' id='boosters' hidden=true)
@@ -37,8 +28,8 @@ block content
 			option none
 			each val in conditions.optionals
 				option(value= val._id) #{val.description}
-		span(class='btn btn-outline-info mx-2' onClick='removeRow(this);' style='font-size:larger;') -
-		span(class='btn btn-outline-info' onClick='addRow();' style='font-size:larger;') +
+		span(class='btn btn-outline-info mx-2' style='font-size:larger;') -
+		span(class='btn btn-outline-info' style='font-size:larger;') +
 	div(class='row' id='riven-example' hidden=true)
 		div(class='input-group mt-2')
 			label(class='input-group-text' for='riven-type') Type :
@@ -54,7 +45,7 @@ block content
 				option none
 				each val in conditions.mandatories
 					option(value= val._id) #{val.description}
-			span(class='btn btn-outline-info mx-1' id='mand-span-example' onClick='addOptional(this)') +
+			span(class='btn btn-outline-info mx-1' id='mand-span-example') +
 		div(class='input-group mt-2')
 			label(class='input-group-text' for='rivenConditionVariable') Mandatory condition variable 'N' :
 			input(class='form-control' type='number' min='0' id='rivenConditionVariable' name='rivenN')
@@ -63,7 +54,7 @@ block content
 	div(class='container-lg')
 		div(class='row m-1')
 			h3 Modification of a Reward
-		form(method='POST' name='rewardForm' action='/reward/form' onsubmit='return validateForm(this);')
+		form(method='POST' id='rewardForm' name='rewardForm' action='/reward/form')
 			if (reward)
 				div(class='input-group input-group-sm mb-2')
 					label(class='input-group-text' for='id') ID of the reward
@@ -79,7 +70,7 @@ block content
 				label(class='input-group-text' for='date') Date of reward acquisition :
 				input(class='form-control' type='text' name='date' id='date' size='24' value=formattedDate readonly)
 				//button(onclick="return toggleDatepicker(this.previousElementSibling);" type='button') Pick Date
-				button(class='btn btn-outline-info mx-1' onclick="return resetDate(this.previousElementSibling);" style="margin-left:20px;") X
+				button(class='btn btn-outline-info mx-1' id='resetDate' style="margin-left:20px;") X
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='source') Select the reward source :
 				select(class='form-select' name='source' id='source')
@@ -90,7 +81,7 @@ block content
 							option(value= val._id) #{val.name}
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='type') Select the reward type :
-				select(class='form-select' name='type' id='type' onchange='onSelect(this)')
+				select(class='form-select' name='type' id='type')
 					each val in types
 						if (reward.type._id.toString() === val._id.toString())
 							option(value= val._id selected) #{val.name}
@@ -106,36 +97,42 @@ block content
 									option(value=val._id selected) #{val.name}
 								else
 									option(value=val._id) #{val.name}
-				if (reward && reward.riven)
+				if reward.rivenType
 					div(id='riven')
 						div(class='input-group mt-2')
 							label(class='input-group-text' for='riven-type') Type :
 							select(class='form-select' name = 'rivenType' id = 'riven-type')
 								each val in rivens
-									if (reward.riven.type._id.toString() === val._id.toString())
+									if (reward.rivenType._id.toString() === val._id.toString())
 										option(value= val._id selected) #{val.name}
 									else
 										option(value= val._id) #{val.name}
 						div(class='input-group mt-2')
 							label(class='input-group-text' for='weaponName') Weapon Name :
-							input(class='form-control' name='rivenWeaponName' id='weaponName' value=reward.riven.weaponName)
+							if reward.riven
+								input(class='form-control' name='rivenWeaponName' id='weaponName' value=reward.riven.weaponName)
+							else
+								input(class='form-control' name='rivenWeaponName' id='weaponName' value='')
 						div(class='input-group mt-2')
-							- var nbcond = reward.riven.conditions.length
+							- var nbcond = reward.riven ? reward.riven.conditions.length : 1
 							label(class='input-group-text' for='mcondition') Mandatory Condition :
 							select(class='form-select' name = 'rivenConditions[]' id='mcondition')
 								option none
 								each val in conditions.mandatories
-									if (reward.riven.conditions.length > 0 && reward.riven.conditions[0]._id.toString() === val._id.toString())
+									if (reward.riven && reward.riven.conditions.length > 0 && reward.riven.conditions[0]._id.toString() === val._id.toString())
 										option(value= val._id selected) #{val.description}
 									else
 										option(value= val._id) #{val.description}
 							if (nbcond > 1)
-								span(class='btn btn-outline-info' id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;' hidden) +
+								span(class='btn btn-outline-info' id='mand-span' style='margin-left: 20px;' hidden) +
 							else
-								span(class='btn btn-outline-info' id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;') +
+								span(class='btn btn-outline-info' id='mand-span' style='margin-left: 20px;') +
 						div(class='input-group mt-2')
 							label(class='input-group-text' for='rivenConditionVariable') Mandatory condition variable 'N' :
-							input(class='form-control' type='number' min='0' id='rivenConditionVariable' name='rivenN' value= reward.riven.N)
+							if reward.riven
+								input(class='form-control' type='number' min='0' id='rivenConditionVariable' name='rivenN' value= reward.riven.N)
+							else
+								input(class='form-control' type='number' min='0' id='rivenConditionVariable' name='rivenN' value='')
 						div(id='condition-rows')
 							- var index = 1
 							while index < nbcond
@@ -149,13 +146,13 @@ block content
 											else
 												option(value= val._id) #{val.description}
 									if (index < nbcond - 1)
-										span(class='btn btn-outline-info mx-2' onClick='removeRow(this);' hidden=true) -
+										span(class='btn btn-outline-info mx-2' hidden=true) -
 									else
-										span(class='btn btn-outline-info mx-2' onClick='removeRow(this);' ) -
+										span(class='btn btn-outline-info mx-2') -
 									if (index < nbcond - 1 || index >= 5)
-										span(class='btn btn-outline-info' onClick='addRow();' hidden=true) +
+										span(class='btn btn-outline-info' hidden=true) +
 									else
-										span(class='btn btn-outline-info' onClick='addRow();') +
+										span(class='btn btn-outline-info') +
 								- index++
 			div(class='row mt-4')
-				input(class='btn btn-outline-primary w-25 ms-5' name='submit' type='submit' value='Update Reward')
+				input(class='btn btn-outline-primary w-25 ms-5' id='submit' name='submit' type='submit' value='Update Reward')

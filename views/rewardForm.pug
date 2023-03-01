@@ -6,20 +6,11 @@ block append link
 block append scripts
 	script(src="https://code.jquery.com/jquery-3.6.0.min.js")
 	script(src='https://code.jquery.com/ui/1.13.1/jquery-ui.js')
-	script(nonce=nonce, type='text/javascript').
-		$(document).ready(function () {
-			$('#date').datepicker({
-				dateFormat: 'yy-mm-dd',
-				onSelect: function (d) {
-					$('#formOptions').submit();
-				}
-			});
-		});
 	script(src='/javascripts/rewardScripts.js')
 
 block content
 	script(nonce=nonce).
-		document.getElementById('nav-rewform').classList.add('active');
+		_('nav-rewform').classList.add('active');
 
 	// invisible Divs, ready for cloning
 	div(class='input-group mt-2' id='boosters' hidden=true)
@@ -33,8 +24,8 @@ block content
 			option none
 			each val in conditions.optionals
 				option(value= val._id) #{val.description}
-		span(class='btn btn-outline-info mx-2' onClick='removeRow(this);' style='font-size:larger;') -
-		span(class='btn btn-outline-info' onClick='addRow();' style='font-size:larger;') +
+		span(class='btn btn-outline-info mx-2' style='font-size:larger;') -
+		span(class='btn btn-outline-info' style='font-size:larger;') +
 	div(class='row' id='riven-example' hidden=true)
 		div(class='input-group mt-2')
 			label(class='input-group-text' for='riven-type') Type :
@@ -50,7 +41,7 @@ block content
 				option none
 				each val in conditions.mandatories
 					option(value= val._id) #{val.description}
-			span(class='btn btn-outline-info mx-1' id='mand-span-example' onClick='addOptional(this)') +
+			span(class='btn btn-outline-info mx-1' id='mand-span-example') +
 		div(class='input-group mt-2')
 			label(class='input-group-text' for='rivenConditionVariable') Mandatory condition variable 'N' :
 			input(class='form-control' type='number' min='0' id='rivenConditionVariable' name='rivenN')
@@ -59,11 +50,11 @@ block content
 	div(class='container-lg')
 		div(class='row m-1')
 			h3 Creation of a new Reward
-		form(method='POST' name='rewardForm' action='/reward/form' onsubmit='return validateForm(this);')
+		form(method='POST' id='rewardForm' name='rewardForm' action='/reward/form' onsubmit='return validateForm(this);')
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='date') Date of reward acquisition :
 				input(class='form-control' type='text' name='date' id='date' size='24' readonly)
-				button(class='btn btn-outline-info mx-1' type='button' onClick='return resetDate(this.previousElementSibling);') X
+				button(class='btn btn-outline-info mx-1' type='button' id='resetDate') X
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='source') Select the reward source :
 				select(class='form-select' name='source' id='source')
@@ -71,7 +62,7 @@ block content
 						option(value= val._id) #{val.name}
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='type') Select the reward type :
-				select(class='form-select' name='type' id='type' onchange='onSelect(this)')
+				select(class='form-select' name='type' id='type')
 					each val in types
 						option(value= val._id) #{val.name}
 			div(id='container')

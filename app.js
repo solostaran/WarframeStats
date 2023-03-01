@@ -59,8 +59,8 @@ app.use(function(req, res, next) {
 	// and https://www.npmjs.com/package/helmet-csp
 	res.locals.nonce = crypto.randomBytes(16).toString("hex");
 	res.setHeader('X-Content-Type-Options', 'nosniff');
-	//res.setHeader('Content-Security-Policy', `default-src 'self' ; img-src 'self' data: ; style-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'nonce-${res.locals.nonce}' ; font-src https://cdn.jsdelivr.net ; object-src 'self' ; frame-ancestors 'self'`);
-	res.setHeader('Content-Security-Policy', `default-src 'self' ; img-src 'self' data: ; style-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; font-src https://cdn.jsdelivr.net ; object-src 'self' ; frame-ancestors 'self'`);
+	res.setHeader('Content-Security-Policy', `default-src 'self' ; img-src 'self' data: https://code.jquery.com ; style-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'nonce-${res.locals.nonce}' ; font-src https://cdn.jsdelivr.net ; object-src 'none' ; frame-ancestors 'self'`);
+	//res.setHeader('Content-Security-Policy', `default-src 'self' ; img-src 'self' data: https://code.jquery.com ; style-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; font-src https://cdn.jsdelivr.net ; object-src 'none' ; frame-ancestors 'self'`);
 	// CSP directive "img-src data:" may be vulnerable to XSS !
 	// CSP directive "style-src 'unsafe-inline'" must be explored, but it depends on the 'bootstrap-table' module.
 	// CSP directive "script-src ''unsafe-inline'" must be excluded, workaround is to set the onClick via a script. @see https://stackoverflow.com/questions/47021481/content-security-policy-with-dynamic-button
