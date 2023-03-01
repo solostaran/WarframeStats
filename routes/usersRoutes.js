@@ -126,7 +126,7 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
 
 			// Cookie access token and connexion management
 			req.app.locals.connected = true;    // For PUG templates
-			res.cookie('access_token', user.token, { httpOnly: true, maxAge: 3600000}); // 1 hour
+			res.cookie('access_token', user.token, { httpOnly: true, maxAge: 600000}); // 10 min
 			console.log(new Date().toISOString()+" | User '"+user.email+"' logged.");
 			res.render('logged', { title: 'connected', connected: true, user: user.toAuthJSON() });
 			return;
@@ -137,8 +137,8 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
 });
 
 router.get('/disconnect', auth.optional, function(req, res) {
-	if (req.payload) {
-		const { payload: { id } } = req;
+	if (req.auth) {
+		const { auth: { id } } = req;
 		Users.findById(id)
 			.then((user) => {
 				if(!user) {
@@ -150,6 +150,7 @@ router.get('/disconnect', auth.optional, function(req, res) {
 				res.render('disconnected', {title: 'Disconnect', user: user.toAuthJSON()});
 			});
 	} else {
+		req.app.locals.connected = false; // For PUG templates
 		res.render('expired', {title: 'Expired'});
 	}
 

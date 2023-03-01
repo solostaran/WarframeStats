@@ -41,7 +41,7 @@ else
 
 // Configure MONGOOSE (on docker, use a different hostname)
 mongoose.Promise = global.Promise;
-const db_host = isDocker ? 'net-db-warstats' : 'localhost';
+const db_host = isDocker ? 'net-db-warstats' : '127.0.0.1';
 mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {useNewUrlParser: true, useUnifiedTopology: true})
 	.then(() => {
 		debug('Connected to database.');

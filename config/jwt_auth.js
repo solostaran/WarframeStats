@@ -1,4 +1,4 @@
-const jwt = require('express-jwt');
+const { expressjwt: jwt } = require('express-jwt'); // for express-jwt v8+
 const sec_string = 'secret';
 
 const getTokenFromRequest = (req) => {

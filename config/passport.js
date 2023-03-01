@@ -9,7 +9,7 @@ passport.use(new LocalStrategy({
     passwordField: 'user[password]'
     //, passReqToCallback: true // means that the first argument of the callback will be 'req'
 }, (email, password, done) => {
-    Users.findOne({ email })
+    Users.findOne({ email: email })
         .then((user) => {
             if(!user || !user.validatePassword(password)) {
                 if (!user)
