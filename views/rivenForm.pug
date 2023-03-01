@@ -4,7 +4,7 @@ block append scripts
 	script(src='/javascripts/rivenScripts.js')
 
 block content
-	script.
+	script(nonce=nonce).
 		//$('#nav-rivform').addClass('active') // jQuery force
 		// document.addEventListener("DOMContentLoaded", function() { // classic event, except IE
 		// 	document.removeEventListener( "DOMContentLoaded", arguments.callee, false );

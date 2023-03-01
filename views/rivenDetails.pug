@@ -1,7 +1,7 @@
 extends layout
 
 block content
-	script.
+	script(nonce=nonce).
 		document.getElementById('nav-rivlist').classList.add('active');
 		document.getElementById('nav-rivlist').innerText = 'Riven Info';
 

@@ -5,8 +5,9 @@ block append link
 
 block append scripts
 	script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+	script(src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js")
 	script(src='https://code.jquery.com/ui/1.13.1/jquery-ui.js')
-	script(type='text/javascript').
+	script(nonce=nonce, type='text/javascript').
 		// cf. https://jqueryui.com/datepicker/
 		$(document).ready(function() {
 			$('#startDate').datepicker({
@@ -25,7 +26,7 @@ block append scripts
 	script(src='/javascripts/rewardListScripts.js')
 
 block content
-	script.
+	script(nonce=nonce).
 		document.getElementById('nav-rewlist2').classList.add('active');
 
 	- nbRewards = totalCount;

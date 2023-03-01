@@ -1,13 +1,13 @@
 extends layout
 
 block append scripts
-	script.
+	script(nonce=nonce).
 		var riven = !{JSON.stringify(riven)};
 	script(src='/javascripts/rivenScripts.js')
 	script(src='/javascripts/updateRivenScripts.js')
 
 block content
-	script.
+	script(nonce=nonce).
 		document.getElementById('nav-rivform').classList.add('active');
 		document.getElementById('nav-rivform').innerText = 'Update riven';
 

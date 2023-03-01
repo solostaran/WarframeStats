@@ -4,7 +4,7 @@ block append scripts
 	script(src='/javascripts/conditionScripts.js')
 
 block content
-	script.
+	script(nonce=nonce).
 		document.getElementById('nav-rivcond').classList.add('active');
 
 	// invisible Divs, ready for cloning

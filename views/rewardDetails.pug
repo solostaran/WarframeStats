@@ -1,7 +1,7 @@
 extends layout
 
 block content
-	script.
+	script(nonce=nonce).
 		document.getElementById('nav-rewlist').classList.add('active');
 		document.getElementById('nav-rewlist').innerText = 'Reward Info';
 
