@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 	extended: true
 }));
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/WarframeStatsDB', { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect('mongodb://127.0.0.1/WarframeStatsDB', { useUnifiedTopology: true, useNewUrlParser: true });
 
 function testRequest() {
 	console.log("Get all rewards");

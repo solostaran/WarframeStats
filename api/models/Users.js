@@ -22,14 +22,10 @@ UsersSchema.methods.validatePassword = function(password) {
 };
 
 UsersSchema.methods.generateJWT = function() {
-    const today = new Date();
-    const expirationDate = new Date(today);
-    expirationDate.setDate(today.getDate() + 60);
-
     return jwt.sign({
         email: this.email,
         id: this._id,
-        exp: parseInt(expirationDate.getTime() / 1000, 10),
+        exp: Math.floor( Date.now() / 1000) + (60 * 10), // 10 min
     }, sec_string);
 };
 
