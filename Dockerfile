@@ -1,16 +1,28 @@
 # alpine is a small container (alternative :latest)
 FROM node:alpine
 
-# create app directory
-WORKDIR /usr/WarframeStats
+# try at upgrading (! new)
+RUN apk -U upgrade
 
-# ENV
-ENV NODE_ENV production
-ENV DOCKER true
+# new user and app directory (! new)
+RUN addgroup -S wsgroup && adduser -S warstats -G wsgroup
+WORKDIR /home/warstats
+USER warstats
+
+# create app directory (! previous dir)
+#WORKDIR /usr/WarframeStats
+
+USER root
 
 # copy npm and install dependencies
 COPY package*.json ./
 RUN npm install
+
+USER warstats
+
+# ENV
+ENV NODE_ENV production
+ENV DOCKER true
 
 # copy sources
 COPY . .
