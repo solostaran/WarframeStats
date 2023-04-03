@@ -6,6 +6,8 @@ const router = express.Router();
 const auth = require('../config/jwt_auth').auth;
 const RivenProcess = require('../api/business/rivenProcess');
 const RivenAdapter = require('../api/business/rivenAdapter');
+const obfuscate = require('../api/utils/obfuscate');
+const {obfuscate_email} = require("../api/utils/obfuscate");
 
 router.get('/', auth.optional, function (req, res) {
     RivenProcess.list()
@@ -23,7 +25,7 @@ router.post('/add', auth.required, function(req, res) {
 router.post('/form', auth.required, function(req, res) {
     const { auth: { id } } = req;
     RivenProcess.addOrUpdate(req.body, id)
-        .then(riven => res.render('rivenDetails', { riven: riven }))
+        .then(riven => res.render('rivenDetails', { riven: riven, obfuscate_email: obfuscate.obfuscate_email }))
         .catch(err => res.status(400).send(err));
 });
 
@@ -37,7 +39,8 @@ router.get('/view/:id', auth.optional, function(req, res) {
     RivenProcess.byId(req.params.id)
         .then(riven => res.render('rivenDetails', {
             //date2string: convertDates.date2string,
-            riven: riven
+            riven: riven,
+            obfuscate_email: obfuscate.obfuscate_email
         }))
         .catch(err => res.status(400).send(err));
 });

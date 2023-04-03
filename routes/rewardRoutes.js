@@ -6,6 +6,7 @@ const router = express.Router();
 const auth = require('../config/jwt_auth').auth;
 const rewardProcess = require('../api/business/rewardProcess');
 const convertDates = require('../api/utils/convertDates');
+const obfuscate = require('../api/utils/obfuscate');
 
 router.get('/', auth.optional, function (req, res) {
 	rewardProcess.list({},
@@ -42,7 +43,8 @@ router.post('/form', auth.required, function(req, res) {
 				{
 					title: 'Reward Details',
 					date2string: convertDates.date2string,
-					reward: reward
+					reward: reward,
+					obfuscate_email: obfuscate.obfuscate_email
 				}))
 			.catch(err => res.status(400).send(err))
 		).catch(err => res.render('error', {message: err.message, error: {}}));
@@ -65,7 +67,8 @@ router.get('/view/:id', auth.optional, function(req, res) {
 			if (reward)
 				res.render('rewardDetails', {
 					date2string: convertDates.date2string,
-					reward: reward
+					reward: reward,
+					obfuscate_email: obfuscate.obfuscate_email
 				});
 			else
 				res.status(404).send(null);
