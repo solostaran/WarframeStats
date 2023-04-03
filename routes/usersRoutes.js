@@ -6,7 +6,7 @@ const Users = mongoose.model('Users');
 
 //POST new user route (optional, everyone has access)
 if (!(process.env.NODE_ENV === 'production')) {
-	router.post('/', auth.optional, (req, res) => {
+	router.post('/', auth.optional, async (req, res) => {
 		const { body: { user } } = req;
 
 		if(!user.email) {
@@ -25,12 +25,19 @@ if (!(process.env.NODE_ENV === 'production')) {
 			});
 		}
 
-		const finalUser = new Users(user);
-
-		finalUser.setPassword(user.password);
-
-		return finalUser.save()
-			.then(() => res.json({ user: finalUser.toAuthJSON() }));
+		// Verify if user is already in DB
+		Users.findOne({email: user.email })
+			.then( (db_user) => {
+				db_user.setPassword(user.password);
+				return db_user.save()
+					.then(() => res.json({ user: db_user.toAuthJSON() }));
+			})
+			.catch( (err) => {
+				const create_user = new Users(user);
+				create_user.setPassword(user.password);
+				return create_user.save()
+					.then(() => res.json({ user: create_user.toAuthJSON() }));
+			});
 	});
 }
 
