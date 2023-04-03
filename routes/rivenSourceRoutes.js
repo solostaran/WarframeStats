@@ -13,14 +13,14 @@ router.get('/', auth.optional, function (req, res) {
 });
 
 router.post('/add', auth.required, function(req, res) {
-    const { payload: { id } } = req;
+    const { auth: { id } } = req;
     RivenOriginProcess.addOrUpdate(req.body, id)
         .then(ret => res.json(ret))
         .catch(err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/adds', auth.required, function(req, res) {
-    const { payload: { id } } = req;
+    const { auth: { id } } = req;
     RivenOriginProcess.adds(req.body)
       .then(ret => res.json({ "insertedCount": ret.insertedCount}))
       .catch(err => res.status(400).send('Invalid body, '+err));

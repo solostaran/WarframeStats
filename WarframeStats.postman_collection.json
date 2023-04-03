@@ -63,60 +63,7 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "GET Riven types",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/riven/type",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"riven",
-										"type"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "415"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"19f-PYYdmKgD+s1HrRBwiMpB8N3XixE\""
-								},
-								{
-									"key": "Date",
-									"value": "Wed, 12 Oct 2022 16:44:12 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "[\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e19\",\n        \"name\": \"rifle\"\n    },\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e1a\",\n        \"name\": \"pistol\"\n    },\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e1b\",\n        \"name\": \"melee\"\n    },\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e1c\",\n        \"name\": \"shotgun\"\n    },\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e1d\",\n        \"name\": \"kitgun\"\n    },\n    {\n        \"_id\": \"5c93564f864cd6643c9e1e1e\",\n        \"name\": \"zaw\"\n    },\n    {\n        \"_id\": \"5ced03e11b3c1756f820dff7\",\n        \"name\": \"archgun\"\n    },\n    {\n        \"_id\": \"5f0468b30bf1362e406e2b63\",\n        \"name\": \"sentinel weapon\"\n    }\n]"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "ADD Riven type",
@@ -606,7 +553,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n  {\"name\":\"Unknown\", \"more_info\": \"from an unknown source (due to the unveiling mechanism or simply unknown)\"},\r\n  {\"name\":\"Slivers\", \"more_info\": \"sold by Palladino in Iron Wake for 10 slivers\"},\r\n  {\"name\":\"Sortie\", \"more_info\": \"sortie's reward\"},\r\n  {\"name\":\"Archon\", \"more_info\": \"archon hunts' reward\"},\r\n  {\"name\":\"Transmutation\", \"more_info\": \"converting 4 rivens into a new one\"},\r\n  {\"name\":\"Simaris\", \"more_info\": \"sold by Cephalon Simaris\"},\r\n  {\"name\":\"Steel Path\", \"more_info\": \"sold by Teshin from Steel Path\"},\r\n  {\"name\":\"Nightwave\", \"more_info\": \"nightwave's rank reward\"},\r\n  {\"name\":\"Nihil\", \"more_info\": \"Nihil boss in Enter Nihil's Oubliette from Nightwave's offerings\"},\r\n  {\"name\":\"Event\", \"more_info\": \"tactical alerts or special events Gift from the Lotus\"},\r\n  {\"name\":\"Daily\", \"more_info\": \"in the daily tribute\"},\r\n  {\"name\":\"Arbitration\", \"more_info\": \"sold by vendors of the Arbiters of Hexis\"}\r\n]",
+							"raw": "[\r\n  {\"name\":\"Unknown\", \"more_info\": \"from an unknown source (due to the unveiling mechanism or simply unknown)\"},\r\n  {\"name\":\"Slivers\", \"more_info\": \"sold by Palladino in Iron Wake for 10 slivers\"},\r\n  {\"name\":\"Sortie\", \"more_info\": \"reward from Sortie\"},\r\n  {\"name\":\"Archon's hunt\", \"more_info\": \"reward from Archon's hunt\"},\r\n  {\"name\":\"Transmutation\", \"more_info\": \"converting 4 rivens into a new one\"},\r\n  {\"name\":\"Simaris\", \"more_info\": \"sold by Cephalon Simaris\"},\r\n  {\"name\":\"Steel Path\", \"more_info\": \"sold by Teshin from Steel Path\"},\r\n  {\"name\":\"Nightwave\", \"more_info\": \"nightwave's rank reward\"},\r\n  {\"name\":\"Nihil\", \"more_info\": \"Nihil boss in Enter Nihil's Oubliette from Nightwave's offerings\"},\r\n  {\"name\":\"Event\", \"more_info\": \"tactical alerts or special events Gift from the Lotus\"},\r\n  {\"name\":\"Daily\", \"more_info\": \"in the daily tribute\"},\r\n  {\"name\":\"Arbitration\", \"more_info\": \"sold by vendors of the Arbiters of Hexis\"}\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3599,7 +3546,7 @@
 			"name": "Users",
 			"item": [
 				{
-					"name": "Create user",
+					"name": "Create or update user",
 					"event": [
 						{
 							"listen": "test",
@@ -3617,6 +3564,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -3627,7 +3584,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"user\": {\n\t\t\"email\":\"tata@toto.fr\",\n\t\t\"password\":\"test\"\n\t}\n}"
+							"raw": "{\n\t\"user\": {\n\t\t\"email\":\"test@toto.fr\",\n\t\t\"password\":\"wakame\"\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/",
@@ -3716,7 +3673,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"user\": {\n\t\t\"email\": \"tata@toto.fr\",\n\t\t\"password\": \"test\"\n\t}\n}"
+							"raw": "{\n\t\"user\": {\n\t\t\"email\": \"test@toto.fr\",\n\t\t\"password\": \"wakame\"\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/login",
@@ -3738,10 +3695,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"User login is ok\", function () {",
+									"pm.test(\"Disconnect ok\", function () {",
 									"    pm.response.to.be.ok;",
 									"    if (pm.response.code == 200) {",
-									"        pm.collectionVariables.set(\"Token\", pm.response.json().user.token);",
+									"        pm.collectionVariables.set(\"Token\", \"\");",
 									"    }",
 									"});"
 								],
@@ -3940,6 +3897,33 @@
 							"path": [
 								"pc",
 								"cambionCycle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET zarimanCycle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.warframestat.us/pc/zarimanCycle",
+							"protocol": "https",
+							"host": [
+								"api",
+								"warframestat",
+								"us"
+							],
+							"path": [
+								"pc",
+								"zarimanCycle"
 							]
 						}
 					},

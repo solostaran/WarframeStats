@@ -1,10 +1,9 @@
 extends layout
 
 block content
-	script.
+	script(nonce=nonce).
 		document.getElementById('nav-rivlist').classList.add('active');
 		document.getElementById('nav-rivlist').innerText = 'Riven Info';
-
 	div(class='container')
 		div(class='row m-1')
 			h3 Riven
@@ -52,7 +51,7 @@ block content
 			label(for='createdDate') Created in database at this date :
 			input(class='form-control' id='createdDate' value=riven.Created_date.toLocaleString() readonly size=24)
 			label(for='createdBy') Created by :
-			input(class='form-control' id='createdBy' value=riven.createdBy.email readonly)
+			input(class='form-control' id='createdBy' value=obfuscate_email(riven.createdBy.email) readonly)
 			if (riven.modifiedBy)
 				label(for='modifiedBy') Modified by :
-				input(class='form-control' id='modifiedBy' value=riven.modifiedBy.email readonly)
+				input(class='form-control' id='modifiedBy' value=obfuscate_email(riven.modifiedBy.email) readonly)

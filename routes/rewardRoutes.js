@@ -6,6 +6,7 @@ const router = express.Router();
 const auth = require('../config/jwt_auth').auth;
 const rewardProcess = require('../api/business/rewardProcess');
 const convertDates = require('../api/utils/convertDates');
+const obfuscate = require('../api/utils/obfuscate');
 
 router.get('/', auth.optional, function (req, res) {
 	rewardProcess.list({},
@@ -21,31 +22,32 @@ router.get('/raw', auth.optional, function(req, res) {
 });
 
 router.post('/add', auth.required, function(req, res) {
-	const { payload: { id } } = req;
+	const { auth: { id } } = req;
 	rewardProcess.addOrUpdate(req.body, id)
 		.then(ret => res.json(ret))
 		.catch(err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/adds', auth.required, function(req, res) {
-	const { payload: { id } } = req;
+	const { auth: { id } } = req;
 	rewardProcess.adds(req.body, id,
 		ret => res.json(ret),
 		err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/form', auth.required, function(req, res) {
-	const { payload: { id } } = req;
+	const { auth: { id } } = req;
 	rewardProcess.addOrUpdate(req.body, id)
 		.then(ret => rewardProcess.findById(ret._id)
 			.then(reward => res.render('rewardDetails',
 				{
 					title: 'Reward Details',
 					date2string: convertDates.date2string,
-					reward: reward
+					reward: reward,
+					obfuscate_email: obfuscate.obfuscate_email
 				}))
 			.catch(err => res.status(400).send(err))
-		);
+		).catch(err => res.render('error', {message: err.message, error: {}}));
 });
 
 router.get('/:id', auth.optional, function (req, res) {
@@ -65,7 +67,8 @@ router.get('/view/:id', auth.optional, function(req, res) {
 			if (reward)
 				res.render('rewardDetails', {
 					date2string: convertDates.date2string,
-					reward: reward
+					reward: reward,
+					obfuscate_email: obfuscate.obfuscate_email
 				});
 			else
 				res.status(404).send(null);

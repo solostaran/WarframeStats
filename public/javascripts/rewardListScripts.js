@@ -1,4 +1,5 @@
 
+function _(id) { return document.getElementById(id); }
 function previous() {
     let newBegin = Number($('#offset').val()) - Number($('#nb').val());
     if (newBegin < 0) newBegin = 0;
@@ -11,7 +12,7 @@ function first() {
     return true;
 }
 
-function next(totalCount) {
+function next() {
     let offset = Number($('#offset').val());
     let newBegin = offset + Number($('#nb').val());
     if (newBegin >= totalCount) newBegin = totalCount - 1;
@@ -19,7 +20,7 @@ function next(totalCount) {
     return true;
 }
 
-function last(totalCount) {
+function last() {
     $('#offset').val( totalCount - Number($('#nb').val()) );
     return true;
 }
@@ -43,3 +44,26 @@ function onSelect(combo) {
     $('#formOptions').submit();
 }
 
+// cf. https://jqueryui.com/datepicker/
+$(document).ready(function() {
+    $('#startDate').datepicker({
+        dateFormat:'yy-mm-dd',
+        onSelect: function(d) {
+            $('#formOptions').submit();
+        }
+    });
+    $('#endDate').datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function (d) {
+            $('#formOptions').submit();
+        }
+    });
+    _('resetStartDate').onclick = function () {resetDate(_('startDate'))};
+    _('resetEndDate').onclick = function () {resetDate(_('endDate'))};
+    _('first').onclick = first;
+    _('previous').onclick = previous;
+    _('next').onclick = next;
+    _('last').onclick = last;
+    _('perType').onchange = function () { onSelect(this); }
+    _('nb').onchange = onChangeNb;
+});

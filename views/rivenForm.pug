@@ -4,15 +4,8 @@ block append scripts
 	script(src='/javascripts/rivenScripts.js')
 
 block content
-	script.
-		//$('#nav-rivform').addClass('active') // jQuery force
-		// document.addEventListener("DOMContentLoaded", function() { // classic event, except IE
-		// 	document.removeEventListener( "DOMContentLoaded", arguments.callee, false );
-		// });
-		window.onload = function () { // classic event, but after everything is downloaded, even images
-			document.getElementById('nav-rivform').classList.add('active');
-		}
-
+	script(nonce=nonce).
+		_('nav-rivform').classList.add('active');
 	// special invisible Div
 	div(class='input-group input-group-sm m-1 p-1' id='condition-exemple' hidden=true)
 		label(class='mt-1' for='cond-select') To be modified
@@ -20,8 +13,8 @@ block content
 			option none
 			each val in conditions.optionals
 				option(value= val._id) #{val.description}
-		span(class='btn btn-outline-info mx-2' style='font-size:larger;' onClick='removeRow();') -
-		span(class='btn btn-outline-info' style='font-size:larger;' onClick='addRow();') +
+		span(class='btn btn-outline-info mx-2' style='font-size:larger;') -
+		span(class='btn btn-outline-info' style='font-size:larger;') +
 	div(class='container-lg')
 		div(class='row m-1')
 			h3 Create a new Riven
@@ -46,7 +39,7 @@ block content
 					option none
 					each val in conditions.mandatories
 						option(value= val._id) #{val.description}
-				span(class='btn btn-outline-info mx-1' id='mand-span' onClick='addOptional(this)') +
+				span(class='btn btn-outline-info mx-1' id='mand-span') +
 			div(class='input-group mt-2')
 				label(class='input-group-text' for='conditionVariable') Mandatory condition variable 'N' :
 				input(class='input-control' type='number' min='0' id='conditionVariable' name='N')

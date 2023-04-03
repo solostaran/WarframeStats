@@ -1,6 +1,7 @@
 let iClone = 0;
 const cloneLimit = 5;
 
+function _(id) { return document.getElementById(id); }
 function validateForm(formObj) {
     if (document.getElementById('mcondition').value === 'none' && iClone > 0) {
         alert('No mandatory condition is selected');
@@ -62,7 +63,14 @@ function removeRow() {
         previousRow.getElementsByTagName('span')[1].hidden = false;
 
     } else {
-        document.getElementById('mand-span').hidden = false;
+        _('mand-span').hidden = false;
     }
     currentRow.remove();
 }
+
+window.onload = function() {
+    _('mand-span').onclick = function() {
+        addOptional(this)
+    };
+}
+

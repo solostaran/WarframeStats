@@ -1,15 +1,15 @@
 extends layout
 
 block append scripts
-	script.
+	script(nonce=nonce).
 		var riven = !{JSON.stringify(riven)};
 	script(src='/javascripts/rivenScripts.js')
 	script(src='/javascripts/updateRivenScripts.js')
 
 block content
-	script.
-		document.getElementById('nav-rivform').classList.add('active');
-		document.getElementById('nav-rivform').innerText = 'Update riven';
+	script(nonce=nonce).
+		_('nav-rivform').classList.add('active');
+		_('nav-rivform').innerText = 'Update riven';
 
 	// special invisible Div
 	div(class='input-group input-group-sm m-1 p-1' id='condition-exemple' hidden=true)
@@ -18,8 +18,8 @@ block content
 			option none
 			each val in conditions.optionals
 				option(value= val._id) #{val.description}
-		span(class='btn btn-outline-info mx-2' style='font-size:larger;' onClick='removeRow();') -
-		span(class='btn btn-outline-info' style='font-size:larger;' onClick='addRow();') +
+		span(class='btn btn-outline-info mx-2' style='font-size:larger;') -
+		span(class='btn btn-outline-info' style='font-size:larger;') +
 	div(class='container-lg')
 		div(class='row m-1')
 			h3 Modify a Riven
@@ -59,9 +59,9 @@ block content
 							else
 								option(value= val._id) #{val.description}
 					if (nbcond > 1)
-						span(class='btn btn-outline-info mx-1' id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;' hidden) +
+						span(class='btn btn-outline-info mx-1' id='mand-span' style='margin-left: 20px;' hidden) +
 					else
-						span(class='btn btn-outline-info mx-1' id='mand-span' onClick='addOptional(this)' style='margin-left: 20px;') +
+						span(class='btn btn-outline-info mx-1' id='mand-span' style='margin-left: 20px;') +
 				div(class='input-group mb-2')
 					label(class='input-group-text' for='conditionVariable') Mandatory condition variable 'N' :
 					input(class='form-control' type='number' min='0' id='conditionVariable' name='N' value=riven.N)
@@ -78,13 +78,13 @@ block content
 									else
 										option(value= val._id) #{val.description}
 							if (index < nbcond - 1)
-								span(class='btn btn-outline-info mx-2' onClick='removeRow(this);' style='font-size:larger;' hidden=true) -
+								span(class='btn btn-outline-info mx-2' style='font-size:larger;' hidden=true) -
 							else
-								span(class='btn btn-outline-info mx-2' onClick='removeRow(this);' style='font-size:larger;') -
+								span(class='btn btn-outline-info mx-2' style='font-size:larger;') -
 							if (index < nbcond - 1 || index >= 5)
-								span(class='btn btn-outline-info' onClick='addRow();' style='font-size:larger;' hidden=true) +
+								span(class='btn btn-outline-info' style='font-size:larger;' hidden=true) +
 							else
-								span(class='btn btn-outline-info' onClick='addRow();' style='font-size:larger;') +
+								span(class='btn btn-outline-info' style='font-size:larger;') +
 						- index++
 				div(class='row m-1')
 					input(class='btn btn-outline-primary w-25 ms-5' name='submit' type='submit' value='Update Riven' style='margin-left: 20px;')

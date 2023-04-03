@@ -4,7 +4,7 @@ block append scripts
 	script(src='/javascripts/conditionScripts.js')
 
 block content
-	script.
+	script(nonce=nonce).
 		document.getElementById('nav-rivcond').classList.add('active');
 
 	// invisible Divs, ready for cloning
@@ -40,11 +40,11 @@ block content
 						div(class='input-group mt-2' id='div-advice'+(++n))
 							label(class='input-group-text' for='advice'+n) Advice #{n} :
 							input(class='form-control' type='text' id='advice'+n name='advices[]' size='75' value=adv)
-			div(class='row mt-3 ms-1')
-				button(class='btn btn-outline-info w-25' onclick='return addAdvice();') Add advice
-				button(class='btn btn-outline-info w-25' onclick='return removeAdvice();' style='margin-left:20px;') Remove last advice
+			div(class='row mt-3 ms-0')
+				button(class='btn btn-outline-info w-25' id='add') Add advice
+				button(class='btn btn-outline-info w-25 mx-3' id='remove') Remove last advice
 			div(class='row mt-4')
-				button(class='btn btn-outline-primary w-25 ms-5' type='submit' style='margin-left:20px;')
+				button(class='btn btn-outline-primary w-25 ms-5' type='submit')
 					if (condition)
 						= 'Update condition'
 					else

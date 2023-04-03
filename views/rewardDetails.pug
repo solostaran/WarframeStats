@@ -1,7 +1,7 @@
 extends layout
 
 block content
-	script.
+	script(nonce=nonce).
 		document.getElementById('nav-rewlist').classList.add('active');
 		document.getElementById('nav-rewlist').innerText = 'Reward Info';
 
@@ -51,10 +51,10 @@ block content
 			input(class='form-control' id='id' size='24' value=reward._id readonly)
 			if reward.createdBy
 				label(for='createdBy') Created by :
-				input(class='form-control' id='createdBy' size='32' value=reward.createdBy.email readonly)
+				input(class='form-control' id='createdBy' size='32' value=obfuscate_email(reward.createdBy.email) readonly)
 			if reward.modifiedBy
 				label(for='modifiedBy') Modified by :
-				input(class='form-control' id='modifiedBy' size='32' value=reward.modifiedBy.email readonly)
+				input(class='form-control' id='modifiedBy' size='32' value=obfuscate_email(reward.modifiedBy.email) readonly)
 			label(for='created') Created in database at this date :
 			input(class='form-control' id='created' size='24' value=reward.Created_date.toLocaleString() readonly)
 			if reward.date

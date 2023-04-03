@@ -1,7 +1,7 @@
 extends layout
 
 block append scripts
-	script.
+	script(nonce=nonce).
 		window.onload = function() {
 				setTimeout(function() {window.location.href = '/';}, 3000);
 		};

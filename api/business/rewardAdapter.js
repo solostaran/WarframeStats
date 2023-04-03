@@ -87,6 +87,7 @@ const form2reward = async function(formReward, userId) {
 	reward.type = rewtype._id;
 	reward.markModified('type');
 	reward.date = getRewardDate(formReward);
+	if (reward.date === null) throw new Error('Reward without a date');
 	reward.markModified('date');
 	if (rewtype.name.search('Booster') >= 0) {
 		reward.booster = await getRewardBooster(formReward);
