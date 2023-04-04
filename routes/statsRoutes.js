@@ -6,7 +6,9 @@ const router = express.Router();
 const StatsProcess = require('../api/business/statsProcess');
 
 router.get('/', function(req, res) {
-    StatsProcess.global(ret => res.render('statsGeneral', { title: 'General statistics for Sortie and Archon\'s Hunt rewards', stats: ret.listStats, totalCount: ret.totalCount}));
+    StatsProcess.all_stats()
+      .then(ret => res.render('statsGeneral', { title: 'General statistics for Sortie and Archon\'s Hunt rewards', stats: ret.listStats, totalCount: ret.totalCount}))
+      .catch(err => res.status(500).send(err));
 });
 
 router.get('/riven', function (req, res) {

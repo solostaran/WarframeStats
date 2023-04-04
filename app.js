@@ -52,7 +52,7 @@ if (isProduction) {
 	app.use(morgan('dev'))
 }
 
-const crypto = require("crypto");
+const crypto = require('crypto');
 app.use(function(req, res, next) {
 	// Maybe use the Helmet middleware instead ?
 	// from https://www.npmjs.com/package/helmet
@@ -64,7 +64,7 @@ app.use(function(req, res, next) {
 	// CSP directive "img-src data:" may be vulnerable to XSS !
 	// CSP directive "style-src 'unsafe-inline'" must be explored, but it depends on the 'bootstrap-table' module.
 	// CSP directive "script-src ''unsafe-inline'" must be excluded, workaround is to set the onClick via a script. [DONE] @see https://stackoverflow.com/questions/47021481/content-security-policy-with-dynamic-button
-	res.setHeader('X-Frame-Options','DENY');
+	res.setHeader('X-Frame-Options','SAMEORIGIN');
 	res.setHeader('X-XSS-Protection','1; mode=block');
 	next()
 })
