@@ -117,5 +117,5 @@ $(document).ready(function () {
     });
     _('resetDate').onclick = resetDate;
     _('type').onchange = function () { onSelect(this); }
-    _('rewardForm').onsubmit = function () { return validateForm(this); }
+    _('rewardForm').onsubmit = function () { return validateForm(); }
 });

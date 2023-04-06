@@ -63,6 +63,6 @@ $(document).ready(function() {
     _('previous').onclick = previous;
     _('next').onclick = next;
     _('last').onclick = last;
-    _('perType').onchange = function () { onSelect(this); }
+    _('perType').onchange = function () { onSelect(); }
     _('nb').onchange = onChangeNb;
 });
