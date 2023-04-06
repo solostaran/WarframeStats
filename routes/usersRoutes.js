@@ -5,7 +5,7 @@ const auth = require('../config/jwt_auth').auth;
 const Users = mongoose.model('Users');
 
 //POST new user route (optional, everyone has access)
-if (!(process.env.NODE_ENV === 'production')) {
+if (process.env.NODE_ENV !== 'production') {
 	router.post('/', auth.optional, async (req, res) => {
 		const { body: { user } } = req;
 
@@ -32,7 +32,7 @@ if (!(process.env.NODE_ENV === 'production')) {
 				return db_user.save()
 					.then(() => res.json({ user: db_user.toAuthJSON() }));
 			})
-			.catch( (err) => {
+			.catch( (_err) => {
 				const create_user = new Users(user);
 				create_user.setPassword(user.password);
 				return create_user.save()
@@ -48,7 +48,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 	if(!user.email) {
 		return res.status(422).json({
 			errors: {
-				email: 'is required',
+				error_email: 'is required',
 			},
 		});
 	}
@@ -56,7 +56,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 	if(!user.password) {
 		return res.status(422).json({
 			errors: {
-				password: 'is required',
+				error_password: 'is required',
 			},
 		});
 	}
@@ -96,7 +96,7 @@ router.get('/current', auth.required, (req, res) => {
 //     Users.collection.deleteMany({}).then(ret => res.status(200).send(ret));
 // });
 
-router.get('/loginForm', auth.optional, function(req, res) {
+router.get('/loginForm', auth.optional, function(_req, res) {
 	res.render('login', { title: "Login"});
 });
 
@@ -106,7 +106,7 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
 	if(!user.email) {
 		res.render('login', {
 			errors: {
-				email: 'is required',
+				error_email: 'is required',
 			},
 		});
 		return;
@@ -116,7 +116,7 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
 		res.render('login',{
 			email: user.email,
 			errors: {
-				password: 'is required',
+				error_password: 'is required',
 			},
 		});
 		return;

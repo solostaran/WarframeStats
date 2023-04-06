@@ -10,19 +10,18 @@ const RivenConditionProcess = require('../api/business/rivenConditionProcess');
 const RivenProcess = require('../api/business/rivenProcess');
 const convertDates = require('../api/utils/convertDates');
 
-router.get('/', auth.required, async function (req, res, next) {
+router.get('/', auth.required, async function (_req, res) {
 	try {
 		const rivenTypes = await RivenTypeProcess.list();
 		const rivenSources = await RivSrcProcess.list();
 		const rivenConditions = await RivenConditionProcess.formattedList();
-		//console.log("manda="+rivenConditions.mandatories.length+", opt="+rivenConditions.optionals.length);
 		res.render('rivenForm', {title: 'Riven Form', types: rivenTypes, sources: rivenSources, conditions: rivenConditions});
 	} catch (err) {
 		res.render('error', {err: err});
 	}
 });
 
-router.get('/list', auth.optional, async function(req,res) {
+router.get('/list', auth.optional, async function(_req,res) {
 	try {
 		const rivens = await RivenProcess.list();
 		res.render('rivenList', {

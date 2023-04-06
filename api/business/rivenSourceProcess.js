@@ -7,7 +7,7 @@ const list = function() {
     return RivenSource.find({}).exec();
 };
 
-const addOrUpdate = async function(obj) {
+const addOrUpdate = async function(obj, _id) {
     let ro;
     if (obj === null) return Promise.reject('Null object');
     if (obj._id) {
@@ -26,7 +26,7 @@ const addOrUpdate = async function(obj) {
     return ro.save();
 };
 
-const adds = function(listOfRivenSource) {
+const adds = function(listOfRivenSource, _id) {
     const options = { ordered: true, rawResult: true };
     return RivenSource.collection.insertMany(listOfRivenSource, options);
 };

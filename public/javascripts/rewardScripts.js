@@ -4,8 +4,7 @@ const cloneLimit = 5;
 
 function _(id) { return document.getElementById(id); }
 
-function validateForm(formObj) {
-    //const riven = _('riven');
+function validateForm() {
     const mcond = _('mcondition');
     if (mcond && mcond.value === 'none' && indexClone > 0) {
         alert('No mandatory condition is selected');
@@ -16,10 +15,6 @@ function validateForm(formObj) {
         alert('Should have a date');
         return false;
     }
-    // if (riven && !riven.childNodes[5].value) {
-    //     alert('weaponName is empty !');
-    //     return false;
-    // }
     return true;
 }
 
@@ -116,7 +111,7 @@ function removeRow() {
 $(document).ready(function () {
     $('#date').datepicker({
         dateFormat: 'yy-mm-dd',
-        onSelect: function (d) {
+        onSelect: function () {
             $('#formOptions').submit();
         }
     });

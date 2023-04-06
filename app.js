@@ -6,8 +6,6 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const debug = require('debug')('warframestats:server');
-//var http = require('http-debug').http;
-//http.debug = 1;
 
 //Configure isProduction variable
 const isProduction = process.env.NODE_ENV === 'production';
@@ -35,7 +33,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 if (isProduction) {
 	app.use(morgan('combined', {
-		skip: function (req, res) {
+		skip: function (_req, res) {
 			return res.statusCode < 400
 		}
 	}))
@@ -49,11 +47,11 @@ if (isProduction) {
 		})
 	}
 } else {
-	app.use(morgan('dev'))
+	app.use(morgan('dev'));
 }
 
 const crypto = require('crypto');
-app.use(function(req, res, next) {
+app.use(function(_req, res, next) {
 	// Maybe use the Helmet middleware instead ?
 	// from https://www.npmjs.com/package/helmet
 	// and https://www.npmjs.com/package/helmet-csp
@@ -72,7 +70,7 @@ app.use(function(req, res, next) {
 // Configure MONGOOSE (on docker, use a different hostname)
 mongoose.Promise = global.Promise;
 const db_host = isDocker ? 'net-db-warstats' : '127.0.0.1';
-mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {useNewUrlParser: true, useUnifiedTopology: true, loggerLevel: 'warn'})
 	.then(() => {
 		debug('Connected to database.');
 	})
@@ -96,28 +94,16 @@ require('./config/passport');
 
 
 // API ROUTES
-const rivenTypeRoute = require('./routes/rivenTypeRoutes');
-app.use('/riven/type', rivenTypeRoute);
-const rivenSourceRoute = require('./routes/rivenSourceRoutes');
-app.use('/riven/source', rivenSourceRoute);
-const rivenConditionRoute = require('./routes/rivenConditionRoutes');
-app.use('/riven/condition', rivenConditionRoute);
-const rivenRoutes = require('./routes/rivenRoutes');
-app.use('/riven', rivenRoutes);
-const boosterTypeRoute = require('./routes/boosterTypeRoutes');
-app.use('/booster/type', boosterTypeRoute);
-const rewardTypeRoute = require('./routes/rewardTypeRoutes');
-app.use('/reward/type', rewardTypeRoute);
-const rewardSourceRoute = require('./routes/rewardSourceRoutes');
-app.use('/reward/source', rewardSourceRoute);
-const rewardRoute = require('./routes/rewardRoutes');
-app.use('/reward', rewardRoute);
-const usersRoute = require('./routes/usersRoutes');
-app.use('/users', usersRoute);
-const worldStateRoute = require('./routes/worldStateRoute');
-app.use('/worldState', worldStateRoute);
-
-//app.get('/favicon.ico', (req, res) => res.status(204));
+app.use('/riven/type', require('./routes/rivenTypeRoutes'));
+app.use('/riven/source', require('./routes/rivenSourceRoutes'));
+app.use('/riven/condition', require('./routes/rivenConditionRoutes'));
+app.use('/riven', require('./routes/rivenRoutes'));
+app.use('/booster/type', require('./routes/boosterTypeRoutes'));
+app.use('/reward/type', require('./routes/rewardTypeRoutes'));
+app.use('/reward/source', require('./routes/rewardSourceRoutes'));
+app.use('/reward', require('./routes/rewardRoutes'));
+app.use('/users', require('./routes/usersRoutes'));
+app.use('/worldState', require('./routes/worldStateRoute'));
 
 // Views
 app.use('/', require('./routes/index'));
@@ -128,6 +114,8 @@ app.use('/rivenForm', require('./routes/rivenFormRoute'));
 app.use('/rewardForm', require('./routes/rewardFormRoutes'));
 app.use('/boosters', require('./routes/boostersRoutes'));
 app.use('/stats', require('./routes/statsRoutes'));
+
+// juste in case : app.get('/favicon.ico', (req, res) => res.status(204));
 
 // 404 management
 app.use(function(req, res, next) {

@@ -23,8 +23,7 @@ const all_stats = function() {
 
 const riven = async function() {
     const rewardRiven = await RewardTypeProcess.findByIdOrName('Riven');
-    const rewards = await new Promise( callback => RewardProcess.list({type: rewardRiven._id}, callback,
-        err => { return Promise.reject(err); }));
+    const rewards = await RewardProcess.list({type: rewardRiven._id});
     const types = await RivenTypeProcess.list();
     const stats = {};
     types.forEach(rt => stats[rt['name']] = 0);
@@ -36,8 +35,7 @@ const riven = async function() {
 
 const booster = async function() {
     const rewardBooster = await RewardTypeProcess.findByIdOrName('Booster');
-    const rewards = await new Promise(callback => RewardProcess.list({type: rewardBooster._id}, callback,
-        err => { return Promise.reject(err); }));
+    const rewards = await RewardProcess.list({type: rewardBooster._id});
     const types = await BoosterTypeProcess.list();
     const stats = {};
     types.forEach(t => stats[t['name']] = 0);

@@ -12,7 +12,7 @@ const addOrUpdate = async function(obj) {
     if (obj === null) return Promise.reject('Null object');
     if (obj._id) {
         // update existing origin
-        rs = await RewardSource.findById(obj._id);
+        rs = await RewardSource.findById(obj._id).exec();
     } else {
         // create a new origin
         rs = new RewardSource(obj);
@@ -42,8 +42,7 @@ const findByIdOrName = async function(param) {
         return await findById(param);
     } catch (err) {}
     const ret = await findByName(param);
-    if (ret.length === 1)
-        return ret[0];
+    if (ret.length === 1) return ret[0];
     return null;
 };
 

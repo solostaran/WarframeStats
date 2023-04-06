@@ -58,6 +58,6 @@ block content
 			label(for='created') Created in database at this date :
 			input(class='form-control' id='created' size='24' value=reward.Created_date.toLocaleString() readonly)
 			if reward.date
-				- var formattedDate = date2string(reward.date)
+				- let formattedDate = date2string(reward.date)
 				label(for='date') Obtained at this date :
 				input(class='form-control' id='date' size='24' value=formattedDate readonly)

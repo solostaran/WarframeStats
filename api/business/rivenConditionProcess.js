@@ -4,20 +4,14 @@ const mongoose = require('mongoose');
 const RivenCondition = mongoose.model('RivenCondition');
 
 const list = function() {
-    return RivenCondition.find({}).exec();
+    return RivenCondition.find({}).sort({optional: 1}).exec();
 };
 
 const formattedList = async function() {
     return {
         mandatories: await RivenCondition.find({ optional: { $not: {$exists:true}}}).exec(),
-        optionals: await RivenCondition.find({ optional: {$exists:true}})
+        optionals: await RivenCondition.find({ optional: {$exists:true}}).exec()
     };
-    // RivenCondition.find({ optional: { $not: {$exists:true}}}).then(ret1 => {
-    //     RivenCondition.find({ optional: {$exists:true}}).then(ret2 => onFound({
-    //         mandatories: ret1,
-    //         optionals: ret2
-    //     })).catch(onError);
-    // }).catch(onError);
 };
 
 const addOrUpdate = async function(obj, userId) {
@@ -46,7 +40,8 @@ const addOrUpdate = async function(obj, userId) {
     return cond.save();
 };
 
-const adds = function(listOfConditions, userId, onSuccess, onError) {
+// Insert one by one with transformations instead of insertMany(...,{ ordered: true, rawResult: true })
+const adds = function(listOfConditions, userId) {
     let inserted = 0;
     let rejected = 0;
     let rejects = [];
@@ -62,13 +57,9 @@ const adds = function(listOfConditions, userId, onSuccess, onError) {
         )
     ).then(() => {
         const result = {insertedCount: inserted , rejectedCount: rejected, rejects: rejects };
-        console.log("Conditions insertion : "+JSON.stringify(result));
-        onSuccess(result);
-    }).catch(onError);
-
-    // return new Promise(RivenCondition.collection
-    //     .insertMany(listOfConditions, { ordered: true, rawResult: true }));
-
+        //console.log("Conditions insertion : "+JSON.stringify(result));
+        return Promise.resolve(result);
+    }).catch(err => { return Promise.reject(err); });
 };
 
 const byId = function(id) {
