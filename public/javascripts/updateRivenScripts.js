@@ -4,7 +4,6 @@ window.onload = function() {
     _('mand-span').onclick = function() {
         addOptional(this)
     };
-    //onSelect($('type'));
     if (riven.conditions) {
         let nbcond = riven.conditions.length;
         if (nbcond > 1) {

@@ -10,7 +10,6 @@ const list = function() {
 
 const addOrUpdate = async function(oneRiven, userId) {
 	const riven = await RivenAdapter.form2riven(oneRiven, userId);
-	//const endRiven = await riven.save();
 	await riven.save();
 	return byId(riven._id);
 };
@@ -28,7 +27,7 @@ const byId = async function(id) {
 			.exec();
 		if (riven.createdBy) riven.createdBy = riven.createdBy.toAuthJSON();
 		if (riven.modifiedBy) riven.modifiedBy = riven.modifiedBy.toAuthJSON();
-		return riven;
+		return Promise.resolve(riven);
 	} catch (err) {
 		return Promise.reject('Cannot find riven whose ID = '+id);
 	}

@@ -27,7 +27,7 @@ function last() {
 
 function onChangeNb() {
     if (isNaN($('#nb').val()) || Number($('#nb').val()) < 0)
-        $('#nb').val( 20 );
+        $('#nb').val( 10 );
     $('#formOptions').submit();
 }
 
@@ -39,8 +39,7 @@ function resetDate(that) {
     return false;
 }
 
-function onSelect(combo) {
-    //const text = combo.options[combo.selectedIndex].innerHTML;
+function onSelect() {
     $('#formOptions').submit();
 }
 
@@ -48,13 +47,13 @@ function onSelect(combo) {
 $(document).ready(function() {
     $('#startDate').datepicker({
         dateFormat:'yy-mm-dd',
-        onSelect: function(d) {
+        onSelect: function() {
             $('#formOptions').submit();
         }
     });
     $('#endDate').datepicker({
         dateFormat: 'yy-mm-dd',
-        onSelect: function (d) {
+        onSelect: function() {
             $('#formOptions').submit();
         }
     });

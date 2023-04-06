@@ -6,7 +6,7 @@ const router = express.Router();
 const auth = require('../config/jwt_auth').auth;
 const RivenOriginProcess = require('../api/business/rivenSourceProcess');
 
-router.get('/', auth.optional, function (req, res) {
+router.get('/', auth.optional, function (_req, res) {
     RivenOriginProcess.list()
         .then(ret => res.json(ret))
         .catch(err => res.status(500).send("Cannot list riven origins from DB, "+err));
@@ -21,7 +21,7 @@ router.post('/add', auth.required, function(req, res) {
 
 router.post('/adds', auth.required, function(req, res) {
     const { auth: { id } } = req;
-    RivenOriginProcess.adds(req.body)
+    RivenOriginProcess.adds(req.body, id)
       .then(ret => res.json({ "insertedCount": ret.insertedCount}))
       .catch(err => res.status(400).send('Invalid body, '+err));
 });
@@ -44,6 +44,8 @@ router.delete('/delete/:id', auth.required, function(req, res) {
 });
 
 router.delete('/deleteall', auth.required, function(req, res) {
+    const { auth: { id } } = req;
+    console.log("Delete all Riven Sources by User : "+id);
     RivenOriginProcess.deleteAll()
         .then(ret => res.send(ret))
         .catch(err => res.status(500).send("Cannot delete all riven origins in DB, " + err));

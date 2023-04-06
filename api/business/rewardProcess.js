@@ -7,72 +7,68 @@ const mongoose = require('mongoose'),
 	convert = require('../utils/convertDates.js'),
 	rewardAdapter = require('./rewardAdapter');
 
-const count = function(onCount) {
-	Reward.find().estimatedDocumentCount().then(onCount);
+const count = function() {
+	return Reward.countDocuments({}).exec();
 };
 
-const countByType = function(type, onCount) {
-	Reward.countDocuments({type: type}).then(onCount);
+const countByType = function(type) {
+	return Reward.countDocuments({type: type}).exec();
 };
 
-const rawlist = function(onOk, onError) {
-	Reward.find({}).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: -1}).then(list => {
-		onOk(list)
-	}).catch(onError);
+const list_raw = function() {
+	return Reward
+		.find({})
+		.populate('source').populate('type').populate('booster').populate('rivenType')
+		.sort({date: -1})
+		.exec();
 }
 
-const list = function(options, onFound, onError) {
-	let params = {};
-	if (options.dateLow || options.dateHigh) {
-		params.date = {};
-		if (options.dateLow) {
-			const date = convert.value2date(options.dateLow);
-			date.setHours(0, 0, 0);
-			params.date.$gte = date;
-		}
-		if (options.dateHigh) {
-			const date = convert.value2date(options.dateHigh);
-			date.setHours(23, 59, 59);
-			params.date.$lte = date;
-		}
+const params_date = function (params, options) {
+	params.date = {};
+	if (options.dateLow) {
+		const date = convert.value2date(options.dateLow);
+		date.setHours(0, 0, 0);
+		params.date.$gte = date;
 	}
-	if (options.type) {
-		if (options.type !== '-') params.type = options.type;
+	if (options.dateHigh) {
+		const date = convert.value2date(options.dateHigh);
+		date.setHours(23, 59, 59);
+		params.date.$lte = date;
 	}
-	// if (options && Number(options.skip) >= 0 && Number(options.limit) > 0) {
-	//     Reward.find(params).populate('type').sort({date: 1}).skip(options.skip).limit(options.limit).then(onFound).catch(onError);
-	// } else {
-	//     Reward.find(params).populate('type').sort({date: 1}).then(onFound).catch(onError);
-	// }
-	if (_.isEmpty(params)) {
-		Reward.find().estimatedDocumentCount().then(count => {
+}
+const list = function(options) {
+	return new Promise( async function(resolve, reject) {
+		let params = {};
+		if (options.dateLow || options.dateHigh) params_date(params, options);
+		if (options.type && options.type !== '-') params.type = options.type;
+		if (_.isEmpty(params)) {
+			const count = await Reward.countDocuments({}).exec();
 			if (options && Number(options.skip) >= 0 && Number(options.limit) > 0)
-				Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).skip(options.skip).limit(options.limit).then(list => {
-					onFound({data: list, count: count});
-				}).catch(onError);
+				Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).skip(options.skip).limit(options.limit).then(ret => {
+					resolve({data: ret, count: count});
+				}).catch(err => reject(err));
 			else
-				Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(list => {
-					onFound({data: list, count: count});
-				}).catch(onError);
-		});
-	} else {
-		// NOTE: this can't work with a large amount of data
-		if (options && Number(options.skip) >= 0 && Number(options.limit) > 0) {
-			Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(list => {
-				onFound({data: list.slice(options.skip, options.skip + options.limit), count: list.length})
-			}).catch(onError);
+				Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(ret => {
+					resolve({data: ret, count: count});
+				}).catch(err => reject(err));
 		} else {
-			Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(list => {
-				onFound({data: list, count: list.length})
-			}).catch(onError);
+			// NOTE: this can't work with a large amount of data
+			if (options && Number(options.skip) >= 0 && Number(options.limit) > 0) {
+				Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(ret => {
+					resolve({data: ret.slice(options.skip, options.skip + options.limit), count: ret.length})
+				}).catch(err => reject(err));
+			} else {
+				Reward.find(params).populate('source').populate('type').populate('booster').populate('rivenType').sort({date: 1}).then(ret => {
+					resolve({data: ret, count: ret.length})
+				}).catch(err => reject(err));
+			}
 		}
-	}
+	});
 };
 
 const addOrUpdate = async function(obj, userId) {
 	if (obj === null) return Promise.reject('Null object');
-	const reward = Promise.resolve(rewardAdapter.form2reward(obj, userId));
-	return reward;
+	return Promise.resolve(rewardAdapter.form2reward(obj, userId));
 };
 
 const adds = function(listOfRewards, userId, onSuccess, onError) {
@@ -104,7 +100,7 @@ const findById = async function(id) {
 		.populate('rivenType')
 		//.populate('riven') // doesn't work well
 		.populate('modifiedBy')
-		.populate('createdBy')
+		.populate('createdBy').exec();
 	if (reward) {
 		if (reward.createdBy) reward.createdBy = reward.createdBy.toAuthJSON();
 		if (reward.modifiedBy) reward.modifiedBy = reward.modifiedBy.toAuthJSON();
@@ -122,7 +118,7 @@ const deleteOneById = function(id) {
 		.exec();
 };
 
-const deleteAll = function(onDelete, onError) {
+const deleteAll = function() {
 	return Reward
 		.deleteMany({})
 		.exec();
@@ -131,8 +127,7 @@ const deleteAll = function(onDelete, onError) {
 exports.count = count;
 exports.countByType = countByType;
 exports.list = list;
-exports.rawlist = rawlist;
-//exports.add = add;
+exports.list_raw = list_raw;
 exports.addOrUpdate = addOrUpdate;
 exports.adds = adds;
 exports.findById = findById;

@@ -8,17 +8,16 @@ const rewardProcess = require('../api/business/rewardProcess');
 const convertDates = require('../api/utils/convertDates');
 const obfuscate = require('../api/utils/obfuscate');
 
-router.get('/', auth.optional, function (req, res) {
-	rewardProcess.list({},
-		ret => res.json(ret),
-		err => res.status(500).send("Cannot list rewards from DB, "+err));
+router.get('/', auth.optional, function (_req, res) {
+	rewardProcess.list({})
+		.then(ret => res.json(ret))
+		.catch(err => res.status(500).send("Cannot list rewards from DB, "+err));
 });
 
-router.get('/raw', auth.optional, function(req, res) {
-	rewardProcess.rawlist(
-		ret => res.json(ret),
-		err => res.status(500).send("Cannot list rewards from DB, "+err)
-	);
+router.get('/raw', auth.optional, function(_req, res) {
+	rewardProcess.list_raw()
+		.then(ret => res.json(ret))
+		.catch(err => res.status(500).send("Cannot list rewards from DB, "+err));
 });
 
 router.post('/add', auth.required, function(req, res) {
@@ -83,6 +82,8 @@ router.delete('/delete/:id', auth.required, function(req, res) {
 });
 
 router.delete('/deleteall', auth.required, function(req, res) {
+	const { auth: { id } } = req;
+	console.log("Delete all Rewards by User : "+id);
 	rewardProcess.deleteAll()
 		.then(ret => res.status(200).send(ret))
 		.catch(err => res.status(500).send("Cannot delete all rewards in DB, "+err));

@@ -27,7 +27,7 @@ async function initialize() {
 }
 initialize();
 
-router.get('/', auth.required, function(req, res) {
+router.get('/', auth.required, async function(_req, res) {
 	Promise.all([
 		RivenConditionProcess.formattedList()
 	]).then(results => {
@@ -43,15 +43,13 @@ router.get('/', auth.required, function(req, res) {
 	}).catch(err => res.status(500).send(err));
 });
 
-async function provideRewardList(req, res) {
+function provideRewardList(req, res) {
 	let offset = req.body.offset ? Number(req.body.offset) : 0;
-	let nb = req.body.nb ? Number(req.body.nb) : 20;
-	//const rewardTypes = await RewardTypeProcess.list();
-	//const boosterTypes = await BoosterTypeProcess.to_array();
+	let nb = req.body.nb ? Number(req.body.nb) : 10;
 	RewardProcess.list(
-		{skip: offset, limit: nb, dateLow: req.body.dateLow, dateHigh: req.body.dateHigh, type: req.body.type},
+		{skip: offset, limit: nb, dateLow: req.body.dateLow, dateHigh: req.body.dateHigh, type: req.body.type}
+	).then(
 		result => {
-			//console.log("Just get "+result.data.length+" rewards over "+result.count);
 			res.status(200).render('rewardList2', {
 				date2string: convertDates.date2string,
 				rewards: result.data,
@@ -65,11 +63,11 @@ async function provideRewardList(req, res) {
 				rewardTypes: rewardTypes,
 				rewardTypeSelected: req.body.type
 			});
-		},
-		err => res.status(500).send(err));
+		}
+	).catch(err => res.status(500).send(err));
 }
 
-router.get('/list', auth.optional, function(req, res) {
+router.get('/list', auth.optional, function(_req, res) {
 	res.render('rewardList');
 });
 

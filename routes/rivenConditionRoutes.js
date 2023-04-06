@@ -6,13 +6,13 @@ const router = express.Router();
 const auth = require('../config/jwt_auth').auth;
 const RivenConditionProcess = require('../api/business/rivenConditionProcess');
 
-router.get('/', auth.optional, function (req, res) {
+router.get('/', auth.optional, function (_req, res) {
     RivenConditionProcess.list()
         .then(ret => res.json(ret))
         .catch(err => res.status(500).send("Cannot list riven conditions from DB, "+err));
 });
 
-router.get('/formatted', auth.optional, function(req, res) {
+router.get('/formatted', auth.optional, function(_req, res) {
     RivenConditionProcess.formattedList()
         .then(ret => res.json(ret))
         .catch(err => res.status(500).send("Cannot list riven conditions from DB, "+err));
@@ -27,9 +27,9 @@ router.post('/add', auth.required, function(req, res) {
 
 router.post('/adds', auth.required, function(req, res) {
     const { auth: { id } } = req;
-    RivenConditionProcess.adds(req.body, id,
-        ret => res.json(ret),
-        err => res.status(400).send('Invalid body, '+err));
+    RivenConditionProcess.adds(req.body, id)
+      .then(ret => res.json(ret))
+      .catch(err => res.status(400).send('Invalid body, '+err));
 });
 
 router.post('/form', auth.required, function(req, res) {
@@ -57,6 +57,8 @@ router.delete('/delete/:id', auth.required, function(req, res) {
 });
 
 router.delete('/deleteall', auth.required, function(req, res) {
+    const { auth: { id } } = req;
+    console.log("Delete all Riven Conditions by User : "+id);
     RivenConditionProcess.deleteAll()
         .then(ret => res.send(ret))
         .catch(err => res.status(500).send("Cannot delete all riven conditions in DB, " + err));

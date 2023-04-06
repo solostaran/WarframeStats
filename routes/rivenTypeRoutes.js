@@ -6,7 +6,7 @@ const router = express.Router();
 const auth = require('../config/jwt_auth').auth;
 const RivenTypeProcess = require('../api/business/rivenTypeProcess');
 
-router.get('/', auth.optional, function (req, res) {
+router.get('/', auth.optional, function (_req, res) {
     RivenTypeProcess
         .list()
         .then(ret => res.json(ret))
@@ -54,6 +54,8 @@ router.delete('/delete/:id', auth.required, function(req, res) {
 });
 
 router.delete('/deleteall', auth.required, function(req, res) {
+    const { auth: { id } } = req;
+    console.log("Delete all Riven Types by User : "+id);
     RivenTypeProcess
         .deleteAll()
         .then(ret => res.status(200).send(ret))

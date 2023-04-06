@@ -32,15 +32,4 @@ const RivenConditionSchema = new Schema({
     }
 });
 
-// Without the following code, advices will be created to [] even if there is no advice.
-// But I would like it to be 'undefined'
-// another workaround: add 'default: undefined' in the Schema
-
-// RivenConditionSchema.pre('save', function (next) {
-//     if (this.isNew && 0 === this.advices.length) {
-//         this.advices = undefined;
-//     }
-//     next();
-// });
-
 module.exports = mongoose.model('RivenCondition', RivenConditionSchema);

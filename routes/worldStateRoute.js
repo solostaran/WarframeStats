@@ -4,8 +4,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-router.get('/', async function(req, res) {
-    //StatsProcess.global(ret => res.render('statsGeneral', { title: 'General Stats', stats: ret.listStats, totalCount: ret.totalCount}));
+router.get('/', async function(_req, res) {
     try {
         // const response = await axios.get('http://content.warframe.com/dynamic/worldState.php');
         // console.log(response.data.Events.length + ' events.');

@@ -1,5 +1,8 @@
 extends layout
 
+block append scripts
+	script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+
 block content
 	script(nonce=nonce).
 		document.getElementById('nav-rivcond').classList.add('active');
@@ -10,10 +13,13 @@ block content
 				thead
 					tr
 						th(colspan=2)
-							div List of Riven Challenges and conditions
-							div(class='float-right').
-								or #[a(href='/conditions/form') Create a new riven condition]
-				tbody
+							div.
+								List of Riven Challenges and conditions or #[a(href='/conditions/form') Create a new riven condition]
+							div
+								input(class="form-control" id="myInput" type="text" placeholder="Search..")
+						th
+							span Mandatory ?
+				tbody(id='table-conditions')
 					for condition in conditions
 						tr
 							td(class='text-center align-middle')
@@ -22,8 +28,20 @@ block content
 								= condition.description
 								ul
 									if condition.optional && condition.optional === true
-										li= 'This condition is an optional one'
+										li= 'This condition is optional'
 									if condition.advices
 										- let n = 1
 										for advice in condition.advices
 											li= 'advice ' + n++ + ' : ' + advice
+							td
+								= !condition.optional
+
+	script(nonce=nonce).
+		$(document).ready(function () {
+			$("#myInput").on("keyup", function () {
+				let value = $(this).val().toLowerCase();
+				$("#table-conditions tr").filter(function () {
+					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+				});
+			});
+		});

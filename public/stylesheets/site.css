@@ -5,3 +5,8 @@
 .navbar {
     background: #e9e9ff;
 }
+
+.footer-text {
+    color: #808080;
+    font-style: italic;
+}

@@ -13,9 +13,9 @@ passport.use(new LocalStrategy({
         .then((user) => {
             if(!user || !user.validatePassword(password)) {
                 if (!user)
-                    return done(null, false, { errors: { email: 'is invalid' } });
+                    return done(null, false, { errors: { error_email: 'is invalid' } });
                 else
-                    return done(null, false, { errors: { password: 'is invalid' } });
+                    return done(null, false, { errors: { error_password: 'is invalid' } });
             }
 
             return done(null, user);
