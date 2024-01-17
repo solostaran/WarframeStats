@@ -9,7 +9,7 @@
     "axios": "^1.6.5",
     "body-parser": "^1.19.2",
     "cookie-parser": "^1.4.6",
-    "debug": "^4.3.3",
+    "debug": "^4.3.4",
     "express": "~4.18.2",
     "express-jwt": "^8.4.1",
     "flatpickr": "^4.6.9",
