@@ -7,8 +7,10 @@ block content
 	div(class='container-lg')
 		div(class='row m-1')
 			if (stats)
-				h3= title
-				p=	totalCount + ' rewards.'
+				div(class='row')
+					h3= title
+					p=	totalCount + ' rewards.'
+					a(href='https://www.warframe.com/fr/droptables') Official <i>droptables</i> on Warframe.com
 				div(class='row')
 					table(class='table table-responsive table-striped table-hover')
 						thead
