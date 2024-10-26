@@ -11,6 +11,7 @@ const https = require('https');
 const fs = require('fs');
 
 const isHttp = process.env.HTTP === 'true';
+const isProd = process.env.NODE_ENV === 'production';
 
 /**
  * Get port from environment and store in Express.
@@ -53,7 +54,11 @@ if (!isHttp) {
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+if (isHttp && isProd) { // localhost only
+  server.listen(port, '127.0.0.1');
+} else {
+  server.listen(port);
+}
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -62,7 +67,7 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  let port = parseInt(val, 10);
 
   if (isNaN(port)) {
     // named pipe
@@ -86,7 +91,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
+  let bind = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port;
 

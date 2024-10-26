@@ -1,3 +1,6 @@
+/*
+ * DEPENDENCIES
+ */
 const express = require('express');
 require('http-errors');
 const path = require('path');
@@ -6,8 +9,12 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const debug = require('debug')('warframestats:server');
+const crypto = require('crypto');
 
-//Configure isProduction variable
+/*
+ * ENVIRONMENT VARIABLES
+ */
+// Configure isProduction variable
 const isProduction = process.env.NODE_ENV === 'production';
 if (isProduction) console.log('Production configuration.');
 else console.log('Development configuration.');
@@ -16,6 +23,9 @@ const isNodemon = process.env.NODEMON === 'true';
 const isDocker = process.env.DOCKER === 'true';
 const isHttp = process.env.HTTP === 'true';
 
+/*
+ * GENERAL APPLICATION SETUP
+ */
 const app = express();
 
 // view engine setup
@@ -31,6 +41,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+/*
+ * SETUP LOG
+ */
 if (isProduction) {
 	app.use(morgan('combined', {
 		skip: function (_req, res) {
@@ -50,7 +64,9 @@ if (isProduction) {
 	app.use(morgan('dev'));
 }
 
-const crypto = require('crypto');
+/*
+ * SETUP HTTP SECURITY
+ */
 app.use(function(_req, res, next) {
 	// Maybe use the Helmet middleware instead ?
 	// from https://www.npmjs.com/package/helmet
@@ -67,7 +83,10 @@ app.use(function(_req, res, next) {
 	next()
 })
 
-// Configure MONGOOSE (on docker, use a different hostname)
+/*
+ * Configure MONGOOSE
+ * on docker, use a different hostname
+ */
 mongoose.Promise = global.Promise;
 const db_host = isDocker ? 'net-db-warstats' : '127.0.0.1';
 mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {useNewUrlParser: true, useUnifiedTopology: true, loggerLevel: 'warn'})
@@ -93,7 +112,9 @@ require('./api/models/Users');
 require('./config/passport');
 
 
-// API ROUTES
+/*
+ * API ROUTES
+ */
 app.use('/riven/type', require('./routes/rivenTypeRoutes'));
 app.use('/riven/source', require('./routes/rivenSourceRoutes'));
 app.use('/riven/condition', require('./routes/rivenConditionRoutes'));
@@ -105,7 +126,9 @@ app.use('/reward', require('./routes/rewardRoutes'));
 app.use('/users', require('./routes/usersRoutes'));
 app.use('/worldState', require('./routes/worldStateRoute'));
 
-// Views
+/*
+ * VIEWS
+ */
 app.use('/', require('./routes/index'));
 app.use('/types', require('./routes/rivenTypesRoutes'));
 app.use('/sources', require('./routes/rivenSourcesRoutes'));
@@ -117,14 +140,18 @@ app.use('/stats', require('./routes/statsRoutes'));
 
 // juste in case : app.get('/favicon.ico', (req, res) => res.status(204));
 
-// 404 management
+/*
+ * 404 error management
+ */
 app.use(function(req, res, next) {
 	//res.status(404).send({url: req.originalUrl + ' not found'})
 	res.render('404', { url: req.originalUrl });
 	next();
 });
 
-// error handler excepting 404
+/*
+ * error handler, excepting 404
+ */
 app.use(function(err, req, res, next) {
 	// set locals (specific for express-jwt's UnauthorizedError)
 	if (err.name === 'UnauthorizedError')
@@ -139,10 +166,14 @@ app.use(function(err, req, res, next) {
 	next();
 });
 
+/*
+ * Nodemon session
+ */
 if (isNodemon) {
 	const PORT = 3000;
 	app.listen(PORT, () => console.log('Server running on http://localhost:'+PORT+'/'));
 } else {
 	module.exports = app;
 }
+
 debug('RESTful API server started.');
