@@ -33,10 +33,18 @@ const byId = async function(id) {
 	}
 };
 
-const deleteOneById = function(id) {
-	return Riven
-		.deleteOne({ '_id': id})
-		.exec();
+const deleteOneById = async function(id) {
+	let riven;
+	try {
+		riven = await Riven.findById(id);
+		await riven.deleteOne();
+		return Promise.resolve(riven);
+	} catch (err) {
+		return Promise.reject('Cannot find riven whose ID = '+id);
+	}
+	// return Riven
+	// 	.deleteOne({ '_id': id})
+	// 	.exec();
 
 };
 

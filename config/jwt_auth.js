@@ -1,5 +1,14 @@
 const { expressjwt: jwt } = require('express-jwt'); // for express-jwt v8+
-const sec_string = 'secret';
+function generateRandomString(length) {
+    let result = '';
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        result += charset.charAt(randomIndex);
+    }
+    return result;
+}
+const sec_string = generateRandomString(10);
 
 const getTokenFromRequest = (req) => {
     const { headers: { authorization } } = req;

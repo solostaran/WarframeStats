@@ -87,7 +87,7 @@ const adds = function(listOfRewards, userId, onSuccess, onError) {
 		)
 	).then(() => {
 		const result = {insertedCount: inserted , rejectedCount: rejected, rejects: rejects };
-		console.log("Rewards insertion : "+JSON.stringify(result));
+		console.log("Rewards insertion : "+JSON.stringify(result)+" by User["+userId+"]");
 		onSuccess(result);
 	}).catch(onError);
 };
@@ -112,10 +112,15 @@ const findById = async function(id) {
 	return reward;
 };
 
-const deleteOneById = function(id) {
-	return Reward
-		.deleteOne({ '_id': id})
-		.exec();
+const deleteOneById = async function(id) {
+	let reward;
+	try {
+		reward = await Reward.findById(id);
+		await reward.deleteOne();
+		return Promise.resolve(reward);
+	} catch(err) {
+		return Promise.reject('Cannot find reward whose ID = '+id)
+	}
 };
 
 const deleteAll = function() {

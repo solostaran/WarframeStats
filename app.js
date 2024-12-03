@@ -3,13 +3,13 @@
  */
 const express = require('express');
 require('http-errors');
-const path = require('path');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
+const path= require('path');
+const bodyParser= require('body-parser');
+const cookieParser= require('cookie-parser');
+const morgan= require('morgan');
+const mongoose= require('mongoose');
 const debug = require('debug')('warframestats:server');
-const crypto = require('crypto');
+const crypto= require('crypto');
 
 /*
  * ENVIRONMENT VARIABLES
@@ -89,7 +89,7 @@ app.use(function(_req, res, next) {
  */
 mongoose.Promise = global.Promise;
 const db_host = isDocker ? 'net-db-warstats' : '127.0.0.1';
-mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {useNewUrlParser: true, useUnifiedTopology: true, loggerLevel: 'warn'})
+mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {family:4})
 	.then(() => {
 		debug('Connected to database.');
 	})
