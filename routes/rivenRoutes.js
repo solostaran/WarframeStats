@@ -16,14 +16,20 @@ router.get('/', auth.optional, function (_req, res) {
 router.post('/add', auth.required, function(req, res) {
     const { auth: { id } } = req;
     RivenProcess.addOrUpdate(req.body, id)
-        .then(riven => res.json(riven))
+        .then(riven => {
+            console.log("Add 1 riven["+riven._id+"] by User["+obfuscate.obfuscate_id(id)+"]");
+            res.json(riven)
+        })
         .catch(err => res.status(400).send(err));
 });
 
 router.post('/form', auth.required, function(req, res) {
     const { auth: { id } } = req;
     RivenProcess.addOrUpdate(req.body, id)
-        .then(riven => res.render('rivenDetails', { riven: riven, obfuscate_email: obfuscate.obfuscate_email }))
+        .then(riven => {
+            console.log("Add 1 riven["+riven._id+"] by User["+obfuscate.obfuscate_id(id)+"]");
+            res.render('rivenDetails', { riven: riven, obfuscate_email: obfuscate.obfuscate_email })
+        })
         .catch(err => res.status(400).send(err));
 });
 
@@ -44,14 +50,18 @@ router.get('/view/:id', auth.optional, function(req, res) {
 });
 
 router.delete('/delete/:id', auth.required,  function(req, res) {
+    const { auth: { id } } = req;
     RivenProcess.deleteOneById(req.params.id)
-        .then(ret => res.status(200).send(ret))
+        .then(ret => {
+          console.log("Delete riven["+ret._id+"] by User["+obfuscate.obfuscate_id(id)+"]");
+          res.status(200).send(ret)
+        })
         .catch(err => res.status(400).send("Cannot delete, "+err));
 });
 
 router.delete('/deleteall', auth.required, function(req, res) {
     const { auth: { id } } = req;
-    console.log("Delete all Rivens by User : "+id);
+    console.log("Delete all Rivens by User["+obfuscate.obfuscate_id(id)+"]");
     RivenProcess.deleteAll()
         .then(ret => res.status(200).send(ret))
         .catch(err => res.status(500).send("Cannot delete all sortie rewards in DB, "+err));
