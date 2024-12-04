@@ -36,7 +36,7 @@ router.get('/list', auth.optional, async function(_req,res) {
 router.get('/:id', auth.required, function(req, res) {
 	RivenProcess.byId(req.params.id)
 		.then(riven => {
-			console.log(JSON.stringify(riven));
+			// console.log(JSON.stringify(riven));
 			if (!riven)
 				res.status(404).send(null);
 			else

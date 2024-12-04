@@ -6,7 +6,7 @@ const router = express.Router();
 const auth = require('../config/jwt_auth').auth;
 const rewardProcess = require('../api/business/rewardProcess');
 const convertDates = require('../api/utils/convertDates');
-const obfuscate = require('../api/utils/obfuscate');
+const { obfuscate_email, obfuscate_id } = require('../api/utils/obfuscate');
 
 router.get('/', auth.optional, function (_req, res) {
 	rewardProcess.list({})
@@ -24,7 +24,7 @@ router.post('/add', auth.required, function(req, res) {
 	const { auth: { id } } = req;
 	rewardProcess.addOrUpdate(req.body, id)
 		.then(ret => {
-			console.log("Add 1 reward["+ret._id+"] by User["+obfuscate.obfuscate_id(id)+"]");
+			console.log("Add 1 reward["+ret._id+"] by User["+obfuscate_id(id)+"]");
 			res.json(ret)
 		})
 		.catch(err => res.status(400).send('Invalid body, '+err));
@@ -41,14 +41,14 @@ router.post('/form', auth.required, function(req, res) {
 	const { auth: { id } } = req;
 	rewardProcess.addOrUpdate(req.body, id)
 		.then(ret => {
-			console.log("Add 1 reward["+ret._id+"] by User["+obfuscate.obfuscate_id(id)+"]");
+			console.log("Add 1 reward["+ret._id+"] by User["+obfuscate_id(id)+"]");
 			rewardProcess.findById(ret._id)
 					.then(reward => res.render('rewardDetails',
 						{
 							title: 'Reward Details',
 							date2string: convertDates.date2string,
 							reward: reward,
-							obfuscate_email: obfuscate.obfuscate_email
+							obfuscate_email: obfuscate_email
 						}))
 					.catch(err => res.status(400).send(err))
 			}
@@ -73,7 +73,7 @@ router.get('/view/:id', auth.optional, function(req, res) {
 				res.render('rewardDetails', {
 					date2string: convertDates.date2string,
 					reward: reward,
-					obfuscate_email: obfuscate.obfuscate_email
+					obfuscate_email: obfuscate_email
 				});
 			else
 				res.status(404).send(null);
@@ -85,7 +85,7 @@ router.delete('/delete/:id', auth.required, function(req, res) {
 	const { auth: { id } } = req;
 	rewardProcess.deleteOneById(req.params.id)
 		.then(ret => {
-			console.log("Delete reward["+ret._id+"] by User["+obfuscate.obfuscate_id(id)+"]");
+			console.log("Delete reward["+ret._id+"] by User["+obfuscate_id(id)+"]");
 			res.status(200).send(ret);
 		})
 		.catch(err => res.status(400).send("Cannot delete : "+err));
@@ -93,7 +93,7 @@ router.delete('/delete/:id', auth.required, function(req, res) {
 
 router.delete('/deleteall', auth.required, function(req, res) {
 	const { auth: { id } } = req;
-	console.log("Delete all Rewards by User["+obfuscate.obfuscate_id(id)+"]");
+	console.log("Delete all Rewards by User["+obfuscate_id(id)+"]");
 	rewardProcess.deleteAll()
 		.then(ret => res.status(200).send(ret))
 		.catch(err => res.status(500).send("Cannot delete all rewards in DB, "+err));

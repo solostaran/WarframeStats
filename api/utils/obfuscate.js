@@ -1,6 +1,6 @@
 'use strict';
 
-const email_regex = /(^.{2})(.*)(.{2}$)/gy
+const email_regex = /(^.{3})(.*)(.{3}$)/gy
 const id_regex = /(^.{4})(.*)(.{4}$)/gy
 function obfuscate_email(email) {
 	return email.replace(

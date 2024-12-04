@@ -1,22 +1,22 @@
 {
   "name": "warframestats",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "axios": "^1.7.7",
+    "axios": "^1.7.9",
     "body-parser": "^1.20.3",
     "cookie-parser": "^1.4.7",
     "debug": "^4.3.5",
-    "express": "^4.21.1",
+    "express": "^5.0.1",
     "express-jwt": "^8.4.1",
     "flatpickr": "^4.6.13",
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
-    "lodash": ">=4.17.21",
-    "mongoose": ">=8.8.3",
+    "lodash": "^4.17.21",
+    "mongoose": "^8.8.3",
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",

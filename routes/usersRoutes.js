@@ -3,6 +3,7 @@ const passport = require('passport');
 const router = require('express').Router();
 const auth = require('../config/jwt_auth').auth;
 const Users = mongoose.model('Users');
+const { obfuscate_email } = require('../api/utils/obfuscate');
 
 //POST new user route (optional, everyone has access)
 if (process.env.NODE_ENV !== 'production') {
@@ -69,7 +70,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 		if(passportUser) {
 			const user = passportUser;
 			user.token = passportUser.generateJWT();
-			console.log(new Date().toISOString()+" | User '"+user.email+"' logged.");
+			console.log(new Date().toISOString()+" | User '"+obfuscate_email(user.email)+"' logged.");
 			return res.json({ user: user.toAuthJSON() });
 		}
 
@@ -134,7 +135,7 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
 			// Cookie access token and connexion management
 			req.app.locals.connected = true;    // For PUG templates
 			res.cookie('access_token', user.token, { httpOnly: true, maxAge: 600000}); // 10 min
-			console.log(new Date().toISOString()+" | User '"+user.email+"' logged.");
+			console.log(new Date().toISOString()+" | User '"+obfuscate_email(user.email)+"' logged.");
 			res.render('logged', { title: 'connected', connected: true, user: user.toAuthJSON() });
 			return;
 		}
@@ -153,7 +154,7 @@ router.get('/disconnect', auth.optional, function(req, res) {
 				}
 				req.app.locals.connected = false; // For PUG templates
 				res.clearCookie('access_token');
-				console.log(new Date().toISOString()+" | User '"+user.email+"' disconnected.");
+				console.log(new Date().toISOString()+" | User '"+obfuscate_email(user.email)+"' disconnected.");
 				res.render('disconnected', {title: 'Disconnect', user: user.toAuthJSON()});
 			});
 	} else {
