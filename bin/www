@@ -12,6 +12,7 @@ const fs = require('fs');
 
 const isHttp = process.env.HTTP === 'true';
 const isProd = process.env.NODE_ENV === 'production';
+const isDocker = process.env.DOCKER === 'true';
 
 /**
  * Get port from environment and store in Express.
@@ -54,7 +55,7 @@ if (!isHttp) {
  * Listen on provided port, on all network interfaces.
  */
 
-if (isHttp && isProd) { // localhost only
+if (isHttp && isProd && !isDocker) { // localhost only
   server.listen(port, '127.0.0.1');
 } else {
   server.listen(port);
