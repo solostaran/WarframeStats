@@ -37,4 +37,11 @@ UsersSchema.methods.toAuthJSON = function() {
     };
 };
 
+UsersSchema.methods.toInfoJSON = function() {
+    return {
+        _id: this._id,
+        email: this.email
+    };
+}
+
 mongoose.model('Users', UsersSchema);

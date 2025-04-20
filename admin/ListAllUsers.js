@@ -6,9 +6,8 @@ require('../api/models/Users');
 const Users = mongoose.model('Users');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/WarframeStatsDB', { useNewUrlParser: true });
 mongoose.set('debug', true);
-
+mongoose.connect('mongodb://localhost/WarframeStatsDB', {family:4})
 
 function listAllUsers(onFinish) {
     console.log('List of Users');
@@ -22,4 +21,4 @@ function listAllUsers(onFinish) {
     });
 }
 
-listAllUsers(() => mongoose.disconnect(() => process.exit(0)));
+listAllUsers(() => mongoose.disconnect());

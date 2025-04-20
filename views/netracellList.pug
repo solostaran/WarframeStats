@@ -1,0 +1,156 @@
+extends layout
+
+block append link
+	link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css")
+	link(rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.24.1/dist/bootstrap-table.min.css")
+	link(rel="stylesheet" href="/stylesheets/bootstrap-datepicker.min.css")
+
+block append scripts
+
+block content
+	script(nonce=nonce).
+		document.getElementById('nav-netra').classList.add('active');
+	// Netracell Modal View
+	div(class='modal fade' id='NetracellView' tabindex='-1' role='dialog' aria-labelledby='ViewNetracell' aria-hidden='true')
+		div(class='modal-dialog' role='document')
+			div(class='modal-content')
+				div(class='modal-header')
+					h4(class='modal-title') Netracell
+				div(class='container modal-body p-3')
+					form(method='post' id='modal-netracell-view' action='#')
+						div(class='row mb-3')
+							label(for='modal-netra-id' class='col-form-label') ID
+							input(id='modal-netra-id' class='form-control' name='_id' type='text' disabled=true)
+							label(for='modal-netra-type' class='col-form-label') Reward
+							input(id='modal-netra-type' class='form-control' name='reward' type='text' disabled=true)
+							label(for='modal-netra-tau' class='col-form-label') Tauforged
+							input(id='modal-netra-tau' class='form-control' name='tauforged' type='boolean' disabled=true)
+							label(for='modal-netra-date' class='col-form-label') Date
+							input(id='modal-netra-date' class='form-control' name='date' type='text' disabled=true)
+				div(class='modal-footer')
+					button(type='button' class='btn btn-secondary' data-bs-dismiss='modal' aria-label='Close') Close
+	// Netracell Modal Add form
+	div(class='modal fade' id='NetracellForm' tabindex='-1' role='dialog' aria-labelledby='ViewNetracell' aria-hidden='true')
+		div(class='modal-dialog' role='document')
+			div(class='modal-content')
+				div(class='modal-header')
+					h4(class='modal-title') Add Netracell
+				div(class='container modal-body p-3')
+					form(method='post' id='modal-netracell-form' action='/netracells/addForm')
+						div(class='row mb-3')
+							label(for='modal-form-type' class='col-form-label') Reward
+							select(id='modal-form-type' class='form-select' name='reward' aria-label="Choose reward" required)
+								option(value='none' selected) Choose reward
+								for type in types
+									option(value=type) #{type}
+							label(for='modal-form-tau' class='col-form-label') Tauforged
+							select(id='modal-form-tau' class='form-select' name='tauforged')
+								option(value="false" selected) false
+								option(value="true") true
+							div(id='modal-form-date-group' class='input-group date mt-2' data-provide='datepicker')
+								label(for='modal-form-date' class='col-form-label me-1') Date
+								input(id='modal-form-date' class='form-control me-1' name='date' type='text' required)
+								span(class='input-group-addon ms-1')
+									img(src='/images/date.svg' alt='date icon' aria-label='date icon' width='32' height='32')
+				div(class='modal-footer')
+					button(type='button' class='btn btn-secondary' data-bs-dismiss='modal' aria-label='Cancel') Cancel
+					button(type="button" class="btn btn-primary") Add Netracell
+	// Main View
+	div(class='container-lg')
+		div(class='row mt-1')
+			div(id='toolbar-title')
+				h4 List of Netracells
+				//button(type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#NetracellForm' data-bs-title='Add netracell') Add Netracell
+			table(id="table"
+				data-content-type="application/json"
+				data-toolbar="#toolbar-title"
+				data-url="/netracell/raw"
+				data-filter-control="true"
+				data-header-style="headerStyle"
+				data-row-style="rowStyle"
+				data-height="765"
+				data-pagination="true"
+				data-side-pagination="client"
+				data-pagination-loop="false"
+				data-page-list="[10, 20, 50, All]"
+				data-total-field="count"
+				data-data-field="items"
+				data-show-fullscreen="true"
+				data-show-search-clear-button="true"
+				data-buttons="buttons")
+				thead
+					tr
+						th(data-field="details" data-formatter="detailsFormatter" data-events="detailsEvents") Details
+						th(data-field="date" data-formatter="dateFormatter" data-sortable="true") Date
+						th(data-field="reward" data-filter-control="select") Reward
+						th(data-field="tauforged" data-filter-control="select") Tauforged
+				tbody(style='height: 10px !important; overflow-y: auto;')
+		script(src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js")
+		script(src="https://unpkg.com/bootstrap-table@1.24.1/dist/bootstrap-table.min.js")
+		script(src="https://unpkg.com/bootstrap-table@1.24.1/dist/extensions/filter-control/bootstrap-table-filter-control.min.js")
+		script(src="/javascripts/bootstrap-datepicker.min.js")
+		script(src="/javascripts/bootstrap-datepicker.fr.min.js")
+		script(src="/javascripts/form_netracell.js")
+		script(nonce=nonce, type='text/javascript').
+			let $table = $('#table');
+
+			function rowStyle(row, index) {
+				if (index % 2 === 0)
+					return {css: {'background': '#f0f0ff'}};
+				return {css: {'background': '#ffffff'}};
+			}
+
+			window.buttons = () => ({
+				btnNetraAdd: {
+					text: 'Add new netracell',
+					icon: 'bi-plus-lg',
+					event() {
+						//alert('Add netracell')
+					},
+					attributes: {
+						"title": "Add new netracell",
+						"data-bs-toggle": "modal",
+						"data-bs-target": "#NetracellForm",
+						"data-bs-title": "Add netracell"
+					}
+				}
+			})
+
+			function headerStyle(column) {
+				return {
+					'type.name': {
+						css: {background: '#f0f0ff'}
+					},
+					'details': {
+						css: {background: '#f0f0ff'}
+					},
+					'booster.name': {
+						css: {background: '#f0f0ff'}
+					}
+				}[column.field]
+			}
+
+			function detailsFormatter(value, row, index) {
+				return [
+					// '<a class="details-btn" href="javascript:void(0)" title="details">',
+					// '<i class="btn btn-outline-info">More info</i>',
+					// '</a>'
+					'<button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#NetracellView" data-bs-title="View netracell" data-netra-id="'+row._id+'" data-netra-reward="'+row.reward+'" data-netra-tau="'+row.tauforged+'" data-netra-date="'+row.date+'">Details</button>'
+				].join('');
+			};
+
+			function dateFormatter(value) {
+				return value.substring(0, 10);
+			}
+
+			window.detailsEvents = {
+				'click .btn-info': function (e, value, row, index) {
+					//alert('You click like action, row: ' + JSON.stringify(row));
+					//window.location.href = '/netracells/view/' + row._id;
+					//console.log("Click Details for "+JSON.stringify(row));
+				}
+			}
+
+			$(function () {
+				$table.bootstrapTable();
+			});

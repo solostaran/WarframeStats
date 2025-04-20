@@ -109,6 +109,7 @@ require('./api/models/rewardTypeModel');
 require('./api/models/rewardSourceModel');
 require('./api/models/rewardModel');
 require('./api/models/Users');
+require('./api/models/netracellModel');
 require('./config/passport');
 
 
@@ -125,6 +126,7 @@ app.use('/reward/source', require('./routes/rewardSourceRoutes'));
 app.use('/reward', require('./routes/rewardRoutes'));
 app.use('/users', require('./routes/usersRoutes'));
 app.use('/worldState', require('./routes/worldStateRoute'));
+app.use('/netracell', require('./routes/netracellRoutes'));
 
 /*
  * VIEWS
@@ -136,6 +138,7 @@ app.use('/conditions', require('./routes/conditionsRoutes'));
 app.use('/rivenForm', require('./routes/rivenFormRoute'));
 app.use('/rewardForm', require('./routes/rewardFormRoutes'));
 app.use('/boosters', require('./routes/boostersRoutes'));
+app.use('/netracells', require('./routes/netracellsRoutes'));
 app.use('/stats', require('./routes/statsRoutes'));
 
 // juste in case : app.get('/favicon.ico', (req, res) => res.status(204));
