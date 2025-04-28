@@ -6,9 +6,11 @@ const mongoose = require('mongoose'),
     RewardProcess = require('./rewardProcess'),
     RewardTypeProcess = require('./rewardTypeProcess'),
     RivenTypeProcess = require('./rivenTypeProcess'),
-    BoosterTypeProcess = require('./boosterTypeProcess');
+    BoosterTypeProcess = require('./boosterTypeProcess'),
+    NetracellProcess = require('./netracellRewardProcess'),
+    Netracell = mongoose.model("NetracellReward");
 
-const all_stats = function() {
+const sortie_stats = function() {
     return new Promise( async function(resolve, reject) {
         const rewardTypes = await RewardTypeProcess.list();
         Promise.all(
@@ -43,6 +45,26 @@ const booster = async function() {
     return {stats: stats, count: rewards.count};
 };
 
-exports.all_stats = all_stats;
+const netracell_stats = function() {
+    return new Promise( async function(resolve, reject) {
+        const netraType = await NetracellProcess.listTypes();
+        Promise.all(
+          netraType.map(nt => Netracell.countDocuments({'reward._id': nt._id}))
+        ).then(results => {
+            const totalCount = results.reduce((prev, current) => prev + current);
+            const list = _.zipWith(netraType, results, function (nt, count) { return { type: nt, count: count }; });
+            let finalList = {};
+            list.forEach(s => {
+                let stat = finalList[s.type.type];
+                if (stat) {finalList[s.type.type] = stat + s.count;}
+                else {finalList[s.type.type] = s.count;}
+            });
+            resolve({ listStats: finalList, totalCount: totalCount});
+        }).catch(err => { reject(err) });
+    });
+}
+
+exports.sortie_stats = sortie_stats;
 exports.riven = riven;
 exports.booster = booster;
+exports.netracell_stats = netracell_stats;

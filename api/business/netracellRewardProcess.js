@@ -170,4 +170,5 @@ exports.adds = adds;
 exports.findById = findById;
 exports.deleteOneById = deleteOneById;
 exports.deleteAll = deleteAll;
+exports.listTypes = listTypes;
 exports.setTypes = setTypes;
