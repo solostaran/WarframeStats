@@ -1,6 +1,6 @@
 ######### BASE STAGE
 
-FROM node:23.3.0-alpine AS base
+FROM node:23-alpine AS base
 LABEL authors="JRD"
 
 RUN apk -U upgrade
