@@ -10,9 +10,9 @@ jobs:
 
   build:
 
-    runs-on: node:23.3.0-alpine
+    runs-on: node:23-alpine
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag warstats-app:$(date +%s)
+    - name: Build docker image
+      run: docker build . --file Dockerfile.ci --tag warstats-app:$(date +%s)
