@@ -14,11 +14,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Setup nodejs
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: docker build . --file Dockerfile --tag warstats-app:$(date +%s)
+    - name: Build docker image
+      run: docker build . --file Dockerfile.ci --tag warstats-app:$(date +%s)
