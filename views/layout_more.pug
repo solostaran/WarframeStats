@@ -1,0 +1,80 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+    block link
+      link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css', integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65', crossorigin='anonymous')
+      link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css' integrity='sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD' crossorigin='anonymous')
+      //link(rel="stylesheet" href="/stylesheets/bootstrap-icons.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous")
+      link(rel='stylesheet' href='/stylesheets/bootstrap-table.min.css' integrity='sha384-tfNXB2/2SVNPdzoqPNMSl0hXmUVBnwOL4odQANKVfu66tA4jFcF+5Ch4nu1LtZAc' crossorigin='anonymous')
+      link(rel='stylesheet', href='/stylesheets/site.css')
+    block scripts
+      - const version = 2.0
+      script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js', integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4', crossorigin='anonymous')
+      script(src='/javascripts/jquery.min.js' integrity='sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs' crossorigin='anonymous')
+      script(src='/javascripts/bootstrap-table.min.js' integrity='sha384-FosO0uRIBBE+YnU4QBFaUk9aMjP2twHyeirpW+jjfqBlKU1Kp576zfju1cWNkx3g' crossorigin='anonymous')
+      script(src='/javascripts/bootstrap-table-filter-control.min.js' integrity='sha384-nbczi1V8J83olXDj+sgGeRn9PnInqFdQkUdO1s+sRbG966JaXt9fTyQ1iZwpFjHR' crossorigin='anonymous')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(charset='utf-8')
+  body
+    block body
+      nav(class='navbar navbar-expand-lg navbar-light')
+        div(class='row')
+          a(class='navbar-brand mx-1' href='#') WarframeStats
+            button(class='navbar-toggler ms-1', type='button', data-bs-toggle='collapse', data-bs-target='#navbarTogglerWS', aria-controls='navbarTogglerWS', aria-expanded='false', aria-label='Toggle navigation')
+              span(class='navbar-toggler-icon')
+        div(class='collapse navbar-collapse' id='navbarTogglerWS')
+          ul(class='nav nav-pills nav-fill')
+            li(class='nav-item dropdown' id='dropInfo')
+              a(class='nav-link dropdown-toggle' href='#' data-bs-toggle='dropdown') Informations
+              ul(class='dropdown-menu')
+                li(class='dropdown-item')
+                  a(class='nav-link', aria-current='page', href='/types', id='nav-rivtyp') Riven types
+                li(class='dropdown-item')
+                  a(class='nav-link', aria-current='page', href='/sources', id='nav-rivsrc') Riven sources
+                li(class='dropdown-item')
+                  a(class='nav-link', aria-current='page', href='/conditions', id='nav-rivcond') Riven conditions
+                li(class='dropdown-item')
+                  a(class='nav-link', aria-current='page', href='/boosters', id='nav-boosttyp') Booster types
+            li(class='nav-item')
+              a(class='nav-link', aria-current='page', href='/rivenForm', id='nav-rivform') Create riven
+            li(class='nav-item')
+              a(class='nav-link', aria-current='page', href='/rivenForm/list', id='nav-rivlist') List rivens
+            li(class='nav-item')
+              a(class='nav-link', aria-current='page', href='/rewardForm', id='nav-rewform') Create reward
+            li(class='nav-item')
+              a(class='nav-link', aria-current='page', href='/rewardForm/list', id='nav-rewlist') List rewards
+            li(class='nav-item')
+              a(class='nav-link', aria-current='page', href='/rewardForm/list2', id='nav-rewlist2')
+                svg(xmlns="http://www.w3.org/2000/svg" width=32 height=auto viewBox="0 0 12000 12000" preserveAspectRatio="xMidYMid meet")
+                  g(transform="translate(0.0,11000.0) scale(1, -1)" fill="#000000" stroke="none")
+                    path(d="M3886 9784 c-89 -21 -174 -71 -246 -144 -103 -104 -150 -217 -150 -365 0 -148 47 -261 150 -365 74 -75 157 -122 251 -145 95 -22 1892 -22 1987 0 134 32 248 113 324 229 108 167 108 396 0 562 -76 116 -191 198 -324 229 -92 21 -1902 21 -1992 -1z")
+                    path(d="M1230 9439 c-310 -41 -571 -166 -792 -378 -217 -208 -344 -436 -410 -734 l-23 -102 0 -3500 0 -3500 23 -102 c66 -298 194 -527 409 -733 196 -188 411 -302 686 -362 l102 -23 3675 0 3675 0 102 23 c298 66 527 194 733 409 188 196 302 411 362 686 l23 102 0 3500 0 3500 -23 102 c-61 276 -174 490 -362 686 -206 216 -438 345 -733 409 -92 20 -131 22 -407 23 l-305 0 -56 -26 c-79 -37 -133 -90 -171 -167 -29 -59 -33 -76 -33 -152 0 -76 4 -93 33 -152 38 -77 92 -130 171 -167 55 -26 60 -26 336 -32 215 -5 293 -10 338 -23 191 -54 354 -190 441 -368 83 -170 76 163 76 -3633 0 -3799 7 -3463 -77 -3635 -38 -79 -60 -109 -132 -181 -72 -72 -102 -94 -181 -132 -173 -84 185 -77 -3810 -77 -3995 0 -3637 -7 -3810 77 -79 38 -109 60 -181 132 -71 71 -94 102 -133 181 -83 169 -76 -159 -76 3635 0 3794 -7 3466 76 3635 84 171 256 314 440 366 46 13 122 18 339 23 l281 6 66 33 c77 38 130 92 167 171 22 47 26 70 26 141 0 71 -4 94 -26 141 -37 79 -90 133 -167 171 l-66 33 -271 2 c-148 0 -299 -3 -335 -8z")
+                    path(d="M1723 7305 c-75 -16 -168 -64 -228 -117 -170 -150 -215 -410 -107 -623 32 -64 143 -175 207 -207 112 -57 257 -74 371 -44 383 102 508 577 225 856 -127 126 -292 173 -468 135z")
+                    path(d="M3292 7163 c-55 -19 -147 -104 -177 -163 -54 -107 -52 -231 7 -343 37 -69 82 -111 158 -146 l55 -26 2370 0 2370 0 56 26 c72 34 134 96 168 168 23 49 26 69 26 156 0 81 -4 109 -22 147 -29 63 -96 134 -158 166 l-50 27 -2380 2 c-2103 1 -2385 0 -2423 -14z")
+                    path(d="M1718 5204 c-172 -41 -317 -176 -368 -341 -25 -81 -27 -216 -4 -294 49 -166 180 -299 342 -349 76 -24 202 -26 278 -6 383 102 508 577 225 856 -127 126 -303 176 -473 134z")
+                    path(d="M3292 5063 c-55 -19 -147 -104 -177 -163 -91 -179 -22 -396 153 -482 l67 -33 2370 0 2370 0 56 26 c72 34 134 96 168 168 23 49 26 69 26 156 0 81 -4 109 -22 147 -29 63 -96 134 -158 166 l-50 27 -2380 2 c-2103 1 -2385 0 -2423 -14z")
+                    path(d="M1731 3120 c-68 -15 -180 -72 -235 -121 -183 -163 -221 -448 -88 -655 242 -374 811 -282 922 150 24 93 25 137 6 227 -37 174 -167 322 -332 380 -68 23 -206 33 -273 19z")
+                    path(d="M3297 2975 c-21 -8 -56 -27 -76 -42 -217 -159 -184 -498 58 -612 l56 -26 2370 0 2370 0 55 26 c70 33 136 99 169 169 23 48 26 68 26 155 0 89 -3 106 -28 157 -17 34 -50 77 -82 106 -98 90 153 82 -2514 81 -2008 0 -2372 -3 -2404 -14z")
+            li(class='nav-item')
+              a(class='nav-link', aria-current='page', href='/netracells/list', id='nav-netra') Netracells
+            li(class='nav-item')
+              a(class='nav-link', aria-current='page', href='/stats', id='nav-stats') Stats
+            li(class='nav-item')
+              a(class='nav-link', aria-current='page', href='https://hub.warframestat.us/', id='nav-wstate') World State
+            li(class='nav-item')
+              if (connected === true)
+                a(class='nav-link', aria-current='page', href='/users/disconnect')
+                  svg(xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512" width=32 height=auto)
+                    circle(fill="#EF4136" transform="rotate(45 -181.019 437.02) scale(3.28877)" r="77.84")
+                    path(fill="#fff" d="m162.03 311.94-28.73 28.73 39.61 39.62 29.11-29.12c30.83 25.41 60.09 27.74 87.12 18.45L143.65 224.13c-9.12 26.74-6.66 55.93 18.38 87.81zm-31.46-150.11c-6.42-6.42-6.42-16.83 0-23.25 6.42-6.42 16.83-6.42 23.25 0l27.22 27.22c9.99-11.21 20.7-21.87 30.85-32.03l21.7 21.69 49.46-49.45c8.33-8.34 21.98-8.34 30.32 0 8.33 8.33 8.33 21.98 0 30.31l-49.47 49.47 63.1 63.09 49.46-49.46c8.34-8.34 21.98-8.34 30.32 0s8.33 21.98 0 30.31l-49.47 49.46 22.5 22.5c-10 10-20.74 20.7-32.14 30.74L375 359.76c6.42 6.41 6.42 16.83 0 23.25-6.42 6.41-16.84 6.41-23.25 0L130.57 161.83z")
+              else
+                a(class='nav-link', aria-current='page', href='/users/loginForm', id='nav-login')
+                  svg(xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512" width=32 height=auto)
+                    circle(fill="#01A437" transform="rotate(45 -181.019 437.02) scale(3.28877)" r="77.84")
+                    path(fill="#fff" d="m162.27 317.75-30.92 30.65 39.62 39.61 31.29-31.03c69.87 57.6 131.69-3.38 177.78-49.48L357.55 285l49.47-49.45c8.33-8.33 8.33-21.98 0-30.32-8.34-8.34-21.99-8.33-30.32 0l-49.46 49.46-63.1-63.09 49.46-49.47c8.34-8.33 8.34-21.98 0-30.31-8.34-8.34-21.98-8.34-30.32 0l-49.46 49.46-21.69-21.7c-47.36 47.36-106.64 105.87-49.86 178.17z")
+      section(id='pageContent')
+        block content
+      footer(class='page-footer fixed-bottom' background-color='#e9e9f9')
+        div(class='container-fluid py-0' height='50px')
+          p(class='col text-end footer-text') v#{version} croopyrite jojo

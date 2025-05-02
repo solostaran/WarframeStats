@@ -1,10 +1,4 @@
-extends layout
-
-block append link
-	link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous")
-	link(rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.24.1/dist/bootstrap-table.min.css" integrity="sha384-tfNXB2/2SVNPdzoqPNMSl0hXmUVBnwOL4odQANKVfu66tA4jFcF+5Ch4nu1LtZAc" crossorigin="anonymous")
-
-block append scripts
+extends layout_more
 
 block content
 	script(nonce=nonce).
@@ -38,9 +32,6 @@ block content
 						th(data-field="type.name" data-filter-control="select") Type
 						th(data-field="weaponName" data-filter-control="input") Weapon name
 				tbody(style='height: 10px !important; overflow-y: auto;')
-		script(src="/javascripts/jquery.min.js" integrity="sha384-apfJm2DWye6itJXDari7QfgbBXzkNeRsr1xgTfEH0SCvYV+NlzqP+MkX/LHMZIPI" crossorigin="anonymous")
-		script(src="/javascripts/bootstrap-table.min.js" integrity="sha384-RzTQgB68/fm4vMToK8E0TUFrz19vvf/rE1U/SPU9Y3AVCYslx71YguRa8ZVnXHGF" crossorigin="anonymous")
-		script(src="/javascripts/bootstrap-table-filter-control.min.js" integrity="sha384-M2XjaOUdW77fyUVi9FWWgI2AebCp7oNx8HMDQjg4fH2af+BBosEYx0v/jPaDpRZE" crossorigin="anonymous")
 		script(nonce=nonce, type='text/javascript').
 			let $table = $('#table');
 

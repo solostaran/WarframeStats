@@ -1,12 +1,10 @@
-extends layout
+extends layout_more
 
 block append link
-	link(rel='stylesheet' href='/stylesheets/jquery-ui.css' integrity="sha384-AUxBc4TYOEuk4Hp24650vW1R1zXkuFE8IK5cgdi5qyXRKuc1Xx2ndBiefujL0Qho" crossorigin="anonymous")
+	link(rel='stylesheet' href='/stylesheets/jquery-ui.css' integrity='sha384-AUxBc4TYOEuk4Hp24650vW1R1zXkuFE8IK5cgdi5qyXRKuc1Xx2ndBiefujL0Qho' crossorigin='anonymous')
 
 block append scripts
-	script(src="/javascripts/jquery.min.js" integrity="sha384-apfJm2DWye6itJXDari7QfgbBXzkNeRsr1xgTfEH0SCvYV+NlzqP+MkX/LHMZIPI" crossorigin="anonymous")
-	//script(src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js")
-	script(src='https://code.jquery.com/ui/1.13.1/jquery-ui.js' integrity="sha384-KUSBBRKMO05pX3xNidXAX5N1p4iNwntmhHY4iugl7mINOyOXFL4KZWceJtMj7M0A" crossorigin="anonymous")
+	script(src='https://code.jquery.com/ui/1.13.1/jquery-ui.js' integrity='sha384-KUSBBRKMO05pX3xNidXAX5N1p4iNwntmhHY4iugl7mINOyOXFL4KZWceJtMj7M0A' crossorigin='anonymous')
 	script(nonce=nonce, type='text/javascript').
 		const totalCount = #{totalCount};
 	script(src='/javascripts/rewardListScripts.js')
