@@ -76,6 +76,7 @@ router.post('/list2', auth.optional, function(req, res) {
 });
 
 router.get('/list2', auth.optional, function(req, res) {
+	req.body = {};
 	provideRewardList(req, res);
 });
 

@@ -73,7 +73,7 @@ app.use(function(_req, res, next) {
 	// and https://www.npmjs.com/package/helmet-csp
 	res.locals.nonce = crypto.randomBytes(16).toString("hex");
 	res.setHeader('X-Content-Type-Options', 'nosniff');
-	res.setHeader('Content-Security-Policy', `default-src 'self' ; img-src 'self' data: https://code.jquery.com ; style-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'nonce-${res.locals.nonce}' ; font-src https://cdn.jsdelivr.net ; object-src 'none' ; frame-ancestors 'self'`);
+	res.setHeader('Content-Security-Policy', `default-src 'self' ; img-src 'self' data: https://code.jquery.com ; style-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'nonce-${res.locals.nonce}' ; font-src 'self' https://cdn.jsdelivr.net ; object-src 'none' ; frame-ancestors 'self'`);
 	//res.setHeader('Content-Security-Policy', `default-src 'self' ; img-src 'self' data: https://code.jquery.com ; style-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; font-src https://cdn.jsdelivr.net ; object-src 'none' ; frame-ancestors 'self'`);
 	// CSP directive "img-src data:" may be vulnerable to XSS !
 	// CSP directive "style-src 'unsafe-inline'" must be explored, but it depends on the 'bootstrap-table' module.
