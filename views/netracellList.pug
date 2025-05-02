@@ -1,9 +1,9 @@
 extends layout
 
 block append link
-	link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css")
-	link(rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.24.1/dist/bootstrap-table.min.css")
-	link(rel="stylesheet" href="/stylesheets/bootstrap-datepicker.min.css")
+	link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous")
+	link(rel="stylesheet" href="/stylesheets/bootstrap-table.min.css" integrity="sha384-26IGhjstuRk+Ig1Eqyd9W32iqUwAGRS/sHXTzEWH2ePjUsGh+CcHwdXhUKHLtHlL" crossorigin="anonymous")
+	link(rel="stylesheet" href="/stylesheets/bootstrap-datepicker.min.css" integrity="sha384-zvbUuMKPgCSuct40UkVd6HUYDuFhKBSPkU7uldv0n0/7lkeeh7E9Y3y5XrZ47WAu" crossorigin="anonymous")
 
 block append scripts
 
@@ -85,12 +85,12 @@ block content
 						th(data-field="reward" data-filter-control="select") Reward
 						th(data-field="tauforged" data-filter-control="select") Tauforged
 				tbody(style='height: 10px !important; overflow-y: auto;')
-		script(src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js")
-		script(src="https://unpkg.com/bootstrap-table@1.24.1/dist/bootstrap-table.min.js")
-		script(src="https://unpkg.com/bootstrap-table@1.24.1/dist/extensions/filter-control/bootstrap-table-filter-control.min.js")
-		script(src="/javascripts/bootstrap-datepicker.min.js")
-		script(src="/javascripts/bootstrap-datepicker.fr.min.js")
-		script(src="/javascripts/form_netracell.js")
+		script(src="/javascripts/jquery.min.js" integrity="sha384-apfJm2DWye6itJXDari7QfgbBXzkNeRsr1xgTfEH0SCvYV+NlzqP+MkX/LHMZIPI" crossorigin="anonymous")
+		script(src="/javascripts/bootstrap-table.min.js" integrity="sha384-RzTQgB68/fm4vMToK8E0TUFrz19vvf/rE1U/SPU9Y3AVCYslx71YguRa8ZVnXHGF" crossorigin="anonymous")
+		script(src="/javascripts/bootstrap-table-filter-control.min.js" integrity="sha384-M2XjaOUdW77fyUVi9FWWgI2AebCp7oNx8HMDQjg4fH2af+BBosEYx0v/jPaDpRZE" crossorigin="anonymous")
+		script(src="/javascripts/bootstrap-datepicker.min.js" integrity="sha384-UfFXrLCKnPSgs5ztfw3VlXcuPOJzCyMzC8PeaIYBbPYaUFLsy7Aqp4goZLx/KCic" crossorigin="anonymous")
+		script(src="/javascripts/bootstrap-datepicker.fr.min.js" integrity="sha384-0QYShvU8+CrUwWRv5soLL/H+9wcwZLBj/F+0l2U1jwetUpy+beDjuDRzKylb7UFH" crossorigin="anonymous")
+		script(src="/javascripts/form_netracell.js" integrity="sha384-41IgYrUD9lyeeeexDDH4FnAsnP4/41rzwlboX39nz0g0ElHISFileyP6yj32Uv3C" crossorigin="anonymous")
 		script(nonce=nonce, type='text/javascript').
 			let $table = $('#table');
 

@@ -1,4 +1,5 @@
 const NetracellView = $('#NetracellView');
+// Replace field with data from the in memory table passed as attributes
 NetracellView.on('show.bs.modal', event => {
 	let btn = event.relatedTarget;
 	NetracellView.find('.modal-title').html(btn.getAttribute('data-bs-title'));
@@ -9,6 +10,13 @@ NetracellView.on('show.bs.modal', event => {
 	NetracellView.find('.modal-body input#modal-netra-tau').val(tau === 'undefined' ? false : tau);
 	NetracellView.find('.modal-body input#modal-netra-date').val(btn.getAttribute('data-netra-date').substring(0, 10));
 });
+// Avoid the error "blocked aria-hidden on an element because its descendant retained focus"
+// here focus is on the button in the modal
+NetracellView.on('hide.bs.modal', event => {
+	if (document.activeElement) {
+		document.activeElement.blur();
+	}
+});
 $('#NetracellForm .input-group.date').datepicker({
 	format: "yyyy-mm-dd",
 	startView: 0,
@@ -18,6 +26,7 @@ $('#NetracellForm .input-group.date').datepicker({
 	language: "fr"
 });
 const NetracellForm = $('#NetracellForm');
+// Form validation
 NetracellForm.on('click', '.btn-primary', event => {
 	const nform = $('form#modal-netracell-form');
 	const reward = NetracellForm.find('.modal-body select#modal-form-type').val();
