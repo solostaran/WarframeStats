@@ -4,16 +4,16 @@ const express = require('express');
 const app = express();
 
 const mongoose = require('mongoose'),
-	BoosterType = require('./api/models/boosterTypeModel'),
-	RivenType = require('./api/models/rivenTypeModel'),
-	RivenSource = require('./api/models/rivenSourceModel'),
-	RivenCondition = require('./api/models/rivenConditionModel'),
-	Riven = require('./api/models/rivenModel'),
-	RewardType = require('./api/models/rewardTypeModel'),
-	RewardSource = require('./api/models/rewardSourceModel'),
-	Reward = require('./api/models/rewardModel'),
-	sortieReward = require('./api/business/rewardProcess'),
-	convertDates = require('./api/utils/convertDates'),
+	BoosterType = require('../api/models/boosterTypeModel'),
+	RivenType = require('../api/models/rivenTypeModel'),
+	RivenSource = require('../api/models/rivenSourceModel'),
+	RivenCondition = require('../api/models/rivenConditionModel'),
+	Riven = require('../api/models/rivenModel'),
+	RewardType = require('../api/models/rewardTypeModel'),
+	RewardSource = require('../api/models/rewardSourceModel'),
+	Reward = require('../api/models/rewardModel'),
+	sortieReward = require('../api/business/rewardProcess'),
+	convertDates = require('../api/utils/convertDates'),
 	bodyParser = require('body-parser'),
 	logger = require('morgan');
 
