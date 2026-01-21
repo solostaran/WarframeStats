@@ -95,17 +95,22 @@ block content
 				return {css: {'background': '#ffffff'}};
 			}
 
+			const isLoggedIn = #{isLoggedIn};
+			console.log("netracell loggedin=" + isLoggedIn );
 			window.buttons = () => ({
 				btnNetraAdd: {
 					text: 'Add new netracell',
 					icon: 'bi-plus-lg',
 					event() {
-						//alert('Add netracell')
+						if (isLoggedIn === false) {
+							alert('You must be logged in to perform this action');
+							return false;
+						}
 					},
 					attributes: {
 						"title": "Add new netracell",
 						"data-bs-toggle": "modal",
-						"data-bs-target": "#NetracellForm",
+						"data-bs-target": (isLoggedIn === true ? "#NetracellForm" : ""),
 						"data-bs-title": "Add netracell"
 					}
 				}
