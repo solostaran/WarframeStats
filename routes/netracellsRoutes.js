@@ -10,10 +10,12 @@ const NetracellProcess = require('../api/business/netracellRewardProcess'),
 // SERVER MEMORY CACHE
 const { netracellRewardTypes }  = require('../api/models/netracellModel');
 
+
 router.get('/list', auth.optional, function(req, res) {
 	res.render('netracellList', {
 		date2string: convertDates.date2string,
-		types: netracellRewardTypes
+		types: netracellRewardTypes,
+		isLoggedIn: (req.app.locals.connected ? req.app.locals.connected : false)
 	});
 });
 
@@ -29,7 +31,8 @@ router.post('/addForm', auth.required, function(req, res) {
 		.then(ret => {
 			res.render('netracellList', {
 				date2string: convertDates.date2string,
-				types: netracellRewardTypes
+				types: netracellRewardTypes,
+				isLoggedIn: (req.app.locals.connected ? req.app.locals.connected : false)
 			});
 		}).catch(err => res.status(500).send(err));
 });

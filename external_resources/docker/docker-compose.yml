@@ -1,0 +1,51 @@
+services:
+  mongo-warstats:
+    container_name: mongo-warstats-run
+    image: mongo-warstats
+    restart: unless-stopped
+    volumes:
+      - "./volumes/db:/data/db"
+      - "./volumes/backup-db:/data/backup"
+#    ports:
+#      - "127.0.0.1:27017:27017"
+    build:
+      context: ./mongo-warstats
+      dockerfile: Dockerfile
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      warstats-network:
+        aliases:
+            - net-db-warstats
+  app-warstats:
+    depends_on:
+      mongo-warstats:
+        condition: service_healthy
+    container_name: app-warstats-run
+    image: app-warstats
+#    restart: always
+    restart: on-failure:2
+    build:
+      context: ./app-warstats
+      dockerfile: Dockerfile
+      args:
+        progress: plain
+    networks:
+      warstats-network:
+        aliases:
+          - net-app-warstats
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DOCKER=true
+      - DEBUG=warframestats:*
+      - HTTP=true
+    links:
+      - mongo-warstats
+networks:
+  warstats-network:
+    driver: bridge

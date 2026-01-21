@@ -102,6 +102,7 @@ router.get('/loginForm', auth.optional, function(_req, res) {
 });
 
 router.post('/loginFormProcess', auth.optional, function(req, res, next) {
+// router.post('/loginFormProcess', function(req, res, next) {
 	const { body: { user } } = req;
 
 	if(!user.email) {
