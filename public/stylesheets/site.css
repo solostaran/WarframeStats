@@ -1,12 +1,90 @@
+/* Site colors, switched by the Bootstrap color mode (data-bs-theme is set by /javascripts/theme.js) */
+:root, [data-bs-theme=light] {
+    --ws-nav-bg: #e9e9ff;
+    --ws-nav-hover-bg: #d0d0f0;
+    --ws-alt-bg: #f0f0ff;
+}
+
+[data-bs-theme=dark] {
+    --ws-nav-bg: #26263a;
+    --ws-nav-hover-bg: #3a3a5c;
+    --ws-alt-bg: #2a2a40;
+}
+
 .nav-item>a:focus, .nav-item>a:hover {
-    background-color: #d0d0f0;
+    background-color: var(--ws-nav-hover-bg);
 }
 
 .navbar {
-    background: #e9e9ff;
+    background: var(--ws-nav-bg);
+}
+
+/* Dark/light button of the navbar : the icon shows the mode a click switches to */
+.theme-toggle {
+    color: var(--bs-body-color);
+    line-height: 1;
+}
+
+.theme-toggle:hover, .theme-toggle:focus-visible {
+    background-color: var(--ws-nav-hover-bg);
+}
+
+[data-bs-theme=light] .theme-icon-to-light,
+[data-bs-theme=dark] .theme-icon-to-dark {
+    display: none;
 }
 
 .footer-text {
-    color: #808080;
+    color: var(--bs-secondary-color);
     font-style: italic;
+}
+
+/* Tinted table row (on a tr) or header cell (on a th). Since Bootstrap 5.3 table cells are painted with --bs-table-bg. */
+.ws-alt {
+    --bs-table-bg: var(--ws-alt-bg);
+}
+
+/* bootstrap-table has no color mode support : replace its hard-coded light colors */
+.bootstrap-table.fullscreen,
+.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading {
+    background: var(--bs-body-bg);
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .animation-dot,
+.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .animation-wrap::after,
+.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .animation-wrap::before {
+    background: var(--bs-body-color);
+}
+
+.bootstrap-table .fixed-table-container.fixed-height:not(.has-footer) {
+    border-bottom-color: var(--bs-border-color);
+}
+
+.bootstrap-table .fixed-table-container.fixed-height .fixed-table-border {
+    border-left-color: var(--bs-border-color);
+    border-right-color: var(--bs-border-color);
+}
+
+.bootstrap-table .fixed-table-container.fixed-height .table thead th {
+    border-bottom-color: var(--bs-border-color);
+}
+
+/* bootstrap-datepicker : same thing, only needed in dark mode */
+[data-bs-theme=dark] .datepicker-dropdown:after {
+    border-bottom-color: var(--bs-body-bg);
+}
+
+[data-bs-theme=dark] .datepicker-dropdown.datepicker-orient-top:after {
+    border-top-color: var(--bs-body-bg);
+}
+
+[data-bs-theme=dark] .datepicker table tr td.day:not(.today):not(.active):not(.selected).focused,
+[data-bs-theme=dark] .datepicker table tr td.day:not(.today):not(.active):not(.selected):hover,
+[data-bs-theme=dark] .datepicker table tr td span:not(.active).focused,
+[data-bs-theme=dark] .datepicker table tr td span:not(.active):hover,
+[data-bs-theme=dark] .datepicker .datepicker-switch:hover,
+[data-bs-theme=dark] .datepicker .next:hover,
+[data-bs-theme=dark] .datepicker .prev:hover,
+[data-bs-theme=dark] .datepicker tfoot tr th:hover {
+    background: var(--bs-secondary-bg);
 }

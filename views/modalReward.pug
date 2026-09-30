@@ -5,10 +5,9 @@ mixin modal(title,id)
 			div(class='modal-content')
 				div(class='modal-header')
 					h5(class='modal-title' id='modalrew-label') Modal Title
-					button(type='button' class='close' data-dismiss='modal' aria-label='Close')
-						span(aria-hidden='true') &times;
+					button(type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close')
 				div(class='modal-body')
 					p My body here !
 				div(class='modal-footer')
-					button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
+					button(type="button" class="btn btn-secondary" data-bs-dismiss="modal") Close
 					button(type="button" class="btn btn-primary") Save changes

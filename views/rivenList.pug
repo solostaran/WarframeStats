@@ -37,20 +37,20 @@ block content
 
 			function rowStyle(row, index) {
 				if (index % 2 === 0)
-					return {css: {'background': '#f0f0ff'}};
-				return {css: {'background': '#ffffff'}};
+					return {classes: 'ws-alt'};
+				return {};
 			}
 
 			function headerStyle(column) {
 				return {
 					'type.name': {
-						css: {background: '#f0f0ff'}
+						classes: 'ws-alt'
 					},
 					'details': {
-						css: {background: '#f0f0ff'}
+						classes: 'ws-alt'
 					},
 					'booster.name': {
-						css: {background: '#f0f0ff'}
+						classes: 'ws-alt'
 					}
 				}[column.field]
 			}
