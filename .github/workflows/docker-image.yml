@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    runs-on: node:23-alpine
+    runs-on: node:26-alpine3.24
 
     steps:
     - uses: actions/checkout@v4

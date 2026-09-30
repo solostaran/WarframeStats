@@ -1,6 +1,6 @@
 ######### BASE STAGE
 
-FROM node:25.4-alpine3.23 AS base
+FROM node:26-alpine3.24 AS base
 LABEL authors="JRD"
 
 RUN apk -U upgrade
@@ -13,7 +13,7 @@ FROM base AS build
 
 #WORKDIR /home/node
 RUN apk add --update --no-cache python3 build-base gcc && ln -sf /usr/bin/python3 /usr/bin/python
-RUN npm install -g npm@11.7.0
+#RUN npm install -g npm@11.7.0
 WORKDIR /home/node/WarframeStats
 COPY package*.json .
 #RUN git clone https://github.com/solostaran/WarframeStats.git

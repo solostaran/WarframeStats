@@ -1,4 +1,4 @@
-FROM mongo:8.0.3
+FROM mongo:8.0-noble
 
 # first possibility : copying db into container (careful, this does not persist)
 #COPY ./mongodb-warframestats-prod /data/db
