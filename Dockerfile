@@ -11,14 +11,12 @@ FROM base AS build
 
 #RUN apk add git
 
-#WORKDIR /home/node
-RUN apk add --update --no-cache python3 build-base gcc && ln -sf /usr/bin/python3 /usr/bin/python
 #RUN npm install -g npm@11.7.0
 WORKDIR /home/node/WarframeStats
-COPY package*.json .
+COPY package*.json ./
 #RUN git clone https://github.com/solostaran/WarframeStats.git
 #RUN git checkout -b develop
-RUN npm install --production
+RUN npm ci --omit=dev
 
 ######### PRODUCTION STAGE
 
@@ -26,16 +24,15 @@ FROM base AS prod
 
 RUN apk add curl
 
-COPY --from=build /home/node/WarframeStats /home/node/WarframeStats
 WORKDIR /home/node/WarframeStats
-COPY app.js .
-COPY api/ api/
-COPY bin/ bin/
-COPY config/ config/
-COPY public/ public/
-COPY routes/ routes/
-COPY views/ views/
-RUN chown -R node /home/node/WarframeStats
+COPY --chown=node:node --from=build /home/node/WarframeStats ./
+COPY --chown=node:node app.js .
+COPY --chown=node:node api/ api/
+COPY --chown=node:node bin/ bin/
+COPY --chown=node:node config/ config/
+COPY --chown=node:node public/ public/
+COPY --chown=node:node routes/ routes/
+COPY --chown=node:node views/ views/
 USER node
 
 EXPOSE 3000
