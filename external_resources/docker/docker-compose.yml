@@ -22,19 +22,17 @@ services:
       warstats-network:
         aliases:
             - net-db-warstats
+  # Image built by GitHub Actions (.github/workflows/docker-image.yml).
+  # Update : docker compose pull app-warstats && docker compose up -d app-warstats
+  # Try a develop build or roll back : replace "latest" by "develop" or a "sha-xxxxxxx" tag
   app-warstats:
     depends_on:
       mongo-warstats:
         condition: service_healthy
     container_name: app-warstats-run
-    image: app-warstats
+    image: ghcr.io/solostaran/warframestats:latest
 #    restart: always
     restart: on-failure:2
-    build:
-      context: ./app-warstats
-      dockerfile: Dockerfile
-      args:
-        progress: plain
     networks:
       warstats-network:
         aliases:
