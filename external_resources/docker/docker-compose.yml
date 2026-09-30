@@ -12,10 +12,12 @@ services:
       context: ./mongo-warstats
       dockerfile: Dockerfile
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 5s
-      timeout: 5s
+      test: ["CMD", "mongosh", "--quiet", "--norc", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 10s
       retries: 5
+      start_period: 90s
+      start_interval: 2s
     networks:
       warstats-network:
         aliases:
