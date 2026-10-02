@@ -1,0 +1,106 @@
+extends layout_more
+include mixins/formModal
+include mixins/detailsModal
+
+block append scripts
+	script(src='/javascripts/formModal.js' integrity='sha384-nmxQl4eDOmEos/O7rTtI98veAW9U243hp8FeqW0RatfhUt8ys4qM+43sMLj6d8j/' crossorigin='anonymous')
+	script(src='/javascripts/detailsModal.js' integrity='sha384-PogRwI2l6/fvDqmGcFlx9e2z3JFuyix4K7pVcc05dEz8kM2SIjIEJDhv7D6MtGzG' crossorigin='anonymous')
+
+block content
+	script(nonce=nonce).
+		document.getElementById('nav-rivens').classList.add('active');
+
+	+formModal(form)
+	+detailsModal()
+
+	div(class='container-lg')
+		div(class='row mt-1')
+			div(id="toolbar-title")
+				h3 List of Rivens
+			table(id="table"
+				data-content-type="application/json"
+				data-toolbar="#toolbar-title"
+				data-url="/riven/"
+				data-filter-control="true"
+				data-header-style="headerStyle"
+				data-row-style="rowStyle"
+				data-height="765"
+				data-pagination="true"
+				data-side-pagination="client"
+				data-pagination-loop="false"
+				data-page-list="[10, 20, 50, All]"
+				data-total-field="count"
+				data-data-field="items"
+				data-show-fullscreen="true"
+				data-show-search-clear-button="true"
+				data-buttons="buttons")
+				thead
+					tr
+						th(data-field="details" data-formatter="detailsFormatter" data-events="detailsEvents") Details
+						th(data-field="source.name" data-filter-control="select") Source
+						th(data-field="type.name" data-filter-control="select") Type
+						th(data-field="weaponName" data-filter-control="input") Weapon name
+				tbody(style='height: 10px !important; overflow-y: auto;')
+		script(nonce=nonce, type='text/javascript').
+			let $table = $('#table');
+			const isLoggedIn = #{isLoggedIn === true};
+			const editDays = #{form.editDays}; // a record can only be edited during this period after its creation
+
+			window.buttons = () => ({
+				btnRivenAdd: {
+					text: 'Add a riven',
+					icon: 'bi-plus-lg',
+					event() {
+						if (!isLoggedIn) {
+							alert('You must be logged in to perform this action');
+							return;
+						}
+						formModal.create('riven');
+					},
+					attributes: { title: 'Add a riven' }
+				}
+			});
+
+			document.addEventListener('formmodal:saved', () => $table.bootstrapTable('refresh'));
+
+			function rowStyle(row, index) {
+				if (index % 2 === 0)
+					return {classes: 'ws-alt'};
+				return {};
+			}
+
+			function headerStyle(column) {
+				return {
+					'type.name': {
+						classes: 'ws-alt'
+					},
+					'details': {
+						classes: 'ws-alt'
+					}
+				}[column.field]
+			}
+
+			function canEdit(row) {
+				return isLoggedIn && Boolean(row.Created_date)
+					&& Date.now() - Date.parse(row.Created_date) <= editDays * 24 * 60 * 60 * 1000;
+			}
+
+			// static buttons : no row data in the HTML, the row is given to the click events
+			function detailsFormatter(value, row, index) {
+				const info = '<button type="button" class="btn btn-outline-info btn-sm details-btn">More info</button>';
+				if (!canEdit(row)) return info;
+				return info + ' <button type="button" class="btn btn-outline-edit btn-sm ms-1 edit-btn">Edit</button>';
+			}
+
+			window.detailsEvents = {
+				'click .details-btn': function (e, value, row, index) {
+					detailsModal.show('riven', row._id);
+				},
+				'click .edit-btn': function (e, value, row, index) {
+					formModal.edit('riven', row._id);
+				}
+			}
+
+			$(function () {
+				$table.bootstrapTable();
+			});

@@ -88,3 +88,19 @@
 [data-bs-theme=dark] .datepicker tfoot tr th:hover {
     background: var(--bs-secondary-bg);
 }
+
+/* "Edit" buttons : a light red outline, the counterpart of the light blue "btn-outline-info" of "More info" */
+.btn-outline-edit {
+    --bs-btn-color: #e5737f;
+    --bs-btn-border-color: #e5737f;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #e5737f;
+    --bs-btn-hover-border-color: #e5737f;
+    --bs-btn-focus-shadow-rgb: 229, 115, 127;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: #e5737f;
+    --bs-btn-active-border-color: #e5737f;
+    --bs-btn-disabled-color: #e5737f;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #e5737f;
+}

@@ -1,0 +1,129 @@
+extends layout_more
+include mixins/formModal
+include mixins/detailsModal
+
+block append scripts
+	script(src='/javascripts/formModal.js' integrity='sha384-nmxQl4eDOmEos/O7rTtI98veAW9U243hp8FeqW0RatfhUt8ys4qM+43sMLj6d8j/' crossorigin='anonymous')
+	script(src='/javascripts/detailsModal.js' integrity='sha384-PogRwI2l6/fvDqmGcFlx9e2z3JFuyix4K7pVcc05dEz8kM2SIjIEJDhv7D6MtGzG' crossorigin='anonymous')
+
+block content
+	script(nonce=nonce).
+		document.getElementById('nav-rewards').classList.add('active');
+
+	+formModal(form)
+	+detailsModal()
+
+	div(class='container-fluid')
+		div(class='row')
+			div(id="toolbar-title")
+				h3 Rewards from Sortie or Archon's Hunt
+			table(id="table"
+				data-content-type="application/json"
+				data-toolbar="#toolbar-title"
+				data-url="/reward/raw"
+				data-filter-control="true"
+				data-header-style="headerStyle"
+				data-row-style="rowStyle"
+				data-height="765"
+				data-pagination="true"
+				data-side-pagination="client"
+				data-pagination-loop="false"
+				data-page-list="[10, 20, 50, All]"
+				data-total-field="count"
+				data-data-field="items"
+				data-show-fullscreen="true"
+				data-show-search-clear-button="true"
+				data-response-handler="responseHandler"
+				data-buttons="buttons")
+				thead
+					tr
+						th(data-field="details" data-formatter="detailsFormatter" data-events="detailsEvents") Details
+						th(data-field="date" data-formatter="dateFormatter" data-sortable="true") Date
+						th(data-field="type.name" data-filter-control="select") Type
+						th(data-field="source.name" data-filter-control="select") Source
+						// a fusion of Boosters and Rivens, computed by responseHandler
+						th(data-field="additionalInfo" data-filter-control="select" data-sortable="true") Additional information
+		script(nonce=nonce, type='text/javascript').
+			let $table = $('#table');
+			const isLoggedIn = #{isLoggedIn === true};
+			const editDays = #{form.editDays}; // a record can only be edited during this period after its creation
+
+			window.buttons = () => ({
+				btnRewardAdd: {
+					text: 'Add a reward',
+					icon: 'bi-plus-lg',
+					event() {
+						if (!isLoggedIn) {
+							alert('You must be logged in to perform this action');
+							return;
+						}
+						formModal.create('reward');
+					},
+					attributes: { title: 'Add a reward' }
+				}
+			});
+
+			document.addEventListener('formmodal:saved', () => $table.bootstrapTable('refresh'));
+
+			function rowStyle(row, index) {
+				if (index % 2 === 0)
+					return { classes: 'ws-alt' };
+				return {};
+			}
+
+			function headerStyle(column) {
+				return {
+					'type.name': {
+						classes: 'ws-alt'
+					},
+					'details': {
+						classes: 'ws-alt'
+					},
+					'additionalInfo': {
+						classes: 'ws-alt'
+					}
+				}[column.field]
+			}
+
+			function canEdit(row) {
+				return isLoggedIn && Boolean(row.Created_date)
+					&& Date.now() - Date.parse(row.Created_date) <= editDays * 24 * 60 * 60 * 1000
+					&& !row.riven; // a reward linked to an unveiled riven cannot be edited here
+			}
+
+			// static buttons : no row data in the HTML, the row is given to the click events
+			function detailsFormatter(value, row, index) {
+				const info = '<button type="button" class="btn btn-outline-info btn-sm details-btn">More info</button>';
+				if (!canEdit(row)) return info;
+				return info + ' <button type="button" class="btn btn-outline-edit btn-sm ms-1 edit-btn">Edit</button>';
+			}
+
+			// the "Additional information" column : booster or riven type, as a real field (filter and sort)
+			function additionalInfo(row) {
+				if (row.booster) return row.booster.name;
+				if (row.rivenType) return row.rivenType.name;
+				return '-';
+			}
+
+			function responseHandler(res) {
+				const rows = Array.isArray(res) ? res : (res && res.items) || [];
+				rows.forEach(row => { row.additionalInfo = additionalInfo(row); });
+				return res;
+			}
+
+			function dateFormatter(value) {
+				return value ? value.substring(0, 10) : '-';
+			}
+
+			window.detailsEvents = {
+				'click .details-btn': function (e, value, row, index) {
+					detailsModal.show('reward', row._id);
+				},
+				'click .edit-btn': function (e, value, row, index) {
+					formModal.edit('reward', row._id);
+				}
+			}
+
+			$(function () {
+				$table.bootstrapTable();
+			});

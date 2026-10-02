@@ -46,8 +46,10 @@ router.get('/', auth.required, async function(_req, res) {
 function provideRewardList(req, res) {
 	let offset = req.body.offset ? Number(req.body.offset) : 0;
 	let nb = req.body.nb ? Number(req.body.nb) : 10;
+	// filters come from a public form : only plain strings are used
+	const asString = value => (typeof value === 'string' && value.length > 0 ? value : undefined);
 	RewardProcess.list(
-		{skip: offset, limit: nb, dateLow: req.body.dateLow, dateHigh: req.body.dateHigh, type: req.body.type}
+		{skip: offset, limit: nb, dateLow: asString(req.body.dateLow), dateHigh: asString(req.body.dateHigh), type: asString(req.body.type)}
 	).then(
 		result => {
 			res.status(200).render('rewardList2', {

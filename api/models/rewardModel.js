@@ -30,6 +30,10 @@ const RewardSchema = new Schema({
 		ref: 'Users',
 		required: false
 	},
+	Modified_date: {
+		type: Date,
+		required: false
+	},
 	booster : {
 		type: Schema.Types.ObjectId,
 		ref: 'BoosterType',

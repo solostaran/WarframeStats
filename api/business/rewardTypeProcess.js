@@ -3,6 +3,7 @@
 // TODO: add update (we need this to change "exilus" to "warframe exilus adapter")
 
 const mongoose = require('mongoose');
+const escapeRegExp = require('../utils/escapeRegExp');
 const RewardTypes = mongoose.model('RewardType');
 
 const list = function() {
@@ -28,10 +29,12 @@ const findById = function(id) {
 };
 
 const findByName = function(name) {
-    return RewardTypes.find({name: { "$regex": name, "$options": "i" }}).exec();
+    return RewardTypes.find({name: { "$regex": escapeRegExp(name), "$options": "i" }}).exec();
 };
 
 const findByIdOrName = async function(param) {
+    if (typeof param !== 'string' && !(param instanceof mongoose.Types.ObjectId))
+        throw new Error('That reward type does not exists or is imprecise.');
     try {
         return await findById(param);
     } catch (err) {}

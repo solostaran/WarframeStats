@@ -15,7 +15,7 @@ router.get('/list', auth.optional, function(req, res) {
 	res.render('netracellList', {
 		date2string: convertDates.date2string,
 		types: netracellRewardTypes,
-		isLoggedIn: (req.app.locals.connected ? req.app.locals.connected : false)
+		isLoggedIn: res.locals.connected
 	});
 });
 
@@ -32,7 +32,7 @@ router.post('/addForm', auth.required, function(req, res) {
 			res.render('netracellList', {
 				date2string: convertDates.date2string,
 				types: netracellRewardTypes,
-				isLoggedIn: (req.app.locals.connected ? req.app.locals.connected : false)
+				isLoggedIn: res.locals.connected
 			});
 		}).catch(err => res.status(500).send(err));
 });

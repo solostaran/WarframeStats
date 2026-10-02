@@ -1,0 +1,56 @@
+//- Generic modal form, built from a view model of api/forms (see api/forms/formEngine.js).
+//- Behaviour (show/hide rules, list rows, JSON submit) : public/javascripts/formModal.js
+//- Usage : include mixins/formModal  then  +formModal(form)  ; open it with the id "form-<form.id>"
+
+mixin formModalSelect(field, inputId, required)
+	select(class='form-select' id=inputId name=field.name required=required aria-label=field.label)
+		option(value='')= required ? 'Choose…' : 'None'
+		each option in field.options
+			option(value=option.value)= option.label
+
+mixin formModalControl(field, inputId)
+	case field.type
+		when 'select'
+			+formModalSelect(field, inputId, field.required === true)
+		when 'integer'
+			input(class='form-control' type='number' step='1' id=inputId name=field.name required=field.required === true min=field.min max=field.max)
+		when 'date'
+			input(class='form-control' type='date' id=inputId name=field.name required=field.required === true)
+		default
+			input(class='form-control' type='text' id=inputId name=field.name required=field.required === true maxlength=field.maxLength || 100 placeholder=field.placeholder)
+
+mixin formModalList(field, inputId)
+	label(class='col-form-label d-block' id=inputId+'-label')= field.label
+	div(data-list-rows role='group' aria-labelledby=inputId+'-label')
+	template(data-list-row)
+		div(class='input-group input-group-sm mb-1')
+			+formModalSelect(field, undefined, true)
+			button(type='button' class='btn btn-outline-secondary' data-list-remove aria-label='Remove') −
+	button(type='button' class='btn btn-outline-info btn-sm' data-list-add data-max=field.max) + Add
+
+mixin formModal(form)
+	- const modalId = 'form-' + form.id
+	div(class='modal fade' id=modalId tabindex='-1' aria-labelledby=modalId+'-title' aria-hidden='true')
+		div(class='modal-dialog')
+			div(class='modal-content')
+				//- the same form creates (POST) or edits (PUT) a record : formModal.create / formModal.edit
+				form(action='/forms/'+form.id method='post' data-form-modal=form.id
+					data-title-create=form.title data-title-edit=form.editTitle
+					data-submit-create=form.submitLabel data-submit-edit=form.editSubmitLabel)
+					div(class='modal-header')
+						h4(class='modal-title' id=modalId+'-title')= form.title
+						button(type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close')
+					div(class='modal-body')
+						div(class='alert alert-danger py-2' role='alert' data-form-error hidden)
+						each field in form.fields
+							- const inputId = modalId + '-' + field.name
+							div(class='mb-2' data-field=field.name data-show-if=field.showIf)
+								if field.type === 'list'
+									+formModalList(field, inputId)
+								else
+									label(class='col-form-label' for=inputId)= field.label
+									+formModalControl(field, inputId)
+								div(class='invalid-feedback')
+					div(class='modal-footer')
+						button(type='button' class='btn btn-secondary' data-bs-dismiss='modal') Cancel
+						button(type='submit' class='btn btn-primary')= form.submitLabel
