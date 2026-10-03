@@ -1,6 +1,6 @@
 'use strict';
 
-// Pages with a table and a generic modal form ("Rivens", "Rewards", "Netracells 2" in the menu).
+// Pages with a table and a generic modal form ("Rivens", "Rewards", "Netracells" in the menu).
 // The login state comes from config/loginState.js (res.locals.connected).
 const express = require('express');
 const router = express.Router();
@@ -23,7 +23,6 @@ function formPage(view, title, formId) {
 
 router.get('/rivens', formPage('rivens', 'Rivens', 'riven'));
 router.get('/rewards', formPage('rewards', 'Rewards', 'reward'));
-// "/netracells/list" and "/netracells/addForm" stay in routes/netracellsRoutes.js
 router.get('/netracells', formPage('netracells', 'Netracells', 'netracell'));
 
 module.exports = router;

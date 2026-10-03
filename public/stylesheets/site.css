@@ -69,26 +69,6 @@
     border-bottom-color: var(--bs-border-color);
 }
 
-/* bootstrap-datepicker : same thing, only needed in dark mode */
-[data-bs-theme=dark] .datepicker-dropdown:after {
-    border-bottom-color: var(--bs-body-bg);
-}
-
-[data-bs-theme=dark] .datepicker-dropdown.datepicker-orient-top:after {
-    border-top-color: var(--bs-body-bg);
-}
-
-[data-bs-theme=dark] .datepicker table tr td.day:not(.today):not(.active):not(.selected).focused,
-[data-bs-theme=dark] .datepicker table tr td.day:not(.today):not(.active):not(.selected):hover,
-[data-bs-theme=dark] .datepicker table tr td span:not(.active).focused,
-[data-bs-theme=dark] .datepicker table tr td span:not(.active):hover,
-[data-bs-theme=dark] .datepicker .datepicker-switch:hover,
-[data-bs-theme=dark] .datepicker .next:hover,
-[data-bs-theme=dark] .datepicker .prev:hover,
-[data-bs-theme=dark] .datepicker tfoot tr th:hover {
-    background: var(--bs-secondary-bg);
-}
-
 /* "Edit" buttons : a light red outline, the counterpart of the light blue "btn-outline-info" of "More info" */
 .btn-outline-edit {
     --bs-btn-color: #e5737f;

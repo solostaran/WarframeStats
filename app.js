@@ -142,7 +142,6 @@ app.use('/sources', require('./routes/rivenSourcesRoutes'));
 app.use('/conditions', require('./routes/conditionsRoutes'));
 app.use('/rewardForm', require('./routes/rewardFormRoutes'));
 app.use('/boosters', require('./routes/boostersRoutes'));
-app.use('/netracells', require('./routes/netracellsRoutes'));
 app.use('/stats', require('./routes/statsRoutes'));
 app.use('/', require('./routes/formPagesRoutes'));	// /rivens, /rewards, /netracells
 
