@@ -1,15 +1,16 @@
 services:
-  mongo-warstats:
-    container_name: mongo-warstats-run
-    image: mongo-warstats
+  db-warstats:
+    container_name: db-warstats-run
+    image: db-warstats
     restart: unless-stopped
+    user: "1000:1000"
     volumes:
-      - "./volumes/db:/data/db"
-      - "./volumes/backup-db:/data/backup"
-#    ports:
-#      - "127.0.0.1:27017:27017"
+      - "./db-warstats/data-volume:/data/db"
+      - "./db-warstats/backup-volume:/data/backup"
+    ports:
+      - "127.0.0.1:27017:27017"
     build:
-      context: ./mongo-warstats
+      context: ./db-warstats
       dockerfile: Dockerfile
     healthcheck:
       test: ["CMD", "mongosh", "--quiet", "--norc", "--eval", "db.adminCommand('ping').ok"]
@@ -22,15 +23,14 @@ services:
       warstats-network:
         aliases:
             - net-db-warstats
-  # Image built by GitHub Actions (.github/workflows/docker-image.yml).
-  # Update : docker compose pull app-warstats && docker compose up -d app-warstats
-  # Try a develop build or roll back : replace "latest" by "develop" or a "sha-xxxxxxx" tag
+  # Image built locally
   app-warstats:
     depends_on:
-      mongo-warstats:
+      db-warstats:
         condition: service_healthy
     container_name: app-warstats-run
-    image: ghcr.io/solostaran/warframestats:latest
+    # the app sources are in the parent directory (root of the git repository)
+    build: ..
 #    restart: always
     restart: on-failure:2
     networks:
@@ -40,12 +40,12 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - DOCKER=true
       - DEBUG=warframestats:*
       - HTTP=true
     links:
-      - mongo-warstats
+      - db-warstats
 networks:
   warstats-network:
     driver: bridge

@@ -1,3 +1,6 @@
 # Files under public/ are loaded with SRI "integrity" hashes computed on their LF content.
 # Always check them out with LF, whatever core.autocrlf says, or the browser blocks them.
 public/** text=auto eol=lf
+
+# Shell scripts run in Linux containers and hosts: never check them out with CRLF.
+*.sh text eol=lf
