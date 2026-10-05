@@ -7,14 +7,13 @@ block append scripts
 	script(src="https://code.jquery.com/jquery-3.6.0.min.js")
 	script(src='https://code.jquery.com/ui/1.13.1/jquery-ui.js')
 	script(nonce=nonce).
-		var reward = !{JSON.stringify(reward)};
+		var reward = !{safeJson(reward)};
 	script(src='/javascripts/rewardScripts.js')
 	script(src='/javascripts/updateScripts.js')
 
 block content
 	script(nonce=nonce).
-		_('nav-rewform').classList.add('active');
-		_('nav-rewform').innerText = 'Update reward';
+		_('nav-rewlist2').classList.add('active');
 
 	// invisible Divs, ready for cloning
 	div(class='input-group mt-2' id='boosters' hidden=true)

@@ -5,7 +5,8 @@ const mongoose = require('mongoose'),
 	Netracell = mongoose.model("NetracellReward"),
 	NetracellRewardType = mongoose.model("NetracellRewardType"),
 	netracellModel = require('../models/netracellModel'),
-	convert = require('../utils/convertDates.js');
+	convert = require('../utils/convertDates.js'),
+	publicUser = require('../utils/publicUser');
 
 const count = function() {
 	return Netracell.countDocuments({}).exec();
@@ -27,7 +28,8 @@ const list_raw = async function() {
 					_id: n._id,
 					reward: n.reward.toType(),
 					tauforged: n.tauforged,
-					date: n.date
+					date: n.date,
+					Created_date: n.Created_date
 				}
 			});
 			return Promise.resolve(ret);
@@ -68,6 +70,8 @@ const form2reward = async function(form, userId) {
 		if (netracell === null) throw new Error('A netracell id was provided but no netracell reward found.');
 		netracell.modifiedBy = userId;
 		netracell.markModified('modifiedBy');
+		netracell.Modified_date = new Date();
+		netracell.markModified('Modified_date');
 	} else {
 		// Create a new netracell
 		netracell = new Netracell();
@@ -82,8 +86,12 @@ const form2reward = async function(form, userId) {
 	} else {
 		throw new Error('Wrong netracell reward type.');
 	}
-	if (form.tauforged) {
+	// a boolean or the text 'true' (forms) ; anything else removes the tauforged flag
+	if (form.tauforged === true || form.tauforged === 'true') {
 		netracell.tauforged = true;
+		netracell.markModified('tauforged');
+	} else if (netracell.tauforged !== undefined) {
+		netracell.tauforged = undefined;
 		netracell.markModified('tauforged');
 	}
 	if (form.date) {
@@ -103,8 +111,9 @@ const findById = async function(id) {
 		.exec()
 		.then(netracell => {
 			if (netracell) {
-				if (netracell.createdBy) netracell.createdBy = netracell.createdBy.toInfoJSON();
-				if (netracell.modifiedBy) netracell.modifiedBy = netracell.modifiedBy.toInfoJSON();
+				// never the user document : this result is sent to visitors
+				if (netracell.createdBy) netracell.createdBy = publicUser(netracell.createdBy);
+				if (netracell.modifiedBy) netracell.modifiedBy = publicUser(netracell.modifiedBy);
 				netracell.reward = netracell.reward.toType();
 				return Promise.resolve(netracell);
 			}

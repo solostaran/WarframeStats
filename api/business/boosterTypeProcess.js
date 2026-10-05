@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const escapeRegExp = require('../utils/escapeRegExp');
 const BoosterTypes = mongoose.model('BoosterType');
 
 const list = function() {
@@ -37,10 +38,12 @@ const findById = function(id) {
 };
 
 const findByName = function(name) {
-    return BoosterTypes.find({name: { "$regex": name, "$options": "i" }}).exec();
+    return BoosterTypes.find({name: { "$regex": escapeRegExp(name), "$options": "i" }}).exec();
 };
 
 const findByIdOrName = async function(param) {
+    if (typeof param !== 'string' && !(param instanceof mongoose.Types.ObjectId))
+        throw new Error('This booster type does not exists or is imprecise.');
     try {
         return await findById(param);
     } catch (err) {}

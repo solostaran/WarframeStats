@@ -5,6 +5,7 @@ const mongoose = require('mongoose'),
 	Reward = mongoose.model('Reward'),
 	rivenProcess = require('./rivenProcess'),
 	convert = require('../utils/convertDates.js'),
+	publicUser = require('../utils/publicUser'),
 	rewardAdapter = require('./rewardAdapter');
 
 const count = function() {
@@ -102,12 +103,13 @@ const findById = async function(id) {
 		.populate('modifiedBy')
 		.populate('createdBy').exec();
 	if (reward) {
-		if (reward.createdBy) reward.createdBy = reward.createdBy.toAuthJSON();
-		if (reward.modifiedBy) reward.modifiedBy = reward.modifiedBy.toAuthJSON();
-	}
-	if (reward.riven) {
-		const riven = await rivenProcess.byId(reward.riven);
-		reward.riven = riven;
+		// never the user document (and never a token) : this result is sent to visitors
+		if (reward.createdBy) reward.createdBy = publicUser(reward.createdBy);
+		if (reward.modifiedBy) reward.modifiedBy = publicUser(reward.modifiedBy);
+		if (reward.riven) {
+			const riven = await rivenProcess.byId(reward.riven);
+			reward.riven = riven;
+		}
 	}
 	return reward;
 };

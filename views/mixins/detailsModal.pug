@@ -1,0 +1,31 @@
+//- Read-only "More info" modal, filled by public/javascripts/detailsModal.js from GET /details/:kind/:id
+//- Usage : include mixins/detailsModal  then  +detailsModal()  ; open it with detailsModal.show(kind, id)
+
+mixin detailsModal()
+	div(class='modal fade' id='details-modal' tabindex='-1' aria-labelledby='details-modal-title' aria-hidden='true')
+		div(class='modal-dialog modal-dialog-scrollable')
+			div(class='modal-content')
+				div(class='modal-header')
+					h4(class='modal-title' id='details-modal-title') Details
+					button(type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close')
+				div(class='modal-body')
+					div(class='alert alert-info py-2' role='status' data-details-message hidden)
+					div(data-details-body)
+					//- a value : label + read-only input
+					template(data-details-value)
+						div(class='mb-2')
+							label(class='col-form-label')
+							input(class='form-control' type='text' readonly)
+					//- a list (riven challenges) : label + table, one row per entry with its advices
+					template(data-details-list)
+						div(class='mb-2')
+							div(class='col-form-label')
+							table(class='table table-sm table-striped mb-0')
+								tbody
+					template(data-details-list-row)
+						tr
+							td
+								span
+								ul(class='mb-0')
+				div(class='modal-footer')
+					button(type='button' class='btn btn-secondary' data-bs-dismiss='modal') Close

@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const escapeRegExp = require('../utils/escapeRegExp');
 const RewardSource = mongoose.model('RewardSource');
 
 const list = function() {
@@ -33,11 +34,13 @@ const findById = function(id) {
 
 const findByName = function(param) {
     return RewardSource
-        .find({ name: { $regex : new RegExp(param, "i") } })
+        .find({ name: { $regex : new RegExp(escapeRegExp(param), "i") } })
         .exec();
 };
 
 const findByIdOrName = async function(param) {
+    if (typeof param !== 'string' && !(param instanceof mongoose.Types.ObjectId))
+        return null;
     try {
         return await findById(param);
     } catch (err) {}

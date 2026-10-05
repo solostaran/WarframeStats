@@ -32,6 +32,8 @@ const manageRewardRiven = async function (formReward, userId, rivenType, rewardI
 		if (!riven) throw new Error('Reward with Riven ID that doesn\'t exists.');
 		riven.modifiedBy = userId;
 		riven.markModified('modifiedBy');
+		riven.Modified_date = new Date();
+		riven.markModified('Modified_date');
 	} else {
 		riven = new Riven();
 		riven.createdBy = userId;
@@ -72,6 +74,8 @@ const form2reward = async function(formReward, userId) {
 		if (reward === null) throw new Error('A reward id was provided but no reward found.');
 		reward.modifiedBy = userId;
 		reward.markModified('modifiedBy');
+		reward.Modified_date = new Date();
+		reward.markModified('Modified_date');
 	} else {
 		// Create a new reward
 		reward = new Reward();
@@ -119,6 +123,10 @@ const form2reward = async function(formReward, userId) {
 		reward.rivenType = null;
 		reward.markModified('rivenType');
 		await riven.remove();
+	} else if (reward.rivenType) {
+		// reward is no longer a riven (and has no unveiled riven) = remove its old riven type
+		reward.rivenType = null;
+		reward.markModified('rivenType');
 	}
 	//console.log(JSON.stringify(reward));
 	await reward.save();

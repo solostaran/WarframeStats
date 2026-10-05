@@ -133,9 +133,8 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
 			const user = passportUser;
 			user.token = passportUser.generateJWT();
 
-			// Cookie access token and connexion management
-			req.app.locals.connected = true;    // For PUG templates
-			res.cookie('access_token', user.token, { httpOnly: true, maxAge: 600000}); // 10 min
+			// Cookie access token (the login state of the PUG templates is computed per request by config/loginState.js)
+			res.cookie('access_token', user.token, { httpOnly: true, sameSite: 'lax', maxAge: 600000}); // 10 min
 			console.log(new Date().toISOString()+" | User '"+obfuscate_email(user.email)+"' logged.");
 			res.render('logged', { title: 'connected', connected: true, user: user.toAuthJSON() });
 			return;
@@ -153,14 +152,13 @@ router.get('/disconnect', auth.optional, function(req, res) {
 				if(!user) {
 					return res.sendStatus(400);
 				}
-				req.app.locals.connected = false; // For PUG templates
 				res.clearCookie('access_token');
 				console.log(new Date().toISOString()+" | User '"+obfuscate_email(user.email)+"' disconnected.");
-				res.render('disconnected', {title: 'Disconnect', user: user.toAuthJSON()});
+				// the cookie is cleared by this response : the page is already disconnected
+				res.render('disconnected', {title: 'Disconnect', user: user.toAuthJSON(), connected: false});
 			});
 	} else {
-		req.app.locals.connected = false; // For PUG templates
-		res.render('expired', {title: 'Expired'});
+		res.render('expired', {title: 'Expired', connected: false});
 	}
 
 

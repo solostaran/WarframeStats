@@ -35,6 +35,10 @@ const NetracellRewardsSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Users',
 		required: false
+	},
+	Modified_date: {
+		type: Date,
+		required: false
 	}
 });
 

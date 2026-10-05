@@ -15,9 +15,12 @@ const form2riven = async function(formRiven, userId) {
         }
         riven.modifiedBy = userId;
         riven.markModified('modifiedBy');
+        riven.Modified_date = new Date();
+        riven.markModified('Modified_date');
     } else {
         // Create a new reward
-        riven = new Riven(formRiven);
+        // no mass assignment from the form : every field is set explicitly below
+        riven = new Riven();
         riven.createdBy = userId;
         riven.markModified('createdBy');
     }
@@ -34,6 +37,10 @@ const form2riven = async function(formRiven, userId) {
     riven.markModified('conditions');
     if (formRiven.N) {
         riven.N = formRiven.N;
+        riven.markModified('N');
+    } else if (formRiven._id && riven.N !== undefined) {
+        // update without N (e.g. no more mandatory condition) = remove the old N
+        riven.N = undefined;
         riven.markModified('N');
     }
     riven.source = await RivSrcProcess.findByIdOrName(formRiven.source);

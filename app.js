@@ -40,7 +40,10 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('./config/sanitizeBody'));	// no "$" operator keys in req.body (NoSQL injection)
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('./config/loginState'));	// res.locals.connected, per request, for the PUG templates
+app.locals.safeJson = require('./api/utils/safeJson');	// JSON inlined in a <script> of a template
 
 /*
  * SETUP LOG
@@ -127,6 +130,8 @@ app.use('/reward', require('./routes/rewardRoutes'));
 app.use('/users', require('./routes/usersRoutes'));
 app.use('/worldState', require('./routes/worldStateRoute'));
 app.use('/netracell', require('./routes/netracellRoutes'));
+app.use('/forms', require('./routes/formsRoutes'));
+app.use('/details', require('./routes/detailsRoutes'));
 
 /*
  * VIEWS
@@ -135,21 +140,18 @@ app.use('/', require('./routes/index'));
 app.use('/types', require('./routes/rivenTypesRoutes'));
 app.use('/sources', require('./routes/rivenSourcesRoutes'));
 app.use('/conditions', require('./routes/conditionsRoutes'));
-app.use('/rivenForm', require('./routes/rivenFormRoute'));
 app.use('/rewardForm', require('./routes/rewardFormRoutes'));
 app.use('/boosters', require('./routes/boostersRoutes'));
-app.use('/netracells', require('./routes/netracellsRoutes'));
 app.use('/stats', require('./routes/statsRoutes'));
+app.use('/', require('./routes/formPagesRoutes'));	// /rivens, /rewards, /netracells
 
 // juste in case : app.get('/favicon.ico', (req, res) => res.status(204));
 
 /*
  * 404 error management
  */
-app.use(function(req, res, next) {
-	//res.status(404).send({url: req.originalUrl + ' not found'})
-	res.render('404', { url: req.originalUrl });
-	next();
+app.use(function(req, res) {
+	res.status(404).render('404', { url: req.originalUrl });
 });
 
 /*

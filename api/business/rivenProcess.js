@@ -2,7 +2,8 @@
 
 const mongoose = require('mongoose'),
 	Riven = mongoose.model('Riven'),
-	RivenAdapter = require('./rivenAdapter');
+	RivenAdapter = require('./rivenAdapter'),
+	publicUser = require('../utils/publicUser');
 
 const list = function() {
 	return Riven.find({}).populate('type').populate('source', {'name':1}).sort({Created_date: 1}).exec();
@@ -25,8 +26,9 @@ const byId = async function(id) {
 			.populate('modifiedBy')
 			.populate('createdBy')
 			.exec();
-		if (riven.createdBy) riven.createdBy = riven.createdBy.toAuthJSON();
-		if (riven.modifiedBy) riven.modifiedBy = riven.modifiedBy.toAuthJSON();
+		// never the user document (and never a token) : this result is sent to visitors
+		if (riven.createdBy) riven.createdBy = publicUser(riven.createdBy);
+		if (riven.modifiedBy) riven.modifiedBy = publicUser(riven.modifiedBy);
 		return Promise.resolve(riven);
 	} catch (err) {
 		return Promise.reject('Cannot find riven whose ID = '+id);
