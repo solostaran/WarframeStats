@@ -9,7 +9,8 @@ VOLUME /data/db
 VOLUME /data/backup
 
 WORKDIR /data
-COPY --chown=1002 ./*.sh .
+# owned by root, read and execute only: the user running the container cannot modify them
+COPY --chmod=755 ./*.sh .
 EXPOSE 27017
 #CMD ["mongod", "--wiredTigerCacheSizeGB 1"]
 CMD ["mongod"]

@@ -3,6 +3,8 @@ services:
     container_name: db-warstats-run
     image: db-warstats
     restart: unless-stopped
+    # owner of the volumes on the host (see db-warstats/data-volume and backup-volume)
+    user: "1002:1002"
     volumes:
       - "./db-warstats/data-volume:/data/db"
       - "./db-warstats/backup-volume:/data/backup"
