@@ -88,7 +88,7 @@
 /* page titles on one line on a phone : the font follows the screen width */
 @media (max-width: 575.98px) {
     .page-title {
-        font-size: min(5vw, 1.75rem);
+        font-size: min(4.6vw, 1.75rem);
         white-space: nowrap;
     }
 }
