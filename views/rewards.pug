@@ -16,7 +16,17 @@ block content
 	div(class='container-fluid')
 		div(class='row')
 			div(id="toolbar-title")
-				h3 Rewards from Sortie or Archon's Hunt
+				h3(class='page-title') Rewards from Sortie or Archon's Hunt
+				// one filter per line on a phone, both on the same line from 576px (sm)
+				div(class='d-flex flex-column flex-sm-row gap-2')
+					div(class='d-flex flex-nowrap align-items-center gap-1')
+						label(for='dateLow' class='text-nowrap') Date ≥
+						input(id='dateLow' type='date' class='form-control form-control-sm w-auto')
+						button(id='resetDateLow' type='button' class='btn btn-outline-secondary btn-sm' title='Clear') X
+					div(class='d-flex flex-nowrap align-items-center gap-1')
+						label(for='dateHigh' class='text-nowrap') Date ≤
+						input(id='dateHigh' type='date' class='form-control form-control-sm w-auto')
+						button(id='resetDateHigh' type='button' class='btn btn-outline-secondary btn-sm' title='Clear') X
 			table(id="table"
 				data-content-type="application/json"
 				data-toolbar="#toolbar-title"
@@ -115,6 +125,30 @@ block content
 				return value ? value.substring(0, 10) : '-';
 			}
 
+			// date range (before / after / between), combined with the filter-control selects
+			// given to the table options (not to 'filterBy') : bootstrap-table 1.27.3 getData() only looks there
+			// for a filterAlgorithm function, otherwise the filtered rows are never displayed
+			function dateRangeFilter(row) {
+				const low = document.getElementById('dateLow').value;	// '' or 'YYYY-MM-DD'
+				const high = document.getElementById('dateHigh').value;
+				if (!low && !high) return true;
+				const day = row.date ? row.date.substring(0, 10) : null;
+				if (!day) return false;	// no date : hidden as soon as a bound is set
+				return (!low || day >= low) && (!high || day <= high);
+			}
+
+			function applyDateRange() {
+				$table.bootstrapTable('filterBy', {});	// runs dateRangeFilter again, back to page 1
+			}
+
+			['dateLow', 'dateHigh'].forEach(id => {
+				document.getElementById(id).addEventListener('change', applyDateRange);
+				document.getElementById('reset' + id[0].toUpperCase() + id.slice(1)).addEventListener('click', () => {
+					document.getElementById(id).value = '';
+					applyDateRange();
+				});
+			});
+
 			window.detailsEvents = {
 				'click .details-btn': function (e, value, row, index) {
 					detailsModal.show('reward', row._id);
@@ -125,5 +159,5 @@ block content
 			}
 
 			$(function () {
-				$table.bootstrapTable();
+				$table.bootstrapTable({ filterOptions: { filterAlgorithm: dateRangeFilter } });
 			});
