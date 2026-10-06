@@ -1,7 +1,8 @@
 {
   "name": "warframestats",
-  "version": "1.10.2",
+  "version": "1.10.3",
   "private": true,
+  "license":"MIT",
   "scripts": {
     "start": "node ./bin/www",
     "inbd": "npm run install-and-build-docker",

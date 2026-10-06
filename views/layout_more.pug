@@ -8,16 +8,15 @@ html(lang='en')
     script(src='/javascripts/theme.js' integrity='sha384-k3i4UoaViZdhgf9NyG2lPYpimNBHn2RWYKVAMfT49OOjoAYrWzRoI2qM18u8wF5A' crossorigin='anonymous')
     block link
       link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css', integrity='sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB', crossorigin='anonymous')
-      link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css' integrity='sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD' crossorigin='anonymous')
-      //link(rel="stylesheet" href="/stylesheets/bootstrap-icons.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous")
-      link(rel='stylesheet' href='/stylesheets/bootstrap-table.min.css' integrity='sha384-tfNXB2/2SVNPdzoqPNMSl0hXmUVBnwOL4odQANKVfu66tA4jFcF+5Ch4nu1LtZAc' crossorigin='anonymous')
+      //link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css' integrity='sha384-Bk5cbLkZQ5raZ0+H2/+VbfYx3WpvxvQK4zqXZr7sYODuaX7bKXoSOnipQxkaS8sv' crossorigin='anonymous')
+      link(rel='stylesheet' href='/stylesheets/bootstrap-icons.min.css' integrity='sha384-CK2SzKma4jA5H/MXDUU7i1TqZlCFaD4T01vtyDFvPlD97JQyS+IsSh1nI2EFbpyk' crossorigin='anonymous')
+      link(rel='stylesheet' href='/stylesheets/bootstrap-table.min.css' integrity='sha384-ITZ/KDfTyAobiSNOWQXtckidYWnjwp8fYQqwl+M6568KJKzh4PDqusbhoyr7wT4D' crossorigin='anonymous')
       link(rel='stylesheet', href='/stylesheets/site.css')
     block scripts
-      - const version = 2.0
       script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js', integrity='sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI', crossorigin='anonymous')
       script(src='/javascripts/jquery.min.js' integrity='sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs' crossorigin='anonymous')
-      script(src='/javascripts/bootstrap-table.min.js' integrity='sha384-FosO0uRIBBE+YnU4QBFaUk9aMjP2twHyeirpW+jjfqBlKU1Kp576zfju1cWNkx3g' crossorigin='anonymous')
-      script(src='/javascripts/bootstrap-table-filter-control.min.js' integrity='sha384-nbczi1V8J83olXDj+sgGeRn9PnInqFdQkUdO1s+sRbG966JaXt9fTyQ1iZwpFjHR' crossorigin='anonymous')
+      script(src='/javascripts/bootstrap-table.min.js' integrity='sha384-PCXzD9+BIZBoxHYpm07NqcdbtJylL7UwcCMs2OonBgci8qeEZq7KXZ3obEHwrwZM' crossorigin='anonymous')
+      script(src='/javascripts/bootstrap-table-filter-control.min.js' integrity='sha384-muXY8Fmu2b1ljvcpPcWd6QwUddV0q9ptLQf/JcA/7pLPxtjWZtQmDzJPxfU0NXCg' crossorigin='anonymous')
   body
     block body
       nav(class='navbar navbar-expand-lg')
@@ -80,4 +79,4 @@ html(lang='en')
         block content
       footer(class='page-footer fixed-bottom')
         div(class='container-fluid py-0')
-          p(class='col text-end footer-text') v#{version} croopyrite jojo
+          p(class='col text-end footer-text') v#{version}

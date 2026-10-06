@@ -44,6 +44,7 @@ app.use(require('./config/sanitizeBody'));	// no "$" operator keys in req.body (
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./config/loginState'));	// res.locals.connected, per request, for the PUG templates
 app.locals.safeJson = require('./api/utils/safeJson');	// JSON inlined in a <script> of a template
+app.locals.version = require('./package.json').version;	// app version, shown in the footer of the layouts
 
 /*
  * SETUP LOG

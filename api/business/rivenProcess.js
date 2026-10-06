@@ -6,7 +6,7 @@ const mongoose = require('mongoose'),
 	publicUser = require('../utils/publicUser');
 
 const list = function() {
-	return Riven.find({}).populate('type').populate('source', {'name':1}).sort({Created_date: 1}).exec();
+	return Riven.find({}).populate('type').populate('source', {'name':1}).sort({Created_date: -1}).exec();
 };
 
 const addOrUpdate = async function(oneRiven, userId) {

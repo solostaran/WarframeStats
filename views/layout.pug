@@ -10,7 +10,6 @@ html(lang='en')
       link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css', integrity='sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB', crossorigin='anonymous')
       link(rel='stylesheet', href='/stylesheets/site.css')
     block scripts
-      - const version = 2.0
       script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js', integrity='sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI', crossorigin='anonymous')
   body
     block body
@@ -74,4 +73,4 @@ html(lang='en')
         block content
       footer(class='page-footer fixed-bottom')
         div(class='container-fluid py-0')
-          p(class='col text-end footer-text') v#{version} croopyrite jojo
+          p(class='col text-end footer-text') v#{version}
