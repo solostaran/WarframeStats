@@ -67,6 +67,33 @@ const list = function(options) {
 	});
 };
 
+// One page of rewards, filtered and sorted by the database (server-side pagination).
+// The options are already validated by the route ; dates are 'YYYY-MM-DD', compared as UTC days
+// like the client-side page does (row.date.substring(0, 10)).
+const list_paged = async function(options) {
+	const query = {};
+	if (options.type) query.type = options.type;
+	if (options.source) query.source = options.source;
+	if (options.booster) query.booster = options.booster;
+	if (options.rivenType) query.rivenType = options.rivenType;
+	if (options.none) { query.booster = null; query.rivenType = null; }
+	if (options.dateLow || options.dateHigh) {
+		query.date = {};
+		if (options.dateLow) query.date.$gte = new Date(options.dateLow + 'T00:00:00.000Z');
+		if (options.dateHigh) query.date.$lte = new Date(options.dateHigh + 'T23:59:59.999Z');
+	}
+	const [total, rows] = await Promise.all([
+		Reward.countDocuments(query).exec(),
+		Reward.find(query)
+			.populate('source').populate('type').populate('booster').populate('rivenType')
+			.sort({date: options.order, _id: options.order})	// _id : a stable order, no row on two pages
+			.skip(options.offset)
+			.limit(options.limit)
+			.exec()
+	]);
+	return { total, rows };
+};
+
 const addOrUpdate = async function(obj, userId) {
 	if (obj === null) return Promise.reject('Null object');
 	return Promise.resolve(rewardAdapter.form2reward(obj, userId));
@@ -135,6 +162,7 @@ exports.count = count;
 exports.countByType = countByType;
 exports.list = list;
 exports.list_raw = list_raw;
+exports.list_paged = list_paged;
 exports.addOrUpdate = addOrUpdate;
 exports.adds = adds;
 exports.findById = findById;

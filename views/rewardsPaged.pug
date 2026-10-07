@@ -1,0 +1,181 @@
+extends layout_more
+include mixins/formModal
+include mixins/detailsModal
+
+//- The "Rewards" page with a server-side pagination : the server filters, sorts and sends one page at a time
+//- (GET /reward/paged), to compare with the client-side pagination of rewards.pug (GET /reward/raw, every row).
+
+block append scripts
+	script(src='/javascripts/formModal.js' integrity='sha384-nmxQl4eDOmEos/O7rTtI98veAW9U243hp8FeqW0RatfhUt8ys4qM+43sMLj6d8j/' crossorigin='anonymous')
+	script(src='/javascripts/detailsModal.js' integrity='sha384-PogRwI2l6/fvDqmGcFlx9e2z3JFuyix4K7pVcc05dEz8kM2SIjIEJDhv7D6MtGzG' crossorigin='anonymous')
+
+block content
+	script(nonce=nonce).
+		document.getElementById('nav-rew-paged').classList.add('active');
+
+	+formModal(form)
+	+detailsModal()
+
+	div(class='container-fluid')
+		div(class='row')
+			div(id="toolbar-title")
+				h3(class='page-title') Paged Rewards from Sortie or Archon's Hunt
+				// one filter per line on a phone, both on the same line from 576px (sm)
+				div(class='d-flex flex-column flex-sm-row gap-2')
+					div(class='d-flex flex-nowrap align-items-center gap-1')
+						label(for='dateLow' class='text-nowrap') Date ≥
+						input(id='dateLow' type='date' class='form-control form-control-sm w-auto')
+						button(id='resetDateLow' type='button' class='btn btn-outline-secondary btn-sm' title='Clear') X
+					div(class='d-flex flex-nowrap align-items-center gap-1')
+						label(for='dateHigh' class='text-nowrap') Date ≤
+						input(id='dateHigh' type='date' class='form-control form-control-sm w-auto')
+						button(id='resetDateHigh' type='button' class='btn btn-outline-secondary btn-sm' title='Clear') X
+			table(id="table"
+				data-content-type="application/json"
+				data-toolbar="#toolbar-title"
+				data-url="/reward/paged"
+				data-filter-control="true"
+				data-header-style="headerStyle"
+				data-row-style="rowStyle"
+				data-height="765"
+				data-pagination="true"
+				data-side-pagination="server"
+				data-pagination-loop="false"
+				data-page-list="[10, 20, 50, 100]"
+				data-sort-name="date"
+				data-sort-order="desc"
+				data-query-params="queryParams"
+				data-show-fullscreen="true"
+				data-show-search-clear-button="true"
+				data-response-handler="responseHandler"
+				data-buttons="buttons")
+				thead
+					tr
+						th(data-field="details" data-formatter="detailsFormatter" data-events="detailsEvents") Details
+						th(data-field="date" data-formatter="dateFormatter" data-sortable="true") Date
+						// the selects send ids (see the option lists below), filtered by the server
+						th(data-field="type.name" data-filter-control="select" data-filter-data="var:rewardTypeOptions") Type
+						th(data-field="source.name" data-filter-control="select" data-filter-data="var:rewardSourceOptions") Source
+						// a fusion of Boosters and Rivens, computed by responseHandler ; not sortable by the server
+						th(data-field="additionalInfo" data-filter-control="select" data-filter-data="var:additionalInfoOptions") Additional information
+		script(nonce=nonce, type='text/javascript').
+			let $table = $('#table');
+			const isLoggedIn = #{isLoggedIn === true};
+			const editDays = #{form.editDays}; // a record can only be edited during this period after its creation
+
+			window.buttons = () => ({
+				btnRewardAdd: {
+					text: 'Add a reward',
+					icon: 'bi-plus-lg',
+					event() {
+						if (!isLoggedIn) {
+							alert('You must be logged in to perform this action');
+							return;
+						}
+						formModal.create('reward');
+					},
+					attributes: { title: 'Add a reward' }
+				}
+			});
+
+			document.addEventListener('formmodal:saved', () => $table.bootstrapTable('refresh'));
+
+			function rowStyle(row, index) {
+				if (index % 2 === 0)
+					return { classes: 'ws-alt' };
+				return {};
+			}
+
+			function headerStyle(column) {
+				return {
+					'type.name': {
+						classes: 'ws-alt'
+					},
+					'details': {
+						classes: 'ws-alt'
+					},
+					'additionalInfo': {
+						classes: 'ws-alt'
+					}
+				}[column.field]
+			}
+
+			function canEdit(row) {
+				return isLoggedIn && Boolean(row.Created_date)
+					&& Date.now() - Date.parse(row.Created_date) <= editDays * 24 * 60 * 60 * 1000
+					&& !row.riven; // a reward linked to an unveiled riven cannot be edited here
+			}
+
+			// static buttons : no row data in the HTML, the row is given to the click events
+			function detailsFormatter(value, row, index) {
+				const info = '<button type="button" class="btn btn-outline-info btn-sm details-btn">More info</button>';
+				if (!canEdit(row)) return info;
+				return info + ' <button type="button" class="btn btn-outline-edit btn-sm ms-1 edit-btn">Edit</button>';
+			}
+
+			// the "Additional information" column : booster or riven type
+			function additionalInfo(row) {
+				if (row.booster) return row.booster.name;
+				if (row.rivenType) return row.rivenType.name;
+				return '-';
+			}
+
+			// the server answers { total, rows }
+			function responseHandler(res) {
+				(res && res.rows || []).forEach(row => { row.additionalInfo = additionalInfo(row); });
+				return res;
+			}
+
+			function dateFormatter(value) {
+				return value ? value.substring(0, 10) : '-';
+			}
+
+			// date range (before / after / between) : sent to the server with the other parameters
+			function queryParams(params) {
+				const low = document.getElementById('dateLow').value;	// '' or 'YYYY-MM-DD'
+				const high = document.getElementById('dateHigh').value;
+				if (low) params.dateLow = low;
+				if (high) params.dateHigh = high;
+				return params;
+			}
+
+			function applyDateRange() {
+				$table.bootstrapTable('refresh', { pageNumber: 1 });
+			}
+
+			['dateLow', 'dateHigh'].forEach(id => {
+				document.getElementById(id).addEventListener('change', applyDateRange);
+				document.getElementById('reset' + id[0].toUpperCase() + id.slice(1)).addEventListener('click', () => {
+					document.getElementById(id).value = '';
+					applyDateRange();
+				});
+			});
+
+			window.detailsEvents = {
+				'click .details-btn': function (e, value, row, index) {
+					detailsModal.show('reward', row._id);
+				},
+				'click .edit-btn': function (e, value, row, index) {
+					formModal.edit('reward', row._id);
+				}
+			}
+
+			// the select options can't come from the rows (only one page) : { value sent to the server: label }
+			const byName = list => list.slice().sort((a, b) => a.name.localeCompare(b.name));
+			const getJson = url => fetch(url).then(res => {
+				if (!res.ok) throw new Error(url + ' : ' + res.status);
+				return res.json();
+			});
+
+			$(function () {
+				Promise.all(['/reward/type/', '/reward/source/', '/booster/type/', '/riven/type/'].map(getJson))
+					.then(([types, sources, boosters, rivenTypes]) => {
+						window.rewardTypeOptions = Object.fromEntries(byName(types).map(t => [t._id, t.name]));
+						window.rewardSourceOptions = Object.fromEntries(byName(sources).map(s => [s._id, s.name]));
+						window.additionalInfoOptions = Object.fromEntries([['-', '-'],
+							...byName(boosters).map(b => ['b:' + b._id, b.name]),
+							...byName(rivenTypes).map(r => ['r:' + r._id, r.name])]);
+						$table.bootstrapTable();
+					})
+					.catch(err => alert('Cannot load the filter lists, ' + err.message));
+			});
