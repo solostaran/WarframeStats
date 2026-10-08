@@ -44,6 +44,7 @@ app.use(require('./config/sanitizeBody'));	// no "$" operator keys in req.body (
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./config/loginState'));	// res.locals.connected, per request, for the PUG templates
 app.locals.safeJson = require('./api/utils/safeJson');	// JSON inlined in a <script> of a template
+app.locals.version = require('./package.json').version;	// app version, shown in the footer of the layouts
 
 /*
  * SETUP LOG
@@ -76,7 +77,8 @@ app.use(function(_req, res, next) {
 	// and https://www.npmjs.com/package/helmet-csp
 	res.locals.nonce = crypto.randomBytes(16).toString("hex");
 	res.setHeader('X-Content-Type-Options', 'nosniff');
-	res.setHeader('Content-Security-Policy', `default-src 'self' ; img-src 'self' data: https://code.jquery.com ; style-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'nonce-${res.locals.nonce}' ; font-src 'self' https://cdn.jsdelivr.net ; object-src 'none' ; frame-ancestors 'self'`);
+	// every asset (Bootstrap, Bootstrap-Table, Bootstrap-Icons, jQuery) is served locally from /public : no CDN allowed
+	res.setHeader('Content-Security-Policy', `default-src 'self' ; img-src 'self' data: ; style-src 'self' 'unsafe-inline' ; script-src 'self' 'nonce-${res.locals.nonce}' ; font-src 'self' ; object-src 'none' ; frame-ancestors 'self'`);
 	//res.setHeader('Content-Security-Policy', `default-src 'self' ; img-src 'self' data: https://code.jquery.com ; style-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://code.jquery.com 'unsafe-inline' ; font-src https://cdn.jsdelivr.net ; object-src 'none' ; frame-ancestors 'self'`);
 	// CSP directive "img-src data:" may be vulnerable to XSS !
 	// CSP directive "style-src 'unsafe-inline'" must be explored, but it depends on the 'bootstrap-table' module.
@@ -140,7 +142,6 @@ app.use('/', require('./routes/index'));
 app.use('/types', require('./routes/rivenTypesRoutes'));
 app.use('/sources', require('./routes/rivenSourcesRoutes'));
 app.use('/conditions', require('./routes/conditionsRoutes'));
-app.use('/rewardForm', require('./routes/rewardFormRoutes'));
 app.use('/boosters', require('./routes/boostersRoutes'));
 app.use('/stats', require('./routes/statsRoutes'));
 app.use('/', require('./routes/formPagesRoutes'));	// /rivens, /rewards, /netracells

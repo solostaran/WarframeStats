@@ -177,3 +177,9 @@ keys/
 .idea/sonarIssues.xml
 
 *.bak
+
+# Docker compose volumes (database files and backups): keep only the empty directories
+compose-warstats/db-warstats/data-volume/*
+compose-warstats/db-warstats/backup-volume/*
+!compose-warstats/db-warstats/data-volume/.gitkeep
+!compose-warstats/db-warstats/backup-volume/.gitkeep

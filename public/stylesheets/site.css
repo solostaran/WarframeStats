@@ -84,3 +84,11 @@
     --bs-btn-disabled-bg: transparent;
     --bs-btn-disabled-border-color: #e5737f;
 }
+
+/* page titles on one line on a phone : the font follows the screen width */
+@media (max-width: 575.98px) {
+    .page-title {
+        font-size: min(4.6vw, 1.75rem);
+        white-space: nowrap;
+    }
+}

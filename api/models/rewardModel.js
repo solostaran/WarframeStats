@@ -54,4 +54,7 @@ const RewardSchema = new Schema({
 	}
 });
 
+// server-side pagination (/reward/paged) : sort and skip on the index, not in memory
+RewardSchema.index({ date: -1, _id: -1 });
+
 module.exports = mongoose.model('Reward', RewardSchema);

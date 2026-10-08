@@ -2,13 +2,16 @@ extends layout_more
 include mixins/formModal
 include mixins/detailsModal
 
+//- The "Rewards" page with a server-side pagination : the server filters, sorts and sends one page at a time
+//- (GET /reward/paged), to compare with the client-side pagination of rewards.pug (GET /reward/raw, every row).
+
 block append scripts
 	script(src='/javascripts/formModal.js' integrity='sha384-nmxQl4eDOmEos/O7rTtI98veAW9U243hp8FeqW0RatfhUt8ys4qM+43sMLj6d8j/' crossorigin='anonymous')
 	script(src='/javascripts/detailsModal.js' integrity='sha384-PogRwI2l6/fvDqmGcFlx9e2z3JFuyix4K7pVcc05dEz8kM2SIjIEJDhv7D6MtGzG' crossorigin='anonymous')
 
 block content
 	script(nonce=nonce).
-		document.getElementById('nav-rewards').classList.add('active');
+		document.getElementById('nav-rew-paged').classList.add('active');
 
 	+formModal(form)
 	+detailsModal()
@@ -16,7 +19,7 @@ block content
 	div(class='container-fluid')
 		div(class='row')
 			div(id="toolbar-title")
-				h3(class='page-title') Rewards from Sortie or Archon's Hunt
+				h3(class='page-title') Paged Rewards from Sortie or Archon's Hunt
 				// one filter per line on a phone, both on the same line from 576px (sm)
 				div(class='d-flex flex-column flex-sm-row gap-2')
 					div(class='d-flex flex-nowrap align-items-center gap-1')
@@ -30,17 +33,18 @@ block content
 			table(id="table"
 				data-content-type="application/json"
 				data-toolbar="#toolbar-title"
-				data-url="/reward/raw"
+				data-url="/reward/paged"
 				data-filter-control="true"
 				data-header-style="headerStyle"
 				data-row-style="rowStyle"
 				data-height="765"
 				data-pagination="true"
-				data-side-pagination="client"
+				data-side-pagination="server"
 				data-pagination-loop="false"
-				data-page-list="[10, 20, 50, All]"
-				data-total-field="count"
-				data-data-field="items"
+				data-page-list="[10, 20, 50, 100]"
+				data-sort-name="date"
+				data-sort-order="desc"
+				data-query-params="queryParams"
 				data-show-fullscreen="true"
 				data-show-search-clear-button="true"
 				data-response-handler="responseHandler"
@@ -49,10 +53,11 @@ block content
 					tr
 						th(data-field="details" data-formatter="detailsFormatter" data-events="detailsEvents") Details
 						th(data-field="date" data-formatter="dateFormatter" data-sortable="true") Date
-						th(data-field="type.name" data-filter-control="select") Type
-						th(data-field="source.name" data-filter-control="select") Source
-						// a fusion of Boosters and Rivens, computed by responseHandler
-						th(data-field="additionalInfo" data-filter-control="select" data-sortable="true") Additional information
+						// the selects send ids (see the option lists below), filtered by the server
+						th(data-field="type.name" data-filter-control="select" data-filter-data="var:rewardTypeOptions") Type
+						th(data-field="source.name" data-filter-control="select" data-filter-data="var:rewardSourceOptions") Source
+						// a fusion of Boosters and Rivens, computed by responseHandler ; not sortable by the server
+						th(data-field="additionalInfo" data-filter-control="select" data-filter-data="var:additionalInfoOptions") Additional information
 		script(nonce=nonce, type='text/javascript').
 			let $table = $('#table');
 			const isLoggedIn = #{isLoggedIn === true};
@@ -108,16 +113,16 @@ block content
 				return info + ' <button type="button" class="btn btn-outline-edit btn-sm ms-1 edit-btn">Edit</button>';
 			}
 
-			// the "Additional information" column : booster or riven type, as a real field (filter and sort)
+			// the "Additional information" column : booster or riven type
 			function additionalInfo(row) {
 				if (row.booster) return row.booster.name;
 				if (row.rivenType) return row.rivenType.name;
 				return '-';
 			}
 
+			// the server answers { total, rows }
 			function responseHandler(res) {
-				const rows = Array.isArray(res) ? res : (res && res.items) || [];
-				rows.forEach(row => { row.additionalInfo = additionalInfo(row); });
+				(res && res.rows || []).forEach(row => { row.additionalInfo = additionalInfo(row); });
 				return res;
 			}
 
@@ -125,20 +130,17 @@ block content
 				return value ? value.substring(0, 10) : '-';
 			}
 
-			// date range (before / after / between), combined with the filter-control selects
-			// given to the table options (not to 'filterBy') : bootstrap-table 1.27.3 getData() only looks there
-			// for a filterAlgorithm function, otherwise the filtered rows are never displayed
-			function dateRangeFilter(row) {
+			// date range (before / after / between) : sent to the server with the other parameters
+			function queryParams(params) {
 				const low = document.getElementById('dateLow').value;	// '' or 'YYYY-MM-DD'
 				const high = document.getElementById('dateHigh').value;
-				if (!low && !high) return true;
-				const day = row.date ? row.date.substring(0, 10) : null;
-				if (!day) return false;	// no date : hidden as soon as a bound is set
-				return (!low || day >= low) && (!high || day <= high);
+				if (low) params.dateLow = low;
+				if (high) params.dateHigh = high;
+				return params;
 			}
 
 			function applyDateRange() {
-				$table.bootstrapTable('filterBy', {});	// runs dateRangeFilter again, back to page 1
+				$table.bootstrapTable('refresh', { pageNumber: 1 });
 			}
 
 			['dateLow', 'dateHigh'].forEach(id => {
@@ -158,6 +160,22 @@ block content
 				}
 			}
 
+			// the select options can't come from the rows (only one page) : { value sent to the server: label }
+			const byName = list => list.slice().sort((a, b) => a.name.localeCompare(b.name));
+			const getJson = url => fetch(url).then(res => {
+				if (!res.ok) throw new Error(url + ' : ' + res.status);
+				return res.json();
+			});
+
 			$(function () {
-				$table.bootstrapTable({ filterOptions: { filterAlgorithm: dateRangeFilter } });
+				Promise.all(['/reward/type/', '/reward/source/', '/booster/type/', '/riven/type/'].map(getJson))
+					.then(([types, sources, boosters, rivenTypes]) => {
+						window.rewardTypeOptions = Object.fromEntries(byName(types).map(t => [t._id, t.name]));
+						window.rewardSourceOptions = Object.fromEntries(byName(sources).map(s => [s._id, s.name]));
+						window.additionalInfoOptions = Object.fromEntries([['-', '-'],
+							...byName(boosters).map(b => ['b:' + b._id, b.name]),
+							...byName(rivenTypes).map(r => ['r:' + r._id, r.name])]);
+						$table.bootstrapTable();
+					})
+					.catch(err => alert('Cannot load the filter lists, ' + err.message));
 			});

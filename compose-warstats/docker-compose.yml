@@ -1,0 +1,53 @@
+services:
+  db-warstats:
+    container_name: db-warstats-run
+    image: db-warstats
+    restart: unless-stopped
+    # owner of the volumes on the host (see db-warstats/data-volume and backup-volume)
+    user: "1002:1002"
+    volumes:
+      - "./db-warstats/data-volume:/data/db"
+      - "./db-warstats/backup-volume:/data/backup"
+#    ports:
+#      - "127.0.0.1:27017:27017"
+    build:
+      context: ./db-warstats
+      dockerfile: Dockerfile
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--norc", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+      start_interval: 2s
+    networks:
+      warstats-network:
+        aliases:
+            - net-db-warstats
+  # Image built by GitHub Actions (.github/workflows/docker-image.yml).
+  # Update : docker compose pull app-warstats && docker compose up -d app-warstats
+  # Try a develop build or roll back : replace "latest" by "develop" or a "sha-xxxxxxx" tag
+  app-warstats:
+    depends_on:
+      db-warstats:
+        condition: service_healthy
+    container_name: app-warstats-run
+    image: ghcr.io/solostaran/warframestats:latest
+#    restart: always
+    restart: on-failure:2
+    networks:
+      warstats-network:
+        aliases:
+          - net-app-warstats
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DOCKER=true
+      - DEBUG=warframestats:*
+      - HTTP=true
+    links:
+      - db-warstats
+networks:
+  warstats-network:
+    driver: bridge

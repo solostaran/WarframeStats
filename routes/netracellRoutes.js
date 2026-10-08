@@ -5,6 +5,7 @@ const router = express.Router();
 
 const auth = require('../config/jwt_auth').auth;
 const netracellRewardProcess = require('../api/business/netracellRewardProcess');
+const { netracellRewardTypes } = require('../api/models/netracellModel');
 const { obfuscate_email, obfuscate_id } = require('../api/utils/obfuscate');
 
 router.get('/raw', auth.optional, function(_req, res) {
@@ -36,6 +37,10 @@ router.post('/setTypes', auth.required, function(req, res) {
 		ret => res.json(ret),
 		err => res.status(400).send('Invalid body, '+err)
 	);
+});
+
+router.get('/type/', auth.optional, function(_req, res) {
+	res.json(netracellRewardTypes);
 });
 
 router.get('/:id', auth.optional, function (req, res) {
