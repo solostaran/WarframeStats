@@ -1,72 +1,11 @@
-doctype html
-html(lang='en')
-  head
-    meta(charset='utf-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    meta(name='color-scheme' content='light dark')
-    title= title
-    script(src='/javascripts/theme.js' integrity='sha384-k3i4UoaViZdhgf9NyG2lPYpimNBHn2RWYKVAMfT49OOjoAYrWzRoI2qM18u8wF5A' crossorigin='anonymous')
-    block link
-      link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css', integrity='sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB', crossorigin='anonymous')
-      //link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css' integrity='sha384-Bk5cbLkZQ5raZ0+H2/+VbfYx3WpvxvQK4zqXZr7sYODuaX7bKXoSOnipQxkaS8sv' crossorigin='anonymous')
-      link(rel='stylesheet' href='/stylesheets/bootstrap-icons.min.css' integrity='sha384-CK2SzKma4jA5H/MXDUU7i1TqZlCFaD4T01vtyDFvPlD97JQyS+IsSh1nI2EFbpyk' crossorigin='anonymous')
-      link(rel='stylesheet' href='/stylesheets/bootstrap-table.min.css' integrity='sha384-ITZ/KDfTyAobiSNOWQXtckidYWnjwp8fYQqwl+M6568KJKzh4PDqusbhoyr7wT4D' crossorigin='anonymous')
-      link(rel='stylesheet', href='/stylesheets/site.css')
-    block scripts
-      script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js', integrity='sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI', crossorigin='anonymous')
-      script(src='/javascripts/jquery.min.js' integrity='sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs' crossorigin='anonymous')
-      script(src='/javascripts/bootstrap-table.min.js' integrity='sha384-PCXzD9+BIZBoxHYpm07NqcdbtJylL7UwcCMs2OonBgci8qeEZq7KXZ3obEHwrwZM' crossorigin='anonymous')
-      script(src='/javascripts/bootstrap-table-filter-control.min.js' integrity='sha384-muXY8Fmu2b1ljvcpPcWd6QwUddV0q9ptLQf/JcA/7pLPxtjWZtQmDzJPxfU0NXCg' crossorigin='anonymous')
-  body
-    block body
-      nav(class='navbar navbar-expand-lg')
-        div(class='row')
-          a(class='navbar-brand mx-1' href='#') WarframeStats
-            button(class='navbar-toggler ms-1', type='button', data-bs-toggle='collapse', data-bs-target='#navbarTogglerWS', aria-controls='navbarTogglerWS', aria-expanded='false', aria-label='Toggle navigation')
-              span(class='navbar-toggler-icon')
-        button(type='button' id='theme-toggle' class='btn theme-toggle order-lg-last mx-2' aria-label='Toggle dark/light mode' title='Toggle dark/light mode')
-          svg(class='theme-icon-to-dark' xmlns="http://www.w3.org/2000/svg" width=24 height=24 fill="currentColor" viewBox="0 0 16 16" aria-hidden='true')
-            path(d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278")
-          svg(class='theme-icon-to-light' xmlns="http://www.w3.org/2000/svg" width=24 height=24 fill="currentColor" viewBox="0 0 16 16" aria-hidden='true')
-            path(d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708")
-        div(class='collapse navbar-collapse' id='navbarTogglerWS')
-          ul(class='nav nav-pills nav-fill')
-            li(class='nav-item dropdown' id='dropInfo')
-              a(class='nav-link dropdown-toggle' href='#' data-bs-toggle='dropdown') Informations
-              ul(class='dropdown-menu')
-                li(class='dropdown-item')
-                  a(class='nav-link', aria-current='page', href='/types', id='nav-rivtyp') Riven types
-                li(class='dropdown-item')
-                  a(class='nav-link', aria-current='page', href='/sources', id='nav-rivsrc') Riven sources
-                li(class='dropdown-item')
-                  a(class='nav-link', aria-current='page', href='/conditions', id='nav-rivcond') Riven conditions
-                li(class='dropdown-item')
-                  a(class='nav-link', aria-current='page', href='/boosters', id='nav-boosttyp') Booster types
-            li(class='nav-item')
-              a(class='nav-link', aria-current='page', href='/rivens', id='nav-rivens') Rivens
-            li(class='nav-item')
-              a(class='nav-link', aria-current='page', href='/rewards', id='nav-rewards') Rewards
-            li(class='nav-item')
-              a(class='nav-link', aria-current='page', href='/rewardsPaged', id='nav-rew-paged') PagedRewards
-            li(class='nav-item')
-              a(class='nav-link', aria-current='page', href='/netracells', id='nav-netra') Netracells
-            li(class='nav-item')
-              a(class='nav-link', aria-current='page', href='/stats', id='nav-stats') Stats
-            li(class='nav-item')
-              a(class='nav-link', aria-current='page', href='https://hub.warframestat.us/', id='nav-wstate') World State
-            li(class='nav-item')
-              if (connected === true)
-                a(class='nav-link', aria-current='page', href='/users/disconnect')
-                  svg(xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512" width=32 height=auto)
-                    circle(fill="#EF4136" transform="rotate(45 -181.019 437.02) scale(3.28877)" r="77.84")
-                    path(fill="#fff" d="m162.03 311.94-28.73 28.73 39.61 39.62 29.11-29.12c30.83 25.41 60.09 27.74 87.12 18.45L143.65 224.13c-9.12 26.74-6.66 55.93 18.38 87.81zm-31.46-150.11c-6.42-6.42-6.42-16.83 0-23.25 6.42-6.42 16.83-6.42 23.25 0l27.22 27.22c9.99-11.21 20.7-21.87 30.85-32.03l21.7 21.69 49.46-49.45c8.33-8.34 21.98-8.34 30.32 0 8.33 8.33 8.33 21.98 0 30.31l-49.47 49.47 63.1 63.09 49.46-49.46c8.34-8.34 21.98-8.34 30.32 0s8.33 21.98 0 30.31l-49.47 49.46 22.5 22.5c-10 10-20.74 20.7-32.14 30.74L375 359.76c6.42 6.41 6.42 16.83 0 23.25-6.42 6.41-16.84 6.41-23.25 0L130.57 161.83z")
-              else
-                a(class='nav-link', aria-current='page', href='/users/loginForm', id='nav-login')
-                  svg(xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512" width=32 height=auto)
-                    circle(fill="#01A437" transform="rotate(45 -181.019 437.02) scale(3.28877)" r="77.84")
-                    path(fill="#fff" d="m162.27 317.75-30.92 30.65 39.62 39.61 31.29-31.03c69.87 57.6 131.69-3.38 177.78-49.48L357.55 285l49.47-49.45c8.33-8.33 8.33-21.98 0-30.32-8.34-8.34-21.99-8.33-30.32 0l-49.46 49.46-63.1-63.09 49.46-49.47c8.34-8.33 8.34-21.98 0-30.31-8.34-8.34-21.98-8.34-30.32 0l-49.46 49.46-21.69-21.7c-47.36 47.36-106.64 105.87-49.86 178.17z")
-      section(id='pageContent')
-        block content
-      footer(class='page-footer fixed-bottom')
-        div(class='container-fluid py-0')
-          p(class='col text-end footer-text') v#{version}
+extends layout
+
+//- Layout of the pages using Bootstrap-Table : layout.pug plus the table assets.
+
+block extraLinks
+  link(rel='stylesheet' href='/stylesheets/bootstrap-table.min.css' integrity='sha384-ITZ/KDfTyAobiSNOWQXtckidYWnjwp8fYQqwl+M6568KJKzh4PDqusbhoyr7wT4D' crossorigin='anonymous')
+
+block append scripts
+  script(src='/javascripts/jquery.min.js' integrity='sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs' crossorigin='anonymous')
+  script(src='/javascripts/bootstrap-table.min.js' integrity='sha384-PCXzD9+BIZBoxHYpm07NqcdbtJylL7UwcCMs2OonBgci8qeEZq7KXZ3obEHwrwZM' crossorigin='anonymous')
+  script(src='/javascripts/bootstrap-table-filter-control.min.js' integrity='sha384-muXY8Fmu2b1ljvcpPcWd6QwUddV0q9ptLQf/JcA/7pLPxtjWZtQmDzJPxfU0NXCg' crossorigin='anonymous')
