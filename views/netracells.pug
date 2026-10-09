@@ -16,7 +16,7 @@ block content
 	div(class='container-lg')
 		div(class='row mt-1')
 			div(id='toolbar-title')
-				h3 List of Netracells
+				h3 List of Netracell & Deep Archimedea rewards
 			table(id="table"
 				data-content-type="application/json"
 				data-toolbar="#toolbar-title"
@@ -38,6 +38,7 @@ block content
 					tr
 						th(data-field="details" data-formatter="detailsFormatter" data-events="detailsEvents") Details
 						th(data-field="date" data-formatter="dateFormatter" data-sortable="true") Date
+						th(data-field="source" data-filter-control="select") Source
 						th(data-field="reward" data-filter-control="select") Reward
 						th(data-field="tauforged" data-filter-control="select") Tauforged
 				tbody(style='height: 10px !important; overflow-y: auto;')

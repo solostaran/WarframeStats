@@ -4,6 +4,7 @@ const mongoose = require('mongoose'),
 	_ = require("lodash"),
 	Netracell = mongoose.model("NetracellReward"),
 	NetracellRewardType = mongoose.model("NetracellRewardType"),
+	NetracellRewardSource = mongoose.model("NetracellRewardSource"),
 	netracellModel = require('../models/netracellModel'),
 	convert = require('../utils/convertDates.js'),
 	publicUser = require('../utils/publicUser');
@@ -26,6 +27,7 @@ const list_raw = async function() {
 			const ret = list.map(function(n) {
 				return {
 					_id: n._id,
+					source: n.source ? n.source.toType() : undefined,
 					reward: n.reward.toType(),
 					tauforged: n.tauforged,
 					date: n.date,
@@ -77,6 +79,14 @@ const form2reward = async function(form, userId) {
 		netracell = new Netracell();
 		netracell.createdBy = userId;
 		netracell.markModified('createdBy');
+	}
+	const find_source_value = encodeURIComponent(form.source).replaceAll("%20", " ");
+	const source = await findSource(find_source_value);
+	if (source) {
+		netracell.source = source;
+		netracell.markModified('source');
+	} else {
+		throw new Error('Wrong netracell reward source.');
 	}
 	const find_reward_value = encodeURIComponent(form.reward).replaceAll("%20", " ");
 	const type = await findType(find_reward_value);
@@ -149,13 +159,22 @@ const findType = async function(type_string) {
 	return NetracellRewardType.findOne({type: type_string});
 }
 
-const setTypes = function(onSuccess, onError){
+const listSources = function() {
+	return NetracellRewardSource.find({}).exec();
+}
+
+const findSource = async function(type_string) {
+	return NetracellRewardSource.findOne({type: type_string});
+}
+
+// inserts a document { type } in "Model" for each value of "types"
+const seed = function(Model, types, label, onSuccess, onError) {
 	let inserted = 0;
 	let rejected = 0;
 	let rejects = [];
 	Promise.all(
-		netracellModel.netracellRewardTypes.map(type => new Promise(
-			resolve => NetracellRewardType.create({type: type})
+		types.map(type => new Promise(
+			resolve => Model.create({type: type})
 				.then(ret => { ++inserted; resolve(ret)})
 				.catch(err => {
 					rejects.push({reject: type, error: err});
@@ -166,9 +185,17 @@ const setTypes = function(onSuccess, onError){
 		)
 	).then(() => {
 		const result = {insertedCount: inserted , rejectedCount: rejected, rejects: rejects };
-		console.log("Netracell Type insertion : "+JSON.stringify(result));
+		console.log(label+" insertion : "+JSON.stringify(result));
 		onSuccess(result);
 	}).catch(onError)
+}
+
+const setTypes = function(onSuccess, onError) {
+	seed(NetracellRewardType, netracellModel.netracellRewardTypes, "Netracell Type", onSuccess, onError);
+}
+
+const setSources = function(onSuccess, onError) {
+	seed(NetracellRewardSource, netracellModel.netracellRewardSources, "Netracell Source", onSuccess, onError);
 }
 
 exports.count = count;
@@ -181,3 +208,5 @@ exports.deleteOneById = deleteOneById;
 exports.deleteAll = deleteAll;
 exports.listTypes = listTypes;
 exports.setTypes = setTypes;
+exports.listSources = listSources;
+exports.setSources = setSources;
