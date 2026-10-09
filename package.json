@@ -1,6 +1,6 @@
 {
   "name": "warframestats",
-  "version": "1.10.5",
+  "version": "1.10.6",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -44,5 +44,10 @@
   },
   "jest": {
     "testEnvironment": "node"
+  },
+  "overrides": {
+    "@istanbuljs/load-nyc-config": {
+      "js-yaml": "^4.1.0"
+    }
   }
 }

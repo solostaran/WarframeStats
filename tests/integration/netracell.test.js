@@ -11,7 +11,7 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 
 // Mongoose Schemas, before the router (the business process gets its models when required)
 require('../../api/models/Users');
-const { netracellRewardTypes } = require('../../api/models/netracellModel');
+const { netracellRewardTypes, netracellRewardSources } = require('../../api/models/netracellModel');
 
 const Users = mongoose.model('Users');
 
@@ -73,8 +73,31 @@ describe('/netracell routes', () => {
 		});
 	});
 
+	describe('GET /netracell/source/', () => {
+		it('returns the netracell reward sources without authentication', async () => {
+			const res = await request(app).get('/netracell/source/').expect(200);
+			expect(res.headers['content-type']).toMatch(/json/);
+			expect(res.body).toEqual(netracellRewardSources);
+		});
+
+		it('also accepts an authenticated user', async () => {
+			const res = await request(app)
+				.get('/netracell/source/')
+				.set('Authorization', 'Bearer ' + token)
+				.expect(200);
+			expect(res.body).toEqual(netracellRewardSources);
+		});
+
+		it('rejects an invalid token', async () => {
+			await request(app)
+				.get('/netracell/source/')
+				.set('Authorization', 'Bearer invalid.token.value')
+				.expect(401);
+		});
+	});
+
 	describe('authentication on writes', () => {
-		it.each(['/netracell/add', '/netracell/adds', '/netracell/setTypes'])('POST %s requires a token', async (path) => {
+		it.each(['/netracell/add', '/netracell/adds', '/netracell/setTypes', '/netracell/setSources'])('POST %s requires a token', async (path) => {
 			await request(app).post(path).send({}).expect(401);
 		});
 	});
@@ -96,13 +119,23 @@ describe('/netracell routes', () => {
 			expect(res.body.rejectedCount).toBe(0);
 		});
 
+		it('POST /netracell/setSources inserts every reward source', async () => {
+			const res = await request(app)
+				.post('/netracell/setSources')
+				.set('Authorization', 'Bearer ' + token)
+				.expect(200);
+			expect(res.body.insertedCount).toBe(netracellRewardSources.length);
+			expect(res.body.rejectedCount).toBe(0);
+		});
+
 		it('POST /netracell/add creates a netracell reward', async () => {
 			const res = await request(app)
 				.post('/netracell/add')
 				.set('Authorization', 'Bearer ' + token)
-				.send({ reward: 'Crimson Archon Shard', tauforged: true, date: '2024-12-16' })
+				.send({ source: 'Netracell', reward: 'Crimson Archon Shard', tauforged: true, date: '2024-12-16' })
 				.expect(200);
 			expect(res.body._id).toBeDefined();
+			expect(res.body.source.type).toBe('Netracell');
 			expect(res.body.tauforged).toBe(true);
 			createdId = res.body._id;
 		});
@@ -111,7 +144,7 @@ describe('/netracell routes', () => {
 			await request(app)
 				.post('/netracell/add')
 				.set('Cookie', 'access_token=' + token)
-				.send({ reward: 'Melee Duplicate', date: '2024-12-10' })
+				.send({ source: 'Deep Archimedea', reward: 'Melee Duplicate', date: '2024-12-10' })
 				.expect(200);
 		});
 
@@ -119,9 +152,27 @@ describe('/netracell routes', () => {
 			const res = await request(app)
 				.post('/netracell/add')
 				.set('Authorization', 'Bearer ' + token)
-				.send({ reward: 'Crimson Truc Shard' })
+				.send({ source: 'Netracell', reward: 'Crimson Truc Shard' })
 				.expect(400);
 			expect(res.text).toMatch(/Wrong netracell reward type/);
+		});
+
+		it('POST /netracell/add rejects a reward without source', async () => {
+			const res = await request(app)
+				.post('/netracell/add')
+				.set('Authorization', 'Bearer ' + token)
+				.send({ reward: 'Crimson Archon Shard', date: '2024-12-16' })
+				.expect(400);
+			expect(res.text).toMatch(/Wrong netracell reward source/);
+		});
+
+		it('POST /netracell/add rejects an unknown reward source', async () => {
+			const res = await request(app)
+				.post('/netracell/add')
+				.set('Authorization', 'Bearer ' + token)
+				.send({ source: 'Sortie', reward: 'Crimson Archon Shard', date: '2024-12-16' })
+				.expect(400);
+			expect(res.text).toMatch(/Wrong netracell reward source/);
 		});
 
 		it('POST /netracell/adds counts the inserted and rejected rewards', async () => {
@@ -129,24 +180,30 @@ describe('/netracell routes', () => {
 				.post('/netracell/adds')
 				.set('Authorization', 'Bearer ' + token)
 				.send([
-					{ reward: 'Azure Archon Shard', date: '2024-12-01' },
-					{ reward: 'Not A Reward' },
+					{ source: 'Netracell', reward: 'Azure Archon Shard', date: '2024-12-01' },
+					{ source: 'Netracell', reward: 'Not A Reward' },
+					{ reward: 'Amber Archon Shard' },
 				])
 				.expect(200);
 			expect(res.body.insertedCount).toBe(1);
-			expect(res.body.rejectedCount).toBe(1);
-			expect(res.body.rejects[0].reject).toEqual({ reward: 'Not A Reward' });
+			expect(res.body.rejectedCount).toBe(2);
+			expect(res.body.rejects.map(r => r.reject)).toEqual(expect.arrayContaining([
+				{ source: 'Netracell', reward: 'Not A Reward' },
+				{ reward: 'Amber Archon Shard' }
+			]));
 		});
 
 		it('GET /netracell/raw lists the rewards, newest date first', async () => {
 			const res = await request(app).get('/netracell/raw').expect(200);
 			expect(res.body.map(n => n.reward)).toEqual(['Crimson Archon Shard', 'Melee Duplicate', 'Azure Archon Shard']);
+			expect(res.body.map(n => n.source)).toEqual(['Netracell', 'Deep Archimedea', 'Netracell']);
 		});
 
 		it('GET /netracell/:id returns the reward with an obfuscated creator', async () => {
 			const res = await request(app).get('/netracell/' + createdId).expect(200);
 			expect(res.body._id).toBe(createdId);
 			expect(res.body.reward.type).toBe('Crimson Archon Shard');
+			expect(res.body.source.type).toBe('Netracell');
 			expect(res.body.createdBy).toEqual({ email: expect.any(String) });
 			expect(res.body.createdBy.email).not.toBe('tester@example.com');
 		});

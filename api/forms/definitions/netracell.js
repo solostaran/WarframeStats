@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-	{ netracellRewardTypes } = require('../../models/netracellModel'),
+	{ netracellRewardTypes, netracellRewardSources } = require('../../models/netracellModel'),
 	{ date2string } = require('../../utils/convertDates'),
 	NetracellRewardProcess = require('../../business/netracellRewardProcess');
 
@@ -15,6 +15,8 @@ module.exports = {
 	editSubmitLabel: 'Update',
 	async fields() {
 		return [
+			{ name: 'source', label: 'Source', type: 'select', required: true,
+				options: netracellRewardSources.map(source => ({ value: source, label: source })) },
 			{ name: 'reward', label: 'Reward', type: 'select', required: true,
 				options: netracellRewardTypes.map(type => ({ value: type, label: type })) },
 			// only shards can be tauforged
@@ -32,6 +34,7 @@ module.exports = {
 			createdAt: doc.Created_date,
 			lockedReason: null,
 			values: {
+				source: doc.source && doc.source.type ? doc.source.type : '',
 				reward: doc.reward && doc.reward.type ? doc.reward.type : '',
 				tauforged: doc.tauforged ? 'true' : 'false',
 				date: doc.date ? date2string(doc.date) : ''
@@ -41,6 +44,7 @@ module.exports = {
 	// id : the record to update (edit form)
 	save: (values, userId, id) => NetracellRewardProcess.addOrUpdate({
 		...(id ? { _id: id } : {}),
+		source: values.source,
 		reward: values.reward,
 		date: values.date,
 		tauforged: values.tauforged === 'true'
