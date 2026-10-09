@@ -3543,6 +3543,286 @@
 			]
 		},
 		{
+			"name": "Netracell",
+			"item": [
+				{
+					"name": "GET Netracell reward types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/netracell/type/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"netracell",
+								"type",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Netracell reward sources",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/netracell/source/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"netracell",
+								"source",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SET Netracell reward types (once)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/netracell/setTypes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"netracell",
+								"setTypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SET Netracell reward sources (once)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/netracell/setSources",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"netracell",
+								"setSources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Netracell reward",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    if (pm.response.code == 200) {",
+									"        // save ID",
+									"        pm.collectionVariables.set(\"netracell_id\", pm.response.json()._id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/netracell/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"netracell",
+								"add"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"source\": \"Netracell\",\n\t\"reward\": \"Crimson Archon Shard\",\n\t\"tauforged\": true,\n\t\"date\": \"2026-10-09\"\n}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Deep Archimedea reward",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/netracell/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"netracell",
+								"add"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"source\": \"Deep Archimedea\",\n\t\"reward\": \"Melee Arcane Adapter\",\n\t\"date\": \"2026-10-09\"\n}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD Multiple netracell rewards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"    console.log(\"ADD Multiple netracell rewards : \"+pm.response.json().insertedCount+\" inserted, \"+pm.response.json().rejectedCount+\" rejected\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/netracell/adds",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"netracell",
+								"adds"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"source\": \"Netracell\",\n\t\t\"reward\": \"Azure Archon Shard\",\n\t\t\"date\": \"2026-10-02\"\n\t},\n\t{\n\t\t\"source\": \"Deep Archimedea\",\n\t\t\"reward\": \"Amber Archon Shard\",\n\t\t\"tauforged\": true,\n\t\t\"date\": \"2026-10-05\"\n\t}\n]"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Netracell rewards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(\"GET Netracell rewards : number of rewards = \"+pm.response.json().length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/netracell/raw",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"netracell",
+								"raw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Netracell reward by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/netracell/{{netracell_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"netracell",
+								"{{netracell_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Users",
 			"item": [
 				{
@@ -4160,6 +4440,11 @@
 		},
 		{
 			"key": "reward_source_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "netracell_id",
 			"value": "",
 			"type": "string"
 		}

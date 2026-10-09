@@ -5,6 +5,12 @@ const router = express.Router();
 
 const StatsProcess = require('../api/business/statsProcess');
 
+// per netracell reward source : title and where to find it in the official droptables
+const netracellPresentation = {
+  'Netracell': { title: 'Statistics for Netracell mission rewards', droptable: 'Entrati Netracell Coffer' },
+  'Deep Archimedea': { title: 'Statistics for Deep Archimedea rewards', droptable: 'Deep Archimedea' }
+};
+
 router.get('/', async function(_req, res) {
   const statsSortie = await StatsProcess.sortie_stats();
   const statsNetracell = await StatsProcess.netracell_stats();
@@ -14,11 +20,13 @@ router.get('/', async function(_req, res) {
       stats: statsSortie.listStats,
       totalCount: statsSortie.totalCount
     },
-    'netracell':{
-      title:'Statistics for Netracell mission rewards',
-      stats: statsNetracell.listStats,
-      totalCount: statsNetracell.totalCount
-    }
+    'netracells': statsNetracell.map(s => ({
+      source: s.source,
+      title: netracellPresentation[s.source].title,
+      droptable: netracellPresentation[s.source].droptable,
+      stats: s.listStats,
+      totalCount: s.totalCount
+    }))
   });
     // StatsProcess.sortie_stats()
     //   .then(ret => res.render('statsGeneral', { titleSortie: 'General statistics for Sortie and Archon\'s Hunt rewards', stats: ret.listStats, totalCount: ret.totalCount}))

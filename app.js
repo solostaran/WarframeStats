@@ -94,9 +94,11 @@ app.use(function(_req, res, next) {
  */
 mongoose.Promise = global.Promise;
 const db_host = isDocker ? 'net-db-warstats' : '127.0.0.1';
-mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {family:4})
+// migrations of the data before serving any request (bin/www waits for app.dbReady)
+const dbReady = mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {family:4})
 	.then(() => {
 		debug('Connected to database.');
+		return require('./api/migrations').migrate();
 	})
 	.catch((err) => {
 		debug(err.message);
@@ -115,6 +117,7 @@ require('./api/models/rewardSourceModel');
 require('./api/models/rewardModel');
 require('./api/models/Users');
 require('./api/models/netracellModel');
+require('./api/models/dbVersionModel');
 require('./config/passport');
 
 
@@ -177,8 +180,9 @@ app.use(function(err, req, res, next) {
  */
 if (isNodemon) {
 	const PORT = 3000;
-	app.listen(PORT, () => console.log('Server running on http://localhost:'+PORT+'/'));
+	dbReady.then(() => app.listen(PORT, () => console.log('Server running on http://localhost:'+PORT+'/')));
 } else {
+	app.dbReady = dbReady;
 	module.exports = app;
 }
 

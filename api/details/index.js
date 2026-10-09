@@ -67,6 +67,7 @@ async function netracell(id) {
 	if (!doc) return null;
 	const blocks = [
 		field('Date', day(doc.date)),
+		field('Source', doc.source && doc.source.type),
 		field('Reward', typeof doc.reward === 'string' ? doc.reward : doc.reward && doc.reward.type)
 	];
 	if (doc.tauforged) blocks.push(field('Tauforged', 'Yes'));
