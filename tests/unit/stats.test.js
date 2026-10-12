@@ -1,6 +1,6 @@
 'use strict';
 
-// Riven and booster statistics : format and compute time of riven() and booster() (aggregations),
+// Reward, riven and booster statistics : format and compute time of reward_stats(), riven() and booster() (aggregations),
 // on the data of an existing database, read only (nothing is written).
 // Database : MONGO_URI, default mongodb://127.0.0.1/WarframeStatsDB (the app outside Docker).
 
@@ -21,6 +21,7 @@ require('../../api/models/netracellModel');
 const StatsProcess = require('../../api/business/statsProcess');
 const RivenTypeProcess = require('../../api/business/rivenTypeProcess');
 const BoosterTypeProcess = require('../../api/business/boosterTypeProcess');
+const RewardTypeProcess = require('../../api/business/rewardTypeProcess');
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1/WarframeStatsDB';
 const MAX_MS = 100;
@@ -37,7 +38,7 @@ async function timed(name, fn) {
 // statistic name : the process that lists its types
 const kinds = [['riven', RivenTypeProcess], ['booster', BoosterTypeProcess]];
 
-describe('riven and booster statistics', () => {
+describe('reward, riven and booster statistics', () => {
 	const runs = {};
 	const typeNames = {};
 
@@ -45,6 +46,8 @@ describe('riven and booster statistics', () => {
 		await mongoose.connect(MONGO_URI, { family: 4, serverSelectionTimeoutMS: 3000 })
 			.catch(err => { throw new Error('Database ' + MONGO_URI + ' unreachable : ' + err.message); });
 		await mongoose.connection.db.admin().ping();	// connection ready : not part of the timing
+		typeNames.reward_stats = (await RewardTypeProcess.list()).map(rt => rt.name);
+		runs.reward_stats = await timed('reward_stats', StatsProcess.reward_stats);
 		for (const [name, typeProcess] of kinds) {
 			typeNames[name] = (await typeProcess.list()).map(t => t.name);
 			runs[name] = await timed(name, StatsProcess[name]);
@@ -53,6 +56,26 @@ describe('riven and booster statistics', () => {
 
 	afterAll(async () => {
 		await mongoose.disconnect();
+	});
+
+	describe('reward_stats()', () => {
+		it('returns { listStats: [{ type, count }], totalCount }', () => {
+			const { result } = runs.reward_stats;
+			expect(Object.keys(result).sort()).toEqual(['listStats', 'totalCount']);
+			expect(Array.isArray(result.listStats)).toBe(true);
+			expect(result.listStats.map(s => s.type.name)).toEqual(typeNames.reward_stats);
+			result.listStats.forEach(s => {
+				expect(Object.keys(s).sort()).toEqual(['count', 'type']);
+				expect(Number.isInteger(s.count)).toBe(true);
+				expect(s.count).toBeGreaterThanOrEqual(0);
+			});
+			expect(Number.isInteger(result.totalCount)).toBe(true);
+			expect(result.listStats.reduce((total, s) => total + s.count, 0)).toBe(result.totalCount);
+		});
+
+		it('is computed in less than ' + MAX_MS + ' ms', () => {
+			expect(runs.reward_stats.ms).toBeLessThan(MAX_MS);
+		});
 	});
 
 	describe.each(kinds.map(([name]) => name))('%s()', (name) => {

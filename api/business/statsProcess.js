@@ -10,17 +10,18 @@ const mongoose = require('mongoose'),
 	Netracell = mongoose.model("NetracellReward"),
 	{ netracellRewardSources } = require('../models/netracellModel');
 
-const sortie_stats = function() {
-	return new Promise( async function(resolve, reject) {
-		const rewardTypes = await RewardTypeProcess.list();
-		Promise.all(
-			rewardTypes.map(rt => Reward.countDocuments({type: rt._id}))
-		).then(results => {
-			const totalCount = results.reduce((prev, current) => prev + current);
-			const list = _.zipWith(rewardTypes, results, function (rt, count) { return { type: rt, count: count }; });
-			resolve({ listStats: list, totalCount: totalCount});
-		}).catch(err => { reject(err) });
-	});
+// count of the rewards per reward type, computed by the database
+const reward_stats = async function() {
+	const [rewardTypes, groups] = await Promise.all([
+		RewardTypeProcess.list(),
+		Reward.aggregate([
+			{ $group: { _id: '$type', count: { $sum: 1 } } }
+		])
+	]);
+	const countById = new Map(groups.map(g => [String(g._id), g.count]));
+	const list = rewardTypes.map(rt => ({ type: rt, count: countById.get(String(rt._id)) || 0 }));
+	const totalCount = list.reduce((total, s) => total + s.count, 0);
+	return { listStats: list, totalCount: totalCount };
 };
 
 // count of the rewards of a reward type per sub-type (riven type, booster type), computed by the database
@@ -71,7 +72,7 @@ const netracell_source_stats = async function(netraType, source) {
 	return { source: source, listStats: finalList, totalCount: totalCount };
 }
 
-exports.sortie_stats = sortie_stats;
+exports.reward_stats = reward_stats;
 exports.riven = riven;
 exports.booster = booster;
 exports.netracell_stats = netracell_stats;

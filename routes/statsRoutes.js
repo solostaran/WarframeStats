@@ -12,7 +12,7 @@ const netracellPresentation = {
 };
 
 router.get('/', async function(_req, res) {
-  const statsSortie = await StatsProcess.sortie_stats();
+  const statsSortie = await StatsProcess.reward_stats();
   const statsNetracell = await StatsProcess.netracell_stats();
   res.render('statsGeneral', {
     'sortie':{
@@ -28,7 +28,7 @@ router.get('/', async function(_req, res) {
       totalCount: s.totalCount
     }))
   });
-    // StatsProcess.sortie_stats()
+    // StatsProcess.reward_stats()
     //   .then(ret => res.render('statsGeneral', { titleSortie: 'General statistics for Sortie and Archon\'s Hunt rewards', stats: ret.listStats, totalCount: ret.totalCount}))
     //   .catch(err => res.status(500).send(err));
 });
