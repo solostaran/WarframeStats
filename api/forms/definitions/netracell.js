@@ -1,11 +1,17 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-	{ netracellRewardTypes, netracellRewardSources } = require('../../models/netracellModel'),
+	{ netracellRewardTypes, netracellRewardSources, netracellTauforgeableTypes } = require('../../models/netracellModel'),
 	{ date2string } = require('../../utils/convertDates'),
 	NetracellRewardProcess = require('../../business/netracellRewardProcess');
 
 const Netracell = mongoose.model('NetracellReward');
+
+// field names of the loots of a run : 'reward', 'tauforged', then 'reward2', 'tauforged2'...
+const LOOT_FIELDS = [1, 2, 3].map(n => {
+	const suffix = n === 1 ? '' : String(n);
+	return { reward: 'reward' + suffix, tauforged: 'tauforged' + suffix };
+});
 
 module.exports = {
 	id: 'netracell',
@@ -17,12 +23,16 @@ module.exports = {
 		return [
 			{ name: 'source', label: 'Source', type: 'select', required: true,
 				options: netracellRewardSources.map(source => ({ value: source, label: source })) },
-			{ name: 'reward', label: 'Reward', type: 'select', required: true,
-				options: netracellRewardTypes.map(type => ({ value: type, label: type })) },
-			// only shards can be tauforged
-			{ name: 'tauforged', label: 'Tauforged', type: 'select', required: true,
-				options: [{ value: 'false', label: 'No' }, { value: 'true', label: 'Yes' }],
-				showIf: { field: 'reward', in: netracellRewardTypes.filter(type => type.includes('Shard')) } },
+			// 1 loot for a Netracell ; up to 3 for a Deep Archimedea, the third one after the second one
+			...LOOT_FIELDS.flatMap((loot, index) => [
+				{ name: loot.reward, label: index === 0 ? 'Reward' : 'Reward ' + (index + 1), type: 'select', required: index === 0,
+					options: netracellRewardTypes.map(type => ({ value: type, label: type })),
+					...(index === 1 ? { showIf: { field: 'source', in: ['Deep Archimedea'] } } : {}),
+					...(index === 2 ? { showIf: { field: LOOT_FIELDS[1].reward, notEmpty: true } } : {}) },
+				{ name: loot.tauforged, label: 'Tauforged', type: 'select', required: true,
+					options: [{ value: 'false', label: 'No' }, { value: 'true', label: 'Yes' }],
+					showIf: { field: loot.reward, in: netracellTauforgeableTypes } }
+			]),
 			{ name: 'date', label: 'Date', type: 'date', required: true }
 		];
 	},
@@ -35,8 +45,13 @@ module.exports = {
 			lockedReason: null,
 			values: {
 				source: doc.source && doc.source.type ? doc.source.type : '',
-				reward: doc.reward && doc.reward.type ? doc.reward.type : '',
-				tauforged: doc.tauforged ? 'true' : 'false',
+				...Object.fromEntries(LOOT_FIELDS.flatMap((fields, index) => {
+					const loot = (doc.loots || [])[index];
+					return [
+						[fields.reward, loot && loot.reward ? loot.reward.type : ''],
+						[fields.tauforged, loot && loot.tauforged ? 'true' : 'false']
+					];
+				})),
 				date: doc.date ? date2string(doc.date) : ''
 			}
 		};
@@ -45,8 +60,9 @@ module.exports = {
 	save: (values, userId, id) => NetracellRewardProcess.addOrUpdate({
 		...(id ? { _id: id } : {}),
 		source: values.source,
-		reward: values.reward,
 		date: values.date,
-		tauforged: values.tauforged === 'true'
+		// the visible loot fields only (validated by the form engine)
+		loots: LOOT_FIELDS.filter(fields => values[fields.reward])
+			.map(fields => ({ reward: values[fields.reward], tauforged: values[fields.tauforged] === 'true' }))
 	}, userId)
 };

@@ -25,7 +25,8 @@ router.get('/', async function(_req, res) {
       title: netracellPresentation[s.source].title,
       droptable: netracellPresentation[s.source].droptable,
       stats: s.listStats,
-      totalCount: s.totalCount
+      totalCount: s.totalCount,
+      runCount: s.runCount
     }))
   });
     // StatsProcess.reward_stats()

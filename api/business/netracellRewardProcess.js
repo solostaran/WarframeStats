@@ -13,14 +13,14 @@ const count = function() {
 	return Netracell.countDocuments({}).exec();
 };
 
-const countByType = function(type) {
-	return Netracell.countDocuments({reward: type}).exec();
+// "Azure Archon Shard (Tauforged), Melee Duplicate" : the loots of a run, as a text
+const lootsText = function(loots) {
+	return (loots || []).map(loot => loot.reward.toType() + (loot.tauforged ? ' (Tauforged)' : '')).join(', ');
 };
 
 const list_raw = async function() {
 	return Netracell
 		.find({})
-		.populate({path:'reward', select:'type'})
 		.sort({date: -1})
 		.exec()
 		.then(list => {
@@ -28,8 +28,8 @@ const list_raw = async function() {
 				return {
 					_id: n._id,
 					source: n.source ? n.source.toType() : undefined,
-					reward: n.reward.toType(),
-					tauforged: n.tauforged,
+					rewards: lootsText(n.loots),
+					lootCount: n.loots ? n.loots.length : 0,
 					date: n.date,
 					Created_date: n.Created_date
 				}
@@ -64,6 +64,24 @@ const adds = function(netArray, userId, onSuccess, onError) {
 		}).catch(onError);
 };
 
+// form.loots : [{ reward, tauforged }] ; without loots, form.reward and form.tauforged are the single loot (former API)
+const form2loots = async function(form, sourceType) {
+	const loots = Array.isArray(form.loots) ? form.loots
+		: (form.reward !== undefined ? [{ reward: form.reward, tauforged: form.tauforged }] : []);
+	const max = netracellModel.netracellMaxLoots[sourceType];
+	if (loots.length < 1 || loots.length > max)
+		throw new Error('A '+sourceType+' reward has '+(max > 1 ? '1 to '+max+' loots.' : '1 loot.'));
+	return Promise.all(loots.map(async loot => {
+		const find_reward_value = encodeURIComponent(loot ? loot.reward : undefined).replaceAll("%20", " ");
+		const type = await findType(find_reward_value);
+		if (!type) throw new Error('Wrong netracell reward type.');
+		// a boolean or the text 'true' (forms), for a shard only ; anything else : not tauforged
+		const tauforged = (loot.tauforged === true || loot.tauforged === 'true')
+			&& netracellModel.netracellTauforgeableTypes.includes(type.type);
+		return tauforged ? { reward: type, tauforged: true } : { reward: type };
+	}));
+};
+
 const form2reward = async function(form, userId) {
 	let netracell;
 	if (form._id) {
@@ -88,22 +106,8 @@ const form2reward = async function(form, userId) {
 	} else {
 		throw new Error('Wrong netracell reward source.');
 	}
-	const find_reward_value = encodeURIComponent(form.reward).replaceAll("%20", " ");
-	const type = await findType(find_reward_value);
-	if (type) {
-		netracell.reward = type;
-		netracell.markModified('reward');
-	} else {
-		throw new Error('Wrong netracell reward type.');
-	}
-	// a boolean or the text 'true' (forms) ; anything else removes the tauforged flag
-	if (form.tauforged === true || form.tauforged === 'true') {
-		netracell.tauforged = true;
-		netracell.markModified('tauforged');
-	} else if (netracell.tauforged !== undefined) {
-		netracell.tauforged = undefined;
-		netracell.markModified('tauforged');
-	}
+	netracell.loots = await form2loots(form, source.type);
+	netracell.markModified('loots');
 	if (form.date) {
 		if (form.date !== netracell.date) {
 			netracell.date = form.date;
@@ -124,7 +128,6 @@ const findById = async function(id) {
 				// never the user document : this result is sent to visitors
 				if (netracell.createdBy) netracell.createdBy = publicUser(netracell.createdBy);
 				if (netracell.modifiedBy) netracell.modifiedBy = publicUser(netracell.modifiedBy);
-				netracell.reward = netracell.reward.toType();
 				return Promise.resolve(netracell);
 			}
 			return Promise.resolve();
@@ -199,7 +202,6 @@ const setSources = function(onSuccess, onError) {
 }
 
 exports.count = count;
-exports.countByType = countByType;
 exports.list_raw = list_raw;
 exports.addOrUpdate = addOrUpdate;
 exports.adds = adds;

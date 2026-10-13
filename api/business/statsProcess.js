@@ -1,14 +1,12 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-	_ = require("lodash"),
 	Reward = mongoose.model('Reward'),
 	RewardTypeProcess = require('./rewardTypeProcess'),
 	RivenTypeProcess = require('./rivenTypeProcess'),
 	BoosterTypeProcess = require('./boosterTypeProcess'),
-	NetracellProcess = require('./netracellRewardProcess'),
 	Netracell = mongoose.model("NetracellReward"),
-	{ netracellRewardSources } = require('../models/netracellModel');
+	{ netracellRewardSources, netracellRewardTypes } = require('../models/netracellModel');
 
 // count of the rewards per reward type, computed by the database
 const reward_stats = async function() {
@@ -51,26 +49,28 @@ const booster = function() {
 	return countBySubType('Booster', 'booster', BoosterTypeProcess.list);
 };
 
-// one statistic per netracell reward source : [{ source, listStats, totalCount }]
+// one statistic per netracell reward source : [{ source, listStats, totalCount, runCount }], computed by the database
+// listStats : count of loots per reward type ; totalCount : count of loots ; runCount : count of runs (documents)
 const netracell_stats = async function() {
-	const netraType = await NetracellProcess.listTypes();
-	return Promise.all(netracellRewardSources.map(source => netracell_source_stats(netraType, source)));
-}
-
-const netracell_source_stats = async function(netraType, source) {
-	const results = await Promise.all(
-		netraType.map(nt => Netracell.countDocuments({'reward._id': nt._id, 'source.type': source}))
-	);
-	const totalCount = results.reduce((prev, current) => prev + current, 0);
-	const list = _.zipWith(netraType, results, function (nt, count) { return { type: nt, count: count }; });
-	let finalList = {};
-	list.forEach(s => {
-		let stat = finalList[s.type.type];
-		if (stat) {finalList[s.type.type] = stat + s.count;}
-		else {finalList[s.type.type] = s.count;}
+	const [lootGroups, runGroups] = await Promise.all([
+		Netracell.aggregate([
+			{ $unwind: '$loots' },
+			{ $group: { _id: { source: '$source.type', reward: '$loots.reward.type' }, count: { $sum: 1 } } }
+		]),
+		Netracell.aggregate([
+			{ $group: { _id: '$source.type', count: { $sum: 1 } } }
+		])
+	]);
+	const runsBySource = new Map(runGroups.map(g => [g._id, g.count]));
+	return netracellRewardSources.map(source => {
+		const listStats = {};
+		netracellRewardTypes.forEach(type => listStats[type] = 0);
+		lootGroups.filter(g => g._id.source === source && Object.hasOwn(listStats, g._id.reward))
+			.forEach(g => listStats[g._id.reward] = g.count);
+		const totalCount = Object.values(listStats).reduce((total, count) => total + count, 0);
+		return { source: source, listStats: listStats, totalCount: totalCount, runCount: runsBySource.get(source) || 0 };
 	});
-	return { source: source, listStats: finalList, totalCount: totalCount };
-}
+};
 
 exports.reward_stats = reward_stats;
 exports.riven = riven;

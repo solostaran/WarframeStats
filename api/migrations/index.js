@@ -13,7 +13,8 @@ const VERSION_ID = 'schema';
 const INITIAL_VERSION = 1;
 
 const migrations = [
-	require('./v2-netracell-source')
+	require('./v2-netracell-source'),
+	require('./v3-netracell-loots')
 ];
 
 const EMPTY_MESSAGE = 'The database is empty and needs initialization: restore a backup, then restart the application.';

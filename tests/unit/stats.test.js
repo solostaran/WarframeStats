@@ -1,6 +1,7 @@
 'use strict';
 
-// Reward, riven and booster statistics : format and compute time of reward_stats(), riven() and booster() (aggregations),
+// Reward, riven, booster and netracell statistics : format and compute time of reward_stats(), riven(), booster()
+// and netracell_stats() (aggregations),
 // on the data of an existing database, read only (nothing is written).
 // Database : MONGO_URI, default mongodb://127.0.0.1/WarframeStatsDB (the app outside Docker).
 
@@ -16,7 +17,7 @@ require('../../api/models/rewardTypeModel');
 require('../../api/models/rewardSourceModel');
 require('../../api/models/rewardModel');
 require('../../api/models/Users');
-require('../../api/models/netracellModel');
+const { netracellRewardSources, netracellRewardTypes } = require('../../api/models/netracellModel');
 
 const StatsProcess = require('../../api/business/statsProcess');
 const RivenTypeProcess = require('../../api/business/rivenTypeProcess');
@@ -38,7 +39,7 @@ async function timed(name, fn) {
 // statistic name : the process that lists its types
 const kinds = [['riven', RivenTypeProcess], ['booster', BoosterTypeProcess]];
 
-describe('reward, riven and booster statistics', () => {
+describe('reward, riven, booster and netracell statistics', () => {
 	const runs = {};
 	const typeNames = {};
 
@@ -52,6 +53,7 @@ describe('reward, riven and booster statistics', () => {
 			typeNames[name] = (await typeProcess.list()).map(t => t.name);
 			runs[name] = await timed(name, StatsProcess[name]);
 		}
+		runs.netracell_stats = await timed('netracell_stats', StatsProcess.netracell_stats);
 	});
 
 	afterAll(async () => {
@@ -95,6 +97,29 @@ describe('reward, riven and booster statistics', () => {
 
 		it('is computed in less than ' + MAX_MS + ' ms', () => {
 			expect(runs[name].ms).toBeLessThan(MAX_MS);
+		});
+	});
+
+	describe('netracell_stats()', () => {
+		it('returns [{ source, listStats: { type: count }, totalCount, runCount }], one per source', () => {
+			const { result } = runs.netracell_stats;
+			expect(result.map(s => s.source)).toEqual(netracellRewardSources);
+			result.forEach(s => {
+				expect(Object.keys(s).sort()).toEqual(['listStats', 'runCount', 'source', 'totalCount']);
+				expect(Object.keys(s.listStats)).toEqual(netracellRewardTypes);
+				Object.values(s.listStats).forEach(value => {
+					expect(Number.isInteger(value)).toBe(true);
+					expect(value).toBeGreaterThanOrEqual(0);
+				});
+				expect(Object.values(s.listStats).reduce((total, value) => total + value, 0)).toBe(s.totalCount);
+				// 1 to 3 loots per run
+				expect(s.runCount).toBeLessThanOrEqual(s.totalCount);
+				expect(s.totalCount).toBeLessThanOrEqual(3 * s.runCount);
+			});
+		});
+
+		it('is computed in less than ' + MAX_MS + ' ms', () => {
+			expect(runs.netracell_stats.ms).toBeLessThan(MAX_MS);
 		});
 	});
 });
