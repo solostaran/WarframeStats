@@ -40,6 +40,10 @@ describe('data migrations', () => {
 			]);
 		});
 
+		it('is not empty', async () => {
+			expect(await migrations.isEmpty()).toBe(false);
+		});
+
 		it('has no version document, so it is at version 1', async () => {
 			expect(await migrations.currentVersion()).toBe(1);
 		});
@@ -71,6 +75,30 @@ describe('data migrations', () => {
 			expect(await migrations.migrate()).toBe(2);
 			expect(await NetracellRewardSource.countDocuments({})).toBe(netracellRewardSources.length);
 			expect(await Netracell.countDocuments({ 'source.type': 'Netracell' })).toBe(2);
+		});
+	});
+
+	describe('from an empty database', () => {
+		beforeAll(async () => {
+			await mongoose.connection.dropDatabase();
+			// empty collections, as the ones created by the indexes at launch
+			await Netracell.createCollection();
+			await NetracellRewardType.createCollection();
+		});
+
+		it('is empty', async () => {
+			expect(await migrations.isEmpty()).toBe(true);
+		});
+
+		it('is not migrated and stays at version 1', async () => {
+			expect(await migrations.migrate()).toBe(1);
+			expect(await DbVersion.findById('schema').lean()).toBeNull();
+			expect(await NetracellRewardSource.countDocuments({})).toBe(0);
+		});
+
+		it('is no longer empty with a document', async () => {
+			await NetracellRewardType.create({ type: netracellRewardTypes[0] });
+			expect(await migrations.isEmpty()).toBe(false);
 		});
 	});
 
