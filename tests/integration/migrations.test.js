@@ -40,15 +40,19 @@ describe('data migrations', () => {
 			]);
 		});
 
+		it('is not empty', async () => {
+			expect(await migrations.isEmpty()).toBe(false);
+		});
+
 		it('has no version document, so it is at version 1', async () => {
 			expect(await migrations.currentVersion()).toBe(1);
 		});
 
 		it('migrates to the latest version', async () => {
 			expect(await migrations.migrate()).toBe(migrations.LATEST_VERSION);
-			expect(migrations.LATEST_VERSION).toBe(2);
+			expect(migrations.LATEST_VERSION).toBe(3);
 			const doc = await DbVersion.findById('schema').lean();
-			expect(doc.version).toBe(2);
+			expect(doc.version).toBe(3);
 			expect(doc.migratedAt).toBeInstanceOf(Date);
 		});
 
@@ -67,10 +71,71 @@ describe('data migrations', () => {
 			});
 		});
 
+		it('makes the reward and tauforged of every netracell reward its single loot', async () => {
+			const docs = await Netracell.collection.find({}).sort({ date: -1 }).toArray();
+			expect(docs.map(doc => doc.loots)).toEqual([
+				[{ reward: expect.objectContaining({ type: netracellRewardTypes[0] }), tauforged: true }],
+				[{ reward: expect.objectContaining({ type: netracellRewardTypes[4] }) }]
+			]);
+			docs.forEach(doc => {
+				expect(doc).not.toHaveProperty('reward');
+				expect(doc).not.toHaveProperty('tauforged');
+			});
+		});
+
 		it('does nothing when run again', async () => {
-			expect(await migrations.migrate()).toBe(2);
+			const before = await Netracell.collection.find({}).sort({ date: -1 }).toArray();
+			expect(await migrations.migrate()).toBe(3);
 			expect(await NetracellRewardSource.countDocuments({})).toBe(netracellRewardSources.length);
 			expect(await Netracell.countDocuments({ 'source.type': 'Netracell' })).toBe(2);
+			expect(await Netracell.collection.find({}).sort({ date: -1 }).toArray()).toEqual(before);
+		});
+	});
+
+	describe('from a version 2 database', () => {
+		beforeAll(async () => {
+			await mongoose.connection.dropDatabase();
+			const types = await NetracellRewardType.insertMany(netracellRewardTypes.map(type => ({ type })));
+			const sources = await NetracellRewardSource.insertMany(netracellRewardSources.map(type => ({ type })));
+			await DbVersion.create({ _id: 'schema', version: 2 });
+			// version 2 netracell rewards : a source, a single reward
+			await Netracell.collection.insertMany([
+				{ source: { _id: sources[1]._id, type: sources[1].type },
+					reward: { _id: types[2]._id, type: types[2].type }, tauforged: true, date: new Date('2024-12-16') }
+			]);
+		});
+
+		it('only runs the migration 3', async () => {
+			expect(await migrations.currentVersion()).toBe(2);
+			expect(await migrations.migrate()).toBe(3);
+			expect(await NetracellRewardSource.countDocuments({})).toBe(netracellRewardSources.length);
+			const doc = await Netracell.collection.findOne({});
+			expect(doc.source.type).toBe('Deep Archimedea');
+			expect(doc.loots).toEqual([{ reward: expect.objectContaining({ type: netracellRewardTypes[2] }), tauforged: true }]);
+		});
+	});
+
+	describe('from an empty database', () => {
+		beforeAll(async () => {
+			await mongoose.connection.dropDatabase();
+			// empty collections, as the ones created by the indexes at launch
+			await Netracell.createCollection();
+			await NetracellRewardType.createCollection();
+		});
+
+		it('is empty', async () => {
+			expect(await migrations.isEmpty()).toBe(true);
+		});
+
+		it('is not migrated and stays at version 1', async () => {
+			expect(await migrations.migrate()).toBe(1);
+			expect(await DbVersion.findById('schema').lean()).toBeNull();
+			expect(await NetracellRewardSource.countDocuments({})).toBe(0);
+		});
+
+		it('is no longer empty with a document', async () => {
+			await NetracellRewardType.create({ type: netracellRewardTypes[0] });
+			expect(await migrations.isEmpty()).toBe(false);
 		});
 	});
 

@@ -67,10 +67,13 @@ async function netracell(id) {
 	if (!doc) return null;
 	const blocks = [
 		field('Date', day(doc.date)),
-		field('Source', doc.source && doc.source.type),
-		field('Reward', typeof doc.reward === 'string' ? doc.reward : doc.reward && doc.reward.type)
+		field('Source', doc.source && doc.source.type)
 	];
-	if (doc.tauforged) blocks.push(field('Tauforged', 'Yes'));
+	const loots = (doc.loots || []).map(loot => ({
+		text: (loot.reward ? loot.reward.type : NONE) + (loot.tauforged ? ' (Tauforged)' : ''),
+		items: []
+	}));
+	blocks.push(loots.length > 0 ? { label: 'Rewards', list: loots } : field('Rewards', NONE));
 	return { title: 'Netracell', blocks: blocks.concat(recordInfo(doc)) };
 }
 

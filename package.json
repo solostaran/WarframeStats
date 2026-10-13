@@ -43,7 +43,8 @@
     "supertest": "^7.3.1"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "watchPathIgnorePatterns": ["<rootDir>/compose-warstats/"]
   },
   "overrides": {
     "@istanbuljs/load-nyc-config": {

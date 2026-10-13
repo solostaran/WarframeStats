@@ -96,9 +96,11 @@ mongoose.Promise = global.Promise;
 const db_host = isDocker ? 'net-db-warstats' : '127.0.0.1';
 // migrations of the data before serving any request (bin/www waits for app.dbReady)
 const dbReady = mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {family:4})
-	.then(() => {
+	.then(async () => {
 		debug('Connected to database.');
-		return require('./api/migrations').migrate();
+		const migrations = require('./api/migrations');
+		await migrations.migrate();
+		app.locals.dbEmpty = await migrations.isEmpty();	// banner of layout.pug, until a restart
 	})
 	.catch((err) => {
 		debug(err.message);

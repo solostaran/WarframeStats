@@ -23,7 +23,7 @@ services:
       warstats-network:
         aliases:
             - net-db-warstats
-  # Image built locally
+# Image built locally
   app-warstats:
     depends_on:
       db-warstats:
