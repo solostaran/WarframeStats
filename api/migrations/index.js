@@ -6,6 +6,7 @@
 // A migration must be idempotent : MongoDB (standalone) has no transaction, it may run again after a crash.
 // An empty database is never migrated (no version written) : the data restored later is migrated at the next launch.
 const mongoose = require('mongoose');
+const debug = require('debug')('warframestats:server');
 
 const DbVersion = mongoose.model('DbVersion');
 
@@ -56,7 +57,7 @@ const migrate = async function() {
 		).exec();
 		version = migration.version;
 	}
-	console.log("Database version : "+version);
+	debug("Database version : "+version);
 	return version;
 };
 

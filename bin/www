@@ -58,7 +58,7 @@ if (!isHttp) {
 // only once the database is connected and migrated
 app.dbReady.then(() => {
   if (isHttp && isProd && !isDocker) { // localhost only
-    debug('Production with localhost interface')
+    debug('Production with localhost only interface')
     server.listen(port, '127.0.0.1');
   } else {
     server.listen(port);
