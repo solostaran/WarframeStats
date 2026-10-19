@@ -46,10 +46,4 @@ router.get('/booster', function (_req, res) {
         .catch(err => res.status(500).send(err));
 });
 
-router.get('/netra', function(_req, res) {
-   StatsProcess.netracell_stats()
-     .then(ret => res.send(ret))
-     .catch(err => res.status(500).send(err));
-});
-
 module.exports = router;

@@ -11,7 +11,7 @@ router.get('/', async function(_req, res) {
         // const events = response.data.Events.filter( (n,i) => { return n.Messages[0].LanguageCode === 'en'; });
 
         const response = await axios.get('https://api.warframestat.us/pc/');
-        res.render('worldEvents', {title: 'World Events', pc: response.data})
+        res.render('worldState', {title: 'World Events', pc: response.data})
     } catch (error) {
         res.status(500).send(error);
     }
