@@ -15,7 +15,8 @@ const INITIAL_VERSION = 1;
 
 const migrations = [
 	require('./v2-netracell-source'),
-	require('./v3-netracell-loots')
+	require('./v3-netracell-loots'),
+	require('./v4-temporal-seed')
 ];
 
 const EMPTY_MESSAGE = 'The database is empty and needs initialization: restore a backup, then restart the application.';

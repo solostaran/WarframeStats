@@ -4,9 +4,10 @@
 // The same fields are used to render the modal (views/mixins/formModal.pug)
 // and to validate what the browser sends back : the browser is never trusted.
 //
-// Field : { name, label, type, required, placeholder, min, max, maxLength, options, showIf }
+// Field : { name, label, type, required, placeholder, min, max, maxLength, options, default, showIf }
 //   type    : 'string' | 'integer' | 'date' | 'select' | 'list' (repeatable select, at most "max" rows)
 //   options : [{ value, label }] for 'select' and 'list'
+//   default : value of the option selected in an empty form, for 'select' (rendered only, never validated)
 //   showIf  : { field, in: [values] } or { field, notEmpty: true }
 //             (data only, evaluated the same way by public/javascripts/formModal.js)
 

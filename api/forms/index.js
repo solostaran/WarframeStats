@@ -6,7 +6,8 @@ const formEngine = require('./formEngine');
 const definitions = new Map([
 	require('./definitions/reward'),
 	require('./definitions/riven'),
-	require('./definitions/netracell')
+	require('./definitions/netracell'),
+	require('./definitions/temporal')
 ].map(definition => [definition.id, definition]));
 
 // A record can only be edited during this period after its creation in database

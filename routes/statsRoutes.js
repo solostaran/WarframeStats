@@ -5,15 +5,16 @@ const router = express.Router();
 
 const StatsProcess = require('../api/business/statsProcess');
 
-// per netracell reward source : title and where to find it in the official droptables
+// per netracell and temporal reward source : title and where to find it in the official droptables (search text, anchor)
 const netracellPresentation = {
-  'Netracell': { title: 'Statistics for Netracell mission rewards', droptable: 'Entrati Netracell Coffer' },
-  'Deep Archimedea': { title: 'Statistics for Deep Archimedea rewards', droptable: 'Deep Archimedea' }
+  'Netracell': { title: 'Statistics for Netracell mission rewards', droptable: 'Entrati Netracell Coffer', anchor: 'deeparchimedeasilverrewards' },
+  'Deep Archimedea': { title: 'Statistics for Deep Archimedea rewards', droptable: 'Deep Archimedea', anchor: 'deeparchimedeasilverrewards' },
+  'Temporal Archimedea': { title: 'Statistics for Temporal Archimedea rewards', droptable: 'Temporal Archimedea', anchor: 'temporalarchimedeasilverrewards' }
 };
 
 router.get('/', async function(_req, res) {
   const statsSortie = await StatsProcess.reward_stats();
-  const statsNetracell = await StatsProcess.netracell_stats();
+  const statsNetracell = (await StatsProcess.netracell_stats()).concat(await StatsProcess.temporal_stats());
   res.render('statsGeneral', {
     'sortie':{
       title:'Riven statistics for Sortie and Archon\'s Hunt rewards',
@@ -24,6 +25,7 @@ router.get('/', async function(_req, res) {
       source: s.source,
       title: netracellPresentation[s.source].title,
       droptable: netracellPresentation[s.source].droptable,
+      anchor: netracellPresentation[s.source].anchor,
       stats: s.listStats,
       totalCount: s.totalCount,
       runCount: s.runCount
@@ -44,12 +46,6 @@ router.get('/booster', function (_req, res) {
     StatsProcess.booster()
         .then(ret => res.render('statsBooster', {title: 'Booster statistics for Sortie and Archon\'s Hunt rewards', boosterStats: ret}))
         .catch(err => res.status(500).send(err));
-});
-
-router.get('/netra', function(_req, res) {
-   StatsProcess.netracell_stats()
-     .then(ret => res.send(ret))
-     .catch(err => res.status(500).send(err));
 });
 
 module.exports = router;
