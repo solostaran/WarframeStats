@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const passport = require('passport');
 const router = require('express').Router();
-const auth = require('../config/jwt_auth').auth;
+const { auth, setAccessTokenCookie } = require('../config/jwt_auth');
 const Users = mongoose.model('Users');
 const { obfuscate_email } = require('../api/utils/obfuscate');
 
@@ -134,7 +134,7 @@ router.post('/loginFormProcess', auth.optional, function(req, res, next) {
 			user.token = passportUser.generateJWT();
 
 			// Cookie access token (the login state of the PUG templates is computed per request by config/loginState.js)
-			res.cookie('access_token', user.token, { httpOnly: true, sameSite: 'lax', maxAge: 600000}); // 10 min
+			setAccessTokenCookie(res, user.token);
 			console.log(new Date().toISOString()+" | User '"+obfuscate_email(user.email)+"' logged.");
 			res.render('logged', { title: 'connected', connected: true, user: user.toAuthJSON() });
 			return;
