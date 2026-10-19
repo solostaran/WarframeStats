@@ -6,7 +6,9 @@ const mongoose = require('mongoose'),
 	RivenTypeProcess = require('./rivenTypeProcess'),
 	BoosterTypeProcess = require('./boosterTypeProcess'),
 	Netracell = mongoose.model("NetracellReward"),
-	{ netracellRewardSources, netracellRewardTypes } = require('../models/netracellModel');
+	{ netracellRewardSources, netracellRewardTypes } = require('../models/netracellModel'),
+	Temporal = mongoose.model("TemporalReward"),
+	{ temporalRewardSources, temporalRewardTypes } = require('../models/temporalModel');
 
 // count of the rewards per reward type, computed by the database
 const reward_stats = async function() {
@@ -49,22 +51,23 @@ const booster = function() {
 	return countBySubType('Booster', 'booster', BoosterTypeProcess.list);
 };
 
-// one statistic per netracell reward source : [{ source, listStats, totalCount, runCount }], computed by the database
+// one statistic per reward source of runs with loots (netracell, temporal) : [{ source, listStats, totalCount, runCount }],
+// computed by the database
 // listStats : count of loots per reward type ; totalCount : count of loots ; runCount : count of runs (documents)
-const netracell_stats = async function() {
+const lootStats = async function(Model, rewardSources, rewardTypes) {
 	const [lootGroups, runGroups] = await Promise.all([
-		Netracell.aggregate([
+		Model.aggregate([
 			{ $unwind: '$loots' },
 			{ $group: { _id: { source: '$source.type', reward: '$loots.reward.type' }, count: { $sum: 1 } } }
 		]),
-		Netracell.aggregate([
+		Model.aggregate([
 			{ $group: { _id: '$source.type', count: { $sum: 1 } } }
 		])
 	]);
 	const runsBySource = new Map(runGroups.map(g => [g._id, g.count]));
-	return netracellRewardSources.map(source => {
+	return rewardSources.map(source => {
 		const listStats = {};
-		netracellRewardTypes.forEach(type => listStats[type] = 0);
+		rewardTypes.forEach(type => listStats[type] = 0);
 		lootGroups.filter(g => g._id.source === source && Object.hasOwn(listStats, g._id.reward))
 			.forEach(g => listStats[g._id.reward] = g.count);
 		const totalCount = Object.values(listStats).reduce((total, count) => total + count, 0);
@@ -72,7 +75,16 @@ const netracell_stats = async function() {
 	});
 };
 
+const netracell_stats = function() {
+	return lootStats(Netracell, netracellRewardSources, netracellRewardTypes);
+};
+
+const temporal_stats = function() {
+	return lootStats(Temporal, temporalRewardSources, temporalRewardTypes);
+};
+
 exports.reward_stats = reward_stats;
 exports.riven = riven;
 exports.booster = booster;
 exports.netracell_stats = netracell_stats;
+exports.temporal_stats = temporal_stats;

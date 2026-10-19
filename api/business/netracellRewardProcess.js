@@ -7,7 +7,8 @@ const mongoose = require('mongoose'),
 	NetracellRewardSource = mongoose.model("NetracellRewardSource"),
 	netracellModel = require('../models/netracellModel'),
 	convert = require('../utils/convertDates.js'),
-	publicUser = require('../utils/publicUser');
+	publicUser = require('../utils/publicUser'),
+	seed = require('../utils/seedTypes');
 
 const count = function() {
 	return Netracell.countDocuments({}).exec();
@@ -168,29 +169,6 @@ const listSources = function() {
 
 const findSource = async function(type_string) {
 	return NetracellRewardSource.findOne({type: type_string});
-}
-
-// inserts a document { type } in "Model" for each value of "types"
-const seed = function(Model, types, label, onSuccess, onError) {
-	let inserted = 0;
-	let rejected = 0;
-	let rejects = [];
-	Promise.all(
-		types.map(type => new Promise(
-			resolve => Model.create({type: type})
-				.then(ret => { ++inserted; resolve(ret)})
-				.catch(err => {
-					rejects.push({reject: type, error: err});
-					++rejected;
-					resolve(err);
-				})
-			)
-		)
-	).then(() => {
-		const result = {insertedCount: inserted , rejectedCount: rejected, rejects: rejects };
-		console.log(label+" insertion : "+JSON.stringify(result));
-		onSuccess(result);
-	}).catch(onError)
 }
 
 const setTypes = function(onSuccess, onError) {

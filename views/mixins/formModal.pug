@@ -6,7 +6,8 @@ mixin formModalSelect(field, inputId, required)
 	select(class='form-select' id=inputId name=field.name required=required aria-label=field.label)
 		option(value='')= required ? 'Choose…' : 'None'
 		each option in field.options
-			option(value=option.value)= option.label
+			//- "selected" : the default value, restored by form.reset() each time the form is opened to create a record
+			option(value=option.value selected=field.default !== undefined && option.value === field.default)= option.label
 
 mixin formModalControl(field, inputId)
 	case field.type

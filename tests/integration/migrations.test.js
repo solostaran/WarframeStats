@@ -8,12 +8,15 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 
 // Mongoose Schemas, before the migrations (they get their models when required)
 const { netracellRewardTypes, netracellRewardSources } = require('../../api/models/netracellModel');
+const { temporalRewardTypes, temporalRewardSources } = require('../../api/models/temporalModel');
 require('../../api/models/dbVersionModel');
 const migrations = require('../../api/migrations');
 
 const Netracell = mongoose.model('NetracellReward');
 const NetracellRewardType = mongoose.model('NetracellRewardType');
 const NetracellRewardSource = mongoose.model('NetracellRewardSource');
+const TemporalRewardType = mongoose.model('TemporalRewardType');
+const TemporalRewardSource = mongoose.model('TemporalRewardSource');
 const DbVersion = mongoose.model('DbVersion');
 
 describe('data migrations', () => {
@@ -50,9 +53,9 @@ describe('data migrations', () => {
 
 		it('migrates to the latest version', async () => {
 			expect(await migrations.migrate()).toBe(migrations.LATEST_VERSION);
-			expect(migrations.LATEST_VERSION).toBe(3);
+			expect(migrations.LATEST_VERSION).toBe(4);
 			const doc = await DbVersion.findById('schema').lean();
-			expect(doc.version).toBe(3);
+			expect(doc.version).toBe(4);
 			expect(doc.migratedAt).toBeInstanceOf(Date);
 		});
 
@@ -83,10 +86,19 @@ describe('data migrations', () => {
 			});
 		});
 
+		it('seeds the temporal reward sources and types', async () => {
+			const sources = await TemporalRewardSource.find({}).lean();
+			expect(sources.map(s => s.type)).toEqual(temporalRewardSources);
+			const types = await TemporalRewardType.find({}).lean();
+			expect(types.map(t => t.type).sort()).toEqual([...temporalRewardTypes].sort());
+		});
+
 		it('does nothing when run again', async () => {
 			const before = await Netracell.collection.find({}).sort({ date: -1 }).toArray();
-			expect(await migrations.migrate()).toBe(3);
+			expect(await migrations.migrate()).toBe(4);
 			expect(await NetracellRewardSource.countDocuments({})).toBe(netracellRewardSources.length);
+			expect(await TemporalRewardSource.countDocuments({})).toBe(temporalRewardSources.length);
+			expect(await TemporalRewardType.countDocuments({})).toBe(temporalRewardTypes.length);
 			expect(await Netracell.countDocuments({ 'source.type': 'Netracell' })).toBe(2);
 			expect(await Netracell.collection.find({}).sort({ date: -1 }).toArray()).toEqual(before);
 		});
@@ -105,13 +117,31 @@ describe('data migrations', () => {
 			]);
 		});
 
-		it('only runs the migration 3', async () => {
+		it('only runs the migrations 3 and 4', async () => {
 			expect(await migrations.currentVersion()).toBe(2);
-			expect(await migrations.migrate()).toBe(3);
+			expect(await migrations.migrate()).toBe(4);
 			expect(await NetracellRewardSource.countDocuments({})).toBe(netracellRewardSources.length);
 			const doc = await Netracell.collection.findOne({});
 			expect(doc.source.type).toBe('Deep Archimedea');
 			expect(doc.loots).toEqual([{ reward: expect.objectContaining({ type: netracellRewardTypes[2] }), tauforged: true }]);
+		});
+	});
+
+	describe('from a version 3 database, partly seeded by /temporal/setSources and /temporal/setTypes', () => {
+		beforeAll(async () => {
+			await mongoose.connection.dropDatabase();
+			await DbVersion.create({ _id: 'schema', version: 3 });
+			await TemporalRewardSource.insertMany(temporalRewardSources.map(type => ({ type })));
+			await TemporalRewardType.insertMany(temporalRewardTypes.slice(0, 2).map(type => ({ type })));
+		});
+
+		it('only runs the migration 4, without duplicate', async () => {
+			const [source] = await TemporalRewardSource.find({}).lean();
+			expect(await migrations.migrate()).toBe(4);
+			const sources = await TemporalRewardSource.find({}).lean();
+			expect(sources).toEqual([source]);
+			const types = await TemporalRewardType.find({}).lean();
+			expect(types.map(t => t.type).sort()).toEqual([...temporalRewardTypes].sort());
 		});
 	});
 
@@ -131,6 +161,8 @@ describe('data migrations', () => {
 			expect(await migrations.migrate()).toBe(1);
 			expect(await DbVersion.findById('schema').lean()).toBeNull();
 			expect(await NetracellRewardSource.countDocuments({})).toBe(0);
+			expect(await TemporalRewardSource.countDocuments({})).toBe(0);
+			expect(await TemporalRewardType.countDocuments({})).toBe(0);
 		});
 
 		it('is no longer empty with a document', async () => {

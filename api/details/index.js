@@ -7,7 +7,8 @@
 const { date2string } = require('../utils/convertDates'),
 	RewardProcess = require('../business/rewardProcess'),
 	RivenProcess = require('../business/rivenProcess'),
-	NetracellRewardProcess = require('../business/netracellRewardProcess');
+	NetracellRewardProcess = require('../business/netracellRewardProcess'),
+	TemporalProcess = require('../business/temporalProcess');
 
 const NONE = '-';
 
@@ -77,7 +78,22 @@ async function netracell(id) {
 	return { title: 'Netracell', blocks: blocks.concat(recordInfo(doc)) };
 }
 
+async function temporal(id) {
+	const doc = await TemporalProcess.findById(id);
+	if (!doc) return null;
+	const blocks = [
+		field('Date', day(doc.date)),
+		field('Source', doc.source && doc.source.type)
+	];
+	const loots = (doc.loots || []).map(loot => ({
+		text: (loot.reward ? loot.reward.type : NONE) + (loot.tauforged ? ' (Tauforged)' : ''),
+		items: []
+	}));
+	blocks.push(loots.length > 0 ? { label: 'Rewards', list: loots } : field('Rewards', NONE));
+	return { title: 'Temporal Archimedea', blocks: blocks.concat(recordInfo(doc)) };
+}
+
 // undefined for an unknown kind (a Map has no inherited keys such as "__proto__")
-const builders = new Map([['reward', reward], ['riven', riven], ['netracell', netracell]]);
+const builders = new Map([['reward', reward], ['riven', riven], ['netracell', netracell], ['temporal', temporal]]);
 
 exports.get = kind => builders.get(kind);

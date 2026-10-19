@@ -119,6 +119,7 @@ require('./api/models/rewardSourceModel');
 require('./api/models/rewardModel');
 require('./api/models/Users');
 require('./api/models/netracellModel');
+require('./api/models/temporalModel');
 require('./api/models/dbVersionModel');
 require('./config/passport');
 
@@ -137,6 +138,7 @@ app.use('/reward', require('./routes/rewardRoutes'));
 app.use('/users', require('./routes/usersRoutes'));
 app.use('/worldState', require('./routes/worldStateRoute'));
 app.use('/netracell', require('./routes/netracellRoutes'));
+app.use('/temporal', require('./routes/temporalRoutes'));
 app.use('/forms', require('./routes/formsRoutes'));
 app.use('/details', require('./routes/detailsRoutes'));
 
@@ -149,7 +151,7 @@ app.use('/sources', require('./routes/rivenSourcesRoutes'));
 app.use('/conditions', require('./routes/conditionsRoutes'));
 app.use('/boosters', require('./routes/boostersRoutes'));
 app.use('/stats', require('./routes/statsRoutes'));
-app.use('/', require('./routes/formPagesRoutes'));	// /rivens, /rewards, /netracells
+app.use('/', require('./routes/formPagesRoutes'));	// /rivens, /rewards, /netracells, /temporalArchimedea
 
 // juste in case : app.get('/favicon.ico', (req, res) => res.status(204));
 
