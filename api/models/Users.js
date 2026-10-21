@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
-const sec_string = require('../../config/jwt_auth').sec_string;
+const { signToken } = require('../../config/jwt_auth');
 
 const { Schema } = mongoose;
 
@@ -22,11 +21,7 @@ UsersSchema.methods.validatePassword = function(password) {
 };
 
 UsersSchema.methods.generateJWT = function() {
-    return jwt.sign({
-        email: this.email,
-        id: this._id,
-        exp: Math.floor( Date.now() / 1000) + (60 * 10), // 10 min
-    }, sec_string);
+	return signToken({ email: this.email, id: this._id });
 };
 
 UsersSchema.methods.toAuthJSON = function() {

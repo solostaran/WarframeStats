@@ -1,4 +1,5 @@
 const { expressjwt: jwt } = require('express-jwt'); // for express-jwt v8+
+const jsonwebtoken = require('jsonwebtoken');
 function generateRandomString(length) {
     let result = '';
     const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -9,6 +10,22 @@ function generateRandomString(length) {
     return result;
 }
 const sec_string = generateRandomString(10);
+
+// A session ends after this idle time : config/loginState.js renews the cookie token of an active user
+const SESSION_DURATION_SECONDS = 30 * 60;
+const RENEW_AFTER_SECONDS = 60;	// no new token for each request
+
+function signToken({ email, id }) {
+	return jsonwebtoken.sign({
+		email: email,
+		id: id,
+		exp: Math.floor(Date.now() / 1000) + SESSION_DURATION_SECONDS,
+	}, sec_string);
+}
+
+function setAccessTokenCookie(res, token) {
+	res.cookie('access_token', token, { httpOnly: true, sameSite: 'lax', maxAge: SESSION_DURATION_SECONDS * 1000 });
+}
 
 const getTokenFromRequest = (req) => {
     const { headers: { authorization } } = req;
@@ -51,4 +68,8 @@ const auth = {
 };
 
 exports.sec_string = sec_string;
+exports.SESSION_DURATION_SECONDS = SESSION_DURATION_SECONDS;
+exports.RENEW_AFTER_SECONDS = RENEW_AFTER_SECONDS;
+exports.signToken = signToken;
+exports.setAccessTokenCookie = setAccessTokenCookie;
 exports.auth = auth;
