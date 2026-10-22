@@ -11,16 +11,10 @@ const mongoose = require('mongoose'),
 	RivenSourceProcess = require('./rivenSourceProcess');
 
 const getRewardBooster = async function (formReward) {
-	if (formReward.booster) {
-		if (mongoose.Types.ObjectId.isValid(formReward.booster)) {
-			return formReward.booster;
-		} else {
-			const boosterType = await BoosterTypeProcess.findByIdOrName(formReward.booster);
-			return boosterType._id;
-		}
-	}
-	else
-		throw new Error('Type is booster but no booster provided.');
+	if (!formReward.booster) throw new Error('Type is booster but no booster provided.');
+	const boosterType = await BoosterTypeProcess.findByIdOrName(formReward.booster);
+	if (!boosterType) throw new Error('Unknown booster type: ' + formReward.booster);
+	return boosterType._id;
 };
 
 const manageRewardRiven = async function (formReward, userId, rivenType, rewardId, rewardSrc) {
@@ -83,9 +77,11 @@ const form2reward = async function(formReward, userId) {
 		reward.markModified('createdBy');
 	}
 	const rsource = await RewardSourceProcess.findByIdOrName(formReward.source);
+	if (!rsource) throw new Error('Unknown reward source: ' + formReward.source);
 	reward.source = rsource._id;
 	reward.markModified('source');
 	const rewtype = await RewardTypeProcess.findByIdOrName(formReward.type);
+	if (!rewtype) throw new Error('Unknown reward type: ' + formReward.type);
 	reward.type = rewtype._id;
 	reward.markModified('type');
 	reward.date = getRewardDate(formReward);
@@ -98,6 +94,7 @@ const form2reward = async function(formReward, userId) {
 		reward.booster = null;
 		reward.markModified('booster');
 	}
+	let oldRiven;	// riven to delete : the reward no longer has riven information, or is no longer a riven
 	if (rewtype.name.search('Riven') >= 0) {
 		const rivtype = await RivenTypeProcess.findByIdOrName(formReward.rivenType);
 		if (!rivtype) throw new Error('Reward with riven but without valid rivenType');
@@ -110,19 +107,17 @@ const form2reward = async function(formReward, userId) {
 			reward.markModified('riven');
 		} else if (reward.riven) {
 			// old unveiled riven + no riven info in form = remove the old unveiled riven
-			const riven = await Riven.findById({_id: reward.riven._id}).exec();
+			oldRiven = reward.riven;
 			reward.riven = null;
 			reward.markModified('riven');
-			await riven.remove();
 		}
 	} else if (reward.riven) {
 		// old riven exists + reward is no longer a riven = remove old riven
-		const riven = await Riven.findById({_id: reward.riven._id}).exec();
+		oldRiven = reward.riven;
 		reward.riven = null;
 		reward.markModified('riven');
 		reward.rivenType = null;
 		reward.markModified('rivenType');
-		await riven.remove();
 	} else if (reward.rivenType) {
 		// reward is no longer a riven (and has no unveiled riven) = remove its old riven type
 		reward.rivenType = null;
@@ -130,6 +125,8 @@ const form2reward = async function(formReward, userId) {
 	}
 	//console.log(JSON.stringify(reward));
 	await reward.save();
+	// the old riven is deleted once the reward no longer references it (nothing is deleted if the save fails)
+	if (oldRiven) await Riven.deleteOne({ _id: oldRiven }).exec();
 	return reward;
 };
 

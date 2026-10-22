@@ -16,12 +16,6 @@ beforeAll(async () => {
 afterEach(() => RivenCondition.deleteMany({}));
 afterAll(() => db.disconnect());
 
-// count of documents reached, for the insertions that run in the background
-async function waitForCount(Model, count) {
-	for (let i = 0; i < 100 && await Model.countDocuments() < count; i++)
-		await new Promise(resolve => setTimeout(resolve, 20));
-}
-
 describe('addOrUpdate()', () => {
 	it('creates a mandatory condition, with its advices and its creator', async () => {
 		const created = await RivenConditionProcess.addOrUpdate({ description: 'Kill 10 enemies', advices: ['Use a shotgun'] }, user._id);
@@ -73,17 +67,17 @@ describe('list() and formattedList()', () => {
 });
 
 describe('adds()', () => {
-	it('inserts the conditions one by one', async () => {
-		RivenConditionProcess.adds([{ description: 'A' }, { description: 'B', optional: 'on' }], user._id);
-		await waitForCount(RivenCondition, 2);
+	it('bulk insert conditions', async () => {
+		const result = await RivenConditionProcess.adds([{ description: 'A' }, { description: 'B', optional: 'on' }], user._id);
+		expect(result).toMatchObject({ insertedCount: 2, rejectedCount: 0 });
+		expect(await RivenCondition.countDocuments()).toBe(2);
 		expect((await RivenConditionProcess.formattedList()).optionals).toHaveLength(1);
 	});
 
-	// Bug : adds() does not return its promise, so POST /riven/condition/adds always answers 500
-	it.failing('returns the insertion counts', async () => {
-		const result = RivenConditionProcess.adds([{ description: 'A' }, {}], user._id);
-		await waitForCount(RivenCondition, 1);
-		await expect(result).resolves.toMatchObject({ insertedCount: 1, rejectedCount: 1 });
+	it('returns the insertion counts', async () => {
+		const result = await RivenConditionProcess.adds([{ description: 'A' }, {}], user._id);
+		expect(result).toMatchObject({ insertedCount: 1, rejectedCount: 1 });
+		expect(await RivenCondition.countDocuments()).toBe(1);
 	});
 });
 

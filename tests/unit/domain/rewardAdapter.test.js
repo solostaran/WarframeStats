@@ -154,34 +154,45 @@ describe('form2reward() of an existing reward', () => {
 			.rejects.toThrow('A reward id was provided but no reward found.');
 	});
 
-	// Bug : riven.remove() no longer exists (Mongoose 7+), the old riven of the reward cannot be deleted
-	it.failing('deletes the riven when the reward is no longer a riven', async () => {
+	it('deletes the riven and the riven type when the reward is no longer a riven', async () => {
 		const created = await RewardAdapter.form2reward(rivenForm(), user._id);
 		await RewardAdapter.form2reward(form({ _id: String(created._id) }), user._id);
+		const saved = await Reward.findById(created._id);
+		expect(saved.type).toEqual(endo._id);
+		expect(saved.riven).toBeNull();
+		expect(saved.rivenType).toBeNull();
 		expect(await Riven.countDocuments()).toBe(0);
 	});
 
-	// Bug : riven.remove() no longer exists (Mongoose 7+), the old riven of the reward cannot be deleted
-	it.failing('deletes the riven when the form has no more riven information', async () => {
+	it('deletes the riven but keeps the riven type when the form has no more riven information', async () => {
 		const created = await RewardAdapter.form2reward(rivenForm(), user._id);
 		await RewardAdapter.form2reward(rivenForm({ _id: String(created._id), rivenWeaponName: undefined }), user._id);
+		const saved = await Reward.findById(created._id);
+		expect(saved.riven).toBeNull();
+		expect(saved.rivenType).toEqual(rifle._id);
 		expect(await Riven.countDocuments()).toBe(0);
+	});
+
+	it('keeps the riven when the reward cannot be saved', async () => {
+		const created = await RewardAdapter.form2reward(rivenForm(), user._id);
+		jest.spyOn(Reward.prototype, 'save').mockRejectedValueOnce(new Error('Database down'));
+		await expect(RewardAdapter.form2reward(form({ _id: String(created._id) }), user._id)).rejects.toThrow('Database down');
+		jest.restoreAllMocks();
+		expect((await Reward.findById(created._id)).riven).toEqual(created.riven);
+		expect(await Riven.countDocuments()).toBe(1);
 	});
 });
 
 describe('form2reward() with unknown ids', () => {
-	// Bug : an unknown reward source or type id gives "Cannot read properties of null (reading '_id')"
-	it.failing('rejects an unknown reward source id with a clear error', async () => {
+	it('rejects an unknown reward source id with a clear error', async () => {
 		await expect(RewardAdapter.form2reward(form({ source: String(new mongoose.Types.ObjectId()) }), user._id)).rejects.toThrow(/reward source/);
 	});
 
-	// Bug : an unknown reward source or type id gives "Cannot read properties of null (reading '_id')"
-	it.failing('rejects an unknown reward type id with a clear error', async () => {
+	it('rejects an unknown reward type id with a clear error', async () => {
 		await expect(RewardAdapter.form2reward(form({ type: String(new mongoose.Types.ObjectId()) }), user._id)).rejects.toThrow(/reward type/);
 	});
 
-	// Bug : a booster id is saved without checking that the booster type exists
-	it.failing('rejects an unknown booster id', async () => {
-		await expect(RewardAdapter.form2reward(form({ type: 'Booster', booster: String(new mongoose.Types.ObjectId()) }), user._id)).rejects.toThrow();
+	it('rejects an unknown booster id', async () => {
+		await expect(RewardAdapter.form2reward(form({ type: 'Booster', booster: String(new mongoose.Types.ObjectId()) }), user._id)).rejects.toThrow(/booster type/);
 	});
 });

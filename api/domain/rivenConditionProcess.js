@@ -45,7 +45,7 @@ const adds = function(listOfConditions, userId) {
     let inserted = 0;
     let rejected = 0;
     let rejects = [];
-    Promise.all(
+    return Promise.all(
         listOfConditions.map(rcond => new Promise(
             resolve => addOrUpdate(rcond, userId)
                 .then(ret => { ++inserted; resolve(ret)})
@@ -59,7 +59,7 @@ const adds = function(listOfConditions, userId) {
         const result = {insertedCount: inserted , rejectedCount: rejected, rejects: rejects };
         //console.log("Conditions insertion : "+JSON.stringify(result));
         return Promise.resolve(result);
-    }).catch(err => { return Promise.reject(err); });
+    });
 };
 
 const byId = function(id) {
