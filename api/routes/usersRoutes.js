@@ -8,7 +8,7 @@ const { obfuscate_email } = require('#root/security/utils/obfuscation.js');
 //POST new user route (optional, everyone has access)
 if (process.env.NODE_ENV !== 'production') {
 	router.post('/', auth.optional, async (req, res) => {
-		const { body: { user } } = req;
+		const user = (req.body && req.body.user) || {};	// no body or no "user" object : the checks below answer "is required"
 
 		if(!user.email) {
 			return res.status(422).json({
@@ -44,7 +44,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 //POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
-	const { body: { user } } = req;
+	const user = (req.body && req.body.user) || {};	// no body or no "user" object : the checks below answer "is required"
 
 	if(!user.email) {
 		return res.status(422).json({
@@ -103,7 +103,7 @@ router.get('/loginForm', auth.optional, function(_req, res) {
 
 router.post('/loginFormProcess', auth.optional, function(req, res, next) {
 // router.post('/loginFormProcess', function(req, res, next) {
-	const { body: { user } } = req;
+	const user = (req.body && req.body.user) || {};	// no body or no "user" object : the checks below answer "is required"
 
 	if(!user.email) {
 		res.render('login', {

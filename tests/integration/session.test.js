@@ -14,7 +14,8 @@ function buildApp() {
 	const app = express();
 	app.use(cookieParser());
 	app.use(require('#root/security/loginState.js'));
-	app.get('/', (_req, res) => res.json({ connected: res.locals.connected }));
+	// token : the cookie seen by the next middlewares (auth.optional of the routes)
+	app.get('/', (req, res) => res.json({ connected: res.locals.connected, token: req.cookies['access_token'] }));
 	return app;
 }
 
@@ -48,9 +49,15 @@ describe('sliding session', () => {
 		expect(accessTokenCookie(res)).toBeUndefined();
 	});
 
-	it('does not renew an expired token', async () => {
+	it('removes an expired token instead of renewing it', async () => {
 		const res = await request(app).get('/').set('Cookie', 'access_token=' + oldToken(SESSION_DURATION_SECONDS + 60, SESSION_DURATION_SECONDS)).expect(200);
-		expect(res.body.connected).toBe(false);
-		expect(accessTokenCookie(res)).toBeUndefined();
+		expect(res.body).toEqual({ connected: false });
+		expect(accessTokenCookie(res)).toMatch(/^access_token=;.*Expires=Thu, 01 Jan 1970/);
+	});
+
+	it('removes a token signed before a restart of the server', async () => {
+		const res = await request(app).get('/').set('Cookie', 'access_token=' + jsonwebtoken.sign(payload, 'previous secret')).expect(200);
+		expect(res.body).toEqual({ connected: false });
+		expect(accessTokenCookie(res)).toMatch(/^access_token=;.*Expires=Thu, 01 Jan 1970/);
 	});
 });

@@ -82,6 +82,11 @@ describe('/users routes', () => {
 			expect(res.body).toEqual({ errors: { password: 'is required' } });
 		});
 
+		it('answers 422 to a body without user', async () => {
+			const res = await request(app).post('/users').send({}).expect(422);
+			expect(res.body).toEqual({ errors: { email: 'is required' } });
+		});
+
 		it('creates a user and returns its token, never its password hash', async () => {
 			const res = await request(app).post('/users').send({ user: { email: 'new@example.com', password: 'secret' } }).expect(200);
 			expect(Object.keys(res.body.user).sort()).toEqual(['_id', 'email', 'token']);
@@ -111,9 +116,10 @@ describe('/users routes', () => {
 			expect(res.body).toEqual({ errors: { error_password: 'is required' } });
 		});
 
-		// Bug : without a "user" object, the route reads user.email of undefined (TypeError, 500)
-		it.failing('answers 422 to a body without user', async () => {
-			await request(app).post('/users/login').send({}).expect(422);
+		it('answers 422 to a body without user, or without body', async () => {
+			const res = await request(app).post('/users/login').send({}).expect(422);
+			expect(res.body).toEqual({ errors: { error_email: 'is required' } });
+			await request(app).post('/users/login').expect(422);
 		});
 
 		it('rejects an unknown email', async () => {
@@ -174,6 +180,11 @@ describe('/users routes', () => {
 			expect(accessTokenCookie(res)).toBeUndefined();
 		});
 
+		it('renders the login page with its error for an empty body', async () => {
+			const res = await form({}).expect(200);
+			expect(res.text).toContain('id="emailError"');
+		});
+
 		it('requires a password, and keeps the email in the form', async () => {
 			const res = await form({ 'user[email]': EMAIL }).expect(200);
 			expect(res.text).toContain('id="passwordError"');
@@ -197,13 +208,14 @@ describe('/users routes', () => {
 			expect(res.text).toContain('logged.');
 		});
 
-		// Bug : auth.optional only accepts a missing token, an invalid one is rejected (401) :
-		// after a restart of the server, the browser cannot log in again until its cookie expires
-		it.failing('logs the user in with a cookie of a previous run of the server', async () => {
+		// loginState removes the cookie of a previous run, then the login sets the new one (the last Set-Cookie wins)
+		it('logs the user in with a cookie of a previous run of the server', async () => {
 			const res = await form({ 'user[email]': EMAIL, 'user[password]': PASSWORD })
 				.set('Cookie', 'access_token=' + previousRunToken(user))
 				.expect(200);
-			expect(accessTokenCookie(res)).toBeDefined();
+			const cookies = res.headers['set-cookie'].filter(cookie => cookie.startsWith('access_token='));
+			expect(cookies[0]).toMatch(/^access_token=;/);
+			expect(jsonwebtoken.verify(cookies.at(-1).split(';')[0].split('=')[1], sec_string)).toMatchObject({ email: EMAIL });
 		});
 	});
 
@@ -225,10 +237,10 @@ describe('/users routes', () => {
 			await request(app).get('/users/disconnect').set('Cookie', 'access_token=' + token).expect(400);
 		});
 
-		// Bug : auth.optional only accepts a missing token, an invalid one is rejected (401)
-		it.failing('renders the expired page for a cookie of a previous run of the server', async () => {
+		it('renders the expired page for a cookie of a previous run of the server', async () => {
 			const res = await request(app).get('/users/disconnect').set('Cookie', 'access_token=' + previousRunToken(user)).expect(200);
 			expect(res.text).toContain('No session or session has expired.');
+			expect(accessTokenCookie(res)).toMatch(/^access_token=;/);
 		});
 	});
 });
