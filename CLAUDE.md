@@ -32,3 +32,4 @@ Express 5 + Mongoose 8 + Pug app that records Warframe rewards (sorties, rivens,
 - **No user documents for visitors:** never send a user document to visitors; pass it through `publicUser` (`security/utils/obfuscation.js`).
 - **Docker:** the `Dockerfile` copies only `app.js`, `api/`, `bin/`, `database/`, `security/`, `static/`, `views/` and `web/`. A new top-level runtime folder must be added there.
 - **Commit messages:** one short sentence.
+- **Versioning:** before every commit, apply the `bump-version` skill (`.claude/skills/bump-version/SKILL.md`): patch or minor by itself, major only when the user asks.
