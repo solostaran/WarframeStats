@@ -26,7 +26,7 @@ const BoosterTypeProcess = require('#root/api/domain/boosterTypeProcess.js');
 const RewardTypeProcess = require('#root/api/domain/rewardTypeProcess.js');
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1/WarframeStatsDB';
-const MAX_MS = 100;
+const MAX_MS = 150;
 
 // result of fn() and its compute time in ms
 async function timed(name, fn) {

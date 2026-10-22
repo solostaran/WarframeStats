@@ -3,4 +3,5 @@ node_modules
 .github
 npm-debug.log*
 resources
+coverage
 *.iml

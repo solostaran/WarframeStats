@@ -1,6 +1,6 @@
 {
   "name": "warframestats",
-  "version": "1.11.4",
+  "version": "1.11.5",
   "private": true,
   "license": "MIT",
   "imports": {
@@ -28,7 +28,6 @@
     "debug": "^4.4.3",
     "express": "^5.2.1",
     "express-jwt": "^8.5.1",
-    "flatpickr": "^4.6.13",
     "http-errors": "^2.0.1",
     "jsonwebtoken": "^9.0.3",
     "lodash": "^4.18.1",
@@ -47,8 +46,19 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "testTimeout": 30000,
+    "collectCoverage": true,
+    "coverageDirectory": "<rootDir>/coverage",
+    "collectCoverageFrom": [
+      "app.js",
+      "api/**/*.js",
+      "database/**/*.js",
+      "security/**/*.js",
+      "web/**/*.js"
+    ],
     "watchPathIgnorePatterns": [
-      "<rootDir>/resources/"
+      "<rootDir>/resources/",
+      "<rootDir>/coverage/"
     ]
   },
   "overrides": {
