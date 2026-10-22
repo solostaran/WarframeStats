@@ -40,10 +40,10 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(require('./config/sanitizeBody'));	// no "$" operator keys in req.body (NoSQL injection)
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(require('./config/loginState'));	// res.locals.connected, per request, for the PUG templates
-app.locals.safeJson = require('./api/utils/safeJson');	// JSON inlined in a <script> of a template
+app.use(require('./security/sanitizeBody'));	// no "$" operator keys in req.body (NoSQL injection)
+app.use(express.static(path.join(__dirname, 'static')));
+app.use(require('./security/loginState'));	// res.locals.connected, per request, for the PUG templates
+app.locals.safeJson = require('./security/safeJson');	// JSON inlined in a <script> of a template
 app.locals.version = require('./package.json').version;	// app version, shown in the footer of the layouts
 
 /*
@@ -98,7 +98,7 @@ const db_host = isDocker ? 'net-db-warstats' : '127.0.0.1';
 const dbReady = mongoose.connect('mongodb://'+db_host+'/WarframeStatsDB', {family:4})
 	.then(async () => {
 		debug('Connected to database.');
-		const migrations = require('./api/migrations');
+		const migrations = require('./database/migrations');
 		await migrations.migrate();
 		app.locals.dbEmpty = await migrations.isEmpty();	// banner of layout.pug, until a restart
 	})
@@ -120,38 +120,38 @@ require('./api/models/rewardModel');
 require('./api/models/Users');
 require('./api/models/netracellModel');
 require('./api/models/temporalModel');
-require('./api/models/dbVersionModel');
-require('./config/passport');
+require('./database/dbVersionModel');
+require('./security/passport');
 
 
 /*
  * API ROUTES
  */
-app.use('/riven/type', require('./routes/rivenTypeRoutes'));
-app.use('/riven/source', require('./routes/rivenSourceRoutes'));
-app.use('/riven/condition', require('./routes/rivenConditionRoutes'));
-app.use('/riven', require('./routes/rivenRoutes'));
-app.use('/booster/type', require('./routes/boosterTypeRoutes'));
-app.use('/reward/type', require('./routes/rewardTypeRoutes'));
-app.use('/reward/source', require('./routes/rewardSourceRoutes'));
-app.use('/reward', require('./routes/rewardRoutes'));
-app.use('/users', require('./routes/usersRoutes'));
-app.use('/worldState', require('./routes/worldStateRoute'));
-app.use('/netracell', require('./routes/netracellRoutes'));
-app.use('/temporal', require('./routes/temporalRoutes'));
-app.use('/forms', require('./routes/formsRoutes'));
-app.use('/details', require('./routes/detailsRoutes'));
+app.use('/riven/type', require('./api/routes/rivenTypeRoutes'));
+app.use('/riven/source', require('./api/routes/rivenSourceRoutes'));
+app.use('/riven/condition', require('./api/routes/rivenConditionRoutes'));
+app.use('/riven', require('./api/routes/rivenRoutes'));
+app.use('/booster/type', require('./api/routes/boosterTypeRoutes'));
+app.use('/reward/type', require('./api/routes/rewardTypeRoutes'));
+app.use('/reward/source', require('./api/routes/rewardSourceRoutes'));
+app.use('/reward', require('./api/routes/rewardRoutes'));
+app.use('/users', require('./api/routes/usersRoutes'));
+app.use('/worldState', require('./web/routes/worldStateRoute'));
+app.use('/netracell', require('./api/routes/netracellRoutes'));
+app.use('/temporal', require('./api/routes/temporalRoutes'));
+app.use('/forms', require('./web/routes/formsRoutes'));
+app.use('/details', require('./web/routes/detailsRoutes'));
 
 /*
  * VIEWS
  */
-app.use('/', require('./routes/index'));
-app.use('/types', require('./routes/rivenTypesRoutes'));
-app.use('/sources', require('./routes/rivenSourcesRoutes'));
-app.use('/conditions', require('./routes/conditionsRoutes'));
-app.use('/boosters', require('./routes/boostersRoutes'));
-app.use('/stats', require('./routes/statsRoutes'));
-app.use('/', require('./routes/formPagesRoutes'));	// /rivens, /rewards, /netracells, /temporalArchimedea
+app.use('/', require('./web/routes/index'));
+app.use('/types', require('./web/routes/rivenTypesRoutes'));
+app.use('/sources', require('./web/routes/rivenSourcesRoutes'));
+app.use('/conditions', require('./web/routes/conditionsRoutes'));
+app.use('/boosters', require('./web/routes/boostersRoutes'));
+app.use('/stats', require('./web/routes/statsRoutes'));
+app.use('/', require('./web/routes/formPagesRoutes'));	// /rivens, /rewards, /netracells, /temporalArchimedea
 
 // juste in case : app.get('/favicon.ico', (req, res) => res.status(204));
 

@@ -1,6 +1,6 @@
 'use strict';
 
-// Integration test of the data migrations (api/migrations), run at launch by app.js,
+// Integration test of the data migrations (database/migrations), run at launch by app.js,
 // against an in-memory MongoDB (no external database needed).
 
 const mongoose = require('mongoose');
@@ -9,8 +9,8 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 // Mongoose Schemas, before the migrations (they get their models when required)
 const { netracellRewardTypes, netracellRewardSources } = require('#root/api/models/netracellModel.js');
 const { temporalRewardTypes, temporalRewardSources } = require('#root/api/models/temporalModel.js');
-require('#root/api/models/dbVersionModel.js');
-const migrations = require('#root/api/migrations/index.js');
+require('#root/database/dbVersionModel.js');
+const migrations = require('#root/database/migrations/index.js');
 
 const Netracell = mongoose.model('NetracellReward');
 const NetracellRewardType = mongoose.model('NetracellRewardType');

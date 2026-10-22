@@ -26,7 +26,7 @@ function buildApp() {
 	const app = express();
 	app.use(express.json());
 	app.use(cookieParser());
-	app.use('/reward', require('#root/routes/rewardRoutes.js'));
+	app.use('/reward', require('#root/api/routes/rewardRoutes.js'));
 	return app;
 }
 

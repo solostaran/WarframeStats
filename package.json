@@ -1,6 +1,6 @@
 {
   "name": "warframestats",
-  "version": "1.10.6",
+  "version": "1.11.2",
   "private": true,
   "license": "MIT",
   "imports": {
@@ -36,8 +36,7 @@
     "morgan": "^1.12.1",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "pug": "^3.0.4",
-    "tv4": "^1.3.0"
+    "pug": "^3.0.4"
   },
   "devDependencies": {
     "cross-env": "^10.1.0",
@@ -48,7 +47,9 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "watchPathIgnorePatterns": ["<rootDir>/compose-warstats/"]
+    "watchPathIgnorePatterns": [
+      "<rootDir>/resources/"
+    ]
   },
   "overrides": {
     "@istanbuljs/load-nyc-config": {

@@ -27,14 +27,16 @@ See also `run_prod.ps1` for windows or `run_prod.sh` for linux.
 ## Adding users to the DB
 Can only be made in `development` mode.
 
-The `WarframeStats.postman_collection.json` file can be imported into the Postman app for testing purpose.
+The `resources/misc/WarframeStats.postman_collection.json` file can be imported into the Postman app for testing purpose.
 
 There is one entry to add a user : `url={{base_url}}/users/,  method=POST` where `base_url` is a collection variable.
 
 ## Back-end description
-Express.js : API is in the `routes` and `api` directories.
+Express.js : the JSON API is in the `api` directory (`routes`, `domain`, `models`), the server side of the pages in the `web` directory.
 
-Mongoose : ORM for a MongoDB database. See the `api/models` and `api/business` directories.
+Mongoose : ORM for a MongoDB database. See the `api/models` and `api/domain` directories, and `database/migrations`.
+
+Authentication and security : the `security` directory.
 
 Passport : user management and access control.
 

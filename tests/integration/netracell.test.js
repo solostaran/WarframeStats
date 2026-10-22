@@ -21,8 +21,8 @@ function buildApp() {
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: false }));
 	app.use(cookieParser());
-	app.use(require('#root/config/sanitizeBody.js'));
-	app.use('/netracell', require('#root/routes/netracellRoutes.js'));
+	app.use(require('#root/security/sanitizeBody.js'));
+	app.use('/netracell', require('#root/api/routes/netracellRoutes.js'));
 	app.use(function(err, _req, res, _next) {
 		res.status(err.status || 500).json({ name: err.name, message: err.message });
 	});
@@ -264,10 +264,10 @@ describe('/netracell routes', () => {
 		});
 	});
 
-	// the generic form (api/forms/definitions/netracell.js) : its fields, validated by the form engine, become the loots
+	// the generic form (web/forms/definitions/netracell.js) : its fields, validated by the form engine, become the loots
 	describe('netracell form', () => {
-		const definition = require('#root/api/forms/definitions/netracell.js');
-		const formEngine = require('#root/api/forms/formEngine.js');
+		const definition = require('#root/web/forms/definitions/netracell.js');
+		const formEngine = require('#root/web/forms/formEngine.js');
 		const userId = new mongoose.Types.ObjectId();
 
 		async function saveForm(body, id) {

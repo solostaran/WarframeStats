@@ -1,19 +1,19 @@
 'use strict';
 
-// Integration test of the sliding session : config/loginState.js renews the "access_token" cookie of an active user.
+// Integration test of the sliding session : security/loginState.js renews the "access_token" cookie of an active user.
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const jsonwebtoken = require('jsonwebtoken');
 const request = require('supertest');
-const { sec_string, SESSION_DURATION_SECONDS, signToken } = require('#root/config/jwt_auth.js');
+const { sec_string, SESSION_DURATION_SECONDS, signToken } = require('#root/security/jwt_auth.js');
 
 const payload = { email: 'tester@example.com', id: '0123456789abcdef01234567' };
 
 function buildApp() {
 	const app = express();
 	app.use(cookieParser());
-	app.use(require('#root/config/loginState.js'));
+	app.use(require('#root/security/loginState.js'));
 	app.get('/', (_req, res) => res.json({ connected: res.locals.connected }));
 	return app;
 }

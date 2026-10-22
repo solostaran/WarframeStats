@@ -20,10 +20,10 @@ require('#root/api/models/Users.js');
 const { netracellRewardSources, netracellRewardTypes } = require('#root/api/models/netracellModel.js');
 const { temporalRewardSources, temporalRewardTypes } = require('#root/api/models/temporalModel.js');
 
-const StatsProcess = require('#root/api/business/statsProcess.js');
-const RivenTypeProcess = require('#root/api/business/rivenTypeProcess.js');
-const BoosterTypeProcess = require('#root/api/business/boosterTypeProcess.js');
-const RewardTypeProcess = require('#root/api/business/rewardTypeProcess.js');
+const StatsProcess = require('#root/api/domain/statsProcess.js');
+const RivenTypeProcess = require('#root/api/domain/rivenTypeProcess.js');
+const BoosterTypeProcess = require('#root/api/domain/boosterTypeProcess.js');
+const RewardTypeProcess = require('#root/api/domain/rewardTypeProcess.js');
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1/WarframeStatsDB';
 const MAX_MS = 100;

@@ -2,6 +2,5 @@ node_modules
 .git
 .github
 npm-debug.log*
-compose-warstats
-external-resources
+resources
 *.iml
