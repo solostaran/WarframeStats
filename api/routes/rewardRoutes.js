@@ -38,11 +38,14 @@ function pagedOptions(query) {
 	return options;
 }
 
+// Old code for server-side page (rewardProcess.list is commented)
+/*
 router.get('/', auth.optional, function (_req, res) {
 	rewardProcess.list({})
 		.then(ret => res.json(ret))
 		.catch(err => res.status(500).send("Cannot list rewards from DB, "+err));
 });
+*/
 
 router.get('/raw', auth.optional, function(_req, res) {
 	rewardProcess.list_raw()

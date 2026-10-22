@@ -1,6 +1,6 @@
 {
   "name": "warframestats",
-  "version": "1.11.5",
+  "version": "1.11.6",
   "private": true,
   "license": "MIT",
   "imports": {
@@ -18,6 +18,7 @@
     "test": "jest",
     "test:integration": "jest tests/integration",
     "test:unit": "jest tests/unit",
+    "test:performance": "jest tests/performance",
     "seed:rewards": "node tests/fixtures/seedRewards.js",
     "perf:rewards": "node tests/fixtures/perfRewards.js"
   },
@@ -47,6 +48,8 @@
   "jest": {
     "testEnvironment": "node",
     "testTimeout": 30000,
+    "globalSetup": "<rootDir>/tests/globalSetup.js",
+    "globalTeardown": "<rootDir>/tests/globalTeardown.js",
     "collectCoverage": true,
     "coverageDirectory": "<rootDir>/coverage",
     "collectCoverageFrom": [

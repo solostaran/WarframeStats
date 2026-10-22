@@ -1,10 +1,10 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-	_ = require("lodash"),
+	// _ = require("lodash"),	// old code for server-side page
 	Reward = mongoose.model('Reward'),
 	rivenProcess = require('./rivenProcess'),
-	convert = require('./convertDates.js'),
+	// convert = require('./convertDates.js'),	// old code for server-side page
 	{ publicUser } = require('#root/security/utils/obfuscation.js'),
 	rewardAdapter = require('./rewardAdapter');
 
@@ -24,6 +24,8 @@ const list_raw = function() {
 		.exec();
 }
 
+// Old code for server-side page (list() and its date filter, with the lodash and convertDates requires)
+/*
 const params_date = function (params, options) {
 	params.date = {};
 	if (options.dateLow) {
@@ -37,6 +39,7 @@ const params_date = function (params, options) {
 		params.date.$lte = date;
 	}
 }
+
 const list = function(options) {
 	return new Promise( async function(resolve, reject) {
 		let params = {};
@@ -66,6 +69,7 @@ const list = function(options) {
 		}
 	});
 };
+*/
 
 // One page of rewards, filtered and sorted by the database (server-side pagination).
 // The options are already validated by the route ; dates are 'YYYY-MM-DD', compared as UTC days
@@ -160,7 +164,7 @@ const deleteAll = function() {
 
 exports.count = count;
 exports.countByType = countByType;
-exports.list = list;
+// exports.list = list;	// old code for server-side page
 exports.list_raw = list_raw;
 exports.list_paged = list_paged;
 exports.addOrUpdate = addOrUpdate;
