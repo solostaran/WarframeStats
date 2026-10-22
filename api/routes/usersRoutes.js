@@ -5,42 +5,7 @@ const { auth, setAccessTokenCookie } = require('#root/security/jwt_auth.js');
 const Users = mongoose.model('Users');
 const { obfuscate_email } = require('#root/security/utils/obfuscation.js');
 
-//POST new user route (optional, everyone has access)
-if (process.env.NODE_ENV !== 'production') {
-	router.post('/', auth.optional, async (req, res) => {
-		const user = (req.body && req.body.user) || {};	// no body or no "user" object : the checks below answer "is required"
-
-		if(!user.email) {
-			return res.status(422).json({
-				errors: {
-					email: 'is required',
-				},
-			});
-		}
-
-		if(!user.password) {
-			return res.status(422).json({
-				errors: {
-					password: 'is required',
-				},
-			});
-		}
-
-		// Verify if user is already in DB
-		Users.findOne({email: user.email })
-			.then( (db_user) => {
-				db_user.setPassword(user.password);
-				return db_user.save()
-					.then(() => res.json({ user: db_user.toAuthJSON() }));
-			})
-			.catch( (_err) => {
-				const create_user = new Users(user);
-				create_user.setPassword(user.password);
-				return create_user.save()
-					.then(() => res.json({ user: create_user.toAuthJSON() }));
-			});
-	});
-}
+// No sign-up route : a user is created with resources/scripts/CreateUser.js
 
 //POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {

@@ -71,37 +71,12 @@ describe('/users routes', () => {
 		await db.disconnect();
 	});
 
+	// No sign-up route (anyone could create an account or reset a password) : resources/scripts/CreateUser.js
 	describe('POST /users', () => {
-		it('requires an email', async () => {
-			const res = await request(app).post('/users').send({ user: { password: PASSWORD } }).expect(422);
-			expect(res.body).toEqual({ errors: { email: 'is required' } });
-		});
-
-		it('requires a password', async () => {
-			const res = await request(app).post('/users').send({ user: { email: 'new@example.com' } }).expect(422);
-			expect(res.body).toEqual({ errors: { password: 'is required' } });
-		});
-
-		it('answers 422 to a body without user', async () => {
-			const res = await request(app).post('/users').send({}).expect(422);
-			expect(res.body).toEqual({ errors: { email: 'is required' } });
-		});
-
-		it('creates a user and returns its token, never its password hash', async () => {
-			const res = await request(app).post('/users').send({ user: { email: 'new@example.com', password: 'secret' } }).expect(200);
-			expect(Object.keys(res.body.user).sort()).toEqual(['_id', 'email', 'token']);
-			expect(jsonwebtoken.verify(res.body.user.token, sec_string)).toMatchObject({ email: 'new@example.com', id: res.body.user._id });
-			expect(await Users.countDocuments()).toBe(2);
-			await login('new@example.com', 'secret').expect(200);
-		});
-
-		// No authentication : outside production, anyone can reset the password of an existing user
-		it('resets the password of an existing user', async () => {
-			const res = await request(app).post('/users').send({ user: { email: EMAIL, password: 'new password' } }).expect(200);
-			expect(res.body.user._id).toBe(String(user._id));
+		it('does not exist', async () => {
+			await request(app).post('/users').send({ user: { email: EMAIL, password: 'new password' } }).expect(404);
 			expect(await Users.countDocuments()).toBe(1);
-			await login(EMAIL, PASSWORD).expect(400);
-			await login(EMAIL, 'new password').expect(200);
+			await login(EMAIL, PASSWORD).expect(200);
 		});
 	});
 

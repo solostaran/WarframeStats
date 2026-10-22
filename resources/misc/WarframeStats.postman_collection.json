@@ -3199,60 +3199,6 @@
 			"name": "Users",
 			"item": [
 				{
-					"name": "Create or update user",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"User creation is ok\", function () {",
-									"    pm.response.to.be.ok;",
-									"    if (pm.response.code == 200) {",
-									"        pm.collectionVariables.set(\"Token\", pm.response.json().user.token);",
-									"    }",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{Token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"user\": {\n\t\t\"email\":\"test@toto.fr\",\n\t\t\"password\":\"wakame\"\n\t}\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/users/",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get current user",
 					"request": {
 						"auth": {

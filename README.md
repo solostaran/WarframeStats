@@ -25,11 +25,11 @@ Linux command line : `HTTP=true NODE_ENV=development DOCKER=false node bin/www`
 See also `run_prod.ps1` for windows or `run_prod.sh` for linux.
 
 ## Adding users to the DB
-Can only be made in `development` mode.
+The API has no sign-up route : a user is created with a script that needs access to the database.
+
+`node resources/scripts/CreateUser.js <email>` asks the password twice (without echo). An existing email is refused. `MONGO_URI` sets the database (default : `mongodb://127.0.0.1/WarframeStatsDB`).
 
 The `resources/misc/WarframeStats.postman_collection.json` file can be imported into the Postman app for testing purpose.
-
-There is one entry to add a user : `url={{base_url}}/users/,  method=POST` where `base_url` is a collection variable.
 
 ## Back-end description
 Express.js : the JSON API is in the `api` directory (`routes`, `domain`, `models`), the server side of the pages in the `web` directory.

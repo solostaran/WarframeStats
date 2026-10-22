@@ -178,6 +178,9 @@ keys/
 
 *.bak
 
+# VS Code settings of my workspace
+.vscode/settings.json
+
 # Docker compose volumes (database files and backups): keep only the empty directories
 resources/compose/db-warstats/data-volume/*
 resources/compose/db-warstats/backup-volume/*
