@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const escapeRegExp = require('../utils/escapeRegExp');
+const escapeRegExp = require('#root/api/utils/escapeRegExp.js');
 const RivenSource = mongoose.model('RivenSource');
 
 const list = function() {

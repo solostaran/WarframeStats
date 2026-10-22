@@ -1,9 +1,9 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-	{ temporalRewardTypes, temporalRewardSources, temporalTauforgeableTypes } = require('../../models/temporalModel'),
-	{ date2string } = require('../../utils/convertDates'),
-	TemporalProcess = require('../../business/temporalProcess');
+	{ temporalRewardTypes, temporalRewardSources, temporalTauforgeableTypes } = require('#root/api/models/temporalModel.js'),
+	{ date2string } = require('#root/api/utils/convertDates.js'),
+	TemporalProcess = require('#root/api/business/temporalProcess.js');
 
 const Temporal = mongoose.model('TemporalReward');
 

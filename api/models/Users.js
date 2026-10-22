@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
-const { signToken } = require('../../config/jwt_auth');
+const { signToken } = require('#root/config/jwt_auth.js');
 
 const { Schema } = mongoose;
 

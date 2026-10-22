@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const StatsProcess = require('../api/business/statsProcess');
+const StatsProcess = require('#root/api/business/statsProcess.js');
 
 // per netracell and temporal reward source : title and where to find it in the official droptables (search text, anchor)
 const netracellPresentation = {

@@ -3,10 +3,10 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../config/jwt_auth').auth;
-const netracellRewardProcess = require('../api/business/netracellRewardProcess');
-const { netracellRewardTypes, netracellRewardSources } = require('../api/models/netracellModel');
-const { obfuscate_email, obfuscate_id } = require('../api/utils/obfuscate');
+const auth = require('#root/config/jwt_auth.js').auth;
+const netracellRewardProcess = require('#root/api/business/netracellRewardProcess.js');
+const { netracellRewardTypes, netracellRewardSources } = require('#root/api/models/netracellModel.js');
+const { obfuscate_email, obfuscate_id } = require('#root/api/utils/obfuscate.js');
 
 router.get('/raw', auth.optional, function(_req, res) {
 	netracellRewardProcess.list_raw()

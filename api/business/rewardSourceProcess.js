@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const escapeRegExp = require('../utils/escapeRegExp');
+const escapeRegExp = require('#root/api/utils/escapeRegExp.js');
 const RewardSource = mongoose.model('RewardSource');
 
 const list = function() {

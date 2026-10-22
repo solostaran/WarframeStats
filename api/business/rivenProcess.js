@@ -3,7 +3,7 @@
 const mongoose = require('mongoose'),
 	Riven = mongoose.model('Riven'),
 	RivenAdapter = require('./rivenAdapter'),
-	publicUser = require('../utils/publicUser');
+	publicUser = require('#root/api/utils/publicUser.js');
 
 const list = function() {
 	return Riven.find({}).populate('type').populate('source', {'name':1}).sort({Created_date: -1}).exec();

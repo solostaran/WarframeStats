@@ -5,10 +5,10 @@ const mongoose = require('mongoose'),
 	Netracell = mongoose.model("NetracellReward"),
 	NetracellRewardType = mongoose.model("NetracellRewardType"),
 	NetracellRewardSource = mongoose.model("NetracellRewardSource"),
-	netracellModel = require('../models/netracellModel'),
-	convert = require('../utils/convertDates.js'),
-	publicUser = require('../utils/publicUser'),
-	seed = require('../utils/seedTypes');
+	netracellModel = require('#root/api/models/netracellModel.js'),
+	convert = require('#root/api/utils/convertDates.js'),
+	publicUser = require('#root/api/utils/publicUser.js'),
+	seed = require('#root/api/utils/seedTypes.js');
 
 const count = function() {
 	return Netracell.countDocuments({}).exec();

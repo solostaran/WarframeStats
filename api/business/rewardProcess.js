@@ -4,8 +4,8 @@ const mongoose = require('mongoose'),
 	_ = require("lodash"),
 	Reward = mongoose.model('Reward'),
 	rivenProcess = require('./rivenProcess'),
-	convert = require('../utils/convertDates.js'),
-	publicUser = require('../utils/publicUser'),
+	convert = require('#root/api/utils/convertDates.js'),
+	publicUser = require('#root/api/utils/publicUser.js'),
 	rewardAdapter = require('./rewardAdapter');
 
 const count = function() {

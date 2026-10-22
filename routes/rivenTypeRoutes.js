@@ -3,8 +3,8 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../config/jwt_auth').auth;
-const RivenTypeProcess = require('../api/business/rivenTypeProcess');
+const auth = require('#root/config/jwt_auth.js').auth;
+const RivenTypeProcess = require('#root/api/business/rivenTypeProcess.js');
 
 router.get('/', auth.optional, function (_req, res) {
     RivenTypeProcess

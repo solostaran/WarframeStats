@@ -6,14 +6,14 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const jsonwebtoken = require('jsonwebtoken');
 const request = require('supertest');
-const { sec_string, SESSION_DURATION_SECONDS, signToken } = require('../../config/jwt_auth');
+const { sec_string, SESSION_DURATION_SECONDS, signToken } = require('#root/config/jwt_auth.js');
 
 const payload = { email: 'tester@example.com', id: '0123456789abcdef01234567' };
 
 function buildApp() {
 	const app = express();
 	app.use(cookieParser());
-	app.use(require('../../config/loginState'));
+	app.use(require('#root/config/loginState.js'));
 	app.get('/', (_req, res) => res.json({ connected: res.locals.connected }));
 	return app;
 }

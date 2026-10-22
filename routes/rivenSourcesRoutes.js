@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const RivenSourceProcess = require('../api/business/rivenSourceProcess');
+const RivenSourceProcess = require('#root/api/business/rivenSourceProcess.js');
 
 /* GET home page. */
 router.get('/', function(_req, res) {

@@ -1,11 +1,11 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-	{ toOptions } = require('../formEngine'),
-	RivenTypeProcess = require('../../business/rivenTypeProcess'),
-	RivenSourceProcess = require('../../business/rivenSourceProcess'),
-	RivenConditionProcess = require('../../business/rivenConditionProcess'),
-	RivenProcess = require('../../business/rivenProcess');
+	{ toOptions } = require('#root/api/forms/formEngine.js'),
+	RivenTypeProcess = require('#root/api/business/rivenTypeProcess.js'),
+	RivenSourceProcess = require('#root/api/business/rivenSourceProcess.js'),
+	RivenConditionProcess = require('#root/api/business/rivenConditionProcess.js'),
+	RivenProcess = require('#root/api/business/rivenProcess.js');
 
 const Riven = mongoose.model('Riven');
 const MAX_OPTIONAL_CONDITIONS = 5;

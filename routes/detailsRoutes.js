@@ -5,7 +5,7 @@
 const express = require('express');
 const router = express.Router();
 
-const details = require('../api/details');
+const details = require('#root/api/details/index.js');
 
 const ID_PATTERN = /^[0-9a-f]{24}$/i;
 

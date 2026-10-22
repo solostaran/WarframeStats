@@ -10,8 +10,8 @@ const request = require('supertest');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
 // Mongoose Schemas, before the router (the business process gets its models when required)
-require('../../api/models/Users');
-const { temporalRewardTypes, temporalRewardSources } = require('../../api/models/temporalModel');
+require('#root/api/models/Users.js');
+const { temporalRewardTypes, temporalRewardSources } = require('#root/api/models/temporalModel.js');
 
 const Users = mongoose.model('Users');
 
@@ -21,8 +21,8 @@ function buildApp() {
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: false }));
 	app.use(cookieParser());
-	app.use(require('../../config/sanitizeBody'));
-	app.use('/temporal', require('../../routes/temporalRoutes'));
+	app.use(require('#root/config/sanitizeBody.js'));
+	app.use('/temporal', require('#root/routes/temporalRoutes.js'));
 	app.use(function(err, _req, res, _next) {
 		res.status(err.status || 500).json({ name: err.name, message: err.message });
 	});
@@ -224,8 +224,8 @@ describe('/temporal routes', () => {
 
 	// the generic form (api/forms/definitions/temporal.js) : its fields, validated by the form engine, become the loots
 	describe('temporal form', () => {
-		const definition = require('../../api/forms/definitions/temporal');
-		const formEngine = require('../../api/forms/formEngine');
+		const definition = require('#root/api/forms/definitions/temporal.js');
+		const formEngine = require('#root/api/forms/formEngine.js');
 		const userId = new mongoose.Types.ObjectId();
 
 		async function saveForm(body, id) {

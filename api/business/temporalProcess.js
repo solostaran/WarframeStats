@@ -4,9 +4,9 @@ const mongoose = require('mongoose'),
 	Temporal = mongoose.model("TemporalReward"),
 	TemporalRewardType = mongoose.model("TemporalRewardType"),
 	TemporalRewardSource = mongoose.model("TemporalRewardSource"),
-	temporalModel = require('../models/temporalModel'),
-	publicUser = require('../utils/publicUser'),
-	seed = require('../utils/seedTypes');
+	temporalModel = require('#root/api/models/temporalModel.js'),
+	publicUser = require('#root/api/utils/publicUser.js'),
+	seed = require('#root/api/utils/seedTypes.js');
 
 const count = function() {
 	return Temporal.countDocuments({}).exec();

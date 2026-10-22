@@ -4,11 +4,11 @@
 // (views/mixins/detailsModal.pug, public/javascripts/detailsModal.js).
 // Everything is converted to display strings here : the browser only shows them, as text.
 // Block : { label, value } or { label, list: [{ text, items: [string] }] }
-const { date2string } = require('../utils/convertDates'),
-	RewardProcess = require('../business/rewardProcess'),
-	RivenProcess = require('../business/rivenProcess'),
-	NetracellRewardProcess = require('../business/netracellRewardProcess'),
-	TemporalProcess = require('../business/temporalProcess');
+const { date2string } = require('#root/api/utils/convertDates.js'),
+	RewardProcess = require('#root/api/business/rewardProcess.js'),
+	RivenProcess = require('#root/api/business/rivenProcess.js'),
+	NetracellRewardProcess = require('#root/api/business/netracellRewardProcess.js'),
+	TemporalProcess = require('#root/api/business/temporalProcess.js');
 
 const NONE = '-';
 

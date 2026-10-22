@@ -3,8 +3,8 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../config/jwt_auth').auth;
-const RivenConditionProcess = require('../api/business/rivenConditionProcess');
+const auth = require('#root/config/jwt_auth.js').auth;
+const RivenConditionProcess = require('#root/api/business/rivenConditionProcess.js');
 
 router.get('/', auth.optional, function (_req, res) {
     RivenConditionProcess.list()

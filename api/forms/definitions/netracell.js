@@ -1,9 +1,9 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-	{ netracellRewardTypes, netracellRewardSources, netracellTauforgeableTypes } = require('../../models/netracellModel'),
-	{ date2string } = require('../../utils/convertDates'),
-	NetracellRewardProcess = require('../../business/netracellRewardProcess');
+	{ netracellRewardTypes, netracellRewardSources, netracellTauforgeableTypes } = require('#root/api/models/netracellModel.js'),
+	{ date2string } = require('#root/api/utils/convertDates.js'),
+	NetracellRewardProcess = require('#root/api/business/netracellRewardProcess.js');
 
 const Netracell = mongoose.model('NetracellReward');
 

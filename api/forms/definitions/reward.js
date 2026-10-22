@@ -1,13 +1,13 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-	{ toOptions } = require('../formEngine'),
-	{ date2string } = require('../../utils/convertDates'),
-	RewardTypeProcess = require('../../business/rewardTypeProcess'),
-	RewardSourceProcess = require('../../business/rewardSourceProcess'),
-	BoosterTypeProcess = require('../../business/boosterTypeProcess'),
-	RivenTypeProcess = require('../../business/rivenTypeProcess'),
-	RewardProcess = require('../../business/rewardProcess');
+	{ toOptions } = require('#root/api/forms/formEngine.js'),
+	{ date2string } = require('#root/api/utils/convertDates.js'),
+	RewardTypeProcess = require('#root/api/business/rewardTypeProcess.js'),
+	RewardSourceProcess = require('#root/api/business/rewardSourceProcess.js'),
+	BoosterTypeProcess = require('#root/api/business/boosterTypeProcess.js'),
+	RivenTypeProcess = require('#root/api/business/rivenTypeProcess.js'),
+	RewardProcess = require('#root/api/business/rewardProcess.js');
 
 const Reward = mongoose.model('Reward');
 const idOf = value => (value ? String(value) : '');

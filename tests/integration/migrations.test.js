@@ -7,10 +7,10 @@ const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
 // Mongoose Schemas, before the migrations (they get their models when required)
-const { netracellRewardTypes, netracellRewardSources } = require('../../api/models/netracellModel');
-const { temporalRewardTypes, temporalRewardSources } = require('../../api/models/temporalModel');
-require('../../api/models/dbVersionModel');
-const migrations = require('../../api/migrations');
+const { netracellRewardTypes, netracellRewardSources } = require('#root/api/models/netracellModel.js');
+const { temporalRewardTypes, temporalRewardSources } = require('#root/api/models/temporalModel.js');
+require('#root/api/models/dbVersionModel.js');
+const migrations = require('#root/api/migrations/index.js');
 
 const Netracell = mongoose.model('NetracellReward');
 const NetracellRewardType = mongoose.model('NetracellRewardType');

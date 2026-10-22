@@ -20,6 +20,7 @@ Express 5 + Mongoose 8 + Pug app that records Warframe rewards (sorties, rivens,
 
 ## Rules
 - Indent with tabs.
+- **Local requires:** a require that goes up a directory uses `#root/<path>.js` (package `imports`), never `../`. Same-folder requires stay `./x`.
 - **Migrations:** a data or schema change needs a migration in `api/migrations/` (`{ version, description, up }`), appended to the list in `api/migrations/index.js`. A migration must be idempotent: MongoDB standalone has no transactions. Startup runs the migrations before serving; an empty database is never migrated.
 - **Content Security Policy** (`app.js`):
   - No CDNs: every asset is served from `public/`.

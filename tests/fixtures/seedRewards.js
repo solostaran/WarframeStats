@@ -12,11 +12,11 @@
 
 const mongoose = require('mongoose');
 
-require('../../api/models/rivenTypeModel');
-require('../../api/models/boosterTypeModel');
-require('../../api/models/rewardTypeModel');
-require('../../api/models/rewardSourceModel');
-require('../../api/models/rewardModel');
+require('#root/api/models/rivenTypeModel.js');
+require('#root/api/models/boosterTypeModel.js');
+require('#root/api/models/rewardTypeModel.js');
+require('#root/api/models/rewardSourceModel.js');
+require('#root/api/models/rewardModel.js');
 
 const Reward = mongoose.model('Reward');
 

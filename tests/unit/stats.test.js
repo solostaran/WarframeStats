@@ -8,22 +8,22 @@
 const mongoose = require('mongoose');
 
 // Mongoose Schemas, before the business processes (they get their models when required)
-require('../../api/models/rivenTypeModel');
-require('../../api/models/rivenSourceModel');
-require('../../api/models/rivenConditionModel');
-require('../../api/models/rivenModel');
-require('../../api/models/boosterTypeModel');
-require('../../api/models/rewardTypeModel');
-require('../../api/models/rewardSourceModel');
-require('../../api/models/rewardModel');
-require('../../api/models/Users');
-const { netracellRewardSources, netracellRewardTypes } = require('../../api/models/netracellModel');
-const { temporalRewardSources, temporalRewardTypes } = require('../../api/models/temporalModel');
+require('#root/api/models/rivenTypeModel.js');
+require('#root/api/models/rivenSourceModel.js');
+require('#root/api/models/rivenConditionModel.js');
+require('#root/api/models/rivenModel.js');
+require('#root/api/models/boosterTypeModel.js');
+require('#root/api/models/rewardTypeModel.js');
+require('#root/api/models/rewardSourceModel.js');
+require('#root/api/models/rewardModel.js');
+require('#root/api/models/Users.js');
+const { netracellRewardSources, netracellRewardTypes } = require('#root/api/models/netracellModel.js');
+const { temporalRewardSources, temporalRewardTypes } = require('#root/api/models/temporalModel.js');
 
-const StatsProcess = require('../../api/business/statsProcess');
-const RivenTypeProcess = require('../../api/business/rivenTypeProcess');
-const BoosterTypeProcess = require('../../api/business/boosterTypeProcess');
-const RewardTypeProcess = require('../../api/business/rewardTypeProcess');
+const StatsProcess = require('#root/api/business/statsProcess.js');
+const RivenTypeProcess = require('#root/api/business/rivenTypeProcess.js');
+const BoosterTypeProcess = require('#root/api/business/boosterTypeProcess.js');
+const RewardTypeProcess = require('#root/api/business/rewardTypeProcess.js');
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1/WarframeStatsDB';
 const MAX_MS = 100;

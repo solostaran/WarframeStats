@@ -3,10 +3,10 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../config/jwt_auth').auth;
-const temporalProcess = require('../api/business/temporalProcess');
-const { temporalRewardTypes, temporalRewardSources } = require('../api/models/temporalModel');
-const { obfuscate_id } = require('../api/utils/obfuscate');
+const auth = require('#root/config/jwt_auth.js').auth;
+const temporalProcess = require('#root/api/business/temporalProcess.js');
+const { temporalRewardTypes, temporalRewardSources } = require('#root/api/models/temporalModel.js');
+const { obfuscate_id } = require('#root/api/utils/obfuscate.js');
 
 router.get('/raw', auth.optional, function(_req, res) {
 	temporalProcess.list_raw()

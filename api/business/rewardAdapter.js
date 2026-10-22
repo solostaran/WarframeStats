@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-	ConvertDate = require('../utils/convertDates.js'),
+	ConvertDate = require('#root/api/utils/convertDates.js'),
 	Riven = mongoose.model('Riven'),
 	Reward = mongoose.model('Reward'),
 	RewardSourceProcess = require('./rewardSourceProcess'),

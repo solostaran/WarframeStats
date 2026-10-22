@@ -5,7 +5,7 @@
 const express = require('express');
 const router = express.Router();
 
-const forms = require('../api/forms');
+const forms = require('#root/api/forms/index.js');
 
 function formPage(view, title, formId) {
 	return async function(_req, res, next) {

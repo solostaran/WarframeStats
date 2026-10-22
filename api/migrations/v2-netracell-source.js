@@ -3,7 +3,7 @@
 // v2 : a netracell reward has a source ("Netracell" or "Deep Archimedea").
 // Seeds the sources, then every existing reward comes from a Netracell.
 const mongoose = require('mongoose'),
-	{ netracellRewardSources } = require('../models/netracellModel');
+	{ netracellRewardSources } = require('#root/api/models/netracellModel.js');
 
 const up = async function() {
 	const Netracell = mongoose.model('NetracellReward');

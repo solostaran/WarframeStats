@@ -10,8 +10,8 @@ const request = require('supertest');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
 // Mongoose Schemas, before the router (the business process gets its models when required)
-require('../../api/models/Users');
-const { netracellRewardTypes, netracellRewardSources } = require('../../api/models/netracellModel');
+require('#root/api/models/Users.js');
+const { netracellRewardTypes, netracellRewardSources } = require('#root/api/models/netracellModel.js');
 
 const Users = mongoose.model('Users');
 
@@ -21,8 +21,8 @@ function buildApp() {
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: false }));
 	app.use(cookieParser());
-	app.use(require('../../config/sanitizeBody'));
-	app.use('/netracell', require('../../routes/netracellRoutes'));
+	app.use(require('#root/config/sanitizeBody.js'));
+	app.use('/netracell', require('#root/routes/netracellRoutes.js'));
 	app.use(function(err, _req, res, _next) {
 		res.status(err.status || 500).json({ name: err.name, message: err.message });
 	});
@@ -266,8 +266,8 @@ describe('/netracell routes', () => {
 
 	// the generic form (api/forms/definitions/netracell.js) : its fields, validated by the form engine, become the loots
 	describe('netracell form', () => {
-		const definition = require('../../api/forms/definitions/netracell');
-		const formEngine = require('../../api/forms/formEngine');
+		const definition = require('#root/api/forms/definitions/netracell.js');
+		const formEngine = require('#root/api/forms/formEngine.js');
 		const userId = new mongoose.Types.ObjectId();
 
 		async function saveForm(body, id) {

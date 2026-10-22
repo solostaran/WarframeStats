@@ -5,8 +5,8 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../config/jwt_auth').auth;
-const RewardTypeProcess = require('../api/business/rewardTypeProcess');
+const auth = require('#root/config/jwt_auth.js').auth;
+const RewardTypeProcess = require('#root/api/business/rewardTypeProcess.js');
 
 router.get('/', auth.optional, function (req, res) {
 	RewardTypeProcess

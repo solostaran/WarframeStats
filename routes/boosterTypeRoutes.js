@@ -3,8 +3,8 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../config/jwt_auth').auth;
-const BoosterTypeProcess = require('../api/business/boosterTypeProcess');
+const auth = require('#root/config/jwt_auth.js').auth;
+const BoosterTypeProcess = require('#root/api/business/boosterTypeProcess.js');
 
 router.get('/', auth.optional, function (_req, res) {
     BoosterTypeProcess.list()

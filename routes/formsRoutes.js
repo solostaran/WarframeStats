@@ -8,10 +8,10 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../config/jwt_auth').auth;
-const forms = require('../api/forms');
-const formEngine = require('../api/forms/formEngine');
-const { obfuscate_id } = require('../api/utils/obfuscate');
+const auth = require('#root/config/jwt_auth.js').auth;
+const forms = require('#root/api/forms/index.js');
+const formEngine = require('#root/api/forms/formEngine.js');
+const { obfuscate_id } = require('#root/api/utils/obfuscate.js');
 
 const ID_PATTERN = /^[0-9a-f]{24}$/i;
 const errorMessage = err => String(err && err.message ? err.message : err);

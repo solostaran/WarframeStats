@@ -4,7 +4,7 @@
 // Seeds the temporal reward sources and types, needed by every new temporal reward
 // (the same as POST /temporal/setSources and /temporal/setTypes, without duplicate).
 const mongoose = require('mongoose'),
-	{ temporalRewardSources, temporalRewardTypes } = require('../models/temporalModel');
+	{ temporalRewardSources, temporalRewardTypes } = require('#root/api/models/temporalModel.js');
 
 // one document { type } per value, the existing ones kept
 const upsertAll = async function(Model, types) {

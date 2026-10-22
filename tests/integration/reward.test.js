@@ -10,15 +10,15 @@ const request = require('supertest');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
 // Mongoose Schemas (same order as app.js), before the router (the business processes get their models when required)
-require('../../api/models/rivenTypeModel');
-require('../../api/models/rivenSourceModel');
-require('../../api/models/rivenConditionModel');
-require('../../api/models/rivenModel');
-require('../../api/models/boosterTypeModel');
-require('../../api/models/rewardTypeModel');
-require('../../api/models/rewardSourceModel');
-require('../../api/models/rewardModel');
-require('../../api/models/Users');
+require('#root/api/models/rivenTypeModel.js');
+require('#root/api/models/rivenSourceModel.js');
+require('#root/api/models/rivenConditionModel.js');
+require('#root/api/models/rivenModel.js');
+require('#root/api/models/boosterTypeModel.js');
+require('#root/api/models/rewardTypeModel.js');
+require('#root/api/models/rewardSourceModel.js');
+require('#root/api/models/rewardModel.js');
+require('#root/api/models/Users.js');
 
 const Reward = mongoose.model('Reward');
 
@@ -26,7 +26,7 @@ function buildApp() {
 	const app = express();
 	app.use(express.json());
 	app.use(cookieParser());
-	app.use('/reward', require('../../routes/rewardRoutes'));
+	app.use('/reward', require('#root/routes/rewardRoutes.js'));
 	return app;
 }
 

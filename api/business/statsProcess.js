@@ -6,9 +6,9 @@ const mongoose = require('mongoose'),
 	RivenTypeProcess = require('./rivenTypeProcess'),
 	BoosterTypeProcess = require('./boosterTypeProcess'),
 	Netracell = mongoose.model("NetracellReward"),
-	{ netracellRewardSources, netracellRewardTypes } = require('../models/netracellModel'),
+	{ netracellRewardSources, netracellRewardTypes } = require('#root/api/models/netracellModel.js'),
 	Temporal = mongoose.model("TemporalReward"),
-	{ temporalRewardSources, temporalRewardTypes } = require('../models/temporalModel');
+	{ temporalRewardSources, temporalRewardTypes } = require('#root/api/models/temporalModel.js');
 
 // count of the rewards per reward type, computed by the database
 const reward_stats = async function() {

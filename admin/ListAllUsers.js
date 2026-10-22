@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const _ = require('lodash');
-require('../api/models/Users');
+require('#root/api/models/Users.js');
 const Users = mongoose.model('Users');
 
 mongoose.Promise = global.Promise;

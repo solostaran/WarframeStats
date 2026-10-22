@@ -3,8 +3,8 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../config/jwt_auth').auth;
-const RivenOriginProcess = require('../api/business/rivenSourceProcess');
+const auth = require('#root/config/jwt_auth.js').auth;
+const RivenOriginProcess = require('#root/api/business/rivenSourceProcess.js');
 
 router.get('/', auth.optional, function (_req, res) {
     RivenOriginProcess.list()

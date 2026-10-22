@@ -3,9 +3,9 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../config/jwt_auth').auth;
-const RivenProcess = require('../api/business/rivenProcess');
-const { obfuscate_id } = require('../api/utils/obfuscate');
+const auth = require('#root/config/jwt_auth.js').auth;
+const RivenProcess = require('#root/api/business/rivenProcess.js');
+const { obfuscate_id } = require('#root/api/utils/obfuscate.js');
 
 router.get('/', auth.optional, function (_req, res) {
     RivenProcess.list()
