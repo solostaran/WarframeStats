@@ -6,7 +6,7 @@ const router = express.Router();
 const auth = require('#root/security/jwt_auth.js').auth;
 const temporalProcess = require('#root/api/domain/temporalProcess.js');
 const { temporalRewardTypes, temporalRewardSources } = require('#root/api/models/temporalModel.js');
-const { obfuscate_id } = require('#root/security/obfuscation.js');
+const { obfuscate_id } = require('#root/security/utils/obfuscation.js');
 
 router.get('/raw', auth.optional, function(_req, res) {
 	temporalProcess.list_raw()

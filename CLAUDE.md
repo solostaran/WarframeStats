@@ -29,6 +29,6 @@ Express 5 + Mongoose 8 + Pug app that records Warframe rewards (sorties, rivens,
   - An inline `<script>` needs `nonce=nonce`; no inline event handlers.
   - Scripts and stylesheets loaded with `integrity=` must get a new sha384 hash whenever the file changes (for example `formModal.js` and `detailsModal.js` in the table pages).
 - **Writes need a JWT** (`auth.required`, from `security/jwt_auth.js`): an `Authorization: Bearer` header or the `access_token` cookie. The signing secret is random at each startup, so a restart logs everyone out.
-- **No user documents for visitors:** never send a user document to visitors; pass it through `publicUser` (`security/obfuscation.js`).
+- **No user documents for visitors:** never send a user document to visitors; pass it through `publicUser` (`security/utils/obfuscation.js`).
 - **Docker:** the `Dockerfile` copies only `app.js`, `api/`, `bin/`, `database/`, `security/`, `static/`, `views/` and `web/`. A new top-level runtime folder must be added there.
 - **Commit messages:** one short sentence.

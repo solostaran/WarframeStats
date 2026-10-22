@@ -6,7 +6,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const auth = require('#root/security/jwt_auth.js').auth;
 const rewardProcess = require('#root/api/domain/rewardProcess.js');
-const { obfuscate_id } = require('#root/security/obfuscation.js');
+const { obfuscate_id } = require('#root/security/utils/obfuscation.js');
 
 // The query of a bootstrap-table in server-side pagination (public input : only expected values are kept).
 // The filter-control selects send ids : "type.name" and "source.name" a type/source id,

@@ -3,7 +3,7 @@
 // TODO: add update (we need this to change "exilus" to "warframe exilus adapter")
 
 const mongoose = require('mongoose');
-const escapeRegExp = require('#root/security/escapeRegExp.js');
+const escapeRegExp = require('#root/security/utils/escapeRegExp.js');
 const RewardTypes = mongoose.model('RewardType');
 
 const list = function() {

@@ -21,7 +21,7 @@ function buildApp() {
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: false }));
 	app.use(cookieParser());
-	app.use(require('#root/security/sanitizeBody.js'));
+	app.use(require('#root/security/utils/sanitizeBody.js'));
 	app.use('/temporal', require('#root/api/routes/temporalRoutes.js'));
 	app.use(function(err, _req, res, _next) {
 		res.status(err.status || 500).json({ name: err.name, message: err.message });

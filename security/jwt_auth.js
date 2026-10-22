@@ -1,15 +1,9 @@
 const { expressjwt: jwt } = require('express-jwt'); // for express-jwt v8+
 const jsonwebtoken = require('jsonwebtoken');
-function generateRandomString(length) {
-    let result = '';
-    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * charset.length);
-        result += charset.charAt(randomIndex);
-    }
-    return result;
-}
-const sec_string = generateRandomString(10);
+const crypto = require('crypto');
+
+// Signing secret, random at each startup (256 bits from a cryptographically secure generator)
+const sec_string = crypto.randomBytes(32).toString('hex');
 
 // A session ends after this idle time : security/loginState.js renews the cookie token of an active user
 const SESSION_DURATION_SECONDS = 30 * 60;

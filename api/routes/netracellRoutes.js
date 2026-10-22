@@ -6,7 +6,7 @@ const router = express.Router();
 const auth = require('#root/security/jwt_auth.js').auth;
 const netracellRewardProcess = require('#root/api/domain/netracellRewardProcess.js');
 const { netracellRewardTypes, netracellRewardSources } = require('#root/api/models/netracellModel.js');
-const { obfuscate_email, obfuscate_id } = require('#root/security/obfuscation.js');
+const { obfuscate_email, obfuscate_id } = require('#root/security/utils/obfuscation.js');
 
 router.get('/raw', auth.optional, function(_req, res) {
 	netracellRewardProcess.list_raw()

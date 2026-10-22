@@ -11,7 +11,7 @@ const router = express.Router();
 const auth = require('#root/security/jwt_auth.js').auth;
 const forms = require('#root/web/forms/index.js');
 const formEngine = require('#root/web/forms/formEngine.js');
-const { obfuscate_id } = require('#root/security/obfuscation.js');
+const { obfuscate_id } = require('#root/security/utils/obfuscation.js');
 
 const ID_PATTERN = /^[0-9a-f]{24}$/i;
 const errorMessage = err => String(err && err.message ? err.message : err);

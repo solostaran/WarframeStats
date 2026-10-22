@@ -5,7 +5,7 @@ const mongoose = require('mongoose'),
 	TemporalRewardType = mongoose.model("TemporalRewardType"),
 	TemporalRewardSource = mongoose.model("TemporalRewardSource"),
 	temporalModel = require('#root/api/models/temporalModel.js'),
-	{ publicUser } = require('#root/security/obfuscation.js'),
+	{ publicUser } = require('#root/security/utils/obfuscation.js'),
 	seed = require('./seedTypes.js');
 
 const count = function() {

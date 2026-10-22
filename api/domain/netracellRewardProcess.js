@@ -6,7 +6,7 @@ const mongoose = require('mongoose'),
 	NetracellRewardType = mongoose.model("NetracellRewardType"),
 	NetracellRewardSource = mongoose.model("NetracellRewardSource"),
 	netracellModel = require('#root/api/models/netracellModel.js'),
-	{ publicUser } = require('#root/security/obfuscation.js'),
+	{ publicUser } = require('#root/security/utils/obfuscation.js'),
 	seed = require('./seedTypes.js');
 
 const count = function() {

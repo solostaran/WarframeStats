@@ -5,7 +5,7 @@ const mongoose = require('mongoose'),
 	Reward = mongoose.model('Reward'),
 	rivenProcess = require('./rivenProcess'),
 	convert = require('./convertDates.js'),
-	{ publicUser } = require('#root/security/obfuscation.js'),
+	{ publicUser } = require('#root/security/utils/obfuscation.js'),
 	rewardAdapter = require('./rewardAdapter');
 
 const count = function() {

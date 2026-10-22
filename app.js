@@ -40,10 +40,10 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(require('./security/sanitizeBody'));	// no "$" operator keys in req.body (NoSQL injection)
+app.use(require('./security/utils/sanitizeBody'));	// no "$" operator keys in req.body (NoSQL injection)
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(require('./security/loginState'));	// res.locals.connected, per request, for the PUG templates
-app.locals.safeJson = require('./security/safeJson');	// JSON inlined in a <script> of a template
+app.locals.safeJson = require('./security/utils/safeJson');	// JSON inlined in a <script> of a template
 app.locals.version = require('./package.json').version;	// app version, shown in the footer of the layouts
 
 /*

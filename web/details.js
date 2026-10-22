@@ -14,7 +14,7 @@ const NONE = '-';
 
 const day = date => (date ? date2string(new Date(date)) : NONE);
 const timestamp = date => (date ? new Date(date).toISOString() : NONE);
-// createdBy/modifiedBy are already reduced to a semi-obfuscated email (security/obfuscation.js)
+// createdBy/modifiedBy are already reduced to a semi-obfuscated email (security/utils/obfuscation.js)
 const email = user => (user && user.email ? user.email : NONE);
 const field = (label, value) => ({
 	label,

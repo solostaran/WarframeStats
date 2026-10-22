@@ -3,7 +3,7 @@ const passport = require('passport');
 const router = require('express').Router();
 const { auth, setAccessTokenCookie } = require('#root/security/jwt_auth.js');
 const Users = mongoose.model('Users');
-const { obfuscate_email } = require('#root/security/obfuscation.js');
+const { obfuscate_email } = require('#root/security/utils/obfuscation.js');
 
 //POST new user route (optional, everyone has access)
 if (process.env.NODE_ENV !== 'production') {
