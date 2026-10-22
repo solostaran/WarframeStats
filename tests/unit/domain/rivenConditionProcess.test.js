@@ -2,7 +2,7 @@
 
 // Unit tests of api/domain/rivenConditionProcess.js, against an in-memory MongoDB
 const mongoose = require('mongoose');
-const db = require('./fixtures/memoryDb.js');
+const db = require('#root/tests/fixtures/memoryDb.js');
 db.registerModels();
 const RivenConditionProcess = require('#root/api/domain/rivenConditionProcess.js');
 

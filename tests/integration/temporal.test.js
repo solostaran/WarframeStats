@@ -7,7 +7,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const request = require('supertest');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const db = require('#root/tests/fixtures/memoryDb.js');
 
 // Mongoose Schemas, before the router (the business process gets its models when required)
 require('#root/api/models/Users.js');
@@ -30,13 +30,11 @@ function buildApp() {
 }
 
 describe('/temporal routes', () => {
-	let mongoServer;
 	let app;
 	let token;
 
 	beforeAll(async () => {
-		mongoServer = await MongoMemoryServer.create();
-		await mongoose.connect(mongoServer.getUri());
+		await db.connect(__filename);
 		app = buildApp();
 
 		const user = new Users({ email: 'tester@example.com' });
@@ -46,8 +44,7 @@ describe('/temporal routes', () => {
 	});
 
 	afterAll(async () => {
-		await mongoose.disconnect();
-		await mongoServer.stop();
+		await db.disconnect();
 	});
 
 	describe('GET /temporal/type/', () => {

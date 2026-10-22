@@ -2,7 +2,7 @@
 
 // Unit tests of api/domain/rewardAdapter.js (reward form -> saved reward, and its riven), against an in-memory MongoDB
 const mongoose = require('mongoose');
-const db = require('./fixtures/memoryDb.js');
+const db = require('#root/tests/fixtures/memoryDb.js');
 db.registerModels();
 const RewardAdapter = require('#root/api/domain/rewardAdapter.js');
 

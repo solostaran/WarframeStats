@@ -2,7 +2,7 @@
 
 // Unit tests of api/domain/temporalProcess.js (Temporal Archimedea runs), against an in-memory MongoDB
 const mongoose = require('mongoose');
-const db = require('./fixtures/memoryDb.js');
+const db = require('#root/tests/fixtures/memoryDb.js');
 db.registerModels();
 const TemporalProcess = require('#root/api/domain/temporalProcess.js');
 const { temporalRewardTypes, temporalRewardSources } = require('#root/api/models/temporalModel.js');

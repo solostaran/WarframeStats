@@ -4,7 +4,7 @@
 // against an in-memory MongoDB (no external database needed).
 
 const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const db = require('#root/tests/fixtures/memoryDb.js');
 
 // Mongoose Schemas, before the migrations (they get their models when required)
 const { netracellRewardTypes, netracellRewardSources } = require('#root/api/models/netracellModel.js');
@@ -20,16 +20,12 @@ const TemporalRewardSource = mongoose.model('TemporalRewardSource');
 const DbVersion = mongoose.model('DbVersion');
 
 describe('data migrations', () => {
-	let mongoServer;
-
 	beforeAll(async () => {
-		mongoServer = await MongoMemoryServer.create();
-		await mongoose.connect(mongoServer.getUri());
+		await db.connect(__filename);
 	});
 
 	afterAll(async () => {
-		await mongoose.disconnect();
-		await mongoServer.stop();
+		await db.disconnect();
 	});
 
 	describe('from a version 1 database', () => {

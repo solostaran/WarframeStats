@@ -5,8 +5,9 @@ Express 5 + Mongoose 8 + Pug app that records Warframe rewards (sorties, rivens,
 ## Commands
 - `npm run dev`: development server on port 3000. It needs a local MongoDB at `127.0.0.1/WarframeStatsDB` (`DOCKER=true` uses the host `net-db-warstats` instead).
 - `npm test`: every Jest suite.
-  - `npm run test:integration`: in-memory MongoDB (`mongodb-memory-server`), no database needed.
-  - `npm run test:unit`: the `api/domain` tests (`tests/unit/domain/`), on the in-memory MongoDB server started once per run (`tests/globalSetup.js`), one database per test file (`tests/unit/domain/fixtures/memoryDb.js`). Known bugs are documented with `it.failing`: once one is fixed, turn its test into `it`.
+  - `npm run test:integration`: the routes, with supertest.
+  - `npm run test:unit`: the `api/domain` tests (`tests/unit/domain/`).
+  - Both run on the in-memory MongoDB server started once per run (`tests/globalSetup.js`), one database per test file (`tests/fixtures/memoryDb.js`), no database needed. Known bugs are documented with `it.failing`: once one is fixed, turn its test into `it`.
   - `npm run test:performance`: `tests/performance/stats.test.js` reads the **real** local database (`MONGO_URI`, read only).
 - `resources/compose/`: Docker Compose setup and database backup/restore scripts (`resources/scripts/`: user admin scripts, `resources/misc/`: Postman collection and other references).
 

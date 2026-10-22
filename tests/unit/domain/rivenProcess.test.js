@@ -2,7 +2,7 @@
 
 // Unit tests of api/domain/rivenProcess.js, against an in-memory MongoDB
 const mongoose = require('mongoose');
-const db = require('./fixtures/memoryDb.js');
+const db = require('#root/tests/fixtures/memoryDb.js');
 db.registerModels();
 const RivenProcess = require('#root/api/domain/rivenProcess.js');
 const { obfuscate_email } = require('#root/security/utils/obfuscation.js');

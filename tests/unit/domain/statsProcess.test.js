@@ -3,7 +3,7 @@
 // Unit tests of api/domain/statsProcess.js : the exact counts of each statistic, on known data in an in-memory MongoDB.
 // (tests/performance/stats.test.js checks their format and compute time on the real database)
 const mongoose = require('mongoose');
-const db = require('./fixtures/memoryDb.js');
+const db = require('#root/tests/fixtures/memoryDb.js');
 db.registerModels();
 const StatsProcess = require('#root/api/domain/statsProcess.js');
 const { netracellRewardTypes } = require('#root/api/models/netracellModel.js');

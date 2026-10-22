@@ -1,6 +1,6 @@
 'use strict';
 
-// In-memory database of the domain unit tests : one database per test file,
+// In-memory database of the unit and integration tests : one database per test file,
 // on the MongoDB server started once for the whole run (tests/globalSetup.js).
 const path = require('path');
 const mongoose = require('mongoose');
@@ -27,14 +27,16 @@ let ownServer;
 // same timeout as the jest config of package.json, for a runner that ignores it (starting a server takes a few seconds)
 jest.setTimeout(30000);
 
-// testFile : __filename of the test file, its name is the name of the database
+// testFile : __filename of the test file, its path under tests/ is the name of the database
+// (tests/integration/users.test.js -> integration-users : two suites may have files with the same name)
 async function connect(testFile) {
 	let uri = process.env.MONGO_MEMORY_URI;
 	if (!uri) {
 		ownServer = await MongoMemoryServer.create();
 		uri = ownServer.getUri();
 	}
-	await mongoose.connect(uri, { dbName: path.basename(testFile, '.test.js') });
+	const dbName = path.relative(path.join(__dirname, '..'), testFile).replace(/\.test\.js$/, '').split(path.sep).join('-');
+	await mongoose.connect(uri, { dbName: dbName });
 }
 
 // empties every collection (between two tests)

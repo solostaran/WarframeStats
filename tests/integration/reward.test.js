@@ -7,7 +7,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const request = require('supertest');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const db = require('#root/tests/fixtures/memoryDb.js');
 
 // Mongoose Schemas (same order as app.js), before the router (the business processes get their models when required)
 require('#root/api/models/rivenTypeModel.js');
@@ -31,7 +31,6 @@ function buildApp() {
 }
 
 describe('GET /reward/paged', () => {
-	let mongoServer;
 	let app;
 	let ids;	// ids of the seeded references
 
@@ -40,8 +39,7 @@ describe('GET /reward/paged', () => {
 	const days = res => res.body.rows.map(r => r.date.substring(0, 10));
 
 	beforeAll(async () => {
-		mongoServer = await MongoMemoryServer.create();
-		await mongoose.connect(mongoServer.getUri());
+		await db.connect(__filename);
 		app = buildApp();
 
 		const [sculpture, rivenMod] = await mongoose.model('RewardType').create([{ name: 'Anasa Ayatan Sculpture' }, { name: 'Riven Mod' }]);
@@ -60,8 +58,7 @@ describe('GET /reward/paged', () => {
 	});
 
 	afterAll(async () => {
-		await mongoose.disconnect();
-		await mongoServer.stop();
+		await db.disconnect();
 	});
 
 	it('returns the first page, newest first, with the populated references', async () => {

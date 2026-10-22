@@ -2,7 +2,7 @@
 
 // Unit tests of api/domain/netracellRewardProcess.js (Netracell and Deep Archimedea runs), against an in-memory MongoDB
 const mongoose = require('mongoose');
-const db = require('./fixtures/memoryDb.js');
+const db = require('#root/tests/fixtures/memoryDb.js');
 db.registerModels();
 const NetracellProcess = require('#root/api/domain/netracellRewardProcess.js');
 const { netracellRewardTypes, netracellRewardSources } = require('#root/api/models/netracellModel.js');
