@@ -7,11 +7,11 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const request = require('supertest');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const db = require('#root/tests/fixtures/memoryDb.js');
 
 // Mongoose Schemas, before the router (the business process gets its models when required)
-require('../../api/models/Users');
-const { temporalRewardTypes, temporalRewardSources } = require('../../api/models/temporalModel');
+require('#root/api/models/Users.js');
+const { temporalRewardTypes, temporalRewardSources } = require('#root/api/models/temporalModel.js');
 
 const Users = mongoose.model('Users');
 
@@ -21,8 +21,8 @@ function buildApp() {
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: false }));
 	app.use(cookieParser());
-	app.use(require('../../config/sanitizeBody'));
-	app.use('/temporal', require('../../routes/temporalRoutes'));
+	app.use(require('#root/security/utils/sanitizeBody.js'));
+	app.use('/temporal', require('#root/api/routes/temporalRoutes.js'));
 	app.use(function(err, _req, res, _next) {
 		res.status(err.status || 500).json({ name: err.name, message: err.message });
 	});
@@ -30,13 +30,11 @@ function buildApp() {
 }
 
 describe('/temporal routes', () => {
-	let mongoServer;
 	let app;
 	let token;
 
 	beforeAll(async () => {
-		mongoServer = await MongoMemoryServer.create();
-		await mongoose.connect(mongoServer.getUri());
+		await db.connect(__filename);
 		app = buildApp();
 
 		const user = new Users({ email: 'tester@example.com' });
@@ -46,8 +44,7 @@ describe('/temporal routes', () => {
 	});
 
 	afterAll(async () => {
-		await mongoose.disconnect();
-		await mongoServer.stop();
+		await db.disconnect();
 	});
 
 	describe('GET /temporal/type/', () => {
@@ -222,10 +219,10 @@ describe('/temporal routes', () => {
 		});
 	});
 
-	// the generic form (api/forms/definitions/temporal.js) : its fields, validated by the form engine, become the loots
+	// the generic form (web/forms/definitions/temporal.js) : its fields, validated by the form engine, become the loots
 	describe('temporal form', () => {
-		const definition = require('../../api/forms/definitions/temporal');
-		const formEngine = require('../../api/forms/formEngine');
+		const definition = require('#root/web/forms/definitions/temporal.js');
+		const formEngine = require('#root/web/forms/formEngine.js');
 		const userId = new mongoose.Types.ObjectId();
 
 		async function saveForm(body, id) {

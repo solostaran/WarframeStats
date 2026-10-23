@@ -1,20 +1,21 @@
 'use strict';
 
-// Integration test of the sliding session : config/loginState.js renews the "access_token" cookie of an active user.
+// Integration test of the sliding session : security/loginState.js renews the "access_token" cookie of an active user.
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const jsonwebtoken = require('jsonwebtoken');
 const request = require('supertest');
-const { sec_string, SESSION_DURATION_SECONDS, signToken } = require('../../config/jwt_auth');
+const { sec_string, SESSION_DURATION_SECONDS, signToken } = require('#root/security/jwt_auth.js');
 
 const payload = { email: 'tester@example.com', id: '0123456789abcdef01234567' };
 
 function buildApp() {
 	const app = express();
 	app.use(cookieParser());
-	app.use(require('../../config/loginState'));
-	app.get('/', (_req, res) => res.json({ connected: res.locals.connected }));
+	app.use(require('#root/security/loginState.js'));
+	// token : the cookie seen by the next middlewares (auth.optional of the routes)
+	app.get('/', (req, res) => res.json({ connected: res.locals.connected, token: req.cookies['access_token'] }));
 	return app;
 }
 
@@ -48,9 +49,15 @@ describe('sliding session', () => {
 		expect(accessTokenCookie(res)).toBeUndefined();
 	});
 
-	it('does not renew an expired token', async () => {
+	it('removes an expired token instead of renewing it', async () => {
 		const res = await request(app).get('/').set('Cookie', 'access_token=' + oldToken(SESSION_DURATION_SECONDS + 60, SESSION_DURATION_SECONDS)).expect(200);
-		expect(res.body.connected).toBe(false);
-		expect(accessTokenCookie(res)).toBeUndefined();
+		expect(res.body).toEqual({ connected: false });
+		expect(accessTokenCookie(res)).toMatch(/^access_token=;.*Expires=Thu, 01 Jan 1970/);
+	});
+
+	it('removes a token signed before a restart of the server', async () => {
+		const res = await request(app).get('/').set('Cookie', 'access_token=' + jsonwebtoken.sign(payload, 'previous secret')).expect(200);
+		expect(res.body).toEqual({ connected: false });
+		expect(accessTokenCookie(res)).toMatch(/^access_token=;.*Expires=Thu, 01 Jan 1970/);
 	});
 });

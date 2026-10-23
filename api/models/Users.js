@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
-const { signToken } = require('../../config/jwt_auth');
+const { signToken } = require('#root/security/jwt_auth.js');
 
 const { Schema } = mongoose;
 
@@ -16,8 +16,10 @@ UsersSchema.methods.setPassword = function(password) {
 };
 
 UsersSchema.methods.validatePassword = function(password) {
-    const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-    return this.hash == hash; // === or == ? Sonarqube and IntelliJ disagree.
+	const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512');
+	const stored = Buffer.from(this.hash || '', 'hex');
+	// constant time comparison : no timing attack on the hash (timingSafeEqual throws on different lengths)
+	return stored.length === hash.length && crypto.timingSafeEqual(stored, hash);
 };
 
 UsersSchema.methods.generateJWT = function() {

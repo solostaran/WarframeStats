@@ -1,8 +1,11 @@
 {
   "name": "warframestats",
-  "version": "1.10.6",
+  "version": "1.12.0",
   "private": true,
   "license": "MIT",
+  "imports": {
+    "#root/*": "./*"
+  },
   "scripts": {
     "start": "node ./bin/www",
     "inbd": "npm run install-and-build-docker",
@@ -15,6 +18,7 @@
     "test": "jest",
     "test:integration": "jest tests/integration",
     "test:unit": "jest tests/unit",
+    "test:performance": "jest tests/performance",
     "seed:rewards": "node tests/fixtures/seedRewards.js",
     "perf:rewards": "node tests/fixtures/perfRewards.js"
   },
@@ -25,7 +29,6 @@
     "debug": "^4.4.3",
     "express": "^5.2.1",
     "express-jwt": "^8.5.1",
-    "flatpickr": "^4.6.13",
     "http-errors": "^2.0.1",
     "jsonwebtoken": "^9.0.3",
     "lodash": "^4.18.1",
@@ -33,8 +36,7 @@
     "morgan": "^1.12.1",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "pug": "^3.0.4",
-    "tv4": "^1.3.0"
+    "pug": "^3.0.4"
   },
   "devDependencies": {
     "cross-env": "^10.1.0",
@@ -45,7 +47,22 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "watchPathIgnorePatterns": ["<rootDir>/compose-warstats/"]
+    "testTimeout": 30000,
+    "globalSetup": "<rootDir>/tests/globalSetup.js",
+    "globalTeardown": "<rootDir>/tests/globalTeardown.js",
+    "collectCoverage": true,
+    "coverageDirectory": "<rootDir>/coverage",
+    "collectCoverageFrom": [
+      "app.js",
+      "api/**/*.js",
+      "database/**/*.js",
+      "security/**/*.js",
+      "web/**/*.js"
+    ],
+    "watchPathIgnorePatterns": [
+      "<rootDir>/resources/",
+      "<rootDir>/coverage/"
+    ]
   },
   "overrides": {
     "@istanbuljs/load-nyc-config": {

@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-const app = require('../app');
+const app = require('#root/app.js');
 const debug = require('debug')('warframestats:server');
 const http = require('http');
 const https = require('https');

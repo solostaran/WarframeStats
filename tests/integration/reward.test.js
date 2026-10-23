@@ -7,18 +7,18 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const request = require('supertest');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const db = require('#root/tests/fixtures/memoryDb.js');
 
 // Mongoose Schemas (same order as app.js), before the router (the business processes get their models when required)
-require('../../api/models/rivenTypeModel');
-require('../../api/models/rivenSourceModel');
-require('../../api/models/rivenConditionModel');
-require('../../api/models/rivenModel');
-require('../../api/models/boosterTypeModel');
-require('../../api/models/rewardTypeModel');
-require('../../api/models/rewardSourceModel');
-require('../../api/models/rewardModel');
-require('../../api/models/Users');
+require('#root/api/models/rivenTypeModel.js');
+require('#root/api/models/rivenSourceModel.js');
+require('#root/api/models/rivenConditionModel.js');
+require('#root/api/models/rivenModel.js');
+require('#root/api/models/boosterTypeModel.js');
+require('#root/api/models/rewardTypeModel.js');
+require('#root/api/models/rewardSourceModel.js');
+require('#root/api/models/rewardModel.js');
+require('#root/api/models/Users.js');
 
 const Reward = mongoose.model('Reward');
 
@@ -26,12 +26,11 @@ function buildApp() {
 	const app = express();
 	app.use(express.json());
 	app.use(cookieParser());
-	app.use('/reward', require('../../routes/rewardRoutes'));
+	app.use('/reward', require('#root/api/routes/rewardRoutes.js'));
 	return app;
 }
 
 describe('GET /reward/paged', () => {
-	let mongoServer;
 	let app;
 	let ids;	// ids of the seeded references
 
@@ -40,8 +39,7 @@ describe('GET /reward/paged', () => {
 	const days = res => res.body.rows.map(r => r.date.substring(0, 10));
 
 	beforeAll(async () => {
-		mongoServer = await MongoMemoryServer.create();
-		await mongoose.connect(mongoServer.getUri());
+		await db.connect(__filename);
 		app = buildApp();
 
 		const [sculpture, rivenMod] = await mongoose.model('RewardType').create([{ name: 'Anasa Ayatan Sculpture' }, { name: 'Riven Mod' }]);
@@ -60,8 +58,7 @@ describe('GET /reward/paged', () => {
 	});
 
 	afterAll(async () => {
-		await mongoose.disconnect();
-		await mongoServer.stop();
+		await db.disconnect();
 	});
 
 	it('returns the first page, newest first, with the populated references', async () => {

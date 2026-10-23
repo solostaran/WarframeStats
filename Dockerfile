@@ -29,10 +29,11 @@ COPY --chown=node:node --from=build /home/node/WarframeStats ./
 COPY --chown=node:node app.js .
 COPY --chown=node:node api/ api/
 COPY --chown=node:node bin/ bin/
-COPY --chown=node:node config/ config/
-COPY --chown=node:node public/ public/
-COPY --chown=node:node routes/ routes/
+COPY --chown=node:node database/ database/
+COPY --chown=node:node security/ security/
+COPY --chown=node:node static/ static/
 COPY --chown=node:node views/ views/
+COPY --chown=node:node web/ web/
 USER node
 
 EXPOSE 3000

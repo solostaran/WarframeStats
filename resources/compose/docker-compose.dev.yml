@@ -1,0 +1,53 @@
+name: compose-warstats
+
+services:
+  db-warstats:
+    container_name: db-warstats-run
+    image: db-warstats
+    restart: unless-stopped
+    user: "1000:1000"
+    volumes:
+      - "./db-warstats/data-volume:/data/db"
+      - "./db-warstats/backup-volume:/data/backup"
+    ports:
+      - "127.0.0.1:27017:27017"
+    build:
+      context: ./db-warstats
+      dockerfile: Dockerfile
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--norc", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+      start_interval: 2s
+    networks:
+      warstats-network:
+        aliases:
+            - net-db-warstats
+# Image built locally
+  app-warstats:
+    depends_on:
+      db-warstats:
+        condition: service_healthy
+    container_name: app-warstats-run
+    # the app sources are in the parent directory (root of the git repository)
+    build: ..
+#    restart: always
+    restart: on-failure:2
+    networks:
+      warstats-network:
+        aliases:
+          - net-app-warstats
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DOCKER=true
+      - DEBUG=warframestats:*
+      - HTTP=true
+    links:
+      - db-warstats
+networks:
+  warstats-network:
+    driver: bridge

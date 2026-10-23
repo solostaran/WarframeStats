@@ -1,16 +1,16 @@
 'use strict';
 
-// Integration test of the data migrations (api/migrations), run at launch by app.js,
+// Integration test of the data migrations (database/migrations), run at launch by app.js,
 // against an in-memory MongoDB (no external database needed).
 
 const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const db = require('#root/tests/fixtures/memoryDb.js');
 
 // Mongoose Schemas, before the migrations (they get their models when required)
-const { netracellRewardTypes, netracellRewardSources } = require('../../api/models/netracellModel');
-const { temporalRewardTypes, temporalRewardSources } = require('../../api/models/temporalModel');
-require('../../api/models/dbVersionModel');
-const migrations = require('../../api/migrations');
+const { netracellRewardTypes, netracellRewardSources } = require('#root/api/models/netracellModel.js');
+const { temporalRewardTypes, temporalRewardSources } = require('#root/api/models/temporalModel.js');
+require('#root/database/dbVersionModel.js');
+const migrations = require('#root/database/migrations/index.js');
 
 const Netracell = mongoose.model('NetracellReward');
 const NetracellRewardType = mongoose.model('NetracellRewardType');
@@ -20,16 +20,12 @@ const TemporalRewardSource = mongoose.model('TemporalRewardSource');
 const DbVersion = mongoose.model('DbVersion');
 
 describe('data migrations', () => {
-	let mongoServer;
-
 	beforeAll(async () => {
-		mongoServer = await MongoMemoryServer.create();
-		await mongoose.connect(mongoServer.getUri());
+		await db.connect(__filename);
 	});
 
 	afterAll(async () => {
-		await mongoose.disconnect();
-		await mongoServer.stop();
+		await db.disconnect();
 	});
 
 	describe('from a version 1 database', () => {
