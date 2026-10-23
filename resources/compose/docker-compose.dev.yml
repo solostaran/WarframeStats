@@ -31,8 +31,8 @@ services:
       db-warstats:
         condition: service_healthy
     container_name: app-warstats-run
-    # the app sources are in the parent directory (root of the git repository)
-    build: ..
+    # the app sources are at the root of the git repository
+    build: ../..
 #    restart: always
     restart: on-failure:2
     networks:
