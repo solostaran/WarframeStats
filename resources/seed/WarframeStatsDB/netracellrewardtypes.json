@@ -1,0 +1,44 @@
+[
+	{
+		"_id": {
+			"$oid": "68057e339f117f92967cab7f"
+		},
+		"type": "Crimson Archon Shard",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "68057e339f117f92967cab81"
+		},
+		"type": "Melee Crescendo",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "68057e339f117f92967cab7e"
+		},
+		"type": "Amber Archon Shard",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "68057e339f117f92967cab82"
+		},
+		"type": "Melee Duplicate",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "68057e339f117f92967cab7d"
+		},
+		"type": "Azure Archon Shard",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "68057e339f117f92967cab80"
+		},
+		"type": "Melee Arcane Adapter",
+		"__v": 0
+	}
+]

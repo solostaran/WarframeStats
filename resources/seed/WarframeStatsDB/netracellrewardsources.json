@@ -1,0 +1,16 @@
+[
+	{
+		"_id": {
+			"$oid": "6ace1e9ff063f067bbbcc6a5"
+		},
+		"type": "Netracell",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ace1e9ff063f067bbbcc6a6"
+		},
+		"type": "Deep Archimedea",
+		"__v": 0
+	}
+]

@@ -1,0 +1,86 @@
+[
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d09d"
+		},
+		"more_info": "from an unknown source (due to the unveiling mechanism or simply unknown)",
+		"name": "Unknown"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d09e"
+		},
+		"more_info": "sold by Palladino in Iron Wake for 10 slivers",
+		"name": "Slivers"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d09f"
+		},
+		"more_info": "reward from Sortie",
+		"name": "Sortie"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d0a0"
+		},
+		"more_info": "reward from Archon's hunt",
+		"name": "Archon's hunt"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d0a1"
+		},
+		"more_info": "converting 4 rivens into a new one",
+		"name": "Transmutation"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d0a2"
+		},
+		"more_info": "sold by Cephalon Simaris",
+		"name": "Simaris"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d0a3"
+		},
+		"more_info": "sold by Teshin from Steel Path",
+		"name": "Steel Path"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d0a4"
+		},
+		"more_info": "nightwave's rank reward",
+		"name": "Nightwave"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d0a5"
+		},
+		"more_info": "Nihil boss in Enter Nihil's Oubliette from Nightwave's offerings",
+		"name": "Nihil"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d0a6"
+		},
+		"more_info": "tactical alerts or special events Gift from the Lotus",
+		"name": "Event"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d0a7"
+		},
+		"more_info": "in the daily tribute",
+		"name": "Daily"
+	},
+	{
+		"_id": {
+			"$oid": "6356aed55337161a3948d0a8"
+		},
+		"more_info": "sold by vendors of the Arbiters of Hexis",
+		"name": "Arbitration"
+	}
+]

@@ -9,6 +9,7 @@ Express 5 + Mongoose 8 + Pug app that records Warframe rewards (sorties, rivens,
   - `npm run test:unit`: the `api/domain` tests (`tests/unit/domain/`).
   - Both run on the in-memory MongoDB server started once per run (`tests/globalSetup.js`), one database per test file (`tests/fixtures/memoryDb.js`), no database needed. Known bugs are documented with `it.failing`: once one is fixed, turn its test into `it`.
   - `npm run test:performance`: `tests/performance/stats.test.js` reads the **real** local database (`MONGO_URI`, read only).
+- `resources/compose/seed_warstats_host_script.sh <email>`: first start of an empty database (a user + the default data of `resources/seed/`, through `resources/scripts/SeedDatabase.js`), with Docker only.
 - `resources/compose/`: Docker Compose setup and database backup/restore scripts (`resources/scripts/`: user admin scripts, `resources/misc/`: Postman collection and other references).
 
 ## Layout
