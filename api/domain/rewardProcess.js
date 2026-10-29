@@ -104,6 +104,7 @@ const addOrUpdate = async function(obj, userId) {
 };
 
 const adds = function(listOfRewards, userId, onSuccess, onError) {
+	if (!Array.isArray(listOfRewards)) return onError('not an array of rewards');
 	let inserted = 0;
 	let rejected = 0;
 	let rejects = [];
@@ -125,6 +126,7 @@ const adds = function(listOfRewards, userId, onSuccess, onError) {
 };
 
 const findById = async function(id) {
+	if (!mongoose.isValidObjectId(id)) return null;	// a malformed id is an unknown reward (404), not a CastError
 	const reward = await Reward.findById(id)
 		.populate('source')
 		.populate('type')
