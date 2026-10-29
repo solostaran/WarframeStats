@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx jest *)",
+      "Bash(git diff *)",
+      "Bash(npm audit 2>&1 | head -80)",
+      "Bash(npm audit 2>&1 | tail -40)"
+    ]
+  },
+  "skillOverrides": {
+    "bump-version": "name-only"
+  }
+}
