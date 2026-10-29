@@ -1,0 +1,14 @@
+[
+	{
+		"_id": {
+			"$oid": "6356aede5337161a3948d0aa"
+		},
+		"name": "Sortie"
+	},
+	{
+		"_id": {
+			"$oid": "6356aede5337161a3948d0ab"
+		},
+		"name": "Archon's hunt"
+	}
+]

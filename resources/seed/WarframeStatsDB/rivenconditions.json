@@ -1,0 +1,689 @@
+[
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef59"
+		},
+		"description": "Kill {N} enemies",
+		"Created_date": {
+			"$date": "2022-03-10T10:44:00.547Z"
+		}
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef5a"
+		},
+		"description": "Kill {N} enemies in a row",
+		"advices": [
+			"Hydron on Sedna or Helene on Saturne + Loki and weapons like Ignis or Amprex"
+		],
+		"Created_date": {
+			"$date": "2022-03-10T10:44:08.022Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef5b"
+		},
+		"description": "Make {N} killing blows",
+		"Created_date": {
+			"$date": "2020-07-07T13:57:22.462Z"
+		},
+		"__v": 2,
+		"advices": [
+			"Ivara is the best choice here"
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef5c"
+		},
+		"description": "Destroy {N} dargyns in flight",
+		"Created_date": {
+			"$date": "2021-10-08T12:37:19.902Z"
+		}
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef5d"
+		},
+		"description": "Kill {N} dargyn pilots before they hit the ground",
+		"advices": [
+			"Titania's 1 (spellbind) while pilots are still on the ground then kill",
+			"Nova with max range to slow pilot's fall",
+			"Mag with Magnetize and shoot the border of the bubble."
+		],
+		"Created_date": {
+			"$date": "2020-07-10T14:54:52.854Z"
+		},
+		"__v": 3
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef5e"
+		},
+		"description": "Kill 3 airborne condrocs",
+		"advices": [
+			"Volt ability 1 (or Arca Plasmor with range) just after take-off",
+			"Sniper rifle on flying condrocs at the west of the map."
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef5f"
+		},
+		"description": "Find {N} caches",
+		"advices": [
+			"Sabotage missions",
+			"Eidolon plains, alone in free roaming"
+		],
+		"Created_date": {
+			"$date": "2022-03-10T10:45:36.979Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef60"
+		},
+		"description": "Kill {N} unalerted tusk ballistas",
+		"advices": [
+			"Eidolon plains by day with a stealth warframe"
+		],
+		"Created_date": {
+			"$date": "2020-07-09T15:20:07.709Z"
+		},
+		"__v": 2
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef61"
+		},
+		"description": "Destroy {N} vruush turrets",
+		"advices": [
+			"Eidolon plains and turrets must be destroyed consecutively.",
+			"Itzal archwing is good to avoid missiles.",
+			"Snper rifle is best."
+		],
+		"Created_date": {
+			"$date": "2022-03-10T10:45:59.319Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef62"
+		},
+		"description": "Sustain 6x (3x before) melee combo for 30 seconds",
+		"advices": [
+			"Nimus on Eris = lots of infested and level 30+"
+		],
+		"Created_date": {
+			"$date": "2020-07-09T15:15:24.981Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef63"
+		},
+		"description": "Complete an incursion alone",
+		"advices": [
+			"Eidolon plains in free roaming (best with find caches)"
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef64"
+		},
+		"description": "Synthesize Simaris target without using ability or consumables",
+		"advices": [
+			"Stealth warframe (best with Ivara)"
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef65"
+		},
+		"description": "Catch one fish, mine one gem or metal and kill one enemy in less than 30 seconds",
+		"advices": [
+			"Eidolon plains, find a mine in close proximity of water then in order : fish, mine and kill someone in the closest camp"
+		],
+		"Created_date": {
+			"$date": "2022-09-08T14:03:08.153Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef66"
+		},
+		"description": "Complete a level 30+ interception alone",
+		"advices": [
+			"Xini on Eris with Banshee Quake or Nova or Saryn"
+		],
+		"Created_date": {
+			"$date": "2022-09-08T13:57:42.852Z"
+		},
+		"__v": 2
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef67"
+		},
+		"description": "Complete a level 30+ extermination",
+		"advices": [
+			"Oxomoco in the Void"
+		],
+		"Created_date": {
+			"$date": "2022-09-08T13:57:23.790Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef68"
+		},
+		"description": "Complete a level 30+ survival without killing anyone",
+		"advices": [
+			"Selkie on Sedna with Loki and Master Thief mod to pop up more oxygen.",
+			"Better with grineers : infested = poison and corpus = nullifiers."
+		],
+		"Created_date": {
+			"$date": "2020-07-10T14:21:37.429Z"
+		},
+		"__v": 3
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef69"
+		},
+		"description": "with a hobbled dragon key equipped",
+		"optional": "true",
+		"advices": [
+			"on enter : do not forget the key in your consumables !!!",
+			"on exit : do not forget to remove the key in your consumables"
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef6a"
+		},
+		"description": "without being detected",
+		"optional": true,
+		"advices": [
+			"Stealth warframe and/or silenced weapon."
+		],
+		"Created_date": {
+			"$date": "2022-01-20T17:42:17.279Z"
+		},
+		"__v": 2
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef6b"
+		},
+		"description": "without dying or becoming downed",
+		"optional": true,
+		"Created_date": {
+			"$date": "2021-10-08T12:46:31.048Z"
+		}
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef6c"
+		},
+		"description": "without beind knocked down",
+		"optional": "true",
+		"advices": [
+			"Stealth warframe",
+			"Atlas",
+			"Rhino",
+			"Better with infested."
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef6d"
+		},
+		"description": "without getting afflicted by a status effect",
+		"optional": true,
+		"advices": [
+			"Stealth warframe",
+			"Bubble type warframe (Frost, Limbo)",
+			"Status immunity (Nezha, Yareli, Helminth buff)"
+		],
+		"Created_date": {
+			"$date": "2022-03-10T10:37:27.318Z"
+		},
+		"__v": 2
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef6e"
+		},
+		"description": "on sentients",
+		"optional": "true",
+		"advices": [
+			"Plato on Lua and find the oculyst (do not run too fast, they will not see you)",
+			"Tycho on Lua (2 at 5 minutes and then 3 every 5 minutes)"
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef6f"
+		},
+		"description": "with headshots",
+		"optional": "true",
+		"advices": [
+			"Stealth warframe and/or silenced weapon."
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef70"
+		},
+		"description": "level 30+",
+		"optional": "true",
+		"advices": [
+			"Sedna / Pluto / Eris and the Void"
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef71"
+		},
+		"description": "without taking any damage",
+		"optional": "true",
+		"advices": [
+			"Rhino's Iron skin",
+			"Loki (max stealth build) or Ivara depending on the mission",
+			" Maybe Frost with a defense mission."
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef72"
+		},
+		"description": "while sliding",
+		"optional": true,
+		"advices": [
+			"Best with scatter weapons (Ignis, Amprex)"
+		],
+		"Created_date": {
+			"$date": "2022-11-12T13:50:31.145Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef73"
+		},
+		"description": "while invisible",
+		"optional": true,
+		"advices": [
+			"Stealth warframe maybe ?"
+		],
+		"Created_date": {
+			"$date": "2022-11-12T13:50:44.777Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef74"
+		},
+		"description": "while in archwing",
+		"optional": true,
+		"advices": [
+			"Needs archwing",
+			"Itzal is best generally to avoid missiles + stealth"
+		],
+		"Created_date": {
+			"$date": "2024-07-08T16:54:26.268Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef75"
+		},
+		"description": "from more than 100m",
+		"optional": "true",
+		"advices": [
+			"Eidolon plains or Orb Vallis",
+			"Silenced sniper rifle or Loki + augment."
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef76"
+		},
+		"description": "using a bow",
+		"optional": true,
+		"advices": [
+			"Use a bow !!!",
+			"Zephyr + jetstream augment can help you.",
+			"Nova with max slow."
+		],
+		"Created_date": {
+			"$date": "2022-03-10T10:51:47.674Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef77"
+		},
+		"description": "without an ally being downed",
+		"optional": "true",
+		"advices": [
+			"Do it alone"
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef78"
+		},
+		"description": "with an active sentinel present",
+		"optional": true,
+		"advices": [
+			"Don't forget to equip a sentinel !",
+			" Maybe don't equip the sentinel with a weapon."
+		],
+		"Created_date": {
+			"$date": "2022-11-12T13:47:20.327Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef79"
+		},
+		"description": "with an animal companion active",
+		"optional": "true",
+		"advices": [
+			"Khora's Venari is not a valid companion !"
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef7a"
+		},
+		"description": "without failing the mission",
+		"optional": "true"
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef7b"
+		},
+		"description": "in one day",
+		"optional": true,
+		"advices": [
+			"In general it means Plains of Eidolon but in fact can be done everywhere."
+		],
+		"Created_date": {
+			"$date": "2020-07-07T13:58:08.701Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef7c"
+		},
+		"description": "on a drop ship",
+		"optional": true,
+		"advices": [
+			"Easiest way : Follow the roads in Orbis Valley and shoot Coildrive vehicles.",
+			"Eidolon's plains bounties",
+			"Yursa on Neptune = 1 drop ship on turns 2, 6 and 10. Rinse and repeat.",
+			"Weapons : Amprex, Cycron, Stalhta secondary, Ignis, Envoy"
+		],
+		"Created_date": {
+			"$date": "2020-07-07T13:05:36.322Z"
+		},
+		"__v": 2
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef7d"
+		},
+		"description": "with only a melee weapon equipped",
+		"optional": "true"
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef7e"
+		},
+		"description": "with a secondary weapon",
+		"optional": "true"
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef7f"
+		},
+		"description": "without using life consumables",
+		"optional": "true",
+		"advices": [
+			"Beware of the red spheres ! They are consumables.",
+			"Stealth or Rhino (Refresh the iron skin safely).",
+			"Elevate, Nourish and Repair magus are not consumables :)"
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef80"
+		},
+		"description": "with a decaying dragon key equipped",
+		"optional": "true"
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef81"
+		},
+		"description": "without raising any alarms",
+		"optional": "true",
+		"advices": [
+			"Easier than without being detected.",
+			"Berserck type or stealth",
+			"no Surviva, Defense or Infested missions because an alarm is the beginning of those missions !"
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5c868874e236101e60b1ef82"
+		},
+		"description": "in a single aim glide",
+		"optional": true,
+		"advices": [
+			"Quite easy with a moa companion and the Tractor Beam mod.",
+			"In case of headshots : easier with grineer and more difficult with infested.",
+			"In case of headshots : best with mirage and spread or precise weapons (Brakk, Akstiletto, ...).",
+			"Slow nova on Eidolon's plains with tractor beam."
+		],
+		"Created_date": {
+			"$date": "2020-07-07T12:40:23.988Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5ca21e2055a6f71a90af529e"
+		},
+		"description": "while wall dashing or wall latching without touching the floor",
+		"optional": true,
+		"advices": [
+			"Hydron on Sedna or Helene on Saturne + Loki and weapons like Ignis or Amprex",
+			"With no alarms: Ivara and noise arrow to pack mobs"
+		],
+		"Created_date": {
+			"$date": "2019-04-01T14:20:16.268Z"
+		},
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5ca35281c34e9b17bc1b1603"
+		},
+		"description": "with an extinguished dragon key",
+		"optional": true,
+		"advices": [
+			"Big frame and/or weapon !"
+		],
+		"Created_date": {
+			"$date": "2019-04-02T12:16:01.631Z"
+		}
+	},
+	{
+		"_id": {
+			"$oid": "5ca3a637b9a0274908a469fe"
+		},
+		"description": "Find {N} syndicate medallions",
+		"advices": [
+			"Helminth's 15th ability !!!",
+			"Carrier's Looter Mod can break containers",
+			"Your max range melee weapon to destroy containers",
+			"Mag's Greedy Pull augment can be useful (with Mag) to loot",
+			"Detection range affected by Loot Detector, Thief's Wit and Animal Instinct mods as well as Ivara's passive.",
+			"Khora's Venari can have an additional animal instinct",
+			"Limbo's cataclysm / Saryn's Molt / Equinox's Maim to destroy containers in a large AoE"
+		],
+		"Created_date": {
+			"$date": "2019-04-02T18:13:11.178Z"
+		},
+		"__v": 2
+	},
+	{
+		"_id": {
+			"$oid": "5ca3a6b4b9a0274908a469ff"
+		},
+		"description": "without using ciphers",
+		"optional": true,
+		"Created_date": {
+			"$date": "2019-04-02T18:15:16.362Z"
+		}
+	},
+	{
+		"_id": {
+			"$oid": "5ca3a83fb9a0274908a46a06"
+		},
+		"description": "Finish a level 30+ defense alone with the defense objective taking no damage",
+		"Created_date": {
+			"$date": "2019-04-02T18:21:51.247Z"
+		},
+		"advices": [
+			"Frost with a big bubble and freezing augment",
+			"Blast infested enemies from far away : Saryn or Banshee quake for example",
+			"Limbo with long bubble (refresh between the waves)"
+		],
+		"__v": 1
+	},
+	{
+		"_id": {
+			"$oid": "5f04704cced70a5e88deebaa"
+		},
+		"description": "with a bleeding dragon key equipped",
+		"Created_date": {
+			"$date": "2020-07-07T12:53:32.994Z"
+		},
+		"optional": true,
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "5f04729567e8a23dd02ed563"
+		},
+		"description": "while alone or in solo mode",
+		"Created_date": {
+			"$date": "2020-07-07T13:03:17.108Z"
+		},
+		"optional": true,
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "5f047b84c464533cb461d4b5"
+		},
+		"description": "Catch {N} fish without missing a throw",
+		"Created_date": {
+			"$date": "2020-07-07T13:41:24.016Z"
+		},
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "5f047ea5c464533cb461d4d2"
+		},
+		"description": "without using energy consummables",
+		"advices": [
+			"Zenurik's energizing dash does not count as a consummable"
+		],
+		"Created_date": {
+			"$date": "2020-07-07T13:54:45.444Z"
+		},
+		"optional": true,
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "5f087605c82c7433041e305c"
+		},
+		"description": "Kill a sentient without taking damage",
+		"advices": [
+			"Excalibur's radial blind and blast the sentient",
+			"Rhino's Iron Skin and Stomp",
+			"Khora's Ensnare and Venari + Whipclaw"
+		],
+		"Created_date": {
+			"$date": "2020-07-10T14:07:01.136Z"
+		},
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "5f087680c82c7433041e3061"
+		},
+		"description": "in the plains of Eidolon",
+		"Created_date": {
+			"$date": "2020-07-10T14:09:04.457Z"
+		},
+		"optional": true,
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "5fc115b144cc20689857d876"
+		},
+		"description": "while aim gliding",
+		"Created_date": {
+			"$date": "2020-11-27T15:05:21.972Z"
+		},
+		"optional": true,
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "61603d371fe45ea0501a03a9"
+		},
+		"description": "from more than 75m",
+		"Created_date": {
+			"$date": "2021-10-08T12:44:39.373Z"
+		},
+		"optional": true,
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6229d5fee6e1c20013c43329"
+		},
+		"description": "with finishers",
+		"advices": [
+			"Stealth warframe"
+		],
+		"Created_date": {
+			"$date": "2022-03-10T10:42:06.314Z"
+		},
+		"optional": true,
+		"__v": 0
+	}
+]

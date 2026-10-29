@@ -1,0 +1,42 @@
+[
+	{
+		"_id": {
+			"$oid": "5c87cdace96e9e3de0e700d8"
+		},
+		"name": "Affinity Booster",
+		"description": "doubles the amount of affinity earned from pickups and mission rewards",
+		"url": "https://wiki.warframe.com/w/Affinity_Booster"
+	},
+	{
+		"_id": {
+			"$oid": "5c87cdace96e9e3de0e700d9"
+		},
+		"name": "Credit Booster",
+		"description": "doubles the amount of credits earned from pickups, caches and mission rewards",
+		"url": "https://wiki.warframe.com/w/Credit_Booster"
+	},
+	{
+		"_id": {
+			"$oid": "5c87cdace96e9e3de0e700da"
+		},
+		"name": "Resource Booster",
+		"description": "doubles the amount of resources earned from most pickups",
+		"url": "https://wiki.warframe.com/w/Resource_Booster"
+	},
+	{
+		"_id": {
+			"$oid": "5c87cdace96e9e3de0e700db"
+		},
+		"name": "Resource Drop Chance Booster",
+		"description": "doubles the chance of resource drops",
+		"url": "https://warframe.fandom.com/wiki/Resource_Drop_Chance_Booster"
+	},
+	{
+		"_id": {
+			"$oid": "5f0468280bf1362e406e2b62"
+		},
+		"name": "Mod Drop Chance Booster",
+		"description": "doubles the chance of mod, endo, arcane enhancement drops",
+		"url": "https://wiki.warframe.com/w/Mod_Drop_Chance_Booster"
+	}
+]

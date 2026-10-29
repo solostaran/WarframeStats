@@ -1,0 +1,50 @@
+[
+	{
+		"_id": {
+			"$oid": "5c93564f864cd6643c9e1e19"
+		},
+		"name": "rifle"
+	},
+	{
+		"_id": {
+			"$oid": "5c93564f864cd6643c9e1e1a"
+		},
+		"name": "pistol"
+	},
+	{
+		"_id": {
+			"$oid": "5c93564f864cd6643c9e1e1b"
+		},
+		"name": "melee"
+	},
+	{
+		"_id": {
+			"$oid": "5c93564f864cd6643c9e1e1c"
+		},
+		"name": "shotgun"
+	},
+	{
+		"_id": {
+			"$oid": "5c93564f864cd6643c9e1e1d"
+		},
+		"name": "kitgun"
+	},
+	{
+		"_id": {
+			"$oid": "5c93564f864cd6643c9e1e1e"
+		},
+		"name": "zaw"
+	},
+	{
+		"_id": {
+			"$oid": "5ced03e11b3c1756f820dff7"
+		},
+		"name": "archgun"
+	},
+	{
+		"_id": {
+			"$oid": "5f0468b30bf1362e406e2b63"
+		},
+		"name": "sentinel weapon"
+	}
+]

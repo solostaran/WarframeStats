@@ -1,0 +1,72 @@
+[
+	{
+		"_id": {
+			"$oid": "5c8934cf2369a4462c22e0af"
+		},
+		"name": "Anasa Ayatan Sculpture",
+		"more_info": "the most common decoration and endo source"
+	},
+	{
+		"_id": {
+			"$oid": "5c8934cf2369a4462c22e0b0"
+		},
+		"name": "Riven Mod",
+		"more_info": "either a veiled or unveiled riven"
+	},
+	{
+		"_id": {
+			"$oid": "5c8934cf2369a4462c22e0b1"
+		},
+		"name": "Endo",
+		"more_info": "4000 in Sortie and 8000 in Archon's hunt"
+	},
+	{
+		"_id": {
+			"$oid": "5c8934cf2369a4462c22e0b2"
+		},
+		"name": "Kuva",
+		"more_info": "6000 in Sortie and 12000 in Archon's hunt"
+	},
+	{
+		"_id": {
+			"$oid": "5c8934cf2369a4462c22e0b3"
+		},
+		"name": "Booster",
+		"more_info": "3 days of booster"
+	},
+	{
+		"_id": {
+			"$oid": "5c8934cf2369a4462c22e0b4"
+		},
+		"name": "Exilus Warframe Adapter",
+		"more_info": "Unlock the exilus mod slot"
+	},
+	{
+		"_id": {
+			"$oid": "5c8934cf2369a4462c22e0b5"
+		},
+		"name": "Forma",
+		"more_info": "fully formed Forma"
+	},
+	{
+		"_id": {
+			"$oid": "5c8934cf2369a4462c22e0b6"
+		},
+		"name": "Orokin Catalyst blueprint",
+		"more_info": "Weapon enhancement. Must be crafted in the foundry."
+	},
+	{
+		"_id": {
+			"$oid": "5c8934cf2369a4462c22e0b7"
+		},
+		"name": "Orokin Reactor blueprint",
+		"more_info": "Warframe, companion or archwing enhancement. Must be crafted in the foundry."
+	},
+	{
+		"_id": {
+			"$oid": "5c8934cf2369a4462c22e0b8"
+		},
+		"name": "Legendary Core",
+		"more_info": "Maximize any mod with no cost."
+	}
+]

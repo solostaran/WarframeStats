@@ -1,0 +1,86 @@
+[
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c3918b"
+		},
+		"type": "Azure Archon Shard",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c3918c"
+		},
+		"type": "Amber Archon Shard",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c3918d"
+		},
+		"type": "Crimson Archon Shard",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c3918e"
+		},
+		"type": "Emerald Archon Shard",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c3918f"
+		},
+		"type": "Topaz Archon Shard",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c39190"
+		},
+		"type": "Violet Archon Shard",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c39191"
+		},
+		"type": "Arcane Escapist",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c39192"
+		},
+		"type": "Arcane Hot Shot",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c39193"
+		},
+		"type": "Arcane Universal Fallout",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c39194"
+		},
+		"type": "Elemental Vice",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c39195"
+		},
+		"type": "Omni Forma",
+		"__v": 0
+	},
+	{
+		"_id": {
+			"$oid": "6ad67cc30abe257dd8c39196"
+		},
+		"type": "Omni Forma Blueprint",
+		"__v": 0
+	}
+]

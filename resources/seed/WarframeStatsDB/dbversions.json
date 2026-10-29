@@ -1,0 +1,9 @@
+[
+	{
+		"_id": "schema",
+		"migratedAt": {
+			"$date": "2026-10-19T20:25:39.133Z"
+		},
+		"version": 4
+	}
+]
